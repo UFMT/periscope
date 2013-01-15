@@ -2,17 +2,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="/template/template.xhtml">
+<f:view contentType="text/html">
 
-	<ui:define name="content">
-		<center>
-			<h1>Periscope</h1>
-		</center>
-	</ui:define>
+	<div class="navbar navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<h:link action="index" styleClass="brand">Periscope</h:link>
+			</div>
+		</div>
+	</div>
+	
+</f:view>
 
-</ui:composition>
 </html>

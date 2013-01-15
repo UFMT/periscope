@@ -48,8 +48,19 @@
          <scope>provided</scope>
       </dependency>
 
+      <dependency>
+      	<groupId>org.primefaces</groupId>
+      	<artifactId>primefaces</artifactId>
+      	<version>3.4.2</version>
+      </dependency>
    </dependencies>
-
+	<repositories>
+		<repository>
+			<id>prime-repo</id>
+			<name>Prime Repo</name>
+			<url>http://repository.primefaces.org</url>
+		</repository>
+	</repositories>
     
    <build>
       <plugins>
