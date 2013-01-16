@@ -36,3 +36,9 @@ body {
    	color:white;
    	padding: 20px 0px 0px 20px; 	   
 }
+
+.ui-growl {
+	position: fixed;
+	top: 50px;
+	z-index: 9999;
+}

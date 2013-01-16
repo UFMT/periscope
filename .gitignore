@@ -1,5 +1,3 @@
-.amateras
-.classpath
-/build
 /target
-.DS_Store
+*/target
+org.*
