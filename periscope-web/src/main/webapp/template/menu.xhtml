@@ -11,7 +11,15 @@
 		<div class="navbar-inner">
 			<div class="container">
 				<h:link action="index" styleClass="brand">Periscope</h:link>
-			</div>
+				<div class="pull-right" style="margin-top:10px; margin-bottom:0px; padding : 0px;">
+					<h:form style="margin:0px">
+						<h:selectOneMenu value="#{language.localString}" onchange="submit()" 
+											valueChangeListener="#{ language.localeCodeChanged }" >				
+							<f:selectItems value="#{ language.locales }"/>
+						</h:selectOneMenu>
+					</h:form>
+				</div>
+			</div>			
 		</div>
 	</div>
 	

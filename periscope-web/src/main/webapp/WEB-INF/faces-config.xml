@@ -6,9 +6,19 @@
         http://java.sun.com/xml/ns/javaee
         http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
 
-   <!-- This descriptor activates the JSF 2.0 Servlet -->
-
-   <!-- Write your navigation rules here. You are encouraged to use CDI for 
-      creating @Named managed beans. -->
-
+   	<application>
+		<locale-config>
+			<default-locale>pt_BR</default-locale>
+			<supported-locale>en_US</supported-locale> 			       
+		</locale-config>
+		<resource-bundle>
+			<base-name>messages</base-name>
+			<var>msgs</var>
+		</resource-bundle>
+		
+		<message-bundle>
+			messages
+		</message-bundle>
+	
+	</application>
 </faces-config>
