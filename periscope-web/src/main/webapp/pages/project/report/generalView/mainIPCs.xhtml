@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/WEB-INF/templates/default.xhtml">
+
+	<ui:define name="growl"></ui:define>
+
+	<ui:define name="content">
+
+		<h1>Principais Inventores</h1>
+
+		<h:panelGrid columns="1">
+			
+			<p:selectManyCheckbox>
+				<f:selectItem itemLabel="Classe" itemValue="Option 1" />
+				<f:selectItem itemLabel="Subclasse" itemValue="Option 2" />
+				<f:selectItem itemLabel="Grupo" itemValue="Option 3" />
+				<f:selectItem itemLabel="Subgrupo" itemValue="Option 4" />
+			</p:selectManyCheckbox>
+		
+		</h:panelGrid>
+		
+		<h:panelGrid columns="2">
+
+			<h:column>
+				<p:graphicImage />
+				<p:graphicImage />
+			</h:column>
+
+			<h:column>
+
+				<p:dataTable emptyMessage="Nenhuma classificacao cadastrada.">
+
+					<p:column headerText="Posição" />
+
+					<p:column headerText="Classificação" />
+
+					<p:column headerText="Numero de Documentos" />
+
+				</p:dataTable>
+			</h:column>
+
+		</h:panelGrid>
+
+	</ui:define>
+
+</ui:composition>
+</html>
