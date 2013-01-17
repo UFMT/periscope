@@ -1,7 +1,6 @@
 package br.ufmt.periscope.importer;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -22,10 +21,7 @@ public class PatentRepository {
 	public void savePatentToDatabase(Iterator<Patent> patents,Project project){
 		
 		List<Patent> patentsCache = new ArrayList<Patent>();
-		int cont = 0; 
-		if(project.getPatents() == null){
-			project.setPatents(new HashSet<Patent>());
-		}
+		int cont = 0;
 		while(patents.hasNext()){
 			
 			Patent p = patents.next();
