@@ -38,7 +38,7 @@
 																														
 					</h:panelGrid>
 					<h:panelGroup  id="pnlObservers">
-						<p:dataTable value="#{projectController.project.observers.toArray()}" id="observers" var="observer"
+						<p:dataTable value="#{projectController.project.observers}" id="observers" var="observer"
 							 emptyMessage="Não Existem observadores para este projeto."  rows="10"
 							 paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom"
 							 rowKey="#{observer.firstname}">
@@ -54,10 +54,10 @@
 							</p:column>
 							<p:column>														
 								<center>
-									<h:form style="margin-bottom:0px">
-										<h:commandLink value="x" style="color:white"
-											class="btn btn-danger" />
-									</h:form>
+									<p:commandLink value="x" style="color:white" styleClass="btn btn-info" 
+										action="#{projectController.removeUser(observer.id.toString())}"
+										update="pnlObservers" ajax="false">											
+									</p:commandLink>									
 								</center>					
 							</p:column>
 						</p:dataTable>
@@ -68,8 +68,8 @@
 												itemLabel="#{u}" itemValue="#{u.id.toString()}"/>
 							</p:selectOneMenu>
 							<p:commandLink value="+" ajax="false" actionListener="#{projectController.adduser()}" 
-										 	process="pnlUser" update="pnlObservers" partialSubmit="true"
-										 	style="color:white" styleClass="btn btn-success"/>
+										 	update="pnlObservers"
+										 	style="color:white" styleClass="btn btn-info"/>
 							
 						</h:panelGrid>					
 					</h:panelGroup>
@@ -77,11 +77,11 @@
 				<h:panelGrid columns="2" cellpadding="10">							
 					
 					<h:commandLink value="Salvar" action="#{projectController.create()}"
-									style="color:white"  class="btn btn-large btn-success" rendered="#{not projectController.editing}"/>
+									style="color:white"  class="btn btn-large btn-info" rendered="#{not projectController.editing}"/>
 					<h:commandLink value="Atualizar" action="#{projectController.save()}"
 									style="color:white"  class="btn btn-large btn-info" rendered="#{projectController.editing}"/>
 					<h:commandLink immediate="true" value="Cancelar" action="projectList" 
-									style="color:white" class="btn btn-large btn-danger" />
+									style="color:white" class="btn btn-large btn-info" />
 									
 				</h:panelGrid>	
 			</h:form>

@@ -1,6 +1,8 @@
 package br.ufmt.periscope.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.bson.types.ObjectId;
@@ -25,7 +27,7 @@ public class User implements Serializable{
 	
 	private UserLevel userLevel;
 	
-	@Reference private Set<Project> projects;
+	@Reference private List<Project> projects = new ArrayList<Project>();
 
 	public ObjectId getId() {
 		return id;
@@ -83,11 +85,11 @@ public class User implements Serializable{
 		this.userLevel = userLevel;
 	}
 
-	public Set<Project> getProjects() {
+	public List<Project> getProjects() {
 		return projects;
 	}
 
-	public void setProjects(Set<Project> projects) {
+	public void setProjects(List<Project> projects) {
 		this.projects = projects;
 	}
 	

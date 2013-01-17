@@ -2,8 +2,8 @@ package br.ufmt.periscope.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.bson.types.ObjectId;
 
@@ -25,9 +25,9 @@ public class Project implements Serializable{
 	private Date updateAt;
 	
 	@Reference private User owner;
-	@Reference private Set<User> observers = new HashSet<User>();
+	@Reference private List<User> observers = new ArrayList<User>();
 	
-	@Reference private Set<Patent> patents = new HashSet<Patent>();
+	@Reference private List<Patent> patents = new ArrayList<Patent>();
 
 	public ObjectId getId() {
 		return id;
@@ -85,20 +85,22 @@ public class Project implements Serializable{
 		this.owner = owner;
 	}
 
-	public Set<User> getObservers() {
+	public List<User> getObservers() {
 		return observers;
 	}
 
-	public void setObservers(Set<User> observers) {
+	public void setObservers(List<User> observers) {
 		this.observers = observers;
 	}
 
-	public Set<Patent> getPatents() {
+	public List<Patent> getPatents() {
 		return patents;
 	}
 
-	public void setPatents(Set<Patent> patents) {
+	public void setPatents(List<Patent> patents) {
 		this.patents = patents;
 	}
+
+
 	
 }

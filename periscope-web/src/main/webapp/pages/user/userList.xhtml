@@ -9,55 +9,53 @@
 <ui:composition template="/template/templateProject.xhtml">
 
 	<ui:define name="content">
-		<ui:include src="/template/flashmessages.xhtml" />
+		<ui:include src="/template/flashmessages.xhtml" />		
 		<center>
-			<p:dataTable id="projects" var="project"
-				emptyMessage="Não Existem Projetos Cadastrados"
-				value="#{projectController.projects}" paginator="true"
+			<p:dataTable id="users" var="user"
+				emptyMessage="Não Existem usuário cadastrados"
+				value="#{userController.users}" paginator="true"
 				paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
-				rowKey="#{project.title}">
+				rowKey="#{user.title}">
 
 				<p:columnGroup type="header">
 					<p:row>
-						<p:column rowspan="2" headerText="Título" />
-						<p:column rowspan="2" headerText="Descrição" />
-						<p:column rowspan="2" headerText="Visibilidade" />
+						<p:column rowspan="2" headerText="Nome" />
+						<p:column rowspan="2" headerText="Email" />
+						<p:column rowspan="2" headerText="Nível de Acesso" />
 						<p:column rowspan="2" headerText="Ações" />
 					</p:row>
 				</p:columnGroup>
 				<p:column>
-					<center>#{project.title}</center>
+					<center>#{user}</center>
 				</p:column>
 				<p:column width="300">														
-						#{project.description}						
+						#{user.email}						
 				</p:column>
 				<p:column>
 					<center>
 						<span
-							class="label label-#{project.isPublic ? 'success' : 'important'}">
-							#{project.isPublic ? 'Público' : 'Privado'} </span>
+							class="label label-#{user.userLevel.accessLevel >= 10 ? 'important' : 'success'}">
+							#{user.userLevel} </span>
 					</center>
 				</p:column>
 				<p:column>
 					<center>
 						<h:form style="margin-bottom:0px">
-							<h:commandLink value="Abrir" style="color:white;margin-right: 10px"
-								class="btn btn-inverse" />
-							<h:commandLink value="Editar" action="editProject"
+							<h:commandLink value="Editar" action="editUser"
 								style="color:white;margin-right: 10px" class="btn btn-inverse">
-								<f:param name="projectId" value="#{project.id.toString()}"/>	
+								<f:param name="userId" value="#{user.id.toString()}"/>	
 							</h:commandLink>
 							<h:commandLink value="Deletar" style="color:white"
-								onclick="if(!confirm('Deseja excluir este projeto e os dados relacionados ?')) { return false; }"
-								class="btn btn-inverse" action="#{projectController.delete(project.id.toString())}"/>
+								onclick="if(!confirm('Deseja excluir este usuario ?')) { return false; }"
+								class="btn btn-inverse" action="#{userController.delete(user.id.toString())}"/>
 						</h:form>
 					</center>
 				</p:column>
 			</p:dataTable>
 			<br />
 			<h:form>
-				<h:commandLink value="Novo projeto" style="color:white"
-					class="btn btn-large btn-info" action="newProject"/>
+				<h:commandLink value="Novo Usuário" style="color:white"
+					class="btn btn-large btn-info" action="newUser"/>
 			</h:form>			
 
 		</center>

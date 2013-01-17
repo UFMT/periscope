@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
@@ -54,24 +55,46 @@ public class ProjectController {
 				this.project.getObservers().add(user);
 				freeUsers = null;
 			}
+		}		
+	}
+	
+	public void removeUser(String id){
+		User user = null;
+		for(User u : project.getObservers()){
+			if(u.getId().toString().contentEquals(id)){				
+				user = u;
+				freeUsers = null;
+				break;
+			}
+		}	
+		if(user != null){
+			this.project.getObservers().remove(user);
 		}
-		
 	}
 	public String create(){	
 		project.setCreatedAt(new Date());
 		project.setUpdateAt(new Date());
 		ds.save(project);		
+		Flash flash = FacesContext.getCurrentInstance().  
+                getExternalContext().getFlash();
+		flash.put("success", "Criado com Sucesso");	
 		return "projectList";
 	}
 	
 	public String save(){
 		project.setUpdateAt(new Date());		
 		ds.save(project);		
+		Flash flash = FacesContext.getCurrentInstance().  
+                getExternalContext().getFlash();
+		flash.put("info", "Atualizado com Sucesso");
 		return "projectList";
 	}
 
 	public String delete(String id){
-		WriteResult result = ds.delete(Project.class,new ObjectId(id));		
+		WriteResult result = ds.delete(Project.class,new ObjectId(id));
+		Flash flash = FacesContext.getCurrentInstance().  
+                getExternalContext().getFlash();
+		flash.put("info", "Deletado com Sucesso");
 		return "projectList";		
 	}
 	

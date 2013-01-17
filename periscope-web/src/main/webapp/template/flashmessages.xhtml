@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view contentType="text/html">
+	<h:panelGroup rendered="#{not empty flash}">
+		<h:panelGroup rendered="#{not empty flash.info}">
+			<div class="alert alert-info">
+				<strong>#{flash.info}</strong>
+			</div>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{not empty flash.success}">
+			<div class="alert alert-success">
+				<strong>#{flash.success}</strong>
+			</div>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{not empty flash.error}">
+			<div class="alert alert-error">
+				<strong>#{flash.error}</strong>
+			</div>
+		</h:panelGroup>
+	</h:panelGroup>
+</f:view>
+</html>
