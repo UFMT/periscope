@@ -1,24 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- This file is not required if you don't need any extra configuration. -->
 <faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="
-        http://java.sun.com/xml/ns/javaee
-        http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
-
-   	<application>
-		<locale-config>
-			<default-locale>pt_BR</default-locale>
-			<supported-locale>en_US</supported-locale> 			       
-		</locale-config>
-		<resource-bundle>
-			<base-name>messages</base-name>
-			<var>msgs</var>
-		</resource-bundle>
-		
-		<message-bundle>
-			messages
-		</message-bundle>
-	
-	</application>
+ xmlns:xi="http://www.w3.org/2001/XInclude"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="         http://java.sun.com/xml/ns/javaee         http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+ <navigation-rule>
+  <from-view-id>/pages/project/projectList.xhtml</from-view-id>
+  <navigation-case>
+   <from-outcome>newProject</from-outcome>
+   <to-view-id>/pages/project/editProject.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>editProject</from-outcome>
+   <to-view-id>/pages/project/editProject.xhtml</to-view-id>
+  </navigation-case>
+ </navigation-rule>
+ <navigation-rule>
+  <from-view-id>*</from-view-id>
+  <navigation-case>
+   <from-outcome>projectList</from-outcome>
+   <to-view-id>/pages/project/projectList.xhtml</to-view-id>
+  </navigation-case>
+ </navigation-rule>
+ <application>
+  <locale-config>
+   <default-locale>pt_BR</default-locale>
+   <supported-locale>en_US</supported-locale>
+  </locale-config>
+  <resource-bundle>
+   <base-name>messages</base-name>
+   <var>msgs</var>
+  </resource-bundle>
+  <message-bundle>messages</message-bundle>
+ </application>
 </faces-config>
