@@ -7,13 +7,25 @@
 	xmlns:p="http://primefaces.org/ui">
 
 
-<ui:composition template="/WEB-INF/templates/default.xhtml">
+<ui:composition template="/template/template.xhtml">
 
 	<ui:define name="growl"></ui:define>
 
 	<ui:define name="content">
 
 		<h1>Principais Inventores</h1>
+
+		<h:panelGrid columns="1">
+			
+			<p:selectManyCheckbox>
+				<f:selectItem itemLabel="#{msgs['class']}" itemValue="Option 1" />
+				<f:selectItem itemLabel="#{msgs['subclass']}" itemValue="Option 2" />
+				<f:selectItem itemLabel="#{msgs['group']}" itemValue="Option 3" />
+				<f:selectItem itemLabel="#{msgs['subgroup']}" itemValue="Option 4" />
+			</p:selectManyCheckbox>
+		
+		</h:panelGrid>
+		
 		<h:panelGrid columns="2">
 
 			<h:column>
@@ -23,11 +35,13 @@
 
 			<h:column>
 
-				<p:dataTable emptyMessage="Nenhum inventor cadastrado.">
+				<p:dataTable emptyMessage="Nenhuma classificacao cadastrada.">
 
-					<p:column headerText="Ano" />
+					<p:column headerText="#{msgs['position']}" />
 
-					<p:column headerText="Numero de Documentos" />
+					<p:column headerText="#{msgs['classification']}" />
+
+					<p:column headerText="#{msgs['documents.number']}" />
 
 				</p:dataTable>
 			</h:column>
