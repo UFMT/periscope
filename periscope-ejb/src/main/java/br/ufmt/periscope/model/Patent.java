@@ -83,6 +83,42 @@ public class Patent {
 	public void setBlacklisted(Boolean blacklisted) {
 		this.blacklisted = blacklisted;
 	}
+	public Date getPublicationDate() {
+		return publicationDate;
+	}
+	public void setPublicationDate(Date publicationDate) {
+		this.publicationDate = publicationDate;
+	}
+	public Country getPublicationCountry() {
+		return publicationCountry;
+	}
+	public void setPublicationCountry(Country publicationCountry) {
+		this.publicationCountry = publicationCountry;
+	}
+	public String getApplicationNumber() {
+		return applicationNumber;
+	}
+	public void setApplicationNumber(String applicationNumber) {
+		this.applicationNumber = applicationNumber;
+	}
+	public Date getApplicationDate() {
+		return applicationDate;
+	}
+	public void setApplicationDate(Date applicationDate) {
+		this.applicationDate = applicationDate;
+	}
+	public Country getApplicationCountry() {
+		return applicationCountry;
+	}
+	public void setApplicationCountry(Country applicationCountry) {
+		this.applicationCountry = applicationCountry;
+	}
+	public Boolean getCompleted() {
+		return completed;
+	}
+	public void setCompleted(Boolean completed) {
+		this.completed = completed;
+	}
 	
 
 }

@@ -1,0 +1,490 @@
+- acronym: CA
+  name: Canada
+- acronym: US
+  name: United States of America
+- acronym: AD
+  name:  Andorra
+- acronym: AE
+  name: United Arab Emirates
+- acronym: AF
+  name: Afghanistan
+- acronym: AG
+  name: Antigua & Barbuda
+- acronym: AI
+  name: Anguilla
+- acronym: AL
+  name: Albania
+- acronym: AM
+  name: Armenia
+- acronym: AN
+  name: Netherlands Antilles
+- acronym: AO
+  name: Angola
+- acronym: AQ
+  name: Antarctica
+- acronym: AR
+  name: Argentina
+- acronym: AS
+  name: American Samoa
+- acronym: AT
+  name: Austria
+- acronym: AU
+  name: Australia
+- acronym: AW
+  name: Aruba
+- acronym: AZ
+  name: Azerbaijan
+- acronym: BA
+  name: Bosnia and Herzegovina
+- acronym: BB
+  name: Barbados
+- acronym: BD
+  name: Bangladesh
+- acronym: BE
+  name: Belgium
+- acronym: BF
+  name: Burkina Faso
+- acronym: BG
+  name: Bulgaria
+- acronym: BH
+  name: Bahrain
+- acronym: BI
+  name: Burundi
+- acronym: BJ
+  name: Benin
+- acronym: BM
+  name: Bermuda
+- acronym: BN
+  name: Brunei Darussalam
+- acronym: BO
+  name: Bolivia
+- acronym: BR
+  name: Brasil
+- acronym: BS
+  name: Bahama
+- acronym: BT
+  name: Bhutan
+- acronym: BU
+  name: Burma (no longer exists)
+- acronym: BV
+  name: Bouvet Island
+- acronym: BW
+  name: Botswana
+- acronym: BY
+  name: Belarus
+- acronym: BZ
+  name: Belize
+- acronym: CC
+  name: Cocos (Keeling) Islands
+- acronym: CF
+  name: Central African Republic
+- acronym: CG
+  name: Congo
+- acronym: CH
+  name: Switzerland
+- acronym: CI
+  name: Côte D'ivoire (Ivory Coast)
+- acronym: CK
+  name: Cook Iislands
+- acronym: CL
+  name: Chile
+- acronym: CM
+  name: Cameroon
+- acronym: CN
+  name: China
+- acronym: CO
+  name: Colombia
+- acronym: CR
+  name: Costa Rica
+- acronym: CS
+  name: Czechoslovakia (no longer exists)
+- acronym: CU
+  name: Cuba
+- acronym: CV
+  name: Cape Verde
+- acronym: CX
+  name: Christmas Island
+- acronym: CY
+  name: Cyprus
+- acronym: CZ
+  name: Czech Republic
+- acronym: DD
+  name: German Democratic Republic (no longer exists)
+- acronym: DE
+  name: Germany
+- acronym: DJ
+  name: Djibouti
+- acronym: DK
+  name: Denmark
+- acronym: DM
+  name: Dominica
+- acronym: DO
+  name: Dominican Republic
+- acronym: DZ
+  name: Algeria
+- acronym: EC
+  name: Ecuador
+- acronym: EE
+  name: Estonia
+- acronym: EG
+  name: Egypt
+- acronym: EH
+  name: Western Sahara
+- acronym: ER
+  name: Eritrea
+- acronym: ES
+  name: Spain
+- acronym: ET
+  name: Ethiopia
+- acronym: FI
+  name: Finland
+- acronym: FJ
+  name: Fiji
+- acronym: FK
+  name: Falkland Islands (Malvinas)
+- acronym: FM
+  name: Micronesia
+- acronym: FO
+  name: Faroe Islands
+- acronym: FR
+  name: France
+- acronym: FX
+  name: Metropolitan France
+- acronym: GA
+  name: Gabon
+- acronym: GB
+  name: United Kingdom (Great Britain)
+- acronym: GD
+  name: Grenada
+- acronym: GE
+  name: Georgia
+- acronym: GF
+  name: French Guiana
+- acronym: GH
+  name: Ghana
+- acronym: GI
+  name: Gibraltar
+- acronym: GL
+  name: Greenland
+- acronym: GM
+  name: Gambia
+- acronym: GN
+  name: Guinea
+- acronym: GP
+  name: Guadeloupe
+- acronym: GQ
+  name: Equatorial Guinea
+- acronym: GR
+  name: Greece
+- acronym: GS
+  name: South Georgia and the South Sandwich Islands
+- acronym: GT
+  name: Guatemala
+- acronym: GU
+  name: Guam
+- acronym: GW
+  name: Guinea-Bissau
+- acronym: GY
+  name: Guyana
+- acronym: HK
+  name: Hong Kong
+- acronym: HM
+  name: Heard & McDonald Islands
+- acronym: HN
+  name: Honduras
+- acronym: HR
+  name: Croatia
+- acronym: HT
+  name: Haiti
+- acronym: HU
+  name: Hungary
+- acronym: ID
+  name: Indonesia
+- acronym: IE
+  name: Ireland
+- acronym: IL
+  name: Israel
+- acronym: IN
+  name: India
+- acronym: IO
+  name: British Indian Ocean Territory
+- acronym: IQ
+  name: Iraq
+- acronym: IR
+  name: Islamic Republic of Iran
+- acronym: IS
+  name: Iceland
+- acronym: IT
+  name: Italy
+- acronym: JM
+  name: Jamaica
+- acronym: JO
+  name: Jordan
+- acronym: JP
+  name: Japan
+- acronym: KE
+  name: Kenya
+- acronym: KG
+  name: Kyrgyzstan
+- acronym: KH
+  name: Cambodia
+- acronym: KI
+  name: Kiribati
+- acronym: KM
+  name: Comoros
+- acronym: KN
+  name: St. Kitts and Nevis
+- acronym: KP
+  name: Democratic People's Republic of Korea 
+- acronym: KR
+  name: Republic of Korea 
+- acronym: KW
+  name: Kuwait
+- acronym: KY
+  name: Cayman Islands
+- acronym: KZ
+  name: Kazakhstan
+- acronym: LA
+  name: Lao People's Democratic Republic
+- acronym: LB
+  name: Lebanon
+- acronym: LC
+  name: Saint Lucia
+- acronym: LI
+  name: Liechtenstein
+- acronym: LK
+  name: Sri Lanka
+- acronym: LR
+  name: Liberia
+- acronym: LS
+  name: Lesotho
+- acronym: LT
+  name: Lithuania
+- acronym: LU
+  name: Luxembourg
+- acronym: LV
+  name: Latvia
+- acronym: LY
+  name: Libyan Arab Jamahiriya
+- acronym: MA
+  name: Morocco
+- acronym: MC
+  name: Monaco
+- acronym: MD
+  name: Republic of Moldova 
+- acronym: MG
+  name: Madagascar
+- acronym: MH
+  name: Marshall Islands
+- acronym: ML
+  name: Mali
+- acronym: MN
+  name: Mongolia
+- acronym: MM
+  name: Myanmar
+- acronym: MO
+  name: Macau
+- acronym: MP
+  name: Northern Mariana Islands
+- acronym: MQ
+  name: Martinique
+- acronym: MR
+  name: Mauritania
+- acronym: MS
+  name: Monserrat
+- acronym: MT
+  name: Malta
+- acronym: MU
+  name: Mauritius
+- acronym: MV
+  name: Maldives
+- acronym: MW
+  name: Malawi
+- acronym: MX
+  name: Mexico
+- acronym: MY
+  name: Malaysia
+- acronym: MZ
+  name: Mozambique
+- acronym: NA
+  name: Namibia
+- acronym: NC
+  name: New Caledonia
+- acronym: NE
+  name: Niger
+- acronym: NF
+  name: Norfolk Island
+- acronym: NG
+  name: Nigeria
+- acronym: NI
+  name: Nicaragua
+- acronym: NL
+  name: Netherlands
+- acronym: NO
+  name: Norway
+- acronym: NP
+  name: Nepal
+- acronym: NR
+  name: Nauru
+- acronym: NT
+  name: Neutral Zone (no longer exists)
+- acronym: NU
+  name: Niue
+- acronym: NZ
+  name: New Zealand
+- acronym: OM
+  name: Oman
+- acronym: PA
+  name: Panama
+- acronym: PE
+  name: Peru
+- acronym: PF
+  name: French Polynesia
+- acronym: PG
+  name: Papua New Guinea
+- acronym: PH
+  name: Philippines
+- acronym: PK
+  name: Pakistan
+- acronym: PL
+  name: Poland
+- acronym: PM
+  name: St. Pierre & Miquelon
+- acronym: PN
+  name: Pitcairn
+- acronym: PR
+  name: Puerto Rico
+- acronym: PT
+  name: Portugal
+- acronym: PW
+  name: Palau
+- acronym: PY
+  name: Paraguay
+- acronym: QA
+  name: Qatar
+- acronym: RE
+  name: Réunion
+- acronym: RO
+  name: Romania
+- acronym: RU
+  name: Russian Federation
+- acronym: RW
+  name: Rwanda
+- acronym: SA
+  name: Saudi Arabia
+- acronym: SB
+  name: Solomon Islands
+- acronym: SC
+  name: Seychelles
+- acronym: SD
+  name: Sudan
+- acronym: SE
+  name: Sweden
+- acronym: SG
+  name: Singapore
+- acronym: SH
+  name: St. Helena
+- acronym: SI
+  name: Slovenia
+- acronym: SJ
+  name: Svalbard & Jan Mayen Islands
+- acronym: SK
+  name: Slovakia
+- acronym: SL
+  name: Sierra Leone
+- acronym: SM
+  name: San Marino
+- acronym: SN
+  name: Senegal
+- acronym: SO
+  name: Somalia
+- acronym: SR
+  name: Suriname
+- acronym: ST
+  name: Sao Tome & Principe
+- acronym: SU
+  name: Union of Soviet Socialist Republics (no longer exists)
+- acronym: SV
+  name: El Salvador
+- acronym: SY
+  name: Syrian Arab Republic
+- acronym: SZ
+  name: Swaziland
+- acronym: TC
+  name: Turks & Caicos Islands
+- acronym: TD
+  name: Chad
+- acronym: TF
+  name: French Southern Territories
+- acronym: TG
+  name: Togo
+- acronym: TH
+  name: Thailand
+- acronym: TJ
+  name: Tajikistan
+- acronym: TK
+  name: Tokelau
+- acronym: TM
+  name: Turkmenistan
+- acronym: TN
+  name: Tunisia
+- acronym: TO
+  name: Tonga
+- acronym: TP
+  name: East Timor
+- acronym: TR
+  name: Turkey
+- acronym: TT
+  name: Trinidad & Tobago
+- acronym: TV
+  name: Tuvalu
+- acronym: TW
+  name: Province of China Taiwan 
+- acronym: TZ
+  name: United Republic of Tanzania 
+- acronym: UA
+  name: Ukraine
+- acronym: UG
+  name: Uganda
+- acronym: UM
+  name: United States Minor Outlying Islands
+- acronym: UY
+  name: Uruguay
+- acronym: UZ
+  name: Uzbekistan
+- acronym: VA
+  name: Vatican City State (Holy See)
+- acronym: VC
+  name: St. Vincent & the Grenadines
+- acronym: VE
+  name: Venezuela
+- acronym: VG
+  name: British Virgin Islands
+- acronym: VI
+  name: United States Virgin Islands
+- acronym: VN
+  name: Viet Nam
+- acronym: VU
+  name: Vanuatu
+- acronym: WF
+  name: Wallis & Futuna Islands
+- acronym: WS
+  name: Samoa
+- acronym: YD
+  name: Democratic Yemen (no longer exists)
+- acronym: YE
+  name: Yemen
+- acronym: YT
+  name: Mayotte
+- acronym: YU
+  name: Yugoslavia
+- acronym: ZA
+  name: South Africa
+- acronym: ZM
+  name: Zambia
+- acronym: ZR
+  name: Zaire
+- acronym: ZW
+  name: Zimbabwe
+- acronym: ZZ
+  name: Unknown or unspecified country

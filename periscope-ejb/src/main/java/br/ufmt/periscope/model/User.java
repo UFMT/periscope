@@ -28,7 +28,7 @@ public class User implements Serializable{
 	private UserLevel userLevel;
 	
 	@Reference private List<Project> projects = new ArrayList<Project>();
-
+	
 	public ObjectId getId() {
 		return id;
 	}

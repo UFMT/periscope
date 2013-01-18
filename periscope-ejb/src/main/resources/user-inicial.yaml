@@ -1,0 +1,6 @@
+- username: admin
+  password: 123456
+  firstname: Admnistrador
+  lastname: Admin
+  email: admin@gmail.com
+  userLevel: ADMIN	
