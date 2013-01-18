@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view contentType="text/html">
+	<h:head>
+
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<title>Periscope</title>
+		<link
+			href="#{facesContext.externalContext.request.contextPath}/style/livetools.css"
+			rel="stylesheet" type="text/css" />
+	</h:head>
+
+	<h:body>
+
+	
+		<h:form styleClass="form-container">
+			<!-- 
+			<center><p:graphicImage value="/imgs/periscope.jpg" width="300px" style=" border: 2px solid #78c8f0;"/></center>
+			<br/>
+			-->
+			<div class="form-title">
+				<h2>Periscope</h2>
+			</div>
+			
+			<div class="form-title">Login</div>
+			<h:inputText value="#{loginController.login}" required="true"
+				requiredMessage="Entre com o usuário" class="form-field" type="text"
+				name="firstname" />
+			<br />
+			<div class="form-title">Senha</div>
+			<h:inputSecret value="#{loginController.password}" required="true"
+				requiredMessage="Entre com a senha" class="form-field" type="text"
+				name="email" />
+			<br />
+			<div class="submit-container">
+				<h:commandButton value="Entrar" action="#{sessionBean.login()}"					
+					styleClass="submit-button" />
+			</div>
+			<div style="font-size: 70%;">
+				<p:messages id="messages"  autoUpdate="true" redisplay="true"/>
+			</div>
+		</h:form>
+	</h:body>
+</f:view>
+</html>

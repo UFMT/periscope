@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="content">
+		<ui:include src="/template/flashmessages.xhtml" />
+		<center>
+			<h:outputText styleClass="pull-right" style="font-size:16px"
+				value="#{patentController.patents.rowCount} patentes cadastradas."/>
+			<br/>						
+			<p:dataTable id="patents" var="patent" style="font-size:12px"
+				emptyMessage="Não existem patentes carregadas"
+				value="#{patentController.patents}" paginator="true"
+				paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+				rowKey="#{patent.id}">
+
+				<p:columnGroup type="header">
+					<p:row>
+						<p:column rowspan="2" headerText="Título" />
+						<p:column rowspan="2" headerText="Número de Publicação" />
+						<p:column rowspan="2" headerText="Classificações" />
+						<p:column rowspan="2" headerText="Lista Negra" />
+						<p:column rowspan="2" headerText="Ações" />
+					</p:row>
+				</p:columnGroup>
+				<p:column width="150">
+					<center>#{patent.titleSelect}</center>
+				</p:column>
+				<p:column>														
+						#{patent.publicationNumber}					
+				</p:column>
+				<p:column>														
+						#{patent.mainClassification}						
+				</p:column>
+				<p:column>
+					<center>
+						<span class="label label-#{patent.blacklisted ? 'inverse' : 'success'}">
+							#{patent.blacklisted ? 'Sim' : 'Não'}
+						</span>
+					</center>
+				</p:column>
+				<p:column>
+					<center>
+						<h:form style="margin-bottom:0px">
+							<h:commandLink value="Editar"
+								style="color:white;margin-right: 10px" class="btn btn-inverse">	
+							</h:commandLink>
+							<h:commandLink value="BlackList" style="color:white" class="btn btn-inverse"/>
+						</h:form>
+					</center>
+				</p:column>
+			</p:dataTable>
+			<br />
+			<h:form>
+				<h:commandLink value="Importar patentes" style="color:white"
+					class="btn btn-large btn-info" action="importPatent"/>
+			</h:form>			
+
+		</center>
+	</ui:define>
+
+</ui:composition>
+</html>

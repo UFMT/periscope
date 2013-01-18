@@ -1,5 +1,6 @@
 package br.ufmt.periscope.model;
 
+import java.util.Date;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -22,7 +23,16 @@ public class Patent {
 	private @Embedded List<Classification> classifications;
 
 	private String publicationNumber;
+	private Date publicationDate;
+	private @Embedded Country publicationCountry;
 	
+	private String applicationNumber;
+	private Date applicationDate;
+	private @Embedded Country applicationCountry;
+		
+	
+	private Boolean blacklisted = false; 
+	private Boolean completed = false;
 	@Reference private Project project;
 	
 	public ObjectId getId() {
@@ -66,6 +76,12 @@ public class Patent {
 	}
 	public void setClassifications(List<Classification> classifications) {
 		this.classifications = classifications;
+	}
+	public Boolean getBlacklisted() {
+		return blacklisted;
+	}
+	public void setBlacklisted(Boolean blacklisted) {
+		this.blacklisted = blacklisted;
 	}
 	
 

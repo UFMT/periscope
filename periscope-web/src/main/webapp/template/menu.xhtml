@@ -8,7 +8,7 @@
 
 <f:view contentType="text/html">
 
-	<div class="navbar navbar-fixed-top">
+	<div class="navbar">
 		<h:form style="margin:0px">
 			<div class="navbar-inner">
 				<div class="container">				
@@ -24,7 +24,12 @@
     				</ul>
     				<ul class="nav pull-right"> 
     					<li>
-    						<h:commandLink action="logout" value="Log Out"/>
+    						<h:panelGroup rendered="#{sessionBean.loggedIn}">
+   								<a>#{sessionBean.currentUser}</a>
+							</h:panelGroup>    						
+    					</li>
+    					<li>
+    						<p:commandLink action="#{sessionBean.logout()}" value="Log Out"/>
     					</li>
     				</ul>
 					<div class="pull-right" style="margin-top:10px; margin-bottom:0px; padding : 0px;">						

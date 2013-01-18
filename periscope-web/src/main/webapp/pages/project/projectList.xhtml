@@ -21,6 +21,7 @@
 					<p:row>
 						<p:column rowspan="2" headerText="Título" />
 						<p:column rowspan="2" headerText="Descrição" />
+						<p:column rowspan="2" headerText="Dono" />
 						<p:column rowspan="2" headerText="Visibilidade" />
 						<p:column rowspan="2" headerText="Ações" />
 					</p:row>
@@ -31,18 +32,29 @@
 				<p:column width="300">														
 						#{project.description}						
 				</p:column>
+				<p:column>														
+						#{project.owner}						
+				</p:column>
 				<p:column>
 					<center>
-						<span
-							class="label label-#{project.isPublic ? 'success' : 'important'}">
-							#{project.isPublic ? 'Público' : 'Privado'} </span>
+						<h:panelGroup rendered="#{empty project.observers}">
+							<span class="label label-#{project.isPublic ? 'success' : 'important'}">
+								#{project.isPublic ? 'Público' : 'Privado'} 
+							</span>	
+						</h:panelGroup>
+						<h:panelGroup rendered="#{not empty project.observers}">
+							<span class="label label-#{project.isPublic ? 'success' : 'info'}">
+								#{project.isPublic ? 'Público' : 'Compartilhado'} 
+							</span>	
+						</h:panelGroup>
+						
 					</center>
 				</p:column>
 				<p:column>
 					<center>
 						<h:form style="margin-bottom:0px">
 							<h:commandLink value="Abrir" style="color:white;margin-right: 10px"
-								class="btn btn-inverse" />
+								class="btn btn-inverse" action="#{projectSession.openProject(project.id.toString())}"/>
 							<h:commandLink value="Editar" action="editProject"
 								style="color:white;margin-right: 10px" class="btn btn-inverse">
 								<f:param name="projectId" value="#{project.id.toString()}"/>	

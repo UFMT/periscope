@@ -2,7 +2,7 @@
 <!-- This file is not required if you don't need any extra configuration. -->
 <faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
  xmlns:xi="http://www.w3.org/2001/XInclude"
- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="         http://java.sun.com/xml/ns/javaee         http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee         http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
  <navigation-rule>
   <from-view-id>/pages/project/projectList.xhtml</from-view-id>
   <navigation-case>
@@ -12,6 +12,22 @@
   <navigation-case>
    <from-outcome>editProject</from-outcome>
    <to-view-id>/pages/project/editProject.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>projectHome</from-outcome>
+   <to-view-id>/pages/project/projectHome.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
+ </navigation-rule>
+ <navigation-rule>
+  <from-view-id>/pages/project/*</from-view-id>
+  <navigation-case>
+   <from-outcome>importPatent</from-outcome>
+   <to-view-id>/pages/project/patent/patentImport.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>listPatent</from-outcome>
+   <to-view-id>/pages/project/patent/patentList.xhtml</to-view-id>
   </navigation-case>
  </navigation-rule>
  <navigation-rule>
@@ -24,6 +40,11 @@
    <from-outcome>userList</from-outcome>
    <to-view-id>/pages/user/userList.xhtml</to-view-id>
   </navigation-case>
+  <navigation-case>
+   <from-outcome>logout</from-outcome>
+   <to-view-id>/login.xhtml</to-view-id>
+   <redirect/>
+  </navigation-case>
  </navigation-rule>
  <navigation-rule>
   <from-view-id>/pages/user/userList.xhtml</from-view-id>
@@ -34,6 +55,14 @@
   <navigation-case>
    <from-outcome>editUser</from-outcome>
    <to-view-id>/pages/user/editUser.xhtml</to-view-id>
+  </navigation-case>
+ </navigation-rule>
+ <navigation-rule>
+  <from-view-id>/login.xhtml</from-view-id>
+  <navigation-case>
+   <from-outcome>login</from-outcome>
+   <to-view-id>/pages/project/projectList.xhtml</to-view-id>
+   <redirect/>
   </navigation-case>
  </navigation-rule>
  <application>

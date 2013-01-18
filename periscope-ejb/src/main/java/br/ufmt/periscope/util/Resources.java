@@ -6,11 +6,15 @@ import java.util.logging.Logger;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.github.jmkgreen.morphia.Datastore;
+import com.github.jmkgreen.morphia.DatastoreService;
 import com.github.jmkgreen.morphia.Morphia;
+import com.github.jmkgreen.morphia.mapping.lazy.DatastoreHolder;
+import com.github.jmkgreen.morphia.mapping.lazy.DatastoreProvider;
 import com.mongodb.Mongo;
 
 /**
@@ -31,10 +35,11 @@ public class Resources {
 	//@Produces
 	//@PersistenceContext
 	//private EntityManager em;
-
+	
+	@Singleton
 	@Produces
-	public Mongo createMongo() {
-		try {
+	private Mongo createMongo() {
+		try {			
 			return new Mongo();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -46,11 +51,12 @@ public class Resources {
 	private Morphia morphia = new Morphia();
 
 	@Produces
-	public Datastore mongoDs(Mongo mongo, Morphia morphia) {
-		Datastore ds = morphia.createDatastore(mongo, "Periscope");
+	public Datastore mongoDs(Mongo mongo, Morphia morphia) {				
+		Datastore ds = morphia.createDatastore(mongo, "Periscope");		
 		ds.ensureCaps();
 		ds.ensureIndexes();
-		morphia.mapPackage("br.ufmt.periscope.model");
+		morphia.mapPackage("br.ufmt.periscope.model");		
+		DatastoreHolder.getInstance().set(ds);
 		return ds;
 	}
 

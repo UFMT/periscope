@@ -63,7 +63,8 @@
 						</p:dataTable>
 						<br/>
 						<h:panelGrid id="pnlUser" columns="2">
-							<p:selectOneMenu value="#{projectController.selectedUser}">
+							<p:selectOneMenu value="#{projectController.selectedUser}">								
+								<f:selectItem noSelectionOption="true" itemLabel="Selecione um usuário"/>
 								<f:selectItems value="#{projectController.freeUsers}" var="u" 
 												itemLabel="#{u}" itemValue="#{u.id.toString()}"/>
 							</p:selectOneMenu>

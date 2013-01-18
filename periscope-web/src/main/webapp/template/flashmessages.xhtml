@@ -5,11 +5,11 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-<f:view contentType="text/html">
+<f:view contentType="text/html">	
 	<h:panelGroup rendered="#{not empty flash}">
 		<h:panelGroup rendered="#{not empty flash.info}">
 			<div class="alert alert-info">
-				<strong>#{flash.info}</strong>
+				<strong>#{flash.info}</strong>		
 			</div>
 		</h:panelGroup>
 		<h:panelGroup rendered="#{not empty flash.success}">
@@ -21,7 +21,7 @@
 			<div class="alert alert-error">
 				<strong>#{flash.error}</strong>
 			</div>
-		</h:panelGroup>
+		</h:panelGroup>		
 	</h:panelGroup>
 </f:view>
 </html>

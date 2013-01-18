@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
@@ -18,6 +19,7 @@ import org.bson.types.ObjectId;
 
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.model.User;
+import br.ufmt.periscope.repository.ProjectRepository;
 
 import com.github.jmkgreen.morphia.Datastore;
 import com.mongodb.WriteResult;
@@ -27,6 +29,8 @@ import com.mongodb.WriteResult;
 public class ProjectController {		
 
 	private @Inject Datastore ds; 
+	private @Inject ProjectRepository projectRepository;
+	private @ManagedProperty(value="#{sessionBean.currentUser}") User currentUser;
 	private DataModel<Project> projects = null;
 	private Project project = new Project();
 	private List<User> freeUsers = null;
@@ -74,6 +78,7 @@ public class ProjectController {
 	public String create(){	
 		project.setCreatedAt(new Date());
 		project.setUpdateAt(new Date());
+		project.setOwner(getCurrentUser());
 		ds.save(project);		
 		Flash flash = FacesContext.getCurrentInstance().  
                 getExternalContext().getFlash();
@@ -100,7 +105,7 @@ public class ProjectController {
 	
 	public DataModel<Project> getProjects() {
 		if(projects == null){
-			projects = new ListDataModel<Project>(ds.find(Project.class).asList());
+			projects = new ListDataModel<Project>(projectRepository.getProjectList(currentUser));
 		}
 		return projects;
 	}
@@ -120,14 +125,12 @@ public class ProjectController {
 	public List<User> getFreeUsers() {
 		if(freeUsers == null){
 			List<ObjectId> keys = new ArrayList<ObjectId>();
+			System.out.println(getCurrentUser().getEmail());
+			keys.add(getCurrentUser().getId());
 			for(User u : project.getObservers()){
 				keys.add(u.getId());
 			}
-			if(keys.isEmpty()){
-				freeUsers = ds.createQuery(User.class).asList();
-			}else{
-				freeUsers = ds.createQuery(User.class).field("id").notIn(keys).asList();
-			}			
+			freeUsers = ds.createQuery(User.class).field("id").notIn(keys).asList();					
 		}
 		return freeUsers;
 	}
@@ -150,6 +153,14 @@ public class ProjectController {
 
 	public void setEditing(boolean editing) {
 		this.editing = editing;
+	}
+
+	public User getCurrentUser() {
+		return currentUser;
+	}
+
+	public void setCurrentUser(User currentUser) {
+		this.currentUser = currentUser;
 	}
 
 	
