@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="growl"></ui:define>
+
+	<ui:define name="content">
+
+		<h1>Principais Depositantes</h1>
+		<h:panelGrid columns="2">
+
+			<h:column>
+				<p:graphicImage />
+				<p:graphicImage />
+			</h:column>
+
+			<h:column>
+
+				<p:dataTable emptyMessage="Nenhum depositante cadastrado.">
+
+					<p:column headerText="#{msgs['year']}" />
+
+					<p:column headerText="#{msgs['documents.number']}" />
+
+				</p:dataTable>
+
+
+				<p:panel header="Filtro" toggleable="true">
+
+				</p:panel>
+
+			</h:column>
+
+		</h:panelGrid>
+
+	</ui:define>
+
+</ui:composition>
+</html>

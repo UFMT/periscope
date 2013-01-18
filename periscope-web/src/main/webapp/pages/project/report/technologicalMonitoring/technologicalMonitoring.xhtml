@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="growl"></ui:define>
+
+	<ui:define name="content">	
+	<h:form  >
+
+		<h1>Data de Deposito / #{msgs['year']}</h1>
+		Language : 
+		<h:selectOneMenu value="#{language.localeCode}" onchange="submit()" 
+			valueChangeListener="#{language.localeCodeChanged}" >
+   			<f:selectItems value="#{language.locales}"  /> 
+   		</h:selectOneMenu>
+ 
+		<h:panelGrid columns="2">
+
+			<h:column>
+				<p:graphicImage />
+				<p:graphicImage />
+			</h:column>
+
+			<h:column>
+				<p:dataTable emptyMessage="Nenhum depositante cadastrado.">
+
+					<p:column headerText="#{msgs['year']}" />
+
+					<p:column headerText="#{msgs['documents.number']}" />
+
+				</p:dataTable>
+			</h:column>
+
+		</h:panelGrid>
+</h:form>
+	</ui:define>
+
+</ui:composition>
+</html>
