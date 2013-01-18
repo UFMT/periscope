@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templateProject.xhtml">
+
+	<ui:define name="content">
+		<ui:include src="/template/flashmessages.xhtml" />
+		<center>
+			<p:dataTable id="projects" var="project"
+				emptyMessage="Não Existem Projetos Cadastrados"
+				value="#{projectController.projects}" paginator="true"
+				paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+				rowKey="#{project.title}">
+
+				<p:columnGroup type="header">
+					<p:row>
+						<p:column rowspan="2" headerText="Título" />
+						<p:column rowspan="2" headerText="Descrição" />
+						<p:column rowspan="2" headerText="Visibilidade" />
+						<p:column rowspan="2" headerText="Ações" />
+					</p:row>
+				</p:columnGroup>
+				<p:column>
+					<center>#{project.title}</center>
+				</p:column>
+				<p:column width="300">														
+						#{project.description}						
+				</p:column>
+				<p:column>
+					<center>
+						<span
+							class="label label-#{project.isPublic ? 'success' : 'important'}">
+							#{project.isPublic ? 'Público' : 'Privado'} </span>
+					</center>
+				</p:column>
+				<p:column>
+					<center>
+						<h:form style="margin-bottom:0px">
+							<h:commandLink value="Abrir" style="color:white;margin-right: 10px"
+								class="btn btn-inverse" />
+							<h:commandLink value="Editar" action="editProject"
+								style="color:white;margin-right: 10px" class="btn btn-inverse">
+								<f:param name="projectId" value="#{project.id.toString()}"/>	
+							</h:commandLink>
+							<h:commandLink value="Deletar" style="color:white"
+								onclick="if(!confirm('Deseja excluir este projeto e os dados relacionados ?')) { return false; }"
+								class="btn btn-inverse" action="#{projectController.delete(project.id.toString())}"/>
+						</h:form>
+					</center>
+				</p:column>
+			</p:dataTable>
+			<br />
+			<h:form>
+				<h:commandLink value="Novo projeto" style="color:white"
+					class="btn btn-large btn-info" action="newProject"/>
+			</h:form>			
+
+		</center>
+	</ui:define>
+
+</ui:composition>
+</html>

@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/templateProject.xhtml">
+
+	<ui:define name="content">
+		<center>
+			<h:panelGroup rendered="#{not userController.editing}">
+				<h1>Novo Usuário</h1>
+			</h:panelGroup>
+			<h:panelGroup rendered="#{userController.editing}">
+				<h1>Editando Usuário</h1>
+			</h:panelGroup>
+			<br/>
+			<h:form>
+				<h:panelGrid columns="3" cellpadding="10">
+				
+					<h:outputLabel id="lblFirstName" for="txtFirstName" value="Nome *" style="font-weight:bold"/>				
+					<p:inputText id="txtFirstName" value="#{userController.user.firstname}" 
+								required="true" requiredMessage="Nome é obrigatório" />
+					<p:message for="txtFirstName"/>		
+					
+					<h:outputLabel id="lblLastname" for="txtLastname" value="Sobrenome *" style="font-weight:bold"/>				
+					<p:inputText id="txtLastname" value="#{userController.user.lastname}" 
+								required="true" requiredMessage="Sobrenome é obrigatório" />
+					<p:message for="txtLastname"/>
+					
+					<h:outputLabel id="lblEmail" for="txtEmail" value="Email" style="font-weight:bold"/>				
+					<p:inputText id="txtEmail" value="#{userController.user.email}"/>
+					<p:message for="txtEmail"/>
+					
+					<h:outputLabel id="lblLogin" for="txtLogin" value="Login *" style="font-weight:bold"/>				
+					<p:inputText id="txtLogin" value="#{userController.user.username}" 
+							required="true" requiredMessage="Login é obrigatório" />
+					<p:message for="txtLogin"/>
+					
+					<h:outputLabel id="lblPassword" for="txtPassword" value="Senha *" style="font-weight:bold"/>				
+					<p:password id="txtPassword" value="#{userController.user.password}"
+						required="true"	requiredMessage="Senha é obrigatória" redisplay="true">
+						<f:validateLength minimum="6">Tamanho mínimo de 6 carateres</f:validateLength>					
+					</p:password>
+					<p:message for="txtPassword" />																		
+					
+					<h:outputLabel id="lblLevel" value="Nível de Usuário " style="font-weight:bold"/>				
+					<p:selectOneMenu id="cmbLevel" value="#{userController.user.userLevel}">
+						<f:selectItems value="#{userController.levels}" />					
+					</p:selectOneMenu>
+					<p:messages for="cmbLevel"/>							
+																													
+				</h:panelGrid>							
+				<h:panelGrid columns="2" cellpadding="10">							
+					
+					<h:commandLink value="Salvar" action="#{userController.save()}"
+									style="color:white"  class="btn btn-large btn-info" rendered="#{not userController.editing}"/>
+					<h:commandLink value="Atualizar" action="#{userController.save()}"
+									style="color:white"  class="btn btn-large btn-info" rendered="#{userController.editing}"/>
+					<h:commandLink immediate="true" value="Cancelar" action="userList" 
+									style="color:white" class="btn btn-large btn-info" />
+									
+				</h:panelGrid>	
+			</h:form>
+		</center>
+	</ui:define>
+
+</ui:composition>
+</html>
