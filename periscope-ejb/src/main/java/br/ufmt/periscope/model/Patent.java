@@ -1,5 +1,6 @@
 package br.ufmt.periscope.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,8 +21,10 @@ public class Patent {
 	private String abstractSelect;
 		
 	private @Embedded Classification mainClassification;
-	private @Embedded List<Classification> classifications;
+	private @Embedded List<Classification> classifications = new ArrayList<Classification>();
 
+	private String language;
+	
 	private String publicationNumber;
 	private Date publicationDate;
 	private @Embedded Country publicationCountry;
@@ -30,6 +33,7 @@ public class Patent {
 	private Date applicationDate;
 	private @Embedded Country applicationCountry;
 		
+	private @Embedded List<Applicant> applicants = new ArrayList<Applicant>();
 	
 	private Boolean blacklisted = false; 
 	private Boolean completed = false;
@@ -118,6 +122,18 @@ public class Patent {
 	}
 	public void setCompleted(Boolean completed) {
 		this.completed = completed;
+	}
+	public String getLanguage() {
+		return language;
+	}
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+	public List<Applicant> getApplicants() {
+		return applicants;
+	}
+	public void setApplicants(List<Applicant> applicants) {
+		this.applicants = applicants;
 	}
 	
 

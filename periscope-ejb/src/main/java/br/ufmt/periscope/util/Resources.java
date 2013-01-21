@@ -3,18 +3,15 @@ package br.ufmt.periscope.util;
 import java.net.UnknownHostException;
 import java.util.logging.Logger;
 
+import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
-import javax.inject.Inject;
+import javax.faces.bean.ManagedBean;
 import javax.inject.Singleton;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import com.github.jmkgreen.morphia.Datastore;
-import com.github.jmkgreen.morphia.DatastoreService;
 import com.github.jmkgreen.morphia.Morphia;
 import com.github.jmkgreen.morphia.mapping.lazy.DatastoreHolder;
-import com.github.jmkgreen.morphia.mapping.lazy.DatastoreProvider;
 import com.mongodb.Mongo;
 
 /**
@@ -58,8 +55,8 @@ public class Resources {
 		morphia.mapPackage("br.ufmt.periscope.model");		
 		DatastoreHolder.getInstance().set(ds);
 		return ds;
-	}
-
+	}	
+	
 	@Produces
 	public Logger produceLog(InjectionPoint injectionPoint) {
 		return Logger.getLogger(injectionPoint.getMember().getDeclaringClass()

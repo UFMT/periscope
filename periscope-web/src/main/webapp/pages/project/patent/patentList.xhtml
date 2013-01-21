@@ -24,7 +24,7 @@
 					<p:row>
 						<p:column rowspan="2" headerText="Título" />
 						<p:column rowspan="2" headerText="Número de Publicação" />
-						<p:column rowspan="2" headerText="Classificações" />
+						<p:column rowspan="2" headerText="Classificação Principal" />
 						<p:column rowspan="2" headerText="Lista Negra" />
 						<p:column rowspan="2" headerText="Ações" />
 					</p:row>
@@ -36,7 +36,7 @@
 						#{patent.publicationNumber}					
 				</p:column>
 				<p:column>														
-						#{patent.mainClassification}						
+						#{patent.mainClassification.value}						
 				</p:column>
 				<p:column>
 					<center>

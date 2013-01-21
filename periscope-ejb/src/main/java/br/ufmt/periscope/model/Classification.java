@@ -1,5 +1,7 @@
 package br.ufmt.periscope.model;
 
+import br.ufmt.periscope.enumerated.ClassificationType;
+
 import com.github.jmkgreen.morphia.annotations.Embedded;
 
 @Embedded(concreteClass=Classification.class)
@@ -9,12 +11,14 @@ public class Classification {
 	private String klass;
 	private String group;
 	private String subgroup;
+	private ClassificationType type;
 	
 	public Classification(){		
 	}
 	
-	public Classification(String value){
+	public Classification(String value,ClassificationType type){
 		this.value = value;
+		this.type = type;
 		updateClassGroupSubGroup(value);
 	}
 

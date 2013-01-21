@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
+import javax.enterprise.inject.Instance;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -15,9 +17,9 @@ import org.primefaces.model.UploadedFile;
 
 import br.ufmt.periscope.importer.PatentImporter;
 import br.ufmt.periscope.importer.PatentImporterFactory;
-import br.ufmt.periscope.importer.PatentRepository;
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.qualifier.CurrentProject;
+import br.ufmt.periscope.repository.PatentRepository;
 
 import com.github.jmkgreen.morphia.Datastore;
 
@@ -31,19 +33,25 @@ public class ImportPatentController implements Serializable{
 	private @Inject Datastore ds;
 	private @Inject @CurrentProject Project currentProject;
 	private @Inject PatentRepository patentRepository;
+	private @Inject PatentImporterFactory importerFactory;
 	
 	private String fileOrigin;
-	private String[] origins= PatentImporterFactory.ORIGINS;
+	private String[] origins= null;
 	private UploadedFile fileUploaded = null;
+	
+	@PostConstruct
+	public void init(){
+		origins = importerFactory.getORIGINS();
+	}
 	
 	public void importPatents(){
 		if(fileUploaded == null){
 			FacesMessage msg = new FacesMessage("Erro","Nenhum arquivo foi enviado.");  
 	        FacesContext.getCurrentInstance().addMessage(null, msg);
 		}else{
-			try {
+			try {				
 				InputStream is = fileUploaded.getInputstream();
-				PatentImporter importer = PatentImporterFactory.getImporter(fileOrigin);
+				PatentImporter importer = importerFactory.getImporter(fileOrigin);
 				importer.initWithStream(is);				
 					
 				patentRepository.savePatentToDatabase(importer,currentProject);				

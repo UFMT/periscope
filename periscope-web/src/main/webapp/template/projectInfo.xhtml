@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view contentType="text/html">
+
+	<div class="well">
+		<h4>#{currentProject.title}</h4>
+		<hr style="margin: 0;" />
+		<p>#{currentProject.description}</p>
+		<center>
+			<h:panelGroup rendered="#{empty currentProject.observers}">
+				<span
+					class="label label-#{currentProject.isPublic ? 'success' : 'important'}">
+					#{currentProject.isPublic ? 'Público' : 'Privado'} </span>
+			</h:panelGroup>
+			<h:panelGroup rendered="#{not empty currentProject.observers}">
+				<span
+					class="label label-#{currentProject.isPublic ? 'success' : 'info'}">
+					#{currentProject.isPublic ? 'Público' : 'Compartilhado'} </span>
+			</h:panelGroup>
+		</center>
+	</div>
+
+</f:view>
+
+</html>

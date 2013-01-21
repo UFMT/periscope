@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
@@ -19,10 +18,10 @@ import org.bson.types.ObjectId;
 
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.model.User;
+import br.ufmt.periscope.qualifier.LoggedUser;
 import br.ufmt.periscope.repository.ProjectRepository;
 
 import com.github.jmkgreen.morphia.Datastore;
-import com.mongodb.WriteResult;
 
 @ManagedBean
 @ViewScoped
@@ -30,7 +29,7 @@ public class ProjectController {
 
 	private @Inject Datastore ds; 
 	private @Inject ProjectRepository projectRepository;
-	private @ManagedProperty(value="#{sessionBean.currentUser}") User currentUser;
+	private @Inject @LoggedUser User currentUser;
 	private DataModel<Project> projects = null;
 	private Project project = new Project();
 	private List<User> freeUsers = null;
@@ -95,8 +94,8 @@ public class ProjectController {
 		return "projectList";
 	}
 
-	public String delete(String id){
-		WriteResult result = ds.delete(Project.class,new ObjectId(id));
+	public String delete(String id){			
+		projectRepository.deleteProject(id);		
 		Flash flash = FacesContext.getCurrentInstance().  
                 getExternalContext().getFlash();
 		flash.put("info", "Deletado com Sucesso");
@@ -125,7 +124,6 @@ public class ProjectController {
 	public List<User> getFreeUsers() {
 		if(freeUsers == null){
 			List<ObjectId> keys = new ArrayList<ObjectId>();
-			System.out.println(getCurrentUser().getEmail());
 			keys.add(getCurrentUser().getId());
 			for(User u : project.getObservers()){
 				keys.add(u.getId());

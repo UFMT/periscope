@@ -55,11 +55,11 @@
 						<h:form style="margin-bottom:0px">
 							<h:commandLink value="Abrir" style="color:white;margin-right: 10px"
 								class="btn btn-inverse" action="#{projectSession.openProject(project.id.toString())}"/>
-							<h:commandLink value="Editar" action="editProject"
+							<h:commandLink value="Editar" action="editProject" rendered="#{project.owner.id eq currentUser.id}"
 								style="color:white;margin-right: 10px" class="btn btn-inverse">
 								<f:param name="projectId" value="#{project.id.toString()}"/>	
 							</h:commandLink>
-							<h:commandLink value="Deletar" style="color:white"
+							<h:commandLink value="Deletar" style="color:white" rendered="#{project.owner.id eq currentUser.id}"
 								onclick="if(!confirm('Deseja excluir este projeto e os dados relacionados ?')) { return false; }"
 								class="btn btn-inverse" action="#{projectController.delete(project.id.toString())}"/>
 						</h:form>

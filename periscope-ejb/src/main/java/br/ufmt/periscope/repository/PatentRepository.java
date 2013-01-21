@@ -1,4 +1,4 @@
-package br.ufmt.periscope.importer;
+package br.ufmt.periscope.repository;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -22,6 +22,9 @@ public class PatentRepository {
 		
 		List<Patent> patentsCache = new ArrayList<Patent>();
 		int cont = 0;
+		if(project.getPatents() == null){
+			project.setPatents(new ArrayList<Patent>());
+		}
 		while(patents.hasNext()){
 			
 			Patent p = patents.next();
@@ -44,8 +47,7 @@ public class PatentRepository {
 			ds.save(project);
 			patentsCache.clear();
 		}
-		
-		
+				
 	}
 	
 	public boolean patentExistsForProject(Patent patent,Project project){		
