@@ -12,6 +12,7 @@
       <module>periscope-ejb</module>
       <module>periscope-web</module>
       <module>periscope-ear</module>
+      <module>periscopeEsb</module>
    </modules>
 
    <properties>
@@ -35,6 +36,14 @@
          <dependency>
             <groupId>br.ufmt</groupId>
             <artifactId>periscope-web</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>war</type>
+            <scope>compile</scope>
+         </dependency>
+         
+         <dependency>
+            <groupId>br.ufmt</groupId>
+            <artifactId>periscopeEsb</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>war</type>
             <scope>compile</scope>
