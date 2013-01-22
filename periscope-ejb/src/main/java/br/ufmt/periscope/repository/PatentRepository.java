@@ -17,7 +17,7 @@ public class PatentRepository {
 
 	@Inject
 	private Datastore ds;
-	
+		
 	public void savePatentToDatabase(Iterator<Patent> patents,Project project){
 		
 		List<Patent> patentsCache = new ArrayList<Patent>();
@@ -55,5 +55,31 @@ public class PatentRepository {
 					.field("publicationNumber").equal(patent.getPublicationNumber())
 					.field("project").equal(project)
 					.countAll() > 0;			
+	}
+	
+	public void sendPatentToBlacklist(Patent patent){		
+		patent.setBlacklisted(!patent.getBlacklisted());
+		ds.save(patent);
+	}
+	
+	public List<Patent> getPatentsComplete(Project project,Boolean complete){
+		return ds.find(Patent.class)
+				.field("completed").equal(complete)
+				.field("blacklisted").equal(false)
+				.field("project").equal(project)
+				.asList();
+	}	
+	
+	public List<Patent> getPatentsDarklist(Project project,Boolean darklist){
+		return ds.find(Patent.class)
+				.field("blacklisted").equal(darklist)
+				.field("project").equal(project)
+				.asList();
+	}	
+	
+	public List<Patent> getAllPatents(Project project){
+		return ds.find(Patent.class)
+				.field("project").equal(project)
+				.asList();
 	}
 }

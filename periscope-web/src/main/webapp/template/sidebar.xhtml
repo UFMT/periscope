@@ -10,28 +10,18 @@
 	<div class="well">
 		<h:form>
 	
-			<p:panelMenu autoDisplay="false">
-	
-				<p:submenu  label="Projetos" icon="ui-icon-clipboard">
+			<p:panelMenu >									
+				<p:submenu label="Patentes" icon="ui-icon-clipboard" > 					
 					
-					<p:menuitem value="Teste" icon="ui-icon-clock" ajax="false" />
-	
-					<p:menuitem value="Teste 2"
-						icon="ui-icon-refresh" ajax="false" />
-	
-				</p:submenu>
-														
-				<p:submenu  label="Patentes" icon="ui-icon-clipboard">
-					
-					<p:menuitem value="Listar" action="listPatent" icon="ui-icon-clock" ajax="false" />
+					<p:menuitem value="Listar" action="listPatent"  
+						icon="ui-icon-clock" ajax="false" />
 	
 					<p:menuitem value="Importar dados" action="importPatent"
 						icon="ui-icon-refresh" ajax="false" />
 	
 				</p:submenu>
 				
-			</p:panelMenu>
-	
+			</p:panelMenu>	
 		</h:form>
 	</div>
 </f:view>

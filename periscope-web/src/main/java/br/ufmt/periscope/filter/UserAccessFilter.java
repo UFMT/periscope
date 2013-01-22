@@ -43,7 +43,7 @@ public class UserAccessFilter implements Filter {
 			resp.sendRedirect(prefix + "/login.jsf");
 			return;
 		}
-		if( currentUser == null){
+		if( currentUser.get() == null){
 			resp.sendRedirect(prefix + "/login.jsf");
 			return;
 		}else{			

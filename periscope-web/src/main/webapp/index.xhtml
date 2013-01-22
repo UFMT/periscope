@@ -10,7 +10,28 @@
 
 	<ui:define name="content">
 		<center>
-			<h1>Periscope</h1>
+			<h:form enctype="multipart/form-data">
+				<p:panel header="Importar dados">
+
+					<p:fileUpload label="Escolha o arquivo" auto="true"						
+						fileUploadListener="#{importPatentController.handleFileUpload}"											
+						update="fileLabel messages"/>
+						
+					<br/>
+					<h:panelGrid columns="2">
+						<p:outputLabel>Origem do arquivo :</p:outputLabel>
+						<p:selectOneMenu value="#{importPatentController.fileOrigin}">
+							<f:selectItems value="#{importPatentController.origins}" />
+						</p:selectOneMenu>
+					</h:panelGrid>
+					<br/>					
+					<p:outputLabel id="fileLabel" style="font-weight:bold"
+						value="Arquivo #{importPatentController.fileUploaded != null ? importPatentController.fileUploaded.fileName : 'não '} enviado." />					
+					<br/>			
+					<p:commandButton value="#{msgs['import']}" update="messages" action="#{importPatentController.importPatents()}"/>
+					<p:growl id="messages" showDetail="true" />
+				</p:panel>
+			</h:form>
 		</center>
 	</ui:define>
 

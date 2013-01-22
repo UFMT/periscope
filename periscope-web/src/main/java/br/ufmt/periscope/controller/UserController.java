@@ -21,7 +21,6 @@ import br.ufmt.periscope.model.UserLevel;
 import br.ufmt.periscope.qualifier.LoggedUser;
 
 import com.github.jmkgreen.morphia.Datastore;
-import com.mongodb.WriteResult;
 
 @ManagedBean
 @ViewScoped
@@ -80,7 +79,7 @@ public class UserController {
 	}
 
 	public String delete(String id){
-		WriteResult result = ds.delete(User.class,new ObjectId(id));
+		ds.delete(User.class,new ObjectId(id));
 		Flash flash = FacesContext.getCurrentInstance().  
                 getExternalContext().getFlash();
 		flash.put("info", "Deletado com sucesso");

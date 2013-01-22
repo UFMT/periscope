@@ -6,13 +6,24 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="/template/template.xhtml">
-
+<ui:composition template="/template/template.xhtml">	
 	<ui:define name="content">
 		<ui:include src="/template/flashmessages.xhtml" />
 		<center>
-			<h:outputText styleClass="pull-right" style="font-size:16px"
-				value="#{patentController.patents.rowCount} patentes cadastradas."/>
+			<h:form id="formType">			
+				<ul class="nav nav-pills pull-left">
+					<ui:repeat var="type" value="#{patentController.filters}">
+						<li class="#{(param['listType'] == type or patentController.type == type) ? 'active' : ''}">
+						    <p:commandLink value="#{msgs[type]}" update=":formType :patents" 
+						    	action="#{patentController.updateList}">			    
+						    	<f:param name="listType" value="#{type}"/>
+						    </p:commandLink>
+				  		</li>
+					</ui:repeat>				  
+				</ul>
+				<h:outputText styleClass="pull-right" style="font-size:16px"
+				value="Listando #{patentController.partialCount} de #{patentController.totalCount} patentes cadastradas."/>
+			</h:form>			
 			<br/>						
 			<p:dataTable id="patents" var="patent" style="font-size:12px"
 				emptyMessage="Não existem patentes carregadas"
@@ -50,8 +61,12 @@
 						<h:form style="margin-bottom:0px">
 							<h:commandLink value="Editar"
 								style="color:white;margin-right: 10px" class="btn btn-inverse">	
-							</h:commandLink>
-							<h:commandLink value="BlackList" style="color:white" class="btn btn-inverse"/>
+							</h:commandLink>							
+							<h:commandLink value="Lista Negra" action="#{patentController.updateBlackListPatent()}" 
+								style="color:white" class="btn btn-inverse" rendered="#{not patent.blacklisted}"/>
+							<h:commandLink value="Retirar da Lista Negra" action="#{patentController.updateBlackListPatent()}" 
+								style="color:white" class="btn btn-inverse" rendered="#{patent.blacklisted}"/>	
+							
 						</h:form>
 					</center>
 				</p:column>

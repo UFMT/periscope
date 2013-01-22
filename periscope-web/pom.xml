@@ -68,6 +68,11 @@
       	<artifactId>jboss-jsf-api_2.0_spec</artifactId>
       	<scope>provided</scope>
       </dependency>
+      <dependency>
+      	<groupId>org.primefaces.themes</groupId>
+      	<artifactId>bootstrap</artifactId>
+      	<version>1.0.8</version>
+      </dependency>
    </dependencies>
 	<repositories>
 		<repository>
