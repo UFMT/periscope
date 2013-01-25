@@ -32,23 +32,40 @@
 				rowKey="#{patent.id}">
 
 				<p:columnGroup type="header">
-					<p:row>
-						<p:column rowspan="2" headerText="Título" />
+					<p:row>						
+						<p:column rowspan="2" headerText="Número de Depósito" />
 						<p:column rowspan="2" headerText="Número de Publicação" />
+						<p:column rowspan="2" headerText="Prioridade" />
+						<p:column rowspan="2" headerText="Depositantes" />
+						<p:column rowspan="2" headerText="Inventores" />
+						<p:column rowspan="2" headerText="Título" />
 						<p:column rowspan="2" headerText="Classificação Principal" />
-						<p:column rowspan="2" headerText="Lista Negra" />
+						<!--  <p:column rowspan="2" headerText="Lista Negra" /> -->
 						<p:column rowspan="2" headerText="Ações" />
 					</p:row>
-				</p:columnGroup>
-				<p:column width="150">
-					<center>#{patent.titleSelect}</center>
+				</p:columnGroup>			
+				<p:column>														
+						#{patent.applicationNumber}					
 				</p:column>
 				<p:column>														
 						#{patent.publicationNumber}					
 				</p:column>
 				<p:column>														
+						#{patent.prioritiesToString}					
+				</p:column>
+				<p:column>														
+						#{patent.applicantsToString}					
+				</p:column>
+				<p:column>														
+						#{patent.inventorsToString}					
+				</p:column>
+				<p:column width="150">
+					<center>#{patent.titleSelect}</center>
+				</p:column>	
+				<p:column>														
 						#{patent.mainClassification.value}						
 				</p:column>
+				<!-- 
 				<p:column>
 					<center>
 						<span class="label label-#{patent.blacklisted ? 'inverse' : 'success'}">
@@ -56,6 +73,7 @@
 						</span>
 					</center>
 				</p:column>
+				 -->
 				<p:column>
 					<center>
 						<h:form style="margin-bottom:0px">

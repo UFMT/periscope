@@ -18,7 +18,7 @@ public class Classification {
 	
 	public Classification(String value,ClassificationType type){
 		this.value = value;
-		this.type = type;
+		this.setType(type);
 		updateClassGroupSubGroup(value);
 	}
 
@@ -65,5 +65,13 @@ public class Classification {
 
 	public String getSubgroup() {
 		return subgroup;
+	}
+
+	public ClassificationType getType() {
+		return type;
+	}
+
+	public void setType(ClassificationType type) {
+		this.type = type;
 	}
 }

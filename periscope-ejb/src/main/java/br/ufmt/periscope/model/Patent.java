@@ -1,6 +1,7 @@
 package br.ufmt.periscope.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +23,8 @@ public class Patent {
 		
 	private @Embedded Classification mainClassification;
 	private @Embedded List<Classification> classifications = new ArrayList<Classification>();
-
+	private @Embedded List<Priority> priorities = new ArrayList<Priority>();
+	
 	private String language;
 	
 	private String publicationNumber;
@@ -34,9 +36,11 @@ public class Patent {
 	private @Embedded Country applicationCountry;
 		
 	private @Embedded List<Applicant> applicants = new ArrayList<Applicant>();
-	
+	private @Embedded List<Inventor> inventors = new ArrayList<Inventor>();
+		
 	private Boolean blacklisted = false; 
 	private Boolean completed = false;
+	private Boolean shared = false;
 	@Reference private Project project;
 	
 	public ObjectId getId() {
@@ -134,6 +138,48 @@ public class Patent {
 	}
 	public void setApplicants(List<Applicant> applicants) {
 		this.applicants = applicants;
+	}
+	public List<Priority> getPriorities() {
+		return priorities;
+	}
+	public void setPriorities(List<Priority> priorities) {
+		this.priorities = priorities;
+	}
+	public List<Inventor> getInventors() {
+		return inventors;
+	}
+	public void setInventors(List<Inventor> inventors) {
+		this.inventors = inventors;
+	}
+	public Boolean getShared() {
+		return shared;
+	}
+	public void setShared(Boolean shared) {
+		this.shared = shared;
+	}
+	
+	public String getApplicantsToString(){
+		if(applicants == null){
+			return "";
+		}else{
+			return Arrays.toString(applicants.toArray());
+		}
+	}
+	
+	public String getInventorsToString(){
+		if(inventors == null){
+			return "";
+		}else{
+			return Arrays.toString(inventors.toArray());
+		}
+	}
+	
+	public String getPrioritiesToString(){
+		if(priorities == null){
+			return "";
+		}else{
+			return Arrays.toString(priorities.toArray());
+		}
 	}
 	
 

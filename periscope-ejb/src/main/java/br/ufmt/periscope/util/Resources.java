@@ -3,10 +3,8 @@ package br.ufmt.periscope.util;
 import java.net.UnknownHostException;
 import java.util.logging.Logger;
 
-import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
-import javax.faces.bean.ManagedBean;
 import javax.inject.Singleton;
 
 import com.github.jmkgreen.morphia.Datastore;

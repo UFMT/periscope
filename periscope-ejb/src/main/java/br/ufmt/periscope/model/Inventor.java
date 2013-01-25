@@ -3,12 +3,10 @@ package br.ufmt.periscope.model;
 import com.github.jmkgreen.morphia.annotations.Embedded;
 
 @Embedded
-public class Applicant {
+public class Inventor {
 
 	private String name;
-	private String acronym;
 	@Embedded private Country country;
-	@Embedded private ApplicantType type;
 	private Boolean harmonized = false;
 	
 	public String getName() {
@@ -17,12 +15,7 @@ public class Applicant {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getAcronym() {
-		return acronym;
-	}
-	public void setAcronym(String acronym) {
-		this.acronym = acronym;
-	}
+	
 	public Country getCountry() {
 		return country;
 	}
@@ -34,12 +27,6 @@ public class Applicant {
 	}
 	public void setHarmonized(Boolean harmonized) {
 		this.harmonized = harmonized;
-	}
-	public ApplicantType getType() {
-		return type;
-	}
-	public void setType(ApplicantType type) {
-		this.type = type;
 	}
 	
 	@Override

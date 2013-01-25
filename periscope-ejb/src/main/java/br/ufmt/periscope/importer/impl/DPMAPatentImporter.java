@@ -15,6 +15,7 @@ import br.ufmt.periscope.enumerated.ClassificationType;
 import br.ufmt.periscope.importer.PatentImporter;
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Classification;
+import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.repository.CountryRepository;
 
@@ -44,15 +45,6 @@ public class DPMAPatentImporter implements PatentImporter{
 		nextLine();
 		patent = new Patent();		
 		
-	}
-
-	private void nextLine() {
-		try {
-			line = bur.readLine();
-		} catch (IOException e) {
-			line = null;
-			e.printStackTrace();
-		}		
 	}
 
 	@Override
@@ -89,10 +81,38 @@ public class DPMAPatentImporter implements PatentImporter{
 		//Carrega as classificações
 		readClassifications();		
 		readApplicants();
+		readInventors();
 		
 	}
 
 	
+	private void readInventors() {
+		List<Inventor> listInventors = patent.getInventors();
+		array = vet[5].split(", ", -2);
+		Inventor inventor = new Inventor();				
+		if(array[0].trim().length() > 0){
+			inventor.setName(array[0]);
+			if(1 < array.length){ 
+				inventor.setCountry(countryRepository.getCountryByAcronym(array[1].substring(0,2)));
+			}			
+			listInventors.add(inventor);
+			for (int i = 1; i < array.length; i++) {
+				if(array[i].trim().length() > 3){
+					
+					inventor.setName(array[i].substring(2));
+					if(i+1 < array.length){ 
+						inventor.setCountry(countryRepository.getCountryByAcronym(array[i+1].substring(0,2)));
+					}
+					if(inventor.getCountry() == null){
+						inventor.setCountry(null);
+					}					
+					listInventors.add(inventor);
+				}
+			}
+		}
+		patent.setInventors(listInventors);		
+	}
+
 	private void readApplicants() {
 		
 		List<Applicant> listPa = patent.getApplicants();
@@ -142,6 +162,15 @@ public class DPMAPatentImporter implements PatentImporter{
 			icais.add(icai);
 		}
 		patent.setClassifications(icais);
+	}
+	
+	private void nextLine() {
+		try {
+			line = bur.readLine();
+		} catch (IOException e) {
+			line = null;
+			e.printStackTrace();
+		}		
 	}
 	
 	@Override

@@ -61,7 +61,7 @@ public class SessionBean implements Serializable{
 		return loggedUser != null;
 	}
 
-	@Named @Produces
+	@Named
 	public boolean isAdmin(){
 		return loggedUser.getUserLevel() == UserLevel.ADMIN;
 	}

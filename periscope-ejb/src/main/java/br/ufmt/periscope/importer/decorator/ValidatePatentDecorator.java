@@ -15,12 +15,15 @@ public abstract class ValidatePatentDecorator implements PatentImporter {
 	@Delegate
 	@Any
 	private PatentImporter patentImporter;
+	
+	@Inject
+	private PatentValidator validator;
 
 
 	@Override
 	public Patent next() {
 		Patent patent = patentImporter.next();
-		System.out.println("Validando patente com titulo " + patent.getTitleSelect());
+		validator.validate(patent);
 		return patent;
 	}
 
