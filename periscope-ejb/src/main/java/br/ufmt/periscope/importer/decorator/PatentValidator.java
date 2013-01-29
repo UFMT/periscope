@@ -18,7 +18,6 @@ public class PatentValidator {
 	private Patent patent;
 	
 	public void validate(Patent patent){
-		System.out.println("Validando " + patent.getTitleSelect());
 		this.patent = patent;
 		
 		validateClassifications();

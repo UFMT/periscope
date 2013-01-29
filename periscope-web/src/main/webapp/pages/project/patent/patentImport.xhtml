@@ -11,7 +11,7 @@
 	<ui:define name="content">
 		<center>
 			<h:form enctype="multipart/form-data">
-				<p:panel header="Importar dados">
+				<p:panel id="pnlImport" header="Importar dados">
 
 					<p:fileUpload label="Escolha o arquivo" auto="true"						
 						fileUploadListener="#{importPatentController.handleFileUpload}"											
@@ -28,9 +28,14 @@
 					<p:outputLabel id="fileLabel" style="font-weight:bold"
 						value="Arquivo #{importPatentController.fileUploaded != null ? importPatentController.fileUploaded.fileName : 'não '} enviado." />					
 					<br/>			
-					<p:commandButton value="#{msgs['import']}" update="messages" action="#{importPatentController.importPatents()}"/>
+					<p:commandButton id="btnImport" value="#{msgs['import']}" update="messages" action="#{importPatentController.importPatents()}"/>
 					<p:growl id="messages" showDetail="true" />
 				</p:panel>
+				
+				<p:blockUI block="pnlImport" trigger="btnImport">  
+        			Importando ... <br />  
+        			<p:graphicImage value="/imgs/ajax-loader.gif"/>  
+    			</p:blockUI>
 			</h:form>
 		</center>
 	</ui:define>

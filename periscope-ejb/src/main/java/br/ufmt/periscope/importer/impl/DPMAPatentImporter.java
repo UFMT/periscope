@@ -91,7 +91,7 @@ public class DPMAPatentImporter implements PatentImporter{
 		array = vet[5].split(", ", -2);
 		Inventor inventor = new Inventor();				
 		if(array[0].trim().length() > 0){
-			inventor.setName(array[0]);
+			inventor.setName(array[0].trim());
 			if(1 < array.length){ 
 				inventor.setCountry(countryRepository.getCountryByAcronym(array[1].substring(0,2)));
 			}			
@@ -99,7 +99,7 @@ public class DPMAPatentImporter implements PatentImporter{
 			for (int i = 1; i < array.length; i++) {
 				if(array[i].trim().length() > 3){
 					
-					inventor.setName(array[i].substring(2));
+					inventor.setName(array[i].substring(2).trim());
 					if(i+1 < array.length){ 
 						inventor.setCountry(countryRepository.getCountryByAcronym(array[i+1].substring(0,2)));
 					}
@@ -119,7 +119,7 @@ public class DPMAPatentImporter implements PatentImporter{
 		array = vet[6].split(", ", -2);
 		Applicant applicant = new Applicant(); 
 		if(array[0].trim().length() > 0){
-			applicant.setName(array[0]);			
+			applicant.setName(array[0].trim());			
 			if(1 < array.length){				
 				applicant.setCountry(countryRepository.getCountryByAcronym(array[1].substring(0,2)));
 			}
@@ -127,7 +127,7 @@ public class DPMAPatentImporter implements PatentImporter{
 			for (int i = 1; i < array.length; i++) {
 				if(array[i].trim().length() > 3){					
 					applicant = new Applicant();
-					applicant.setName(array[i].substring(2));
+					applicant.setName(array[i].substring(2).trim());
 					if(i+1 < array.length){ 
 						applicant.setCountry(countryRepository.getCountryByAcronym(array[i+1].substring(0,2)));
 					}

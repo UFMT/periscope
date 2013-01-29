@@ -1,16 +1,24 @@
 package br.ufmt.periscope.model;
 
+import java.io.Serializable;
+
 import com.github.jmkgreen.morphia.annotations.Embedded;
+import com.github.jmkgreen.morphia.annotations.Transient;
 
 @Embedded
-public class Applicant {
-
+public class Applicant implements Serializable{
+	
+	private static final long serialVersionUID = 8189474165213004815L;
+	
 	private String name;
 	private String acronym;
 	@Embedded private Country country;
 	@Embedded private ApplicantType type;
 	private Boolean harmonized = false;
 	
+	@Transient
+	private Integer documentCount = 0;
+		
 	public String getName() {
 		return name;
 	}
@@ -42,6 +50,12 @@ public class Applicant {
 		this.type = type;
 	}
 	
+	public Integer getDocumentCount() {
+		return documentCount;
+	}
+	public void setDocumentCount(Integer documentCount) {
+		this.documentCount = documentCount;
+	}
 	@Override
 	public String toString(){ 
 		return name;

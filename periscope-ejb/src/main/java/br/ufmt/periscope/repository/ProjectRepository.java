@@ -7,6 +7,7 @@ import javax.inject.Named;
 
 import org.bson.types.ObjectId;
 
+import br.ufmt.periscope.indexer.PatentIndexer;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.model.User;
@@ -19,6 +20,8 @@ public class ProjectRepository {
 
 	@Inject
 	private Datastore ds;
+	
+	private @Inject PatentIndexer patentIndexer;
 		
 	public List<Project> getProjectList(User user){
 		Query<Project> query = ds.createQuery(Project.class);
@@ -33,7 +36,8 @@ public class ProjectRepository {
 	public void deleteProject(String id){
 		Project p = new Project();
 		p.setId(new ObjectId(id));
-		deleteProject(p);			
+		patentIndexer.deleteIndexesForProject(p);
+		deleteProject(p);		
 	}
 	
 	public void deleteProject(Project project){

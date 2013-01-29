@@ -7,6 +7,7 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.ufmt.periscope.indexer.PatentIndexer;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
 
@@ -17,6 +18,8 @@ public class PatentRepository {
 
 	@Inject
 	private Datastore ds;
+	
+	private @Inject PatentIndexer patentIndexer; 
 		
 	public void savePatentToDatabase(Iterator<Patent> patents,Project project){
 		
@@ -38,6 +41,7 @@ public class PatentRepository {
 			if(cont >= 30){
 				ds.save(patentsCache);
 				ds.save(project);
+				patentIndexer.indexPatents(patentsCache);
 				patentsCache.clear();
 				cont = 0;
 			}
@@ -45,8 +49,9 @@ public class PatentRepository {
 		if(cont > 0){
 			ds.save(patentsCache);
 			ds.save(project);
+			patentIndexer.indexPatents(patentsCache);
 			patentsCache.clear();
-		}
+		}		
 				
 	}
 	

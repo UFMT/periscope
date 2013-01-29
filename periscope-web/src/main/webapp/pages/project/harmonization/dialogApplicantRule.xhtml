@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view contentType="text/html">
+	<p:dialog id="sugestions" widgetVar="sugestionsDialog" modal="true"
+		header="Criar regra" resizable="false">
+		<h:panelGrid columns="3">
+			<h:column>
+				<h4>Nomes selecionados</h4>				
+				<p:separator/>
+			</h:column>
+			<h:column>
+				<p:spacer width="50"/>
+			</h:column>
+			<h:column>
+				<h4>Sugestões</h4>				
+				<p:separator/>
+			</h:column>
+			<h:column>				
+				<ul>
+					<ui:repeat var="spa"
+						value="#{applicantHarmonizationController.selectedApplicants}">
+
+						<li>#{spa.name}</li>
+
+					</ui:repeat>
+				</ul>
+			</h:column>
+			<h:column>
+				<p:spacer width="50"/>
+			</h:column>
+			<h:column>
+				<ui:repeat var="sug"
+					value="#{applicantHarmonizationController.applicantSugestions.toArray()}">
+
+					<p:selectBooleanCheckbox /> #{sug}<br />
+
+				</ui:repeat>
+			</h:column>
+		</h:panelGrid>
+		<p:spacer height="50"/>
+		<center>
+			<p:commandButton value="Salvar" />
+
+			<p:commandButton value="Cancelar" immediate="true"
+				oncomplete="sugestionsDialog.hide()" />
+		</center>
+
+	</p:dialog>
+
+</f:view>
+</html>
