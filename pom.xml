@@ -12,7 +12,6 @@
       <module>periscope-ejb</module>
       <module>periscope-web</module>
       <module>periscope-ear</module>
-      <module>periscopeEsb</module>
    </modules>
 
    <properties>
