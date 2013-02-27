@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -19,6 +18,7 @@ public class LoginStepdefs {
 //	
 //	@Given("^Eu estou na pagina \"([^\"]*)\"$")
 //	public void Eu_estou_na_pagina(String site) throws Throwable {
+//        System.setProperty("webdriver.chrome.driver", "/Users/andre/Downloads/chromedriver");
 //		driver = new ChromeDriver();
 //		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 //		driver.get(site);
@@ -68,6 +68,8 @@ public class LoginStepdefs {
 //			}
 //		}
 //	}
+//	
+//	
 //	
 	
 	
