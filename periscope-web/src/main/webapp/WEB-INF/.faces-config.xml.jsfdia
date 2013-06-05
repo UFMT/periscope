@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#pages#project#projectList.xhtml"
+  PATH="/pages/project/projectList.xhtml" SHAPE="232,176,50,57" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#pages#project#projectList.xhtml:0"
+   NAME="item" PATH="/pages/project/projectList.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="newProject::#pages#project#editProject.xhtml" NAME="output"
+    PATH="/pages/project/editProject.xhtml"
+    TARGET="rules:#pages#project#editProject.xhtml" TITLE="newProject" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="editProject::#pages#project#editProject.xhtml" NAME="output1"
+    PATH="/pages/project/editProject.xhtml"
+    TARGET="rules:#pages#project#editProject.xhtml" TITLE="editProject" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="projectHome::#pages#project#projectHome.xhtml" NAME="output2"
+    PATH="/pages/project/projectHome.xhtml"
+    TARGET="rules:#pages#project#projectHome.xhtml" TITLE="projectHome" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*" PATH="*" SHAPE="32,184,53,42" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:0" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="projectList::#pages#project#projectList.xhtml" NAME="output"
+    PATH="/pages/project/projectList.xhtml"
+    TARGET="rules:#pages#project#projectList.xhtml" TITLE="projectList" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="userList::#pages#user#userList.xhtml"
+    NAME="output1" PATH="/pages/user/userList.xhtml"
+    TARGET="rules:#pages#user#userList.xhtml" TITLE="userList" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="logout::#login.xhtml" NAME="output2"
+    PATH="/login.xhtml" TARGET="rules:#login.xhtml" TITLE="logout" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#project#editProject.xhtml"
+  PATH="/pages/project/editProject.xhtml" SHAPE="232,88,50,25" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#user#userList.xhtml"
+  PATH="/pages/user/userList.xhtml" SHAPE="232,288,50,57" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#pages#user#userList.xhtml:0" NAME="item"
+   PATH="/pages/user/userList.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="newUser::#pages#user#editUser.xhtml"
+    NAME="output" PATH="/pages/user/editUser.xhtml"
+    TARGET="rules:#pages#user#editUser.xhtml" TITLE="newUser" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="editUser::#pages#user#editUser.xhtml"
+    NAME="output1" PATH="/pages/user/editUser.xhtml"
+    TARGET="rules:#pages#user#editUser.xhtml" TITLE="editUser" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#user#editUser.xhtml"
+  PATH="/pages/user/editUser.xhtml" SHAPE="224,408,50,25" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#login.xhtml" PATH="/login.xhtml"
+  SHAPE="128,128,50,41" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#login.xhtml:0" NAME="item"
+   PATH="/login.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="login::#pages#project#projectList.xhtml"
+    NAME="output" PATH="/pages/project/projectList.xhtml"
+    TARGET="rules:#pages#project#projectList.xhtml" TITLE="login" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#pages#project#projectHome.xhtml"
+  PATH="/pages/project/projectHome.xhtml" SHAPE="440,200,50,25" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#project#patent#patentImport.xhtml"
+  PATH="/pages/project/patent/patentImport.xhtml" SHAPE="640,272,50,25" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#project#patent#patentList.xhtml"
+  PATH="/pages/project/patent/patentList.xhtml" SHAPE="640,312,50,25" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#project#*" PATH="/pages/project/*"
+  SHAPE="464,288,53,58" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#pages#project#*:0" NAME="item"
+   PATH="/pages/project/*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="importPatent::#pages#project#patent#patentImport.xhtml"
+    NAME="output" PATH="/pages/project/patent/patentImport.xhtml"
+    TARGET="rules:#pages#project#patent#patentImport.xhtml"
+    TITLE="importPatent" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listPatent::#pages#project#patent#patentList.xhtml"
+    NAME="output1" PATH="/pages/project/patent/patentList.xhtml"
+    TARGET="rules:#pages#project#patent#patentList.xhtml"
+    TITLE="listPatent" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="harmonizationHome::#pages#project#harmonization#harmonizationHome.xhtml"
+    NAME="output2"
+    PATH="/pages/project/harmonization/harmonizationHome.xhtml"
+    TARGET="rules:#pages#project#harmonization#harmonizationHome.xhtml"
+    TITLE="harmonizationHome" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM
+  NAME="rules:#pages#project#harmonization#harmonizationHome.xhtml"
+  PATH="/pages/project/harmonization/harmonizationHome.xhtml"
+  SHAPE="648,368,50,25" model-entity="JSFProcessGroup"/>
+</PROCESS>

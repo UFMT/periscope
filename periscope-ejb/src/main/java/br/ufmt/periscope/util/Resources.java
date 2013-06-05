@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import com.github.jmkgreen.morphia.Datastore;
@@ -45,6 +46,7 @@ public class Resources {
 
 	@Produces
 	private Morphia morphia = new Morphia();
+
 
 	@Produces
 	public Datastore mongoDs(Mongo mongo, Morphia morphia) {				

@@ -47,13 +47,17 @@ public class PatentIndexer {
 		log.info("Ocorreu algum erro deletando os indices.");
 	}
 	
+	public void updateIndexPatent(Patent p){
+		indexPatent(p);
+	}
+	
 	private void indexPatent(Patent p) {
 		Document doc = new Document();	    
     			
 		doc.add(new Field("id",p.getPublicationNumber()+p.getProject().getId().toString(), Field.Store.YES, Field.Index.ANALYZED));
     	doc.add(new Field("publicationNumber",p.getPublicationNumber(), Field.Store.YES, Field.Index.ANALYZED));
     	doc.add(new Field("project",p.getProject().getId().toString(), Field.Store.YES, Field.Index.ANALYZED));
-    	doc.add(new Field("titleSelect",p.getTitleSelect(), Field.Store.YES, Field.Index.ANALYZED));
+    	doc.add(new Field("titleSelect",p.getTitleSelect(), Field.Store.YES, Field.Index.ANALYZED));    	
     	if(p.getAbstractSelect() != null)
     		doc.add(new Field("abstractSelect",p.getAbstractSelect(), Field.Store.YES, Field.Index.ANALYZED));
     	

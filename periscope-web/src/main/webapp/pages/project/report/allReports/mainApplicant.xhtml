@@ -12,34 +12,21 @@
 	<ui:define name="growl"></ui:define>
 
 	<ui:define name="content">
-
-		<h1>Principais Depositantes</h1>
-		<h:panelGrid columns="2">
-
-			<h:column>
-				<p:graphicImage />
-				<p:graphicImage />
-			</h:column>
-
-			<h:column>
-
-				<p:dataTable emptyMessage="Nenhum depositante cadastrado.">
-
-					<p:column headerText="#{msgs['year']}" />
-
-					<p:column headerText="#{msgs['documents.number']}" />
-
-				</p:dataTable>
-
-
-				<p:panel header="Filtro" toggleable="true">
-
-				</p:panel>
-
-			</h:column>
-
-		</h:panelGrid>
-
+		
+		<h:form id="chart">
+			<p:barChart id="horizontal" value="#{report.model}" legendPosition="se"  
+            title="Principais Depositantes" orientation="horizontal" style="height:300px" 
+            datatipFormat="%s" /> 	
+            	
+            <br/>
+            <center>
+            	<h4> Número de Depositantes</h4>	
+				<p:spinner valueChangeListener="#{report.mainApplicantChart()}"   
+					value="#{report.limit}" min="5" max="20" style="padding:0 20px 0 0">
+					<p:ajax update="horizontal"/>
+				</p:spinner>
+			</center>
+		</h:form>
 	</ui:define>
 
 </ui:composition>

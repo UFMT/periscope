@@ -27,11 +27,6 @@
          <artifactId>periscope-ejb</artifactId>
          <type>ejb</type>
       </dependency>
-      <dependency>
-         <groupId>br.ufmt</groupId>
-         <artifactId>periscopeEsb</artifactId>
-         <type>war</type>
-      </dependency>
       
    </dependencies>
 

@@ -43,7 +43,7 @@ public class ImportPatentController implements Serializable{
 		origins = importerFactory.getORIGINS();
 	}
 	
-	public void importPatents(){
+	public void importPatents(){		
 		if(fileUploaded == null){
 			FacesMessage msg = new FacesMessage("Erro","Nenhum arquivo foi enviado.");  
 	        FacesContext.getCurrentInstance().addMessage(null, msg);

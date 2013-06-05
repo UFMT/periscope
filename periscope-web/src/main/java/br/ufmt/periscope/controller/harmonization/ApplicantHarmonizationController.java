@@ -16,6 +16,7 @@ import javax.inject.Inject;
 
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Project;
+import br.ufmt.periscope.model.Rule;
 import br.ufmt.periscope.qualifier.CurrentProject;
 import br.ufmt.periscope.repository.ApplicantRepository;
 import br.ufmt.periscope.util.SelectObject;
@@ -34,6 +35,7 @@ public class ApplicantHarmonizationController implements Serializable{
 	private DataModel<SelectObject<Applicant>> applicants = null;
 	private List<Applicant> selectedApplicants = new ArrayList<Applicant>();
 	private Set<String> applicantSugestions = new HashSet<String>();
+	private Rule rule = new Rule();
 	
 	@PostConstruct
 	public void init(){		
@@ -50,6 +52,12 @@ public class ApplicantHarmonizationController implements Serializable{
 				selectedApplicants.add(pa.getObject());
 			}
 		}
+	}
+	
+	public void createRule(){
+		
+		
+		
 	}
 	
 	public void loadSugestions(){		

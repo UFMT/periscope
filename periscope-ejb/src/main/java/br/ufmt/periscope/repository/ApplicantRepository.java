@@ -35,8 +35,11 @@ import com.github.jmkgreen.morphia.mapping.cache.EntityCache;
 import com.google.common.collect.HashMultiset;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import com.mongodb.MapReduceCommand;
+import com.mongodb.MapReduceCommand.OutputType;
 
 @Named
 public class ApplicantRepository {
@@ -73,6 +76,35 @@ public class ApplicantRepository {
 						
 		}
 		return new ArrayList<Applicant>(map.values());
+	}
+	
+	public void updateMainApplicants(Project currentProject){
+		
+		String map = "function() { " +
+				"for(var i in this.applicants){ " +
+					"emit(this.applicants[i].name,1); " +
+				"}" +
+			 "}";
+		String reduce = "function(name,values) { " +
+							"total=0;" +
+							"for(var i in values){ " +
+								"total+=values[i]; " +
+							"}" +
+							"return total;" +
+						"}";
+		BasicDBObject where = new BasicDBObject();		
+		where.put("project.$id", currentProject.getId());		
+		where.put("applicants", new BasicDBObject("$exists", true));
+		
+		DBCollection coll = ds.getCollection(Patent.class);
+		MapReduceCommand cmd = new MapReduceCommand(coll, 
+													map,
+													reduce, 
+													"mainApplicant",
+													OutputType.REPLACE, 					
+													where);		
+		coll.mapReduce(cmd);
+								  
 	}
 	
 	public Set<String> getApplicantSugestions(Project project,int top,String... names){
