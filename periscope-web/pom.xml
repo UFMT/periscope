@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-<<<<<<< HEAD
    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
    <modelVersion>4.0.0</modelVersion>
 
@@ -75,135 +74,6 @@
       	<version>1.0.8</version>
       </dependency>
    </dependencies>
-=======
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-
-	<parent>
-		<artifactId>periscope</artifactId>
-		<groupId>br.ufmt</groupId>
-		<version>1.0-SNAPSHOT</version>
-	</parent>
-
-	<artifactId>periscope-web</artifactId>
-	<packaging>war</packaging>
-
-	<name>periscope Web module</name>
-
-	<dependencies>
-
-		<!-- Dependency on the EJB module so we can use it's services if needed -->
-		<dependency>
-			<groupId>br.ufmt</groupId>
-			<artifactId>periscope-ejb</artifactId>
-			<type>ejb</type>
-			<scope>provided</scope>
-		</dependency>
-
-		<!-- Import the JAX-RS API, we use provided scope as the API is included 
-			in JBoss AS 7 -->
-		<dependency>
-			<groupId>org.jboss.spec.javax.ws.rs</groupId>
-			<artifactId>jboss-jaxrs-api_1.1_spec</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-		<!-- Import the CDI API, we use provided scope as the API is included in 
-			JBoss AS 7 -->
-		<dependency>
-			<groupId>javax.enterprise</groupId>
-			<artifactId>cdi-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-		<!-- Import the JPA API, we use provided scope as the API is included in 
-			JBoss AS 7 -->
-		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.0-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.primefaces</groupId>
-			<artifactId>primefaces</artifactId>
-			<version>3.4.2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>1.3.2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>1.2.2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.jboss.spec.javax.faces</groupId>
-			<artifactId>jboss-jsf-api_2.0_spec</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>info.cukes</groupId>
-			<artifactId>cucumber-picocontainer</artifactId>
-			<version>1.1.1</version>
-			<scope>test</scope>
-			<!-- <exclusions> -->
-			<!-- <exclusion> -->
-			<!-- <groupId>info.cukes</groupId> -->
-			<!-- <artifactId>cucumber-core</artifactId> -->
-			<!-- </exclusion> -->
-			<!-- </exclusions> -->
-		</dependency>
-		<dependency>
-			<groupId>info.cukes</groupId>
-			<artifactId>cucumber-junit</artifactId>
-			<version>1.1.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-java</artifactId>
-			<version>2.25.0</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.picocontainer</groupId>
-			<artifactId>picocontainer</artifactId>
-			<version>2.14.1</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>jboss-public-repository-group</id>
-			<name>JBoss Public Maven Repository Group</name>
-			<url>https://repository.jboss.org/nexus/content/groups/public-jboss/</url>
-			<layout>default</layout>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>never</updatePolicy>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
-
->>>>>>> 9049ef875bb4a73f6a43ee36d94fe2959ea9a4a1
 	<repositories>
 		<repository>
 			<id>prime-repo</id>
@@ -211,141 +81,33 @@
 			<url>http://repository.primefaces.org</url>
 		</repository>
 	</repositories>
-
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.1.1</version>
-				<configuration>
-					<!-- Java EE 6 doesn't require web.xml, Maven needs to catch up! -->
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.jboss.spec</groupId>
-				<artifactId>jboss-javaee-web-6.0</artifactId>
-				<version>${javaee6.web.spec.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-
-	<properties>
-		<javaee6.web.spec.version>2.0.0.Final</javaee6.web.spec.version>
-
-		<jboss.home>/Users/andre/jboss-as-7.1.1.Final</jboss.home>
-		<harddeploy.fileName>
-			${project.build.directory}/${project.build.finalName}.${project.packaging}
-		</harddeploy.fileName>
-
-	</properties>
-
-	<profiles>
-		<profile>
-			<id>integration-tests</id>
-
-			<!-- Here the profile is activated by default so that the example can 
-				be executed directly, but it probably would not be in “real life.” -->
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-
-			<properties>
-				<jboss.home>/Users/andre/jboss-as-7.1.1.Final</jboss.home>
-				<harddeploy.fileName>
-					target/periscope-web-1.0-SNAPSHOT.war
-				</harddeploy.fileName>
-				<cucumber.options>--format html:target/cucumber --tags @wip,@foo</cucumber.options>
-			</properties>
-
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>build-helper-maven-plugin</artifactId>
-						<version>1.7</version>
-						<executions>
-							<execution>
-								<id>add-source</id>
-								<phase>generate-sources</phase>
-								<goals>
-									<goal>add-test-source</goal>
-								</goals>
-								<configuration>
-									<sources>
-										<source>src/it/java</source>
-									</sources>
-								</configuration>
-							</execution>
-							<execution>
-								<id>add-resource</id>
-								<phase>generate-sources</phase>
-								<goals>
-									<goal>add-test-resource</goal>
-								</goals>
-								<configuration>
-									<resources>
-										<resource>
-											<directory>src/it/resources</directory>
-										</resource>
-									</resources>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<!-- block unit tests execution -->
-						<artifactId>maven-surefire-plugin</artifactId>
-						<version>2.8.1</version>
-						<configuration>
-							<skip>true</skip>
-						</configuration>
-					</plugin>
-					<plugin>
-						<artifactId>maven-failsafe-plugin</artifactId>
-						<version>2.12</version>
-						<executions>
-							<execution>
-								<goals>
-									<goal>integration-test</goal>
-									<goal>verify</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<systemPropertyVariables>
-								<cucumber.options>${cucumber.options}</cucumber.options>
-							</systemPropertyVariables>
-						</configuration>
-					</plugin>
-					<plugin>
-						<groupId>org.jboss.as.plugins</groupId>
-						<artifactId>jboss-as-maven-plugin</artifactId>
-						<executions>
-							<execution>
-								<phase>integration-test</phase>
-								<goals>
-									<goal>deploy</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<hostname>localhost</hostname>
-							<port>8080</port>
-							<filename>${project.build.finalName}.war</filename>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-
-
-	</profiles>
+    
+   <build>
+      <plugins>
+         <plugin>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>2.1.1</version>
+            <configuration>
+               <!-- Java EE 6 doesn't require web.xml, Maven needs to catch 
+                  up! -->
+               <failOnMissingWebXml>false</failOnMissingWebXml>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
+   <dependencyManagement>
+   	<dependencies>
+   		<dependency>
+   			<groupId>org.jboss.spec</groupId>
+   			<artifactId>jboss-javaee-web-6.0</artifactId>
+   			<version>${javaee6.web.spec.version}</version>
+   			<type>pom</type>
+   			<scope>import</scope>
+   		</dependency>
+   	</dependencies>
+   </dependencyManagement>
+   <properties>
+   	<javaee6.web.spec.version>2.0.0.Final</javaee6.web.spec.version>
+   </properties>
 
 </project>

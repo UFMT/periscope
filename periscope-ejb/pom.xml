@@ -92,10 +92,15 @@
    
    <repositories>
    		<repository>
-                <id>fixjures</id>
-                <name>fixjures.googlecode.com</name>
-                <url>http://fixjures.googlecode.com/svn/repo</url>
+	        <id>fixjures</id>
+	        <name>fixjures.googlecode.com</name>
+	        <url>http://fixjures.googlecode.com/svn/repo</url>
         </repository>
+		<repository>
+			<id>prime-repo</id>
+			<name>Prime Repo</name>
+			<url>http://repository.primefaces.org</url>
+		</repository>		
    </repositories>
 
    <build>
