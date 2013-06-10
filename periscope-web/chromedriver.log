@@ -1,0 +1,195 @@
+[0.001][INFO]:      ChromeDriver 26.0.1383.0 /Users/andre/Downloads/chromedriver
+[0.465][FINE]:      Initializing session with capabilities {
+   "browserName": "chrome",
+   "chrome.switches": [  ],
+   "chromeOptions": {
+      "args": [  ],
+      "extensions": [  ]
+   },
+   "platform": "ANY",
+   "version": ""
+}
+
+[0.465][INFO]:      Launching chrome: /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-hang-monitor --disable-prompt-on-repost --dom-automation --full-memory-crash-report --no-default-browser-check --no-first-run --disable-background-networking --disable-sync --disable-translate --disable-web-resources --safebrowsing-disable-auto-update --safebrowsing-disable-download-protection --disable-client-side-phishing-detection --disable-component-update --disable-default-apps --enable-logging --log-level=1 --use-mock-keychain --ignore-certificate-errors about:blank
+[1.104][INFO]:      Connected to Chrome successfully. Version: 24.0.1312.57
+[1.112][FINE]:      Command received (/session/78911e35d585dbf6fcf8b623ef3526d5)
+[1.112][FINE]:      Command finished (/session/78911e35d585dbf6fcf8b623ef3526d5) with response {
+   "sessionId": "78911e35d585dbf6fcf8b623ef3526d5",
+   "status": 0,
+   "value": {
+      "acceptSslCerts": false,
+      "applicationCacheEnabled": false,
+      "browserConnectionEnabled": false,
+      "browserName": "chrome",
+      "chrome.chromedriverVersion": "26.0.1383.0",
+      "cssSelectorsEnabled": true,
+      "databaseEnabled": false,
+      "handlesAlerts": true,
+      "javascriptEnabled": true,
+      "locationContextEnabled": false,
+      "nativeEvents": true,
+      "platform": "mac",
+      "rotatable": false,
+      "takesScreenshot": true,
+      "version": "24.0.1312.57",
+      "webStorageEnabled": true
+   }
+}
+
+[1.116][FINE]:      Command received (/session/78911e35d585dbf6fcf8b623ef3526d5/timeouts/implicit_wait) with params {
+   "ms": 30000
+}
+
+[1.116][FINER]:     Waiting for all views to stop loading...
+[1.138][FINER]:     Done waiting for all views to stop loading
+[1.138][FINER]:     Waiting for all views to stop loading...
+[1.138][FINER]:     Done waiting for all views to stop loading
+[1.138][FINE]:      Command finished (/session/78911e35d585dbf6fcf8b623ef3526d5/timeouts/implicit_wait) with response {
+   "sessionId": "78911e35d585dbf6fcf8b623ef3526d5",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[1.140][FINE]:      Command received (/session/78911e35d585dbf6fcf8b623ef3526d5/url) with params {
+   "url": "http://localhost:8080/periscope/login.jsf"
+}
+
+[1.140][FINER]:     Waiting for all views to stop loading...
+[1.141][FINER]:     Done waiting for all views to stop loading
+[1.257][FINER]:     Waiting for all views to stop loading...
+[1.260][FINER]:     Done waiting for all views to stop loading
+[1.261][FINE]:      Command finished (/session/78911e35d585dbf6fcf8b623ef3526d5/url) with response {
+   "sessionId": "78911e35d585dbf6fcf8b623ef3526d5",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[1.264][FINE]:      Command received (/session/78911e35d585dbf6fcf8b623ef3526d5/element) with params {
+   "using": "id",
+   "value": "username"
+}
+
+[1.264][FINER]:     Waiting for all views to stop loading...
+[1.265][FINER]:     Done waiting for all views to stop loading
+[1.314][FINER]:     Waiting for all views to stop loading...
+[1.314][FINER]:     Done waiting for all views to stop loading
+[1.314][FINE]:      Command finished (/session/78911e35d585dbf6fcf8b623ef3526d5/element) with response {
+   "sessionId": "78911e35d585dbf6fcf8b623ef3526d5",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1360864742730"
+   }
+}
+
+[1.317][FINE]:      Command received (/session/78911e35d585dbf6fcf8b623ef3526d5/element/:wdc:1360864742730/value) with params {
+   "id": ":wdc:1360864742730",
+   "value": [ "andre" ]
+}
+
+[1.317][FINER]:     Waiting for all views to stop loading...
+[1.318][FINER]:     Done waiting for all views to stop loading
+[1.557][FINER]:     Waiting for all views to stop loading...
+[1.557][FINER]:     Done waiting for all views to stop loading
+[1.557][FINE]:      Command finished (/session/78911e35d585dbf6fcf8b623ef3526d5/element/:wdc:1360864742730/value) with response {
+   "sessionId": "78911e35d585dbf6fcf8b623ef3526d5",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[1.560][FINE]:      Command received (/session/78911e35d585dbf6fcf8b623ef3526d5/element) with params {
+   "using": "id",
+   "value": "password"
+}
+
+[1.560][FINER]:     Waiting for all views to stop loading...
+[1.560][FINER]:     Done waiting for all views to stop loading
+[1.578][FINER]:     Waiting for all views to stop loading...
+[1.578][FINER]:     Done waiting for all views to stop loading
+[1.578][FINE]:      Command finished (/session/78911e35d585dbf6fcf8b623ef3526d5/element) with response {
+   "sessionId": "78911e35d585dbf6fcf8b623ef3526d5",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1360864742731"
+   }
+}
+
+[1.582][FINE]:      Command received (/session/78911e35d585dbf6fcf8b623ef3526d5/element/:wdc:1360864742731/value) with params {
+   "id": ":wdc:1360864742731",
+   "value": [ "andrerox" ]
+}
+
+[1.582][FINER]:     Waiting for all views to stop loading...
+[1.582][FINER]:     Done waiting for all views to stop loading
+[1.772][FINER]:     Waiting for all views to stop loading...
+[1.772][FINER]:     Done waiting for all views to stop loading
+[1.773][FINE]:      Command finished (/session/78911e35d585dbf6fcf8b623ef3526d5/element/:wdc:1360864742731/value) with response {
+   "sessionId": "78911e35d585dbf6fcf8b623ef3526d5",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[1.775][FINE]:      Command received (/session/78911e35d585dbf6fcf8b623ef3526d5/element) with params {
+   "using": "id",
+   "value": "login"
+}
+
+[1.776][FINER]:     Waiting for all views to stop loading...
+[1.776][FINER]:     Done waiting for all views to stop loading
+[1.798][FINER]:     Waiting for all views to stop loading...
+[1.798][FINER]:     Done waiting for all views to stop loading
+[1.798][FINE]:      Command finished (/session/78911e35d585dbf6fcf8b623ef3526d5/element) with response {
+   "sessionId": "78911e35d585dbf6fcf8b623ef3526d5",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1360864742732"
+   }
+}
+
+[1.801][FINE]:      Command received (/session/78911e35d585dbf6fcf8b623ef3526d5/element/:wdc:1360864742732/click) with params {
+   "id": ":wdc:1360864742732"
+}
+
+[1.801][FINER]:     Waiting for all views to stop loading...
+[1.801][FINER]:     Done waiting for all views to stop loading
+[1.872][FINER]:     Waiting for all views to stop loading...
+[1.991][FINER]:     Done waiting for all views to stop loading
+[1.991][FINE]:      Command finished (/session/78911e35d585dbf6fcf8b623ef3526d5/element/:wdc:1360864742732/click) with response {
+   "sessionId": "78911e35d585dbf6fcf8b623ef3526d5",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[1.994][FINE]:      Command received (/session/78911e35d585dbf6fcf8b623ef3526d5/url)
+[1.994][FINER]:     Waiting for all views to stop loading...
+[1.994][FINER]:     Done waiting for all views to stop loading
+[2.009][FINER]:     Waiting for all views to stop loading...
+[2.009][FINER]:     Done waiting for all views to stop loading
+[2.009][FINE]:      Command finished (/session/78911e35d585dbf6fcf8b623ef3526d5/url) with response {
+   "sessionId": "78911e35d585dbf6fcf8b623ef3526d5",
+   "status": 0,
+   "value": "http://localhost:8080/periscope/login.jsf"
+}
+
+[2.012][FINE]:      Command received (/session/78911e35d585dbf6fcf8b623ef3526d5/source)
+[2.012][FINER]:     Waiting for all views to stop loading...
+[2.012][FINER]:     Done waiting for all views to stop loading
+[2.016][FINER]:     Waiting for all views to stop loading...
+[2.016][FINER]:     Done waiting for all views to stop loading
+[2.016][FINE]:      Command finished (/session/78911e35d585dbf6fcf8b623ef3526d5/source) with response {
+   "sessionId": "78911e35d585dbf6fcf8b623ef3526d5",
+   "status": 0,
+   "value": "\u003C!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/x..."
+}
+
+[2.018][FINE]:      Command received (/session/78911e35d585dbf6fcf8b623ef3526d5)
+[2.103][INFO]:      Chrome shutdown

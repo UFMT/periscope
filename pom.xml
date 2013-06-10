@@ -12,7 +12,10 @@
       <module>periscope-ejb</module>
       <module>periscope-web</module>
       <module>periscope-ear</module>
+<<<<<<< HEAD
       
+=======
+>>>>>>> 9049ef875bb4a73f6a43ee36d94fe2959ea9a4a1
    </modules>
 
    <properties>

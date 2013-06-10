@@ -19,7 +19,7 @@
 	<h:body>
 
 	
-		<h:form styleClass="form-container">
+		<h:form styleClass="form-container" prependId="false">
 			<!-- 
 			<center><p:graphicImage value="/imgs/periscope.jpg" width="300px" style=" border: 2px solid #78c8f0;"/></center>
 			<br/>
@@ -29,17 +29,15 @@
 			</div>
 			
 			<div class="form-title">Login</div>
-			<h:inputText value="#{loginController.login}" required="true"
-				requiredMessage="Entre com o usuário" class="form-field" type="text"
-				name="firstname" />
+			<h:inputText id="username" value="#{loginController.login}" required="true"
+				requiredMessage="Entre com o usuário" class="form-field" type="text" />
 			<br />
 			<div class="form-title">Senha</div>
-			<h:inputSecret value="#{loginController.password}" required="true"
-				requiredMessage="Entre com a senha" class="form-field" type="text"
-				name="email" />
+			<h:inputSecret id="password" value="#{loginController.password}" required="true"
+				requiredMessage="Entre com a senha" class="form-field" type="text"	/>
 			<br />
 			<div class="submit-container">
-				<h:commandButton value="Entrar" action="#{sessionBean.login()}"					
+				<h:commandButton id="login" value="Logar" action="#{sessionBean.login()}"					
 					styleClass="submit-button" />
 			</div>
 			<div style="font-size: 70%;">
