@@ -23,6 +23,7 @@ public abstract class ValidatePatentDecorator implements PatentImporter {
 	@Override
 	public Patent next() {
 		Patent patent = patentImporter.next();
+		if(patent == null) return null;
 		validator.validate(patent);
 		return patent;
 	}

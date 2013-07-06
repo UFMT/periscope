@@ -29,7 +29,9 @@ public class PatentIndexer {
 	public void indexPatents(Iterable<Patent> patents){		
 		Iterator<Patent> it = patents.iterator();
 		while(it.hasNext()){
-			indexPatent(it.next());
+			Patent p = it.next();
+			if(p == null) continue;
+			indexPatent(p);
 		}		
 	}	
 	

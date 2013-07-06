@@ -44,18 +44,18 @@ public class DPMAPatentImporter implements PatentImporter{
 		//Inicia na primeira linha dos dados
 		nextLine();
 		patent = new Patent();		
-		
+			
 	}
 
 	@Override
-	public boolean hasNext() {	
+	public boolean hasNext() {			
 		if(line == null) return false;
 		if(line.trim().length() <= 0) return false;
 		return true;
 	}
 
 	@Override
-	public Patent next() {		
+	public Patent next() {			
 		try {
 			parseLine();
 		} catch (ParseException e) {
@@ -68,27 +68,32 @@ public class DPMAPatentImporter implements PatentImporter{
 	
 	private void parseLine() throws ParseException{
 		patent = new Patent();
-		vet = line.split("\t", -2);
+		vet = line.split("; ", -2);
 
 		patent.setLanguage(lang);
-		patent.setTitleSelect(vet[7].substring(5));
-		patent.setPublicationNumber(vet[0] + " " + 	sdf2.format(sdf.parse(vet[3])));
+		if(vet[6].length() > 5){
+			patent.setTitleSelect(vet[6].substring(5));
+		}else{
+			patent = null;
+			return;
+		}
+		patent.setPublicationNumber(vet[0] + " " + 	sdf2.format(sdf.parse(vet[2])));
 		patent.setPublicationCountry(countryRepository.getCountryByAcronym(patent.getPublicationNumber().substring(0, 2).toUpperCase()));
-		patent.setApplicationCountry(countryRepository.getCountryByAcronym(vet[0].substring(0, 2)));				
-		patent.setPublicationDate(sdf.parse(vet[3]));
+		patent.setApplicationCountry(countryRepository.getCountryByAcronym(patent.getPublicationNumber().substring(0, 2).toUpperCase()));				
+		patent.setPublicationDate(sdf.parse(vet[2]));
+		patent.setApplicationDate(sdf.parse(vet[1]));
 		
 		
 		//Carrega as classificações
 		readClassifications();		
 		readApplicants();
 		readInventors();
-		
 	}
 
 	
 	private void readInventors() {
 		List<Inventor> listInventors = patent.getInventors();
-		array = vet[5].split(", ", -2);
+		array = vet[4].split(", ", -2);
 		Inventor inventor = new Inventor();				
 		if(array[0].trim().length() > 0){
 			inventor.setName(array[0].trim());
@@ -99,12 +104,10 @@ public class DPMAPatentImporter implements PatentImporter{
 			for (int i = 1; i < array.length; i++) {
 				if(array[i].trim().length() > 3){
 					
+					inventor = new Inventor();
 					inventor.setName(array[i].substring(2).trim());
 					if(i+1 < array.length){ 
 						inventor.setCountry(countryRepository.getCountryByAcronym(array[i+1].substring(0,2)));
-					}
-					if(inventor.getCountry() == null){
-						inventor.setCountry(null);
 					}					
 					listInventors.add(inventor);
 				}
@@ -116,7 +119,7 @@ public class DPMAPatentImporter implements PatentImporter{
 	private void readApplicants() {
 		
 		List<Applicant> listPa = patent.getApplicants();
-		array = vet[6].split(", ", -2);
+		array = vet[5].split(", ", -2);
 		Applicant applicant = new Applicant(); 
 		if(array[0].trim().length() > 0){
 			applicant.setName(array[0].trim());			
@@ -145,8 +148,8 @@ public class DPMAPatentImporter implements PatentImporter{
 	private void readClassifications(){
 		List<Classification> icais = patent.getClassifications();			
 		String string = null;
-		if (vet[4].trim().length() > 0) {
-			string = vet[4].replace(" ", "");
+		if (vet[3].trim().length() > 0) {
+			string = vet[3].replace(" ", "");
 			array = string.split("/",-2);
             String tudo = "";
             try{

@@ -19,6 +19,14 @@ public class Applicant implements Serializable{
 	@Transient
 	private Integer documentCount = 0;
 		
+	public Applicant() {
+	
+	}
+	
+	public Applicant(String name) {
+		this.name = name;
+	}
+	
 	public String getName() {
 		return name;
 	}

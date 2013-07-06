@@ -36,11 +36,15 @@
 			</h:column>
 			<h:column>
 				<ui:repeat var="sug"
-					value="#{applicantHarmonizationController.applicantSugestions.toArray()}">
-
-					<p:selectBooleanCheckbox /> #{sug}<br />
-
+					value="#{applicantHarmonizationController.applicantSugestions}">
+					<p:selectBooleanCheckbox
+						onchange="#{applicantHarmonizationController.onSelectApplicant()}" value="#{sug.selected}">
+					</p:selectBooleanCheckbox>
+					#{sug.object.name}
 				</ui:repeat>
+				<h:panelGrid rendered="#{applicantHarmonizationController.applicantSugestions.size() == 0}">
+					Não existem sugestões.
+				</h:panelGrid>
 			</h:column>
 		</h:panelGrid>
 		<p:spacer height="50"/>

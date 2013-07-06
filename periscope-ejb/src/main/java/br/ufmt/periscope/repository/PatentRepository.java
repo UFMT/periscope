@@ -31,6 +31,7 @@ public class PatentRepository {
 		while(patents.hasNext()){
 			
 			Patent p = patents.next();
+			if(p == null) continue;
 			p.setProject(project);
 			
 			if(!patentExistsForProject(p, project)){				

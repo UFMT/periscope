@@ -34,7 +34,7 @@ public class ApplicantHarmonizationController implements Serializable{
 	private @Inject ApplicantRepository applicantRepository;
 	private DataModel<SelectObject<Applicant>> applicants = null;
 	private List<Applicant> selectedApplicants = new ArrayList<Applicant>();
-	private Set<String> applicantSugestions = new HashSet<String>();
+	private List<SelectObject<Applicant>> applicantSugestions = null;
 	private Rule rule = new Rule();
 	
 	@PostConstruct
@@ -67,7 +67,12 @@ public class ApplicantHarmonizationController implements Serializable{
 			names[i] = pa.getName();
 			i++;
 		}
-		applicantSugestions = applicantRepository.getApplicantSugestions(currentProject, 10, names);
+		Set<String> sugestions = applicantRepository.getApplicantSugestions(currentProject, 10, names);
+		List<Applicant> aplicants = new ArrayList<Applicant>();
+		for(String sugestion : sugestions){
+			aplicants.add(new Applicant(sugestion));
+		}
+		setApplicantSugestions(new ArrayList<SelectObject<Applicant>>(SelectObject.convertToSelectObjects(aplicants)));
 	}
 	
 	public DataModel<SelectObject<Applicant>> getApplicants() {
@@ -86,11 +91,19 @@ public class ApplicantHarmonizationController implements Serializable{
 		this.selectedApplicants = selectedApplicants;
 	}
 
-	public Set<String> getApplicantSugestions() {
+	public Rule getRule() {
+		return rule;
+	}
+
+	public void setRule(Rule rule) {
+		this.rule = rule;
+	}
+
+	public List<SelectObject<Applicant>> getApplicantSugestions() {
 		return applicantSugestions;
 	}
 
-	public void setApplicantSugestions(Set<String> applicantSugestions) {
+	public void setApplicantSugestions(List<SelectObject<Applicant>> applicantSugestions) {
 		this.applicantSugestions = applicantSugestions;
 	}
 		
