@@ -79,9 +79,11 @@ public class DPMAPatentImporter implements PatentImporter{
 		}
 		patent.setPublicationNumber(vet[0] + " " + 	sdf2.format(sdf.parse(vet[2])));
 		patent.setPublicationCountry(countryRepository.getCountryByAcronym(patent.getPublicationNumber().substring(0, 2).toUpperCase()));
-		patent.setApplicationCountry(countryRepository.getCountryByAcronym(patent.getPublicationNumber().substring(0, 2).toUpperCase()));				
 		patent.setPublicationDate(sdf.parse(vet[2]));
+						
+		//patent.setApplicationNumber(vet[0] + " " + 	sdf2.format(sdf.parse(vet[2])));
 		patent.setApplicationDate(sdf.parse(vet[1]));
+		patent.setApplicationCountry(countryRepository.getCountryByAcronym(patent.getPublicationNumber().substring(0, 2).toUpperCase()));		
 		
 		
 		//Carrega as classificações

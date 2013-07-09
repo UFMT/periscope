@@ -19,18 +19,23 @@ public class Rule {
 	private String acronym;
 	
 	@Embedded
-	private List<String> substitutions = new ArrayList<String>();
+	private List<String> substitutions;
 	
 	@Embedded
 	private Country country;
 	
 	@Embedded
 	private ApplicantType nature;
-	
 	private RuleType type;
 		
 	@Reference
 	private Project project;
+	
+	public Rule(){
+		country = new Country();
+		nature = new ApplicantType();
+		substitutions = new ArrayList<String>();
+	}
 
 	public ObjectId getId() {
 		return id;

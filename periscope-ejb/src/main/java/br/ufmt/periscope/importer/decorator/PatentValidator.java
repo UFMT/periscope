@@ -2,32 +2,55 @@ package br.ufmt.periscope.importer.decorator;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.inject.Inject;
 import javax.inject.Named;
+
+import com.github.jmkgreen.morphia.Datastore;
 
 import br.ufmt.periscope.enumerated.ClassificationType;
 import br.ufmt.periscope.model.Applicant;
+import br.ufmt.periscope.model.ApplicantType;
 import br.ufmt.periscope.model.Classification;
 import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.model.Patent;
+import br.ufmt.periscope.repository.ApplicantRepository;
+import br.ufmt.periscope.repository.ApplicantTypeRepository;
 
 @Named
 public class PatentValidator {
 
 	private Patent patent;
+	private @Inject ApplicantTypeRepository typeRepository;
 	
 	public void validate(Patent patent){
 		this.patent = patent;
 		
 		validateClassifications();
 		fillInventors();
+		saveApplicantTypes();
+		
 		
 		patent.setCompleted(false);
 		
 		validatePublicationAndApplicationNumbers();		
 		setAsComplete();
 		
+	}
+
+	private void saveApplicantTypes() {
+		Set<String> types = new HashSet<String>();
+		for (Applicant pa : patent.getApplicants()) {
+			if( pa.getType() == null) continue;
+			
+			types.add(pa.getType().getName());			
+		}		
+		for(String type : types){
+			typeRepository.createIfNotExists(new ApplicantType(type));
+		}
 	}
 
 	private void setAsComplete() {

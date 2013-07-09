@@ -9,6 +9,22 @@
 <f:view contentType="text/html">
 	<p:dialog id="sugestions" widgetVar="sugestionsDialog" modal="true"
 		header="Criar regra" resizable="false">
+		<p:panelGrid columns="2">		
+			<h:outputLabel value="Nome harmonizado " style="font-weight:bold"/>				
+			<p:inputText value="#{applicantHarmonizationController.rule.name}"/>
+						
+			<h:outputLabel value="País " style="font-weight:bold"/>				
+			<p:selectOneMenu value="#{applicantHarmonizationController.rule.country.acronym}" >
+				<f:selectItems value="#{applicantHarmonizationController.countries}" var="c" itemValue="#{c.acronym}" itemLabel="#{c.name}"/>					
+			</p:selectOneMenu>
+			
+			<h:outputLabel value="Natureza " style="font-weight:bold"/>
+			<p:selectOneMenu id="cmbNature" value="#{applicantHarmonizationController.rule.nature.name}">
+				<f:selectItem itemLabel="Nenhuma" itemValue=""/>
+				<f:selectItems value="#{applicantHarmonizationController.applicantTypes}" var="t" itemValue="#{t.name}" itemLabel="#{t.name}" />	
+			</p:selectOneMenu>						
+		</p:panelGrid>		
+										
 		<h:panelGrid columns="3">
 			<h:column>
 				<h4>Nomes selecionados</h4>				
@@ -35,16 +51,20 @@
 				<p:spacer width="50"/>
 			</h:column>
 			<h:column>
+				<ul>
 				<ui:repeat var="sug"
 					value="#{applicantHarmonizationController.applicantSugestions}">
-					<p:selectBooleanCheckbox
-						onchange="#{applicantHarmonizationController.onSelectApplicant()}" value="#{sug.selected}">
-					</p:selectBooleanCheckbox>
-					#{sug.object.name}
-				</ui:repeat>
+					<li>
+						<p:selectBooleanCheckbox
+							onchange="#{applicantHarmonizationController.onSelectApplicantSugestion()}" value="#{sug.selected}">
+						</p:selectBooleanCheckbox>
+						#{sug.object.name}
+					</li>
+				</ui:repeat>				
 				<h:panelGrid rendered="#{applicantHarmonizationController.applicantSugestions.size() == 0}">
-					Não existem sugestões.
+					<li>Não existem sugestões.</li>
 				</h:panelGrid>
+				</ul>
 			</h:column>
 		</h:panelGrid>
 		<p:spacer height="50"/>

@@ -9,6 +9,14 @@ public class ApplicantType {
 
 	private String name;
 	
+	public ApplicantType(){
+		
+	}
+	
+	public ApplicantType(String name){
+		this.name = name;
+	}
+	
 	public String getName() {
 		return name;
 	}
