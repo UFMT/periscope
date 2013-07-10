@@ -46,7 +46,7 @@
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#pages#user#editUser.xhtml"
-  PATH="/pages/user/editUser.xhtml" SHAPE="224,408,50,25" model-entity="JSFProcessGroup"/>
+  PATH="/pages/user/editUser.xhtml" SHAPE="232,408,50,25" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:#login.xhtml" PATH="/login.xhtml"
   SHAPE="128,128,50,41" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:#login.xhtml:0" NAME="item"
@@ -57,11 +57,11 @@
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#pages#project#projectHome.xhtml"
-  PATH="/pages/project/projectHome.xhtml" SHAPE="440,200,50,25" model-entity="JSFProcessGroup"/>
+  PATH="/pages/project/projectHome.xhtml" SHAPE="416,208,50,25" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:#pages#project#patent#patentImport.xhtml"
-  PATH="/pages/project/patent/patentImport.xhtml" SHAPE="640,272,50,25" model-entity="JSFProcessGroup"/>
+  PATH="/pages/project/patent/patentImport.xhtml" SHAPE="664,264,50,25" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:#pages#project#patent#patentList.xhtml"
-  PATH="/pages/project/patent/patentList.xhtml" SHAPE="640,312,50,25" model-entity="JSFProcessGroup"/>
+  PATH="/pages/project/patent/patentList.xhtml" SHAPE="664,320,50,25" model-entity="JSFProcessGroup"/>
  <PROCESS-ITEM NAME="rules:#pages#project#*" PATH="/pages/project/*"
   SHAPE="464,288,53,58" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:#pages#project#*:0" NAME="item"
@@ -82,10 +82,28 @@
     PATH="/pages/project/harmonization/harmonizationHome.xhtml"
     TARGET="rules:#pages#project#harmonization#harmonizationHome.xhtml"
     TITLE="harmonizationHome" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="listRule::#pages#project#harmonization#ruleList.xhtml"
+    NAME="output3" PATH="/pages/project/harmonization/ruleList.xhtml"
+    TARGET="rules:#pages#project#harmonization#ruleList.xhtml"
+    TITLE="listRule" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM
   NAME="rules:#pages#project#harmonization#harmonizationHome.xhtml"
   PATH="/pages/project/harmonization/harmonizationHome.xhtml"
-  SHAPE="648,368,50,25" model-entity="JSFProcessGroup"/>
+  SHAPE="672,368,50,25" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#pages#project#harmonization#ruleList.xhtml"
+  PATH="/pages/project/harmonization/ruleList.xhtml"
+  SHAPE="672,416,50,25" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#pages#project#harmonization#ruleList.xhtml:0"
+   NAME="item" PATH="/pages/project/harmonization/ruleList.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="newRule::#pages#project#harmonization#harmonizationHome.xhtml"
+    NAME="output"
+    PATH="/pages/project/harmonization/harmonizationHome.xhtml"
+    TARGET="rules:#pages#project#harmonization#harmonizationHome.xhtml"
+    TITLE="newRule" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
 </PROCESS>

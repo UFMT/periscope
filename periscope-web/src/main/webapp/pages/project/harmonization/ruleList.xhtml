@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="content">
+		<ui:include src="/template/flashmessages.xhtml" />
+		<h2>Regras de Harmonização</h2>
+		<br/>
+		<h:form>		
+			<p:commandButton value="Criar Nova Regra" action="harmonizationHome" ajax="false" />
+		</h:form>
+		<p:tabView id="tabView"> 
+			<p:tab id="tab1" title="Depositantes">				
+				<p:dataTable id="ruleApplicants" var="rule" style="font-size:12px"
+							emptyMessage="Não existem regras de depositantes"
+							value="#{ruleController.applicantRules}" paginator="true"
+							paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+							rowKey="#{rule.id.toString()}" sortBy="#{rule.name}">
+			
+					<p:columnGroup type="header">
+						<p:row>						
+							<p:column rowspan="2" headerText="Nome" sortBy="#{rule.name}"/>
+							<p:column rowspan="2" headerText="Substituições" />
+							<p:column rowspan="2" headerText="Pais" sortBy="#{rule.country.name}"/>
+							<p:column rowspan="2" headerText="Natureza" sortBy="#{rule.nature.name}"/>
+							<p:column rowspan="2" headerText="Ações" />
+						</p:row>
+					</p:columnGroup>		
+					<p:column>														
+							#{rule.name}					
+					</p:column>
+					
+					<p:column>														
+							#{rule.substitutions}					
+					</p:column>
+					<p:column>														
+							#{rule.country == null ? '' : rule.country.name}					
+					</p:column>
+					<p:column>														
+							#{rule.nature == null ? '' : rule.nature.name}					
+					</p:column>
+					<p:column>
+						<center>
+							<h:form style="margin-bottom:0px">
+								<h:commandLink value="Aplicar"
+									style="color:white;margin-right: 10px" class="btn btn-inverse"
+									action="#{ruleController.apply(rule.id.toString())}">	
+								</h:commandLink>
+								<h:commandLink value="Deletar"
+									style="color:white;margin-right: 10px" class="btn btn-inverse"
+									onclick="if(!confirm('Deseja excluir esta regra ?')) { return false; }" 
+									action="#{ruleController.delete(rule.id.toString())}">										
+								</h:commandLink>							
+							</h:form>
+						</center>
+					</p:column>
+				</p:dataTable>				
+			</p:tab>  			
+			<p:tab id="tab2" title="Inventores">					
+				<p:dataTable id="ruleInventors" var="rule" style="font-size:12px"
+							emptyMessage="Não existem regras de inventores"
+							value="#{ruleController.inventorRules}" paginator="true"
+							paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+							rowKey="#{rule.id.toString()}" sortBy="#{rule.name}">
+			
+					<p:columnGroup type="header">
+						<p:row>						
+							<p:column rowspan="2" headerText="Nome" sortBy="#{rule.name}"/>
+							<p:column rowspan="2" headerText="Substituições" />
+							<p:column rowspan="2" headerText="Pais" sortBy="#{rule.country.name}"/>
+							<p:column rowspan="2" headerText="Natureza" sortBy="#{rule.nature.name}"/>
+							<p:column rowspan="2" headerText="Ações" />
+						</p:row>
+					</p:columnGroup>		
+					<p:column>														
+							#{rule.name}					
+					</p:column>
+					
+					<p:column>														
+							#{rule.substitutions}					
+					</p:column>
+					<p:column>														
+							#{rule.country == null ? '' : rule.country.name}					
+					</p:column>
+					<p:column>														
+							#{rule.nature == null ? '' : rule.nature.name}					
+					</p:column>
+					<p:column>
+						<center>
+							<h:form style="margin-bottom:0px">
+								<h:commandLink value="Aplicar"
+									style="color:white;margin-right: 10px" class="btn btn-inverse">	
+								</h:commandLink>
+								<h:commandLink value="Deletar"
+									style="color:white;margin-right: 10px" class="btn btn-inverse">	
+								</h:commandLink>							
+							</h:form>
+						</center>
+					</p:column>
+				</p:dataTable>
+			</p:tab>  
+			
+		</p:tabView>		
+	</ui:define>
+</ui:composition>
+</html>

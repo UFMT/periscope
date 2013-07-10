@@ -9,7 +9,7 @@
 <f:view contentType="text/html">
 	<p:dialog id="sugestions" widgetVar="sugestionsDialog" modal="true"
 		header="Criar regra" resizable="false">
-		<p:panelGrid columns="2">		
+		<h:panelGrid columns="2">		
 			<h:outputLabel value="Nome harmonizado " style="font-weight:bold"/>				
 			<p:inputText value="#{applicantHarmonizationController.rule.name}"/>
 						
@@ -23,9 +23,9 @@
 				<f:selectItem itemLabel="Nenhuma" itemValue=""/>
 				<f:selectItems value="#{applicantHarmonizationController.applicantTypes}" var="t" itemValue="#{t.name}" itemLabel="#{t.name}" />	
 			</p:selectOneMenu>						
-		</p:panelGrid>		
+		</h:panelGrid>		
 										
-		<h:panelGrid columns="3">
+		<h:panelGrid id="panelSugestions" columns="3">
 			<h:column>
 				<h4>Nomes selecionados</h4>				
 				<p:separator/>
@@ -57,6 +57,7 @@
 					<li>
 						<p:selectBooleanCheckbox
 							onchange="#{applicantHarmonizationController.onSelectApplicantSugestion()}" value="#{sug.selected}">
+							<p:ajax update="@this"/>
 						</p:selectBooleanCheckbox>
 						#{sug.object.name}
 					</li>
@@ -69,7 +70,7 @@
 		</h:panelGrid>
 		<p:spacer height="50"/>
 		<center>
-			<p:commandButton value="Salvar" />
+			<p:commandButton value="Salvar" action="#{applicantHarmonizationController.createRule()}"/>
 
 			<p:commandButton value="Cancelar" immediate="true"
 				oncomplete="sugestionsDialog.hide()" />

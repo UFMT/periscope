@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.ufmt.periscope.indexer.PatentIndexer;
+import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
 
@@ -86,6 +87,13 @@ public class PatentRepository {
 	public List<Patent> getAllPatents(Project project){
 		return ds.find(Patent.class)
 				.field("project").equal(project)
+				.asList();
+	}
+	
+	public List<Patent> getPatentWithApplicant(Project project,String applicantName){
+		return ds.find(Patent.class)
+				.field("project").equal(project)
+				.field("applicants.name").equal(applicantName)
 				.asList();
 	}
 }

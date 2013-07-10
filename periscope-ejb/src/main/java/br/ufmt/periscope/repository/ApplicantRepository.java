@@ -146,7 +146,7 @@ public class ApplicantRepository {
 		    for(int i=0;i<hits.length;++i) {	    			    	
 		      int docId = hits[i].doc;
 		      Document d = searcher.doc(docId);	      		      
-		      System.out.println((i + 1) + ". " + d.get("applicant") + "\t" + hits[i].score );		      
+		      //System.out.println((i + 1) + ". " + d.get("applicant") + "\t" + hits[i].score );		      
 		      results.add(d.get("applicant"));
 		      
 		      if(results.size() == top ) break;

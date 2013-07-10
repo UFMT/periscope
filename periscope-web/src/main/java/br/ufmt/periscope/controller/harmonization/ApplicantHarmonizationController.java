@@ -10,6 +10,8 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
@@ -78,7 +80,7 @@ public class ApplicantHarmonizationController implements Serializable{
 		}
 	}
 	
-	public void createRule(){
+	public String createRule(){
 
 		rule.setType(RuleType.APPLICANT);
 		rule.setProject(currentProject);
@@ -86,10 +88,16 @@ public class ApplicantHarmonizationController implements Serializable{
 		List<String> substitutions = new ArrayList<String>();
 		for(Applicant pa : selectedApplicants){
 			substitutions.add(pa.getName());
-		}
-		rule.setSubstitutions(substitutions);		
-		
+		}	
+		if(rule.getNature().getName().contentEquals("")){
+			rule.setNature(null);
+		}								
+		rule.setCountry(countryRepository.getCountryByAcronym(rule.getCountry().getAcronym()));
+		rule.setSubstitutions(substitutions);				
 		ds.save(rule);
+		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+		flash.put("success","Regra criada com sucesso");
+		return "listRule";
 	}
 	
 	public void loadSugestions(){		

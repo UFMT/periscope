@@ -23,8 +23,6 @@ public class ReportController {
 	
 	@PostConstruct
 	public void init(){
-		//FacesContext context = FacesContext.getCurrentInstance();
-		//HttpServletRequest req = (HttpServletRequest) context.getExternalContext().getRequest();
 		mainApplicantChart();
 	}
 	
@@ -32,7 +30,7 @@ public class ReportController {
 	public void mainApplicantChart(){
 						
 		model = new CartesianChartModel();
-		ChartSeries series = report.mainApplicantSeries(currentProject, limit);		
+		ChartSeries series = report.mainApplicantSeries(currentProject, limit);				
 		model.addSeries(series);
 	}
 

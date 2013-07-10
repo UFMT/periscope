@@ -33,6 +33,10 @@
    <from-outcome>harmonizationHome</from-outcome>
    <to-view-id>/pages/project/harmonization/harmonizationHome.xhtml</to-view-id>
   </navigation-case>
+  <navigation-case>
+   <from-outcome>listRule</from-outcome>
+   <to-view-id>/pages/project/harmonization/ruleList.xhtml</to-view-id>
+  </navigation-case>
  </navigation-rule>
  <navigation-rule>
   <from-view-id>*</from-view-id>
@@ -67,6 +71,13 @@
    <from-outcome>login</from-outcome>
    <to-view-id>/pages/project/projectList.xhtml</to-view-id>
    <redirect/>
+  </navigation-case>
+ </navigation-rule>
+ <navigation-rule>
+  <from-view-id>/pages/project/harmonization/ruleList.xhtml</from-view-id>
+  <navigation-case>
+   <from-outcome>newRule</from-outcome>
+   <to-view-id>/pages/project/harmonization/harmonizationHome.xhtml</to-view-id>
   </navigation-case>
  </navigation-rule>
  <application>

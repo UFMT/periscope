@@ -24,7 +24,7 @@ public class MainApplicantReport {
 	public ChartSeries mainApplicantSeries(Project currentProject,int limit){
 		ChartSeries series = new ChartSeries("Número de Depositos");
 		
-		repo.updateMainApplicants(currentProject);
+		repo.updateMainApplicants(currentProject);		
 		List<DBObject> it = ds.getDB()
 							  .getCollection("mainApplicant").find()
 							  .sort(new BasicDBObject("value",-1))

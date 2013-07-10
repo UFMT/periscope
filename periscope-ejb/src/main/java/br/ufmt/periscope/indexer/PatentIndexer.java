@@ -11,8 +11,10 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.CorruptIndexException;
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.search.Query;
 
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Inventor;
@@ -23,6 +25,7 @@ import br.ufmt.periscope.model.Project;
 public class PatentIndexer {
 
 	private @Inject IndexWriter writer;
+	private @Inject IndexReader reader;
 	private @Inject Analyzer analyzer;
 	private @Inject Logger log;
 			
@@ -49,14 +52,14 @@ public class PatentIndexer {
 		log.info("Ocorreu algum erro deletando os indices.");
 	}
 	
-	public void updateIndexPatent(Patent p){
-		indexPatent(p);
-	}
+//	public void updateIndexPatent(Patent p){
+//		indexPatent(p);
+//	}
 	
 	private void indexPatent(Patent p) {
 		Document doc = new Document();	    
     			
-		doc.add(new Field("id",p.getPublicationNumber()+p.getProject().getId().toString(), Field.Store.YES, Field.Index.ANALYZED));
+		doc.add(new Field("id",p.getPublicationNumber()+p.getProject().getId().toString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
     	doc.add(new Field("publicationNumber",p.getPublicationNumber(), Field.Store.YES, Field.Index.ANALYZED));
     	doc.add(new Field("project",p.getProject().getId().toString(), Field.Store.YES, Field.Index.ANALYZED));
     	doc.add(new Field("titleSelect",p.getTitleSelect(), Field.Store.YES, Field.Index.ANALYZED));    	
@@ -72,8 +75,9 @@ public class PatentIndexer {
     	}
     	
     	try {
-    		    		
-    	    writer.deleteDocuments(new Term("id",doc.get("id")));    	    
+    		Term key = new Term("id",doc.getFieldable("id").stringValue());
+    		//writer.updateDocument(key, doc); 		
+    	    writer.deleteDocuments(key);    	    
 			writer.addDocument(doc);
 			//writer.commit();
 			
