@@ -34,7 +34,7 @@ public class LuceneIndexerResources {
 	
 	@Produces
 	public IndexReader getReader(Directory dir){
-		try {			
+		try {				
 			return IndexReader.open(dir);
 		} catch (CorruptIndexException e) {		
 			e.printStackTrace();
@@ -72,7 +72,10 @@ public class LuceneIndexerResources {
 	
 	@Produces
 	private IndexWriterConfig getIndexConfig(StandardAnalyzer analyzer){		
-		return new IndexWriterConfig(Version.LUCENE_36, analyzer);
+		//return new IndexWriterConfig(Version.LUCENE_36, analyzer);
+		IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_36, analyzer);
+		
+		return config;
 	}
 	
 	@Produces
@@ -84,10 +87,10 @@ public class LuceneIndexerResources {
 		DBObjectSerializer<MapDirectoryEntry> valueSerializer = new MapDirectoryEntrySerializer("value");
 		ConcurrentMap<String, MapDirectoryEntry> store = new MongoConcurrentMap<String, MapDirectoryEntry>(dbCollection, keySerializer, valueSerializer);
 
-		// lucene directory
+		// lucene directory	
 		Directory dir;
 		try {
-			dir = new MapDirectory(store);
+			dir = new MapDirectory(store);			
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
@@ -99,6 +102,7 @@ public class LuceneIndexerResources {
 	public void disposesWriter(@Disposes IndexWriter writer){
 		try {
 			System.out.println("Disposing Writer");
+			writer.deleteUnusedFiles();		
 			writer.commit();
 			writer.close();
 		} catch (CorruptIndexException e) {

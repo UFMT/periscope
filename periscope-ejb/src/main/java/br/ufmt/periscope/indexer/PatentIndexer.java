@@ -14,7 +14,6 @@ import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.search.Query;
 
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Inventor;
@@ -41,7 +40,7 @@ public class PatentIndexer {
 	public void deleteIndexesForProject(Project project){
 		log.info("Deletando indices para o projeto " +project.getTitle());
 		try {
-			writer.deleteDocuments(new Term("project",project.getId().toString()));
+			writer.deleteDocuments(new Term("project",project.getId().toString()));			
 			log.info("Indices deletados com sucesso");
 			return;
 		} catch (CorruptIndexException e) {
@@ -75,7 +74,7 @@ public class PatentIndexer {
     	}
     	
     	try {
-    		Term key = new Term("id",doc.getFieldable("id").stringValue());
+    		Term key = new Term("id",doc.get("id"));
     		//writer.updateDocument(key, doc); 		
     	    writer.deleteDocuments(key);    	    
 			writer.addDocument(doc);

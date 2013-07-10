@@ -1,6 +1,6 @@
 package br.ufmt.periscope.harmonization;
 
-import java.util.Iterator;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -8,21 +8,15 @@ import javax.inject.Named;
 
 import org.bson.types.ObjectId;
 
-import com.github.jmkgreen.morphia.Datastore;
-import com.github.jmkgreen.morphia.mapping.Mapper;
-import com.github.jmkgreen.morphia.mapping.cache.EntityCache;
-import com.mongodb.BasicDBObject;
-import com.mongodb.BasicDBObjectBuilder;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
-import com.mongodb.QueryBuilder;
-
 import br.ufmt.periscope.indexer.PatentIndexer;
-import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Rule;
-import br.ufmt.periscope.repository.ApplicantRepository;
 import br.ufmt.periscope.repository.PatentRepository;
+
+import com.github.jmkgreen.morphia.Datastore;
+import com.github.jmkgreen.morphia.mapping.Mapper;
+import com.mongodb.BasicDBObjectBuilder;
+import com.mongodb.DBObject;
 
 @Named
 public class Harmonization {
@@ -72,11 +66,9 @@ public class Harmonization {
 		System.out.println(updateOp);
 		ds.getCollection(Patent.class).updateMulti(query,updateOp);
 				
-		List<Patent> patents = patentRepository.getPatentWithApplicant(rule.getProject(), rule.getName());
-		for (Patent patent : patents) {
-			System.out.println(patent.getProject().getId().toString() + patent.getPublicationNumber());
-		}
+		List<Patent> patents = patentRepository.getAllPatents(rule.getProject());		
 		indexer.indexPatents(patents);
+		
 		
 	}
 

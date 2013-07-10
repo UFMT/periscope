@@ -26,6 +26,7 @@ import br.ufmt.periscope.qualifier.CurrentProject;
 import br.ufmt.periscope.repository.ApplicantRepository;
 import br.ufmt.periscope.repository.ApplicantTypeRepository;
 import br.ufmt.periscope.repository.CountryRepository;
+import br.ufmt.periscope.repository.RuleRepository;
 import br.ufmt.periscope.util.SelectObject;
 
 import com.github.jmkgreen.morphia.Datastore;
@@ -40,6 +41,7 @@ public class ApplicantHarmonizationController implements Serializable{
 	private @Inject Datastore ds;
 	private @Inject @CurrentProject Project currentProject;
 	private @Inject ApplicantRepository applicantRepository;
+	private @Inject RuleRepository ruleRepository;
 	private @Inject ApplicantTypeRepository typeRepository;
 	private @Inject CountryRepository countryRepository;
 	private DataModel<SelectObject<Applicant>> applicants = null;
@@ -94,7 +96,7 @@ public class ApplicantHarmonizationController implements Serializable{
 		}								
 		rule.setCountry(countryRepository.getCountryByAcronym(rule.getCountry().getAcronym()));
 		rule.setSubstitutions(substitutions);				
-		ds.save(rule);
+		ruleRepository.save(rule);		
 		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 		flash.put("success","Regra criada com sucesso");
 		return "listRule";

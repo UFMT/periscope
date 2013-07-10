@@ -10,6 +10,7 @@ import org.bson.types.ObjectId;
 import br.ufmt.periscope.indexer.PatentIndexer;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
+import br.ufmt.periscope.model.Rule;
 import br.ufmt.periscope.model.User;
 
 import com.github.jmkgreen.morphia.Datastore;
@@ -17,10 +18,8 @@ import com.github.jmkgreen.morphia.query.Query;
 
 @Named
 public class ProjectRepository {
-
-	@Inject
-	private Datastore ds;
 	
+	private @Inject Datastore ds;	
 	private @Inject PatentIndexer patentIndexer;
 		
 	public List<Project> getProjectList(User user){
@@ -42,6 +41,7 @@ public class ProjectRepository {
 	
 	public void deleteProject(Project project){
 		ds.delete(ds.createQuery(Patent.class).field("project").equal(project));
+		ds.delete(ds.createQuery(Rule.class).field("project").equal(project));
 		ds.delete(project);
 	}
 }

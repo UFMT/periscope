@@ -55,7 +55,7 @@ public class PatentRepository {
 			patentsCache.clear();
 		}		
 				
-	}
+	}		
 	
 	public boolean patentExistsForProject(Patent patent,Project project){		
 		return ds.find(Patent.class)

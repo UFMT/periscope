@@ -39,6 +39,21 @@ public class RuleRepository {
 				.asList();
 	}
 	
+	public void save(Rule rule){
+		Rule r = findByName(rule.getName());
+		if(r == null){
+			ds.save(rule);
+		}else{
+			delete(r.getId().toString());
+			rule.getSubstitutions().addAll(r.getSubstitutions());
+			ds.save(rule);			
+		}
+	}
+	
+	public Rule findByName(String name){
+		return ds.find(Rule.class).field("name").equal(name).get();
+	}
+	
 	public Rule findById(String id){
 		return ds.get(Rule.class, new ObjectId(id));
 	}
