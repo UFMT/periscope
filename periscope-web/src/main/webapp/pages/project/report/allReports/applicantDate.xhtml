@@ -11,35 +11,38 @@
 
 	<ui:define name="growl"></ui:define>
 
-	<ui:define name="content">	
-	<h:form  >
+	<ui:define name="content">
+		<h:form styleClass="container">
 
-		<h1>Data de Deposito / #{msgs['year']}</h1>
-		Language : 
-		<h:selectOneMenu value="#{language.localeCode}" onchange="submit()" 
-			valueChangeListener="#{language.localeCodeChanged}" >
-   			<f:selectItems value="#{language.locales}"  /> 
-   		</h:selectOneMenu>
- 
-		<h:panelGrid columns="2">
+			<h1>Depositos / #{msgs['year']}</h1>
 
-			<h:column>
-				<p:graphicImage />
-				<p:graphicImage />
-			</h:column>
+			<p:lineChart id="line" value="#{applicantDateReport.model}"
+				legendPosition="e" title="Número de depositos por ano"
+				style="height:300px"/>
 
-			<h:column>
-				<p:dataTable emptyMessage="Nenhum depositante cadastrado.">
+			<h:panelGrid columns="2">
 
-					<p:column headerText="#{msgs['year']}" />
+				<h:column>
+					<p:graphicImage />
+					<p:graphicImage />
+				</h:column>
 
-					<p:column headerText="#{msgs['documents.number']}" />
+				<h:column>
+					<p:dataTable emptyMessage="Nenhum depositante cadastrado." var="pair" value="#{applicantDateReport.pairs}">
 
-				</p:dataTable>
-			</h:column>
+						<p:column headerText="#{msgs['year']}">
+							<h:outputText value="#{pair.key}" />
+						</p:column>
 
-		</h:panelGrid>
-</h:form>
+						<p:column headerText="#{msgs['documents.number']}">
+							<h:outputText value="#{pair.value}" />
+						</p:column>
+
+					</p:dataTable>
+				</h:column>
+
+			</h:panelGrid>
+		</h:form>
 	</ui:define>
 
 </ui:composition>

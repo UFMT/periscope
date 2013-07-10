@@ -12,20 +12,22 @@
 	<ui:define name="growl"></ui:define>
 
 	<ui:define name="content">
-		
+
 		<h:form id="chart">
-			<p:barChart id="horizontal" value="#{report.model}" legendPosition="se"  
-            title="Principais Depositantes" orientation="horizontal" style="height:300px" 
-            datatipFormat="%s" /> 	
-            	
-            <br/>
-            <center>
-            	<h4> Número de Depositantes</h4>	
-				<p:spinner valueChangeListener="#{report.mainApplicantChart()}"   
-					value="#{report.limit}" min="5" max="20" style="padding:0 20px 0 0">
-					<p:ajax update="horizontal"/>
+
+			<br />
+			<center>
+				<h4>Número de Depositantes</h4>
+				<p:spinner value="#{report.limit}" min="5" max="20"
+					style="padding:0 20px 0 0">
+					<p:ajax listener="#{report.mainApplicantChart()}" update="@form" />
 				</p:spinner>
 			</center>
+			<br />
+			<p:barChart id="horizontal" value="#{report.model}"
+				legendPosition="se" title="Principais Depositantes"
+				orientation="horizontal" style="height:300px" datatipFormat="%s" />
+
 		</h:form>
 	</ui:define>
 

@@ -14,25 +14,44 @@
 	<ui:define name="content">
 
 		<h1>Principais Inventores</h1>
-		<h:panelGrid columns="2">
 
-			<h:column>
-				<p:graphicImage />
-				<p:graphicImage />
-			</h:column>
+		<h:form styleClass="container">
 
-			<h:column>
+			<br />
+			<center>
+				<h4>Número de inventores</h4>
+				<p:spinner value="#{mainInventorController.limit}" min="5" max="20"
+					style="padding:0 20px 0 0">
+					<p:ajax listener="#{mainInventorController.mainInventorChart()}"
+						update="@form" process="@this" />
+				</p:spinner>
+			</center>
+			<br/>
 
-				<p:dataTable emptyMessage="Nenhum inventor cadastrado.">
+			<p:barChart id="horizontal" value="#{mainInventorController.model}"
+				orientation="horizontal" legendPosition="e" datatipFormat="%s"
+				title="Número de depositos por Inventores" style="height:300px"
+				styleClass="span8" />
 
-					<p:column headerText="#{msgs['year']}" />
+			<p:dataTable id="inventors"
+				emptyMessage="Nenhum inventor cadastrado." var="pair"
+				value="#{mainInventorController.pairs}" styleClass="span2">
 
-					<p:column headerText="#{msgs['documents.number']}" />
+				<p:column headerText="Nome">
+					<h:outputText value="#{pair.key}" />
+				</p:column>
 
-				</p:dataTable>
-			</h:column>
+				<p:column headerText="#{msgs['documents.number']}">
+					<h:outputText value="#{pair.value}" />
+				</p:column>
 
-		</h:panelGrid>
+			</p:dataTable>
+
+
+
+		</h:form>
+
+
 
 	</ui:define>
 
