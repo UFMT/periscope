@@ -21,59 +21,86 @@ import br.ufmt.periscope.report.Pair;
 @ViewScoped
 public class MainIPCController {
 
-	private @Inject	@CurrentProject	Project currentProject;
-	private @Inject	MainIPCReport report;
+	private @Inject
+	@CurrentProject
+	Project currentProject;
+	private @Inject
+	MainIPCReport report;
 	private CartesianChartModel model;
 	private List<Pair> pairs;
-	
+
 	private boolean klass;
 	private boolean subKlass;
 	private boolean group;
 	private boolean subGroup;
 	
+	private int limit = 5;
+
 	@PostConstruct
-	public void init(){
+	public void init() {
+		klass = false;
+		subKlass = false;
+		group = false;
+		subGroup = false;
 		mainIpcChart();
 	}
-	
-	public void update(){
-		if(!klass){
+
+	public void update() {
+		if (!klass) {
+			// classe nao esta selecionada
+			// buscar secao
 			subKlass = false;
 			group = false;
 			subGroup = false;
-		}else if(!subKlass){
+		} else if (!subKlass) {
+			// classe selecionada e subclasse nao esta
+			// buscar classe
 			group = false;
-			subGroup= false;
-		}else if(!group){
 			subGroup = false;
+		} else if (!group) {
+			// classe e subclasse selecionadas e grupo nao selecionado
+			// buscar subclasse
+			subGroup = false;
+		} else if (!subGroup) {
+			// classe, subclasse e grupo selecionado, subgrupo nao selecioando
+			// buscar grupo
+		} else {
+			// tudo selecionado
+			// buscar subgrupo
 		}
+
+		mainIpcChart();
 	}
-	
-	public void mainIpcChart(){
+
+	public void mainIpcChart() {
 		model = new CartesianChartModel();
-		ChartSeries series = report.ipcCount(currentProject);
-		
+		ChartSeries series = report.ipcCount(currentProject, klass, subKlass,
+				group, subGroup, limit);
+
 		model.addSeries(series);
-		
+
 		setPairs(new ArrayList<Pair>());
-		
-		for(Object key : series.getData().keySet()){
+
+		for (Object key : series.getData().keySet()) {
 			Number value = series.getData().get(key);
 			getPairs().add(new Pair(key, value));
 		}
-		
+
 		Collections.reverse(pairs);
 	}
-	
+
 	public List<Pair> getPairs() {
 		return pairs;
 	}
+
 	public void setPairs(List<Pair> pairs) {
 		this.pairs = pairs;
 	}
+
 	public CartesianChartModel getModel() {
 		return model;
 	}
+
 	public void setModel(CartesianChartModel model) {
 		this.model = model;
 	}
@@ -108,6 +135,14 @@ public class MainIPCController {
 
 	public void setSubGroup(boolean subGroup) {
 		this.subGroup = subGroup;
+	}
+
+	public int getLimit() {
+		return limit;
+	}
+
+	public void setLimit(int limit) {
+		this.limit = limit;
 	}
 
 }

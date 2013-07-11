@@ -17,11 +17,12 @@ public class MainIPCReport {
 	private @Inject
 	ClassificationRepository repo;
 
-	public ChartSeries ipcCount(Project currentProject) {
+	public ChartSeries ipcCount(Project currentProject, boolean klass,
+			boolean subKlass, boolean group, boolean subGroup, int limit) {
 
 		ChartSeries series = new ChartSeries("Contagem classificação");
 		
-		List<Pair> i = repo.getMainIPC(currentProject);
+		List<Pair> i = repo.getMainIPC(currentProject, klass, subKlass, group, subGroup, limit);
 		
 		Collections.reverse(i);
 		

@@ -17,38 +17,51 @@
 
 		<h:form prependId="false">
 
+			<center>
+				<h4>Número de classificações</h4>
+				<p:spinner value="#{mainIPCController.limit}" min="5" max="20"
+					style="padding:0 20px 0 0">
+					<p:ajax listener="#{mainIPCController.mainIpcChart()}"
+						update="@form" process="@this" />
+				</p:spinner>
+			</center>
+
 			<h:panelGrid columns="4">
 
 				<p:selectBooleanCheckbox id="klass" itemLabel="#{msgs['class']}"
 					value="#{mainIPCController.klass}">
-					<p:ajax update="subKlass,group,subGroup,horizontal" listener="#{mainIPCController.update()}"/>
+					<p:ajax update="subKlass,group,subGroup,horizontal,datatable"
+						listener="#{mainIPCController.update()}" />
 				</p:selectBooleanCheckbox>
 
 				<p:selectBooleanCheckbox id="subKlass"
 					disabled="#{!mainIPCController.klass}"
 					itemLabel="#{msgs['subclass']}"
 					value="#{mainIPCController.subKlass}">
-					<p:ajax update="group,subGroup,horizontal" listener="#{mainIPCController.update()}"/>
+					<p:ajax update="group,subGroup,horizontal,datatable"
+						listener="#{mainIPCController.update()}" />
 				</p:selectBooleanCheckbox>
 
 				<p:selectBooleanCheckbox id="group"
 					disabled="#{!mainIPCController.klass or !mainIPCController.subKlass}"
 					itemLabel="#{msgs['group']}" value="#{mainIPCController.group}">
-					<p:ajax update="subGroup,horizontal" listener="#{mainIPCController.update()}"/>
+					<p:ajax update="subGroup,horizontal,datatable"
+						listener="#{mainIPCController.update()}" />
 				</p:selectBooleanCheckbox>
 
 				<p:selectBooleanCheckbox id="subGroup"
 					disabled="#{!mainIPCController.klass or !mainIPCController.subKlass or !mainIPCController.group}"
 					itemLabel="#{msgs['subgroup']}"
 					value="#{mainIPCController.subGroup}">
-					<p:ajax update="horizontal" listener="#{mainIPCController.update()}"/>
+					<p:ajax update="horizontal,datatable"
+						listener="#{mainIPCController.update()}" />
 				</p:selectBooleanCheckbox>
 
 			</h:panelGrid>
 
 			<p:barChart id="horizontal" value="#{mainIPCController.model}"
 				orientation="horizontal" legendPosition="e" datatipFormat="%s"
-				title="Número de depositos por Inventores" style="height:300px" />
+				title="Principais classificações" style="height:300px" />
 
 			<h:panelGrid columns="2">
 
@@ -59,8 +72,9 @@
 
 				<h:column>
 
-					<p:dataTable emptyMessage="Nenhuma classificacao cadastrada."
-						var="ipc" value="#{mainIPCController.pairs}">
+					<p:dataTable id="datatable"
+						emptyMessage="Nenhuma classificacao cadastrada." var="ipc"
+						value="#{mainIPCController.pairs}">
 
 						<!-- 					<p:column headerText="#{msgs['position']}" > -->
 						<!-- 						<h:outputText value="ipc." /> -->
