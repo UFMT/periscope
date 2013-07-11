@@ -15,6 +15,7 @@ import javax.inject.Named;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.CorruptIndexException;
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanClause.Occur;
@@ -45,7 +46,7 @@ import com.mongodb.MapReduceCommand.OutputType;
 public class ApplicantRepository {
 
 	private @Inject Datastore ds;
-	private @Inject IndexSearcher searcher;
+	private @Inject IndexReader reader;
 	private @Inject StandardAnalyzer analyzer;
 	
 	public List<Applicant> getApplicants(Project project){
@@ -139,7 +140,8 @@ public class ApplicantRepository {
 			bq.add(queryProject,Occur.MUST);
 			System.out.println(bq);
 			
-			searcher.search(bq, collector);						    			
+			IndexSearcher searcher = new IndexSearcher(reader);
+			searcher.search(bq, collector);							
 			
 			ScoreDoc[] hits = collector.topDocs().scoreDocs;
 		    System.out.println("Found " + hits.length + " hits.");
@@ -154,7 +156,7 @@ public class ApplicantRepository {
 		    for(String name : names){
 		    	results.remove(name);
 		    }
-		    
+		    searcher.close();
 		    
 		    return results;
 		    		
