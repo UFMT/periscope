@@ -1,6 +1,5 @@
 package br.ufmt.periscope.bean;
 
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
@@ -25,7 +24,6 @@ import com.github.jmkgreen.morphia.Datastore;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import com.mongodb.MongoClient;
 
 @ApplicationScoped
 @Singleton

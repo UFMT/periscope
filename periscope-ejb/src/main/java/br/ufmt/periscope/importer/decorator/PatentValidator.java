@@ -9,15 +9,12 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.github.jmkgreen.morphia.Datastore;
-
 import br.ufmt.periscope.enumerated.ClassificationType;
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.ApplicantType;
 import br.ufmt.periscope.model.Classification;
 import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.model.Patent;
-import br.ufmt.periscope.repository.ApplicantRepository;
 import br.ufmt.periscope.repository.ApplicantTypeRepository;
 
 @Named

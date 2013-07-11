@@ -2,6 +2,7 @@ package br.ufmt.periscope.controller.harmonization;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -95,7 +96,7 @@ public class ApplicantHarmonizationController implements Serializable{
 			rule.setNature(null);
 		}								
 		rule.setCountry(countryRepository.getCountryByAcronym(rule.getCountry().getAcronym()));
-		rule.setSubstitutions(substitutions);				
+		rule.setSubstitutions(new HashSet<String>(substitutions));				
 		ruleRepository.save(rule);		
 		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
 		flash.put("success","Regra criada com sucesso");

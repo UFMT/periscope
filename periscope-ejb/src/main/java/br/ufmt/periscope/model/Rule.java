@@ -1,7 +1,7 @@
 package br.ufmt.periscope.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.bson.types.ObjectId;
 
@@ -19,7 +19,7 @@ public class Rule {
 	private String acronym;
 	
 	@Embedded
-	private List<String> substitutions;
+	private Set<String> substitutions;
 	
 	@Embedded
 	private Country country;
@@ -34,7 +34,7 @@ public class Rule {
 	public Rule(){
 		country = new Country();
 		nature = new ApplicantType();
-		substitutions = new ArrayList<String>();
+		substitutions = new HashSet<String>();
 	}
 
 	public ObjectId getId() {
@@ -61,11 +61,11 @@ public class Rule {
 		this.acronym = acronym;
 	}
 
-	public List<String> getSubstitutions() {
+	public Set<String> getSubstitutions() {
 		return substitutions;
 	}
 
-	public void setSubstitutions(List<String> substitutions) {
+	public void setSubstitutions(Set<String> substitutions) {
 		this.substitutions = substitutions;
 	}
 
