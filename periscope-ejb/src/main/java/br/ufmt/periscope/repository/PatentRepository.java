@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.ufmt.periscope.indexer.PatentIndexer;
-import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
 

@@ -13,7 +13,6 @@ import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.LockObtainFailedException;
 import org.apache.lucene.util.Version;
@@ -44,10 +43,10 @@ public class LuceneIndexerResources {
 		return null;
 	}
 	
-	@Produces
-	public IndexSearcher getSearcher(IndexReader reader){
-		return new IndexSearcher(reader);	
-	}
+//	@Produces
+//	public IndexSearcher getSearcher(IndexReader reader){		
+//		return new IndexSearcher(reader);	
+//	}
 	
 	@Produces
 	public IndexWriter getIndexWriter(Directory dir,IndexWriterConfig config){
@@ -103,7 +102,7 @@ public class LuceneIndexerResources {
 		try {
 			System.out.println("Disposing Writer");
 			writer.deleteUnusedFiles();		
-			writer.commit();
+			writer.commit();			
 			writer.close();
 		} catch (CorruptIndexException e) {
 			e.printStackTrace();
@@ -121,13 +120,13 @@ public class LuceneIndexerResources {
 		}
 	}
 	
-	public void disposesSearcher(@Disposes IndexSearcher searcher){
-		try {
-			System.out.println("Disposing searcher");
-			searcher.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}	
+//	public void disposesSearcher(@Disposes IndexSearcher searcher){
+//		try {
+//			System.out.println("Disposing searcher");
+//			searcher.close();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}	
 	
 }
