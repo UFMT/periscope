@@ -48,12 +48,12 @@ task :remote do
 	server "200.129.242.6:2204", :app
 	set :user, "gaiia"	
 	
-  	set :maven_home, "/usr/local/apache-maven"
-  	set :jboss_home, ENV['JBOSS_HOME'] ? ENV['JBOSS_HOME'] : "/usr/local/jboss-7.1.1"	
+  set :maven_home, ENV['MAVEN_HOME'] ? ENV['MAVEN_HOME'] : "/usr/local/apache-maven/apache-maven-3.0.5"
+	set :jboss_home, ENV['JBOSS_HOME'] ? ENV['JBOSS_HOME'] : "/home/gaiia/jboss"	
 	set :deploy_to, "/tmp/#{deploy_name}"
 	set :use_sudo, false
 	
-	after "remote", "jboss:deploy"
+	after "deploy", "jboss:deploy"
 
 end
 

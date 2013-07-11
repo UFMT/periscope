@@ -1,6 +1,5 @@
 package br.ufmt.periscope.harmonization;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -62,8 +61,7 @@ public class Harmonization {
 										.add("applicants.$.nature",dbObjectNature)
 										.get())
 									.get();
-		System.out.println(query);
-		System.out.println(updateOp);
+		
 		ds.getCollection(Patent.class).updateMulti(query,updateOp);
 				
 		List<Patent> patents = patentRepository.getAllPatents(rule.getProject());		

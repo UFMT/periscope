@@ -37,6 +37,22 @@
    <from-outcome>listRule</from-outcome>
    <to-view-id>/pages/project/harmonization/ruleList.xhtml</to-view-id>
   </navigation-case>
+  <navigation-case>
+   <from-outcome>mainApplicantReport</from-outcome>
+   <to-view-id>/pages/project/report/allReports/mainApplicant.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>mainInventorReport</from-outcome>
+   <to-view-id>/pages/project/report/allReports/mainInventor.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>mainIPCReport</from-outcome>
+   <to-view-id>/pages/project/report/allReports/mainIPC.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-outcome>applicationDateReport</from-outcome>
+   <to-view-id>/pages/project/report/allReports/applicantDate.xhtml</to-view-id>
+  </navigation-case>
  </navigation-rule>
  <navigation-rule>
   <from-view-id>*</from-view-id>
