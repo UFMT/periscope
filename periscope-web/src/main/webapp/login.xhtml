@@ -40,10 +40,20 @@
 				<h:commandButton id="login" value="Logar" action="#{sessionBean.login()}"					
 					styleClass="submit-button" />
 			</div>
-			<div style="font-size: 70%;">
-				<p:messages id="messages"  autoUpdate="true" redisplay="true"/>
-			</div>
+			<div style="font-size: 70%;">			
+				<p:messages id="messages"  autoUpdate="true" redisplay="true"/>				
+			</div>			
 		</h:form>
+		<br/>
+		<center>			
+			<p:panelGrid columns="1" style="padding:0px;margin:0px;font-size:70%">															
+					
+				<h3>Usuário de teste para o sistema</h3>
+				<p>Login  : <b>teste</b></p>				
+				<p>Senha : <b>teste123456</b></p>				
+								
+			</p:panelGrid>
+		</center>
 	</h:body>
 </f:view>
 </html>
