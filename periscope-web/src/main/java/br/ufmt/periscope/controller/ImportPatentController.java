@@ -24,69 +24,71 @@ import com.github.jmkgreen.morphia.Datastore;
 
 @ManagedBean
 @ViewScoped
-public class ImportPatentController implements Serializable{
-	
-	private static final long serialVersionUID = 7744517674295407077L;
-	
-	
-	private @Inject Datastore ds;
-	private @Inject @CurrentProject Project currentProject;
-	private @Inject PatentRepository patentRepository;
-	private @Inject PatentImporterFactory importerFactory;
-	
-	private String fileOrigin;
-	private String[] origins= null;
-	private UploadedFile fileUploaded = null;
-	
-	@PostConstruct
-	public void init(){
-		origins = importerFactory.getORIGINS();
-	}
-	
-	public void importPatents(){		
-		if(fileUploaded == null){
-			FacesMessage msg = new FacesMessage("Erro","Nenhum arquivo foi enviado.");  
-	        FacesContext.getCurrentInstance().addMessage(null, msg);
-		}else{
-			try {				
-				InputStream is = fileUploaded.getInputstream();
-				PatentImporter importer = importerFactory.getImporter(fileOrigin);
-				importer.initWithStream(is);				
-					
-				patentRepository.savePatentToDatabase(importer,currentProject);				
-					
-				FacesMessage msg = new FacesMessage("Sucesso","Arquivo importado com sucesso.");  
-		        FacesContext.getCurrentInstance().addMessage(null, msg);		        		        		        
-				
-			} catch (IOException e) {		
-				FacesMessage msg = new FacesMessage("Erro","Ocorreu um erro com o arquivo que foi enviado.");  
-		        FacesContext.getCurrentInstance().addMessage(null, msg);
-				e.printStackTrace();
-			}
-			
-		}
-	}
-	
-	public void handleFileUpload(FileUploadEvent event) { 
-							
-		fileUploaded = event.getFile();
-        FacesMessage msg = new FacesMessage("Sucesso", event.getFile().getFileName() + " foi enviado.");  
-        FacesContext.getCurrentInstance().addMessage(null, msg);  
+public class ImportPatentController implements Serializable {
+
+    private static final long serialVersionUID = 7744517674295407077L;
+    private @Inject
+    Datastore ds;
+    private @Inject
+    @CurrentProject
+    Project currentProject;
+    private @Inject
+    PatentRepository patentRepository;
+    private @Inject
+    PatentImporterFactory importerFactory;
+    private String fileOrigin;
+    private String[] origins = null;
+    private UploadedFile fileUploaded = null;
+
+    @PostConstruct
+    public void init() {
+        origins = importerFactory.getORIGINS();
     }
 
-	public UploadedFile getFileUploaded(){
-		return fileUploaded;
-	}
-	
-	public String getFileOrigin() {
-		return fileOrigin;
-	}
+    public void importPatents() {
+        if (fileUploaded == null) {
+            FacesMessage msg = new FacesMessage("Erro", "Nenhum arquivo foi enviado.");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        } else {
+            try {
+                InputStream is = fileUploaded.getInputstream();
+                PatentImporter importer = importerFactory.getImporter(fileOrigin);
+                importer.initWithStream(is);
 
-	public void setFileOrigin(String fileOrigin) {
-		this.fileOrigin = fileOrigin;
-	}  
-	
-	public String[] getOrigins() {
-		return origins;
-	}
+                patentRepository.savePatentToDatabase(importer, currentProject);
+
+                FacesMessage msg = new FacesMessage("Sucesso", "Arquivo importado com sucesso.");
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+
+            } catch (IOException e) {
+                FacesMessage msg = new FacesMessage("Erro", "Ocorreu um erro com o arquivo que foi enviado.");
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    public void handleFileUpload(FileUploadEvent event) {
+
+        fileUploaded = event.getFile();
+        FacesMessage msg = new FacesMessage("Sucesso", event.getFile().getFileName() + " foi enviado.");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public UploadedFile getFileUploaded() {
+        return fileUploaded;
+    }
+
+    public String getFileOrigin() {
+        return fileOrigin;
+    }
+
+    public void setFileOrigin(String fileOrigin) {
+        this.fileOrigin = fileOrigin;
+    }
+
+    public String[] getOrigins() {
+        return origins;
+    }
 }

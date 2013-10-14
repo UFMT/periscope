@@ -30,11 +30,11 @@
 			
 			<div class="form-title">Login</div>
 			<h:inputText id="username" value="#{loginController.login}" required="true"
-				requiredMessage="Entre com o usuário" class="form-field" type="text" />
+				requiredMessage="Entre com o usuário" class="form-field"  />
 			<br />
 			<div class="form-title">Senha</div>
 			<h:inputSecret id="password" value="#{loginController.password}" required="true"
-				requiredMessage="Entre com a senha" class="form-field" type="text"	/>
+				requiredMessage="Entre com a senha" class="form-field" 	/>
 			<br />
 			<div class="submit-container">
 				<h:commandButton id="login" value="Logar" action="#{sessionBean.login()}"					
