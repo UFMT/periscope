@@ -5,9 +5,12 @@ import java.util.Iterator;
 
 import br.ufmt.periscope.model.Patent;
 
-public interface PatentImporter extends Iterator<Patent>{
+public interface PatentImporter {
 	
 	public void initWithStream(InputStream is);
 	public String provider();
+        public boolean hasNext();
+        public Patent next();
+        public void remove();
 
 }
