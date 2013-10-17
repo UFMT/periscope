@@ -29,13 +29,13 @@
 			<br/>
 
 			<p:barChart id="horizontal" value="#{mainInventorController.model}"
-				orientation="horizontal" legendPosition="e" datatipFormat="%s"
+				orientation="horizontal" legendPosition="se" datatipFormat="%s"
 				title="Número de depositos por Inventores" style="height:300px"
-				styleClass="span8" />
-
+				 />
+                        
 			<p:dataTable id="inventors"
 				emptyMessage="Nenhum inventor cadastrado." var="pair"
-				value="#{mainInventorController.pairs}" styleClass="span2">
+                                value="#{mainInventorController.pairs}" style="height:300px">
 
 				<p:column headerText="Nome">
 					<h:outputText value="#{pair.key}" />

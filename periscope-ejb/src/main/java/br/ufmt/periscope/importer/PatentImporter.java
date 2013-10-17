@@ -7,7 +7,7 @@ import br.ufmt.periscope.model.Patent;
 
 public interface PatentImporter {
 	
-	public void initWithStream(InputStream is);
+	public boolean initWithStream(InputStream is);
 	public String provider();
         public boolean hasNext();
         public Patent next();

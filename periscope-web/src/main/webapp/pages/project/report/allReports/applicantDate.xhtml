@@ -28,7 +28,8 @@
 				</h:column>
 
 				<h:column>
-					<p:dataTable emptyMessage="Nenhum depositante cadastrado." var="pair" value="#{applicantDateReport.pairs}">
+                                    <p:dataTable emptyMessage="Nenhum depositante cadastrado." var="pair" value="#{applicantDateReport.pairs}"
+                                                 >
 
 						<p:column headerText="#{msgs['year']}">
 							<h:outputText value="#{pair.key}" />

@@ -53,12 +53,17 @@ public class ImportPatentController implements Serializable {
             try {
                 InputStream is = fileUploaded.getInputstream();
                 PatentImporter importer = importerFactory.getImporter(fileOrigin);
-                importer.initWithStream(is);
+                if (importer.initWithStream(is)) {
+                
+                    patentRepository.savePatentToDatabase(importer, currentProject);
 
-                patentRepository.savePatentToDatabase(importer, currentProject);
+                    FacesMessage msg = new FacesMessage("Sucesso", "Arquivo importado com sucesso.");
+                    FacesContext.getCurrentInstance().addMessage(null, msg);
 
-                FacesMessage msg = new FacesMessage("Sucesso", "Arquivo importado com sucesso.");
-                FacesContext.getCurrentInstance().addMessage(null, msg);
+                } else {
+                    FacesMessage msg = new FacesMessage("Erro", "Ocorreu um erro com o arquivo que foi enviado.");
+                    FacesContext.getCurrentInstance().addMessage(null, msg);
+                }
 
             } catch (IOException e) {
                 FacesMessage msg = new FacesMessage("Erro", "Ocorreu um erro com o arquivo que foi enviado.");

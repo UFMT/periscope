@@ -34,15 +34,20 @@ public class DPMAPatentImporter implements PatentImporter {
     private String[] array = null;
 
     @Override
-    public void initWithStream(InputStream is) {
+    public boolean initWithStream(InputStream is) {
         InputStreamReader isr = new InputStreamReader(is);
         bur = new BufferedReader(isr);
         //Passa o cabeçalho
         nextLine();
         //Inicia na primeira linha dos dados
         nextLine();
-        patent = new Patent();
-
+        if (testLine(line)){
+            patent = new Patent();
+            return true;
+        } else {
+            return false;
+        }
+       
     }
 
     @Override
@@ -92,6 +97,17 @@ public class DPMAPatentImporter implements PatentImporter {
         readClassifications();
         readApplicants();
         readInventors();
+    }
+    
+    private Boolean testLine(String test) {
+        
+        String vetor[] = test.split( ";", -2);
+        if (vetor.length >= 6) {
+            return true;
+        } else {
+            return false;
+        }
+        
     }
 
     private void readInventors() {
