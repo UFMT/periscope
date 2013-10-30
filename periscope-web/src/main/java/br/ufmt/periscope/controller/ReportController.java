@@ -26,10 +26,13 @@ public class ReportController {
 	private CartesianChartModel model;
 	private int limit = 5;
         private List<Pair> pairs;
+        
+        private boolean complete;
 
 	
 	@PostConstruct
 	public void init(){
+                complete = false;
 		mainApplicantChart();
 	}
 	
@@ -37,7 +40,7 @@ public class ReportController {
 	public void mainApplicantChart(){
 						
 		model = new CartesianChartModel();
-		ChartSeries series = report.mainApplicantSeries(currentProject, limit);				
+		ChartSeries series = report.mainApplicantSeries(currentProject, complete, limit);				
 		model.addSeries(series);
                 
                 setPairs(new ArrayList<Pair>());
@@ -72,6 +75,15 @@ public class ReportController {
         public void setPairs(List<Pair> pairs) {
             this.pairs = pairs;
         }
+
+        public boolean isComplete() {
+            return complete;
+        }
+
+        public void setComplete(boolean complete) {
+            this.complete = complete;
+        }
 	
+        
 	
 }

@@ -79,7 +79,7 @@ public class ApplicantRepository {
 		return new ArrayList<Applicant>(map.values());
 	}
 	
-	public void updateMainApplicants(Project currentProject){
+	public void updateMainApplicants(Project currentProject, boolean complete){
 		
 		String map = "function() { " +
 				"for(var i in this.applicants){ " +
@@ -96,6 +96,9 @@ public class ApplicantRepository {
 		BasicDBObject where = new BasicDBObject();		
 		where.put("project.$id", currentProject.getId());		
 		where.put("applicants", new BasicDBObject("$exists", true));
+                if (complete){
+                    where.put("completed", complete);
+                }
 		
 		DBCollection coll = ds.getCollection(Patent.class);
 		MapReduceCommand cmd = new MapReduceCommand(coll, 

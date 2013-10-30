@@ -21,10 +21,10 @@ public class MainApplicantReport {
 	private @Inject ApplicantRepository repo;
 	private @Inject Datastore ds;
 	
-	public ChartSeries mainApplicantSeries(Project currentProject,int limit){
+	public ChartSeries mainApplicantSeries(Project currentProject, boolean complete, int limit){
 		ChartSeries series = new ChartSeries("Número de Depositos");
 		
-		repo.updateMainApplicants(currentProject);		
+		repo.updateMainApplicants(currentProject, complete);		
 		List<DBObject> it = ds.getDB()
 							  .getCollection("mainApplicant").find()
 							  .sort(new BasicDBObject("value",-1))
