@@ -29,22 +29,16 @@
                 <br/>
                 <h:outputScript library="js" name="locales.js"></h:outputScript>
 
-                <h:panelGrid columns="3" cellpadding="5">  
-                    <h:outputText value="Defina o período de interesse:"> 
-                        <p:selectOneMenu >
-                            <f:selectItem itemLabel="Data de Publicação" itemValue="" />  
-                            <f:selectItem itemLabel="Data de Depósito" itemValue="1" />  
-
-                        </p:selectOneMenu>
-                    </h:outputText>
-                    <h:outputText value="Inicial:">
-                        <p:calendar locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy" />
-                    </h:outputText>
-
-                    <h:outputText value="Final:">
-                        <p:calendar locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy"/>
-                    </h:outputText>z
-
+                <h:panelGrid columns="6" cellpadding="5">  
+                    <h:outputText value="Defina o período de interesse:"/> 
+                    <p:selectOneMenu >
+                        <f:selectItem itemLabel="Data de Publicação" itemValue="" />  
+                        <f:selectItem itemLabel="Data de Depósito" itemValue="1" />  
+                    </p:selectOneMenu>
+                    <h:outputText value="Inicial:"/>
+                    <p:calendar locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy" />
+                    <h:outputText value="Final:"/>
+                    <p:calendar locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy"/>
                 </h:panelGrid>
 
                 <p:barChart id="horizontal" value="#{mainInventorController.model}"
