@@ -1,59 +1,78 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
 
-<ui:composition template="/template/template.xhtml">
+    <ui:composition template="/template/template.xhtml">
 
-	<ui:define name="growl"></ui:define>
+        <ui:define name="growl"></ui:define>
 
-	<ui:define name="content">
+        <ui:define name="content">
 
-		<h1>Principais Inventores</h1>
+            <h1>Principais Inventores</h1>
 
-		<h:form styleClass="container">
+            <h:form styleClass="container">
 
-			<br />
-			<center>
-				<h4>Número de inventores</h4>
-				<p:spinner value="#{mainInventorController.limit}" min="5" max="20"
-					style="padding:0 20px 0 0">
-					<p:ajax listener="#{mainInventorController.mainInventorChart()}"
-						update="@form" process="@this" />
-				</p:spinner>
-			</center>
-			<br/>
+                <br />
+                <center>
+                    <h4>Número de inventores</h4>
+                    <p:spinner value="#{mainInventorController.limit}" min="5" max="20"
+                               style="padding:0 20px 0 0">
+                        <p:ajax listener="#{mainInventorController.mainInventorChart()}"
+                                update="@form" process="@this" />
+                    </p:spinner>
+                </center>
+                <br/>
+                <h:outputScript library="js" name="locales.js"></h:outputScript>
 
-			<p:barChart id="horizontal" value="#{mainInventorController.model}"
-				orientation="horizontal" legendPosition="se" datatipFormat="%s"
-				title="Número de depositos por Inventores" style="height:300px"
-				 />
-                        
-			<p:dataTable id="inventors"
-				emptyMessage="Nenhum inventor cadastrado." var="pair"
-                                value="#{mainInventorController.pairs}" style="height:300px">
+                <h:panelGrid columns="3" cellpadding="5">  
+                    <h:outputText value="Defina o período de interesse:"> 
+                        <p:selectOneMenu >
+                            <f:selectItem itemLabel="Data de Publicação" itemValue="" />  
+                            <f:selectItem itemLabel="Data de Depósito" itemValue="1" />  
 
-				<p:column headerText="Nome">
-					<h:outputText value="#{pair.key}" />
-				</p:column>
+                        </p:selectOneMenu>
+                    </h:outputText>
+                    <h:outputText value="Inicial:">
+                        <p:calendar locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy" />
+                    </h:outputText>
 
-				<p:column headerText="#{msgs['documents.number']}">
-					<h:outputText value="#{pair.value}" />
-				</p:column>
+                    <h:outputText value="Final:">
+                        <p:calendar locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy"/>
+                    </h:outputText>z
 
-			</p:dataTable>
+                </h:panelGrid>
+
+                <p:barChart id="horizontal" value="#{mainInventorController.model}"
+                            orientation="horizontal" legendPosition="se" datatipFormat="%s"
+                            title="Número de depositos por Inventores" style="height:300px"
+                            />
+
+                <p:dataTable id="inventors"
+                             emptyMessage="Nenhum inventor cadastrado." var="pair"
+                             value="#{mainInventorController.pairs}" style="height:300px">
+
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{pair.key}" />
+                    </p:column>
+
+                    <p:column headerText="#{msgs['documents.number']}">
+                        <h:outputText value="#{pair.value}" />
+                    </p:column>
+
+                </p:dataTable>
 
 
 
-		</h:form>
+            </h:form>
 
 
 
-	</ui:define>
+        </ui:define>
 
-</ui:composition>
+    </ui:composition>
 </html>
