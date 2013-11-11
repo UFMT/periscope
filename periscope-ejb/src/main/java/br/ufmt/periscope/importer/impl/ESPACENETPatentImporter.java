@@ -55,7 +55,7 @@ public class ESPACENETPatentImporter implements PatentImporter {
     private String fileType;
     private String vet[] = null;
     private String[] array = null;
-    private Patent pat;
+    private Patent patent;
 
     @Override
     public boolean initWithStream(InputStream is) {
@@ -131,7 +131,7 @@ public class ESPACENETPatentImporter implements PatentImporter {
 
     @Override
     public Patent next() {
-        pat = new Patent();
+        patent = new Patent();
         if (fileType.equalsIgnoreCase("xls")) {
             parseLineXLS();
         } else {
@@ -140,7 +140,8 @@ public class ESPACENETPatentImporter implements PatentImporter {
             }
             nextLine();
         }
-        return pat;
+        setAsComplete();
+        return patent;
     }
 
     @Override
@@ -172,7 +173,7 @@ public class ESPACENETPatentImporter implements PatentImporter {
      */
     private void parseLineXLS() {
 
-        pat.setLanguage(lang);
+        patent.setLanguage(lang);
 
         row = rowIterator.next(); //Percorrendo cada linha (patente)
         // Para cada linha (patente), pega cada atributo (Titulo, Publicação, Autor ...)
@@ -199,20 +200,20 @@ public class ESPACENETPatentImporter implements PatentImporter {
 
         switch (columnIndex) {
             case 0:
-                pat.setTitleSelect(contentStrin);
+                patent.setTitleSelect(contentStrin);
                 break;
             case 1:
-                pat.setPublicationNumber(contentStrin);
+                patent.setPublicationNumber(contentStrin);
                 break;
             case 2:
                 try {
-                    pat.setPublicationDate(sdf.parse(contentStrin));
+                    patent.setPublicationDate(sdf.parse(contentStrin));
                 } catch (ParseException ex) {
                     Logger.getLogger(ESPACENETPatentImporter.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
             case 3:
-                List<Inventor> inventors = pat.getInventors();
+                List<Inventor> inventors = patent.getInventors();
                 String aux;
                 StringTokenizer st = new StringTokenizer(contentStrin, "\n");
                 while (st.hasMoreTokens()) {
@@ -234,10 +235,10 @@ public class ESPACENETPatentImporter implements PatentImporter {
                     }
                     inventors.add(inventor);
                 }
-                pat.setInventors(inventors);
+                patent.setInventors(inventors);
                 break;
             case 4:
-                List<Applicant> applicants = pat.getApplicants();
+                List<Applicant> applicants = patent.getApplicants();
 
                 st = new StringTokenizer(contentStrin, "\n");
                 while (st.hasMoreTokens()) {
@@ -259,10 +260,10 @@ public class ESPACENETPatentImporter implements PatentImporter {
                     }
                     applicants.add(applicant);
                 }
-                pat.setApplicants(applicants);
+                patent.setApplicants(applicants);
                 break;
             case 5:
-                List<Classification> classifications = pat.getClassifications();
+                List<Classification> classifications = patent.getClassifications();
                 st = new StringTokenizer(contentStrin, "\n");
                 while (st.hasMoreTokens()) {
                     Classification classification = new Classification();
@@ -271,26 +272,26 @@ public class ESPACENETPatentImporter implements PatentImporter {
                     classifications.add(classification);
                 }
                 try {
-                    pat.setMainClassification(classifications.get(0));
+                    patent.setMainClassification(classifications.get(0));
                 } catch (Exception ex) {
                 }
-                pat.setClassifications(classifications);
+                patent.setClassifications(classifications);
                 break;
             case 6:
                 //"Cooperative Patent Classification: ";
                 break;
             case 7:
-                pat.setApplicationNumber(contentStrin);
+                patent.setApplicationNumber(contentStrin);
                 break;
             case 8:
                 try {
-                    pat.setApplicationDate(sdf2.parse(contentStrin));
+                    patent.setApplicationDate(sdf2.parse(contentStrin));
                 } catch (ParseException ex) {
                     Logger.getLogger(ESPACENETPatentImporter.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
             case 9:
-                List<Priority> priorities = pat.getPriorities();
+                List<Priority> priorities = patent.getPriorities();
                 st = new StringTokenizer(contentStrin, "\n");
                 while (st.hasMoreTokens()) {
                     aux = st.nextToken();
@@ -307,7 +308,7 @@ public class ESPACENETPatentImporter implements PatentImporter {
                     }
                     priorities.add(priority);
                 }
-                pat.setPriorities(priorities);
+                patent.setPriorities(priorities);
                 //"Priority number(s): ";
                 //       pat.setPriorities(null);
                 break;
@@ -325,14 +326,13 @@ public class ESPACENETPatentImporter implements PatentImporter {
     }
 
     private void fillPatentCSV() {
-        pat.setLanguage(lang);
-        System.out.println("Linha : " + line);
+        patent.setLanguage(lang);
         vet = line.split("\",");
 
-        List<Inventor> inventors = pat.getInventors();
-        List<Applicant> applicants = pat.getApplicants();
-        List<Classification> classifications = pat.getClassifications();
-        List<Priority> priorities = pat.getPriorities();
+        List<Inventor> inventors = patent.getInventors();
+        List<Applicant> applicants = patent.getApplicants();
+        List<Classification> classifications = patent.getClassifications();
+        List<Priority> priorities = patent.getPriorities();
         for (int i = 0; i < vet.length; i++) {
             array = vet[i].split(";");
             for (int j = 0; j < array.length; j++) {
@@ -343,14 +343,14 @@ public class ESPACENETPatentImporter implements PatentImporter {
 
                 switch (i) {
                     case 0:
-                        pat.setTitleSelect(contentString);
+                        patent.setTitleSelect(contentString);
                         break;
                     case 1:
-                        pat.setPublicationNumber(contentString);
+                        patent.setPublicationNumber(contentString);
                         break;
                     case 2:
                         try {
-                            pat.setPublicationDate(sdf.parse(contentString));
+                            patent.setPublicationDate(sdf.parse(contentString));
                         } catch (ParseException ex) {
                             Logger.getLogger(ESPACENETPatentImporter.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -383,11 +383,11 @@ public class ESPACENETPatentImporter implements PatentImporter {
                         //"Cooperative Patent Classification: ";
                         break;
                     case 7:
-                        pat.setApplicationNumber(contentString);
+                        patent.setApplicationNumber(contentString);
                         break;
                     case 8:
                         try {
-                            pat.setApplicationDate(sdf2.parse(contentString));
+                            patent.setApplicationDate(sdf2.parse(contentString));
                         } catch (ParseException ex) {
                             Logger.getLogger(ESPACENETPatentImporter.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -413,17 +413,33 @@ public class ESPACENETPatentImporter implements PatentImporter {
                 }
             }
         }
-        pat.setApplicants(applicants);
-        pat.setClassifications(classifications);
+        patent.setApplicants(applicants);
+        patent.setClassifications(classifications);
         try {
-            pat.setMainClassification(classifications.get(0));
+            patent.setMainClassification(classifications.get(0));
         } catch (Exception ex) {
         }
-        pat.setPriorities(priorities);
-        pat.setInventors(inventors);
+        patent.setPriorities(priorities);
+        patent.setInventors(inventors);
 
     }
 
+    private void setAsComplete() {
+        if (patent.getApplicationNumber() != null) {
+            if (patent.getApplicationDate() != null) {
+                if (patent.getApplicants().size() > 0) {
+                    if (patent.getTitleSelect() != null) {
+                        if (patent.getMainClassification() != null) {
+                            if (patent.getInventors().size() > 0) {
+                                patent.setCompleted(true);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+ 
     private void parseLineCSV() {
         fillPatentCSV();
     }

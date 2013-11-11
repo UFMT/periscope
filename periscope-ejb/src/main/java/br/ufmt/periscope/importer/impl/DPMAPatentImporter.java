@@ -41,13 +41,13 @@ public class DPMAPatentImporter implements PatentImporter {
         nextLine();
         //Inicia na primeira linha dos dados
         nextLine();
-        if (testLine(line)){
+        if (testLine(line)) {
             patent = new Patent();
             return true;
         } else {
             return false;
         }
-       
+
     }
 
     @Override
@@ -76,7 +76,7 @@ public class DPMAPatentImporter implements PatentImporter {
     private void parseLine() throws ParseException {
         patent = new Patent();
         vet = line.split("; ", -2);
-        
+
         patent.setLanguage(lang);
         if (vet[6].length() > 5) {
             patent.setTitleSelect(vet[6].substring(5));
@@ -97,17 +97,18 @@ public class DPMAPatentImporter implements PatentImporter {
         readClassifications();
         readApplicants();
         readInventors();
+        setAsComplete();
     }
-    
+
     private Boolean testLine(String test) {
-        
-        String vetor[] = test.split( ";", -2);
+
+        String vetor[] = test.split(";", -2);
         if (vetor.length >= 6) {
             return true;
         } else {
             return false;
         }
-        
+
     }
 
     private void readInventors() {
@@ -193,6 +194,22 @@ public class DPMAPatentImporter implements PatentImporter {
         } catch (IOException e) {
             line = null;
             e.printStackTrace();
+        }
+    }
+
+    private void setAsComplete() {
+        if (patent.getApplicationNumber() != null) {
+            if (patent.getApplicationDate() != null) {
+                if (patent.getApplicants().size() > 0) {
+                    if (patent.getTitleSelect() != null) {
+                        if (patent.getMainClassification() != null) {
+                            if (patent.getInventors().size() > 0) {
+                                patent.setCompleted(true);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
