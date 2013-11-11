@@ -12,10 +12,16 @@ import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.qualifier.CurrentProject;
 import br.ufmt.periscope.report.MainApplicantReport;
 import br.ufmt.periscope.report.Pair;
+import br.ufmt.periscope.util.Filters;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @ManagedBean(name="report")
 @ViewScoped
@@ -27,12 +33,21 @@ public class ReportController {
 	private int limit = 5;
         private List<Pair> pairs;
         
-        private boolean complete;
+        private @Inject Filters filtro;
 
 	
 	@PostConstruct
 	public void init(){
-                complete = false;
+                filtro.setComplete(false);
+                filtro.setSelecionaData(0);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            filtro.setInicio(simpleDateFormat.parse("01/01/2000"));
+            filtro.setFim(simpleDateFormat.parse("31/12/2020"));
+        } catch (ParseException ex) {
+            Logger.getLogger(ReportController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                
 		mainApplicantChart();
 	}
 	
@@ -40,11 +55,10 @@ public class ReportController {
 	public void mainApplicantChart(){
 						
 		model = new CartesianChartModel();
-		ChartSeries series = report.mainApplicantSeries(currentProject, complete, limit);				
+		ChartSeries series = report.mainApplicantSeries(currentProject, limit, filtro);				
 		model.addSeries(series);
                 
                 setPairs(new ArrayList<Pair>());
-                
                 for(Object key : series.getData().keySet()){
 			Number value = series.getData().get(key);
 			getPairs().add(new Pair(key, value));
@@ -76,13 +90,15 @@ public class ReportController {
             this.pairs = pairs;
         }
 
-        public boolean isComplete() {
-            return complete;
-        }
+    public Filters getFiltro() {
+        return filtro;
+    }
 
-        public void setComplete(boolean complete) {
-            this.complete = complete;
-        }
+    public void setFiltro(Filters filtro) {
+        this.filtro = filtro;
+    }
+        
+        
 	
         
 	

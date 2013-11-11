@@ -9,6 +9,7 @@ import javax.inject.Named;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.report.Pair;
+import br.ufmt.periscope.util.Filters;
 
 import com.github.jmkgreen.morphia.Datastore;
 import com.mongodb.AggregationOutput;
@@ -22,7 +23,7 @@ public class InventorRepository {
 	private @Inject
 	Datastore ds;
 
-	public List<Pair> getInventors(Project currentProject,int limit) {
+	public List<Pair> getInventors(Project currentProject,int limit, Filters filtro) {
 
 		/**
 		 * db.Patent.aggregate( {$match:{"project.$id":new
@@ -35,6 +36,17 @@ public class InventorRepository {
 		DBObject matchProj = new BasicDBObject();
 		matchProj.put("$match",
 				new BasicDBObject("project.$id", currentProject.getId()));
+                
+                DBObject matchComplete = new BasicDBObject();
+                matchComplete.put("$match", new BasicDBObject("completed", filtro.isComplete()));
+                
+                DBObject matchDate = new BasicDBObject();
+                if (filtro.getSelecionaData() == 1){
+                    matchDate.put("$match", new BasicDBObject("publicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim())));
+                }
+                else{
+                    matchDate.put("$match", new BasicDBObject("applicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim())));
+                }
 
 		DBObject matchBlacklist = new BasicDBObject();
 		matchBlacklist.put("$match", new BasicDBObject("blacklisted", false));
@@ -49,10 +61,11 @@ public class InventorRepository {
 		DBObject sort = new BasicDBObject("$sort", new BasicDBObject(
 				"applicationPerInventor", -1));
 
+                System.out.println(limit);
 		DBObject pipeLimit = new BasicDBObject("$limit", limit);
 
 		AggregationOutput output = ds.getCollection(Patent.class).aggregate(
-				matchProj, matchBlacklist, unwind, group, sort, pipeLimit);
+				matchProj, matchComplete, matchDate, matchBlacklist, unwind, group, sort, pipeLimit);
 
 		BasicDBList outputResult = (BasicDBList) output.getCommandResult().get(
 				"result");

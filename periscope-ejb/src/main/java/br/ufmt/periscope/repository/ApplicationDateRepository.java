@@ -9,6 +9,7 @@ import javax.inject.Named;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.report.Pair;
+import br.ufmt.periscope.util.Filters;
 
 import com.github.jmkgreen.morphia.Datastore;
 import com.mongodb.AggregationOutput;
@@ -22,7 +23,7 @@ public class ApplicationDateRepository {
 	private @Inject
 	Datastore ds;
 
-	public List<Pair> getApplicationsByDate(Project projetoAtual) {
+	public List<Pair> getApplicationsByDate(Project projetoAtual, Filters filtro) {
 
 		/**
 		 * db.Patent.aggregate( {$match:{"project.$id":new
@@ -34,6 +35,18 @@ public class ApplicationDateRepository {
 		DBObject matchProj = new BasicDBObject();
 		matchProj.put("$match", new BasicDBObject("project.$id", projetoAtual.getId()));
 
+                System.out.println(filtro.isComplete());
+                DBObject matchComplete = new BasicDBObject();
+                matchComplete.put("$match", new BasicDBObject("completed", filtro.isComplete()));
+                
+                DBObject matchDate = new BasicDBObject();
+                if (filtro.getSelecionaData() == 1){
+                    matchDate.put("$match", new BasicDBObject("publicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim())));
+                }
+                else{
+                    matchDate.put("$match", new BasicDBObject("applicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim())));
+                }
+                
 		DBObject matchBlacklist = new BasicDBObject();
 		matchBlacklist.put("$match",new BasicDBObject("blacklisted", false));
 
@@ -49,7 +62,7 @@ public class ApplicationDateRepository {
 		DBObject sort = new BasicDBObject("$sort",new BasicDBObject("_id", 1));
 		
 		AggregationOutput output = ds.getCollection(Patent.class).aggregate(
-				matchProj, matchBlacklist, project, group, sort);
+				matchProj, matchComplete, matchDate, matchBlacklist, project, group, sort);
 		
 		
 		BasicDBList outputResult = (BasicDBList) output.getCommandResult().get("result");

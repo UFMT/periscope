@@ -107,4 +107,5 @@
         </resource-bundle>
         <message-bundle>messages</message-bundle>
     </application>
+    
 </faces-config>

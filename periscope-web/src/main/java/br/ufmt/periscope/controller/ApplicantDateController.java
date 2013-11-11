@@ -15,44 +15,78 @@ import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.qualifier.CurrentProject;
 import br.ufmt.periscope.report.ApplicationDateReport;
 import br.ufmt.periscope.report.Pair;
+import br.ufmt.periscope.util.Filters;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-@ManagedBean(name="applicantDateReport")
+@ManagedBean(name = "applicantDateReport")
 @ViewScoped
 public class ApplicantDateController {
-	
-	private @Inject @CurrentProject Project currentProject;
-	private @Inject ApplicationDateReport report;
-	private CartesianChartModel model;
-	private List<Pair> pairs;
-	
-	@PostConstruct
-	public void init(){		
-		model = new CartesianChartModel();
-		ChartSeries series = report.applicationDateSeries(currentProject);		
-		model.addSeries(series);
-		
-		setPairs(new ArrayList<Pair>());
-		
-		for(Object key : series.getData().keySet()){
-			Number value = series.getData().get(key);
-			getPairs().add(new Pair(key, value));
-		}
-	}
-	
-	public CartesianChartModel getModel() {
-		return model;
-	}
 
-	public void setModel(CartesianChartModel model) {
-		this.model = model;
-	}
+    private @Inject
+    @CurrentProject
+    Project currentProject;
+    private @Inject
+    ApplicationDateReport report;
+    private CartesianChartModel model;
+    private List<Pair> pairs;
+    private @Inject
+    Filters filtro;
 
-	public List<Pair> getPairs() {
-		return pairs;
-	}
+    @PostConstruct
+    public void init() {
+        filtro.setComplete(false);
+        filtro.setSelecionaData(0);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            filtro.setInicio(simpleDateFormat.parse("01/01/2000"));
+            filtro.setFim(simpleDateFormat.parse("31/12/2020"));
+        } catch (ParseException ex) {
+            Logger.getLogger(ReportController.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+        applicantDateChart();
+    }
+    
+    public void applicantDateChart (){
+        model = new CartesianChartModel();
+        System.out.println("2");
+        ChartSeries series = report.applicationDateSeries(currentProject, filtro);
+        model.addSeries(series);
 
-	public void setPairs(List<Pair> pairs) {
-		this.pairs = pairs;
-	}
+        setPairs(new ArrayList<Pair>());
 
+        for (Object key : series.getData().keySet()) {
+            Number value = series.getData().get(key);
+            getPairs().add(new Pair(key, value));
+        }
+        Collections.reverse(pairs);
+        
+    }
+
+    public CartesianChartModel getModel() {
+        return model;
+    }
+
+    public void setModel(CartesianChartModel model) {
+        this.model = model;
+    }
+
+    public List<Pair> getPairs() {
+        return pairs;
+    }
+
+    public void setPairs(List<Pair> pairs) {
+        this.pairs = pairs;
+    }
+
+    public Filters getFiltro() {
+        return filtro;
+    }
+
+    public void setFiltro(Filters filtro) {
+        this.filtro = filtro;
+    }
 }

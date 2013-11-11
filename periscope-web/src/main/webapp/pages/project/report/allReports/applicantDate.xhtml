@@ -1,50 +1,79 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
 
-<ui:composition template="/template/template.xhtml">
+    <ui:composition template="/template/template.xhtml">
 
-	<ui:define name="growl"></ui:define>
+        <ui:define name="growl"></ui:define>
 
-	<ui:define name="content">
-		<h:form styleClass="container">
+        <ui:define name="content">
+            
+            <h:form id="chart" styleClass="container">
 
-			<h1>Depositos / #{msgs['year']}</h1>
+                <h1>Depositos / #{msgs['year']}</h1>
+                <p:selectBooleanCheckbox id="complete" itemLabel="#{msgs['completo']}"
+                                         value="#{applicantDateReport.filtro.complete}">
+                    <p:ajax update="tudo" 
+                            listener="#{applicantDateReport.applicantDateChart()}" />
+                </p:selectBooleanCheckbox>
 
-			<p:lineChart id="line" value="#{applicantDateReport.model}"
-				legendPosition="e" title="Número de depositos por ano"
-				style="height:300px"/>
+                <h:outputScript library="js" name="locales.js"></h:outputScript>
 
-			<h:panelGrid columns="2">
+                <h:panelGrid columns="7" cellpadding="5">  
+                    <h:outputText value="Defina o período de interesse:"/> 
+                    <p:selectOneMenu value="#{applicantDateReport.filtro.selecionaData}">
+                        <f:selectItem itemLabel="Data de Publicação" itemValue="0" />  
+                        <f:selectItem itemLabel="Data de Depósito" itemValue="1" />  
 
-				<h:column>
-					<p:graphicImage />
-					<p:graphicImage />
-				</h:column>
+                    </p:selectOneMenu>
+                    <h:outputText value="Inicial:"/>
+                    <p:calendar  value="#{applicantDateReport.filtro.inicio}" mindate="01/01/2000" maxdate="31/12/2020" locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
+                    </p:calendar>
 
-				<h:column>
-                                    <p:dataTable emptyMessage="Nenhum depositante cadastrado." var="pair" value="#{applicantDateReport.pairs}"
-                                                 >
+                    <h:outputText value="Final:"/>
+                    <p:calendar value="#{applicantDateReport.filtro.fim}" mindate="02/01/2000" maxdate="31/12/2020" locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
+                    </p:calendar>
 
-						<p:column headerText="#{msgs['year']}">
-							<h:outputText value="#{pair.key}" />
-						</p:column>
+                    <p:commandButton action="#{applicantDateReport.applicantDateChart()}" update="tudo" value="Pesquisar"></p:commandButton>
+                </h:panelGrid>
 
-						<p:column headerText="#{msgs['documents.number']}">
-							<h:outputText value="#{pair.value}" />
-						</p:column>
 
-					</p:dataTable>
-				</h:column>
 
-			</h:panelGrid>
-		</h:form>
-	</ui:define>
+                <h:panelGrid id="tudo" columns="2" styleClass="container">
 
-</ui:composition>
+
+                    <p:lineChart id="line" value="#{applicantDateReport.model}" rendered="#{applicantDateReport.model.series.get(0).getData().size()!=0}"
+                                 legendPosition="e" title="Número de depositos por ano"
+                                 style="width:600px; height:300px" />
+
+                    <h:column>
+                        <p:graphicImage />
+                        <p:graphicImage />
+                    </h:column>
+
+                    <h:column>
+                        <p:dataTable emptyMessage="Nenhum depositante cadastrado." var="pair" value="#{applicantDateReport.pairs}"
+                                     >
+
+                            <p:column headerText="#{msgs['year']}">
+                                <h:outputText value="#{pair.key}" />
+                            </p:column>
+
+                            <p:column headerText="#{msgs['documents.number']}">
+                                <h:outputText value="#{pair.value}" />
+                            </p:column>
+
+                        </p:dataTable>
+                    </h:column>
+
+                </h:panelGrid>
+            </h:form>
+        </ui:define>
+
+    </ui:composition>
 </html>

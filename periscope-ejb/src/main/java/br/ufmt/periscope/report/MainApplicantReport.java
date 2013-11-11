@@ -10,10 +10,12 @@ import org.primefaces.model.chart.ChartSeries;
 
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.repository.ApplicantRepository;
+import br.ufmt.periscope.util.Filters;
 
 import com.github.jmkgreen.morphia.Datastore;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import java.util.Date;
 
 @Named
 public class MainApplicantReport {
@@ -21,10 +23,10 @@ public class MainApplicantReport {
 	private @Inject ApplicantRepository repo;
 	private @Inject Datastore ds;
 	
-	public ChartSeries mainApplicantSeries(Project currentProject, boolean complete, int limit){
+	public ChartSeries mainApplicantSeries(Project currentProject, int limit, Filters filtro){
 		ChartSeries series = new ChartSeries("Número de Depositos");
 		
-		repo.updateMainApplicants(currentProject, complete);		
+		repo.updateMainApplicants(currentProject, filtro);		
 		List<DBObject> it = ds.getDB()
 							  .getCollection("mainApplicant").find()
 							  .sort(new BasicDBObject("value",-1))

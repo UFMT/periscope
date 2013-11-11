@@ -10,6 +10,7 @@ import org.primefaces.model.chart.ChartSeries;
 
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.repository.ClassificationRepository;
+import br.ufmt.periscope.util.Filters;
 
 @Named
 public class MainIPCReport {
@@ -18,11 +19,11 @@ public class MainIPCReport {
 	ClassificationRepository repo;
 
 	public ChartSeries ipcCount(Project currentProject, boolean klass,
-			boolean subKlass, boolean group, boolean subGroup, int limit) {
+			boolean subKlass, boolean group, boolean subGroup, int limit, Filters filtro) {
 
 		ChartSeries series = new ChartSeries("Contagem classificação");
 		
-		List<Pair> i = repo.getMainIPC(currentProject, klass, subKlass, group, subGroup, limit);
+		List<Pair> i = repo.getMainIPC(currentProject, klass, subKlass, group, subGroup, limit, filtro);
 		
 		Collections.reverse(i);
 		

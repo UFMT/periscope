@@ -10,16 +10,17 @@ import org.primefaces.model.chart.ChartSeries;
 
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.repository.InventorRepository;
+import br.ufmt.periscope.util.Filters;
 
 @Named
 public class MainInventorReport {
 	
 	private @Inject InventorRepository repo;
 	
-	public ChartSeries InventorDateSeries(Project currentProject, int limit) {
+	public ChartSeries InventorDateSeries(Project currentProject, int limit, Filters filtro) {
 		ChartSeries series = new ChartSeries("Depositos por inventores");
 
-		List<Pair> i = repo.getInventors(currentProject,limit);
+		List<Pair> i = repo.getInventors(currentProject,limit, filtro);
 		
 		Collections.reverse(i);
 		

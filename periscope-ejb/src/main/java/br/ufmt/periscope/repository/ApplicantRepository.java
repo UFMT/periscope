@@ -29,6 +29,7 @@ import org.apache.lucene.util.Version;
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
+import br.ufmt.periscope.util.Filters;
 
 import com.github.jmkgreen.morphia.Datastore;
 import com.github.jmkgreen.morphia.mapping.Mapper;
@@ -41,6 +42,7 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MapReduceCommand;
 import com.mongodb.MapReduceCommand.OutputType;
+import java.util.Date;
 
 @Named
 public class ApplicantRepository {
@@ -79,7 +81,7 @@ public class ApplicantRepository {
 		return new ArrayList<Applicant>(map.values());
 	}
 	
-	public void updateMainApplicants(Project currentProject, boolean complete){
+	public void updateMainApplicants(Project currentProject, Filters filtro){
 		
 		String map = "function() { " +
 				"for(var i in this.applicants){ " +
@@ -96,8 +98,12 @@ public class ApplicantRepository {
 		BasicDBObject where = new BasicDBObject();		
 		where.put("project.$id", currentProject.getId());		
 		where.put("applicants", new BasicDBObject("$exists", true));
-                if (complete){
-                    where.put("completed", complete);
+                where.put("completed", filtro.isComplete());
+                if (filtro.getSelecionaData() == 1){
+                    where.put("publicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim()));
+                }
+                else{
+                    where.put("applicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim()));
                 }
 		
 		DBCollection coll = ds.getCollection(Patent.class);

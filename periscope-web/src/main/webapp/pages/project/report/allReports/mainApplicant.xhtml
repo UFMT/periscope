@@ -1,62 +1,84 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
 
-<ui:composition template="/template/template.xhtml">
+    <ui:composition template="/template/template.xhtml">
 
-	<ui:define name="growl"></ui:define>
+        <ui:define name="growl"></ui:define>
 
-	<ui:define name="content">
+        <ui:define name="content">
 
             <h:form id="chart" styleClass="container">
 
-			<center>
-				<h4>Número de Depositantes</h4>
-				<p:spinner value="#{report.limit}" min="5" max="20"
-					style="padding:0 20px 0 0">
-					<p:ajax listener="#{report.mainApplicantChart()}" update="@form"  />
-				</p:spinner>
-			</center>
+                <center>
+                    <h4>Número de Depositantes</h4>
+                    <p:spinner value="#{report.limit}" min="5" max="20"
+                               style="padding:0 20px 0 0">
+                        <p:ajax listener="#{report.mainApplicantChart()}" update="@form"  />
+                    </p:spinner>
+                </center>
+
                 
-				<p:selectBooleanCheckbox id="complete" itemLabel="#{msgs['completo']}"
-                                        value="#{report.complete}">
-                                        <p:ajax update="tudo" 
-                                        listener="#{report.mainApplicantChart()}" />
-				</p:selectBooleanCheckbox>
-                        
-                                <h:panelGrid columns="1" id="tudo" styleClass="container" >
-                            
-                                        <p:outputLabel value="Vazio" rendered="#{report.model.series.get(0).getData().size()==0}" />
-                        
-                        
-                                        <p:barChart id="horizontal" value="#{report.model}"  rendered="#{report.model.series.get(0).getData().size()!=0}"
-                                                legendPosition="se" title="Principais Depositantes"
-                                                orientation="horizontal" style="height:300px" datatipFormat="%s" />
-                                
-                                        <p:dataTable id="applicants"
-                                              emptyMessage="Nenhum depositante cadastrado." var="pair"
-                                              value="#{report.pairs}" style="height:300px">
+                
+                <p:selectBooleanCheckbox id="complete" itemLabel="#{msgs['completo']}"
+                                         value="#{report.filtro.complete}">
+                    <p:ajax update="tudo" 
+                            listener="#{report.mainApplicantChart()}" />
+                </p:selectBooleanCheckbox>
 
-                                        <p:column headerText="Nome">
-					<h:outputText value="#{pair.key}" />
-                                        </p:column>
+                <h:outputScript library="js" name="locales.js"></h:outputScript>
 
-                                        <p:column headerText="#{msgs['documents.number']}">
-					<h:outputText value="#{pair.value}" />
-                                        </p:column>
+                <h:panelGrid columns="7" cellpadding="5">  
+                    <h:outputText value="Defina o período de interesse:"/> 
+                    <p:selectOneMenu value="#{report.filtro.selecionaData}">
+                        <f:selectItem itemLabel="Data de Publicação" itemValue="0" />  
+                        <f:selectItem itemLabel="Data de Depósito" itemValue="1" />  
 
-                                </p:dataTable>
+                    </p:selectOneMenu>
+                    <h:outputText value="Inicial:"/>
+                    <p:calendar  value="#{report.filtro.inicio}" mindate="01/01/2000" maxdate="31/12/2020" locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
+                    </p:calendar>
 
-                        </h:panelGrid>
-                        
-                        
-		</h:form>
-	</ui:define>
+                    <h:outputText value="Final:"/>
+                    <p:calendar value="#{report.filtro.fim}" mindate="02/01/2000" maxdate="31/12/2020" locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
+                    </p:calendar>
 
-</ui:composition>
+                    <p:commandButton action="#{report.mainApplicantChart()}" update="tudo" value="Pesquisar"></p:commandButton>
+                </h:panelGrid>
+
+                <h:panelGrid columns="1" id="tudo" styleClass="container" >
+
+                    <p:outputLabel value="Vazio" rendered="#{report.model.series.get(0).getData().size()==0}" />
+
+
+                    <p:barChart id="horizontal" value="#{report.model}"  rendered="#{report.model.series.get(0).getData().size()!=0}"
+                                legendPosition="se" title="Principais Depositantes"
+                                orientation="horizontal" style="height:300px" datatipFormat="%s" />
+
+                    <p:dataTable id="applicants"
+                                 emptyMessage="Nenhum depositante cadastrado." var="pair"
+                                 value="#{report.pairs}" style="height:300px">
+
+                        <p:column headerText="Nome">
+                            <h:outputText value="#{pair.key}" />
+                        </p:column>
+
+                        <p:column headerText="#{msgs['documents.number']}">
+                            <h:outputText value="#{pair.value}" />
+                        </p:column>
+
+                    </p:dataTable>
+
+                </h:panelGrid>
+
+
+            </h:form>
+        </ui:define>
+
+    </ui:composition>
 </html>

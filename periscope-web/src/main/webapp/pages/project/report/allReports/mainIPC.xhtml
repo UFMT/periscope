@@ -1,100 +1,129 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
 
-<ui:composition template="/template/template.xhtml">
+    <ui:composition template="/template/template.xhtml">
 
-	<ui:define name="growl"></ui:define>
+        <ui:define name="growl"></ui:define>
 
-	<ui:define name="content">
+        <ui:define name="content">
 
-		<h1>Principais Classificações</h1>
+            <h1>Principais Classificações</h1>
 
-		<h:form prependId="false">
+            <h:form id="chart" styleClass="container">
 
-			<center>
-				<h4>Número de classificações</h4>
-				<p:spinner value="#{mainIPCController.limit}" min="5" max="20"
-					style="padding:0 20px 0 0">
-					<p:ajax listener="#{mainIPCController.mainIpcChart()}"
-						update="@form" process="@this" />
-				</p:spinner>
-			</center>
+                <center>
+                    <h4>Número de classificações</h4>
+                    <p:spinner value="#{mainIPCController.limit}" min="5" max="20"
+                               style="padding:0 20px 0 0">
+                        <p:ajax listener="#{mainIPCController.mainIpcChart()}"
+                                update="@form" process="@this"/>
+                    </p:spinner>
+                </center>
 
-			<h:panelGrid columns="4">
+                <p:selectBooleanCheckbox id="complete" itemLabel="#{msgs['completo']}"
+                                         value="#{mainIPCController.filtro.complete}">
+                    <p:ajax update="tudo" 
+                            listener="#{mainIPCController.update()}" />
+                </p:selectBooleanCheckbox>
 
-				<p:selectBooleanCheckbox id="klass" itemLabel="#{msgs['class']}"
-					value="#{mainIPCController.klass}">
-					<p:ajax update="subKlass,group,subGroup,horizontal,datatable"
-						listener="#{mainIPCController.update()}" />
-				</p:selectBooleanCheckbox>
+                <h:outputScript library="js" name="locales.js"></h:outputScript>
 
-				<p:selectBooleanCheckbox id="subKlass"
-					disabled="#{!mainIPCController.klass}"
-					itemLabel="#{msgs['subclass']}"
-					value="#{mainIPCController.subKlass}">
-					<p:ajax update="group,subGroup,horizontal,datatable"
-						listener="#{mainIPCController.update()}" />
-				</p:selectBooleanCheckbox>
+                <h:panelGrid columns="7" cellpadding="5">  
+                    <h:outputText value="Defina o período de interesse:"/> 
+                    <p:selectOneMenu value="#{mainIPCController.filtro.selecionaData}">
+                        <f:selectItem itemLabel="Data de Publicação" itemValue="0" />  
+                        <f:selectItem itemLabel="Data de Depósito" itemValue="1" />  
 
-				<p:selectBooleanCheckbox id="group"
-					disabled="#{!mainIPCController.klass or !mainIPCController.subKlass}"
-					itemLabel="#{msgs['group']}" value="#{mainIPCController.group}">
-					<p:ajax update="subGroup,horizontal,datatable"
-						listener="#{mainIPCController.update()}" />
-				</p:selectBooleanCheckbox>
+                    </p:selectOneMenu>
+                    <h:outputText value="Inicial:"/>
+                    <p:calendar  value="#{mainIPCController.filtro.inicio}" mindate="01/01/2000" maxdate="31/12/2020" locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
+                    </p:calendar>
 
-				<p:selectBooleanCheckbox id="subGroup"
-					disabled="#{!mainIPCController.klass or !mainIPCController.subKlass or !mainIPCController.group}"
-					itemLabel="#{msgs['subgroup']}"
-					value="#{mainIPCController.subGroup}">
-					<p:ajax update="horizontal,datatable"
-						listener="#{mainIPCController.update()}" />
-				</p:selectBooleanCheckbox>
+                    <h:outputText value="Final:"/>
+                    <p:calendar value="#{mainIPCController.filtro.fim}" mindate="02/01/2000" maxdate="31/12/2020" locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
+                    </p:calendar>
 
-			</h:panelGrid>
+                    <p:commandButton action="#{mainIPCController.update()}" update="tudo" value="Pesquisar"></p:commandButton>
+                </h:panelGrid>
 
-			<p:barChart id="horizontal" value="#{mainIPCController.model}"
-				orientation="horizontal" legendPosition="e" datatipFormat="%s"
-				title="Principais classificações" style="height:300px" />
+                <h:panelGrid columns="4">
 
-			<h:panelGrid columns="2">
+                    <p:selectBooleanCheckbox id="klass" itemLabel="#{msgs['class']}"
+                                             value="#{mainIPCController.klass}">
+                        <p:ajax update="subKlass,group,subGroup,tudo"
+                                listener="#{mainIPCController.update()}" />
+                    </p:selectBooleanCheckbox>
 
-				<h:column>
-					<p:graphicImage />
-					<p:graphicImage />
-				</h:column>
+                    <p:selectBooleanCheckbox id="subKlass"
+                                             disabled="#{!mainIPCController.klass}"
+                                             itemLabel="#{msgs['subclass']}"
+                                             value="#{mainIPCController.subKlass}">
+                        <p:ajax update="group,subGroup,tudo"
+                                listener="#{mainIPCController.update()}" />
+                    </p:selectBooleanCheckbox>
 
-				<h:column>
+                    <p:selectBooleanCheckbox id="group"
+                                             disabled="#{!mainIPCController.klass or !mainIPCController.subKlass}"
+                                             itemLabel="#{msgs['group']}" value="#{mainIPCController.group}">
+                        <p:ajax update="subGroup,tudo"
+                                listener="#{mainIPCController.update()}" />
+                    </p:selectBooleanCheckbox>
 
-					<p:dataTable id="datatable"
-						emptyMessage="Nenhuma classificacao cadastrada." var="ipc"
-                                                value="#{mainIPCController.pairs}" >
+                    <p:selectBooleanCheckbox id="subGroup"
+                                             disabled="#{!mainIPCController.klass or !mainIPCController.subKlass or !mainIPCController.group}"
+                                             itemLabel="#{msgs['subgroup']}"
+                                             value="#{mainIPCController.subGroup}">
+                        <p:ajax update="tudo"
+                                listener="#{mainIPCController.update()}" />
+                    </p:selectBooleanCheckbox>
 
-						<!-- 					<p:column headerText="#{msgs['position']}" > -->
-						<!-- 						<h:outputText value="ipc." /> -->
-						<!-- 					</p:column> -->
+                </h:panelGrid>
+             
 
-						<p:column headerText="#{msgs['classification']}">
-							<h:outputText value="#{ipc.key}" />
-						</p:column>
+                <h:panelGrid id="tudo" columns="2" styleClass="container">
 
-						<p:column headerText="#{msgs['documents.number']}">
-							<h:outputText value="#{ipc.value}" />
-						</p:column>
+                        
+                        
+                            <p:barChart id="horizontal" value="#{mainIPCController.model}" rendered="#{mainIPCController.model.series.get(0).getData().size()!=0}"
+                                orientation="horizontal" legendPosition="e" datatipFormat="%s"
+                                title="Principais classificações" style="width:600px ; height:300px" />
+                        
+                        <h:column>
+                            <p:graphicImage />
+                            <p:graphicImage />
+                        </h:column>
 
-					</p:dataTable>
-				</h:column>
+                        <h:column>
 
-			</h:panelGrid>
-		</h:form>
+                            <p:dataTable id="datatable"
+                                         emptyMessage="Nenhuma classificacao cadastrada." var="ipc"
+                                         value="#{mainIPCController.pairs}" >
 
-	</ui:define>
+                                                <!-- 					<p:column headerText="#{msgs['position']}" > -->
+                                <!-- 						<h:outputText value="ipc." /> -->
+                                <!-- 					</p:column> -->
 
-</ui:composition>
+                                <p:column headerText="#{msgs['classification']}">
+                                    <h:outputText value="#{ipc.key}" />
+                                </p:column>
+
+                                <p:column headerText="#{msgs['documents.number']}">
+                                    <h:outputText value="#{ipc.value}" />
+                                </p:column>
+
+                            </p:dataTable>
+                        </h:column>
+
+                    </h:panelGrid>
+            </h:form>
+
+        </ui:define>
+
+    </ui:composition>
 </html>

@@ -27,27 +27,34 @@
                     </p:spinner>
                 </center>
                 <br/>
+                <p:selectBooleanCheckbox id="complete" itemLabel="#{msgs['completo']}"
+                                         value="#{mainInventorController.filtro.complete}">
+                    <p:ajax update="tudo" 
+                            listener="#{mainInventorController.mainInventorChart()}" />
+                </p:selectBooleanCheckbox>
                 <h:outputScript library="js" name="locales.js"></h:outputScript>
 
-                <h:panelGrid columns="3" cellpadding="5">  
-                    <h:outputText value="Defina o período de interesse:"> 
-                        <p:selectOneMenu >
-                            <f:selectItem itemLabel="Data de Publicação" itemValue="" />  
+                <h:panelGrid columns="7" cellpadding="5">  
+                    <h:outputText value="Defina o período de interesse:"/> 
+                    <p:selectOneMenu value="#{mainInventorController.filtro.selecionaData}">
+                            <f:selectItem itemLabel="Data de Publicação" itemValue="0" />  
                             <f:selectItem itemLabel="Data de Depósito" itemValue="1" />  
 
                         </p:selectOneMenu>
-                    </h:outputText>
-                    <h:outputText value="Inicial:">
-                        <p:calendar locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy" />
-                    </h:outputText>
+                    <h:outputText value="Inicial:"/>
+                    <p:calendar value="#{mainInventorController.filtro.inicio}" mindate="01/01/2000" maxdate="31/12/2020" locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy" />
 
-                    <h:outputText value="Final:">
-                        <p:calendar locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy"/>
-                    </h:outputText>z
+
+                    <h:outputText value="Final:"/>
+                    <p:calendar value="#{mainInventorController.filtro.fim}" mindate="02/01/2000" maxdate="31/12/2020" locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy"/>
+                    
+                    <p:commandButton action="#{mainInventorController.mainInventorChart()}" update="tudo" value="Pesquisar"></p:commandButton>
 
                 </h:panelGrid>
 
-                <p:barChart id="horizontal" value="#{mainInventorController.model}"
+                <h:panelGrid columns="1" id="tudo" styleClass="container" >
+                    
+                    <p:barChart id="horizontal" value="#{mainInventorController.model}" rendered="#{mainInventorController.model.series.get(0).getData().size()!=0}"
                             orientation="horizontal" legendPosition="se" datatipFormat="%s"
                             title="Número de depositos por Inventores" style="height:300px"
                             />
@@ -65,6 +72,8 @@
                     </p:column>
 
                 </p:dataTable>
+                
+                </h:panelGrid>
 
 
 

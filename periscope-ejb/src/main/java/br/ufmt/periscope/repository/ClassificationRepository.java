@@ -9,6 +9,7 @@ import javax.inject.Named;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.report.Pair;
+import br.ufmt.periscope.util.Filters;
 
 import com.github.jmkgreen.morphia.Datastore;
 import com.mongodb.AggregationOutput;
@@ -23,36 +24,36 @@ public class ClassificationRepository {
 	Datastore ds;
 
 	public List<Pair> getMainIPC(Project currentProject, boolean klass,
-			boolean subKlass, boolean group, boolean subGroup, int limit) {
+			boolean subKlass, boolean group, boolean subGroup, int limit, Filters filtro) {
 
 		AggregationOutput output;
 
 		if (!klass) {
 			// classe nao esta selecionada
 			// buscar secao
-			output = getSection(currentProject);
+			output = getSection(currentProject, limit, filtro);
 			subKlass = false;
 			group = false;
 			subGroup = false;
 		} else if (!subKlass) {
 			// classe selecionada e subclasse nao esta
 			// buscar classe
-			output = getKlass(currentProject, limit);
+			output = getKlass(currentProject, limit, filtro);
 			group = false;
 			subGroup = false;
 		} else if (!group) {
 			// classe e subclasse selecionadas e grupo nao selecionado
 			// buscar subclasse
-			output = getSubKlass(currentProject, limit);
+			output = getSubKlass(currentProject, limit, filtro);
 			subGroup = false;
 		} else if (!subGroup) {
 			// classe, subclasse e grupo selecionado, subgrupo nao selecioando
 			// buscar grupo
-			output = getGroup(currentProject, limit);
+			output = getGroup(currentProject, limit, filtro);
 		} else {
 			// tudo selecionado
 			// buscar subgrupo
-			output = getSubGroup(currentProject, limit);
+			output = getSubGroup(currentProject, limit, filtro);
 		}
 
 		BasicDBList outputResult = (BasicDBList) output.getCommandResult().get(
@@ -69,7 +70,7 @@ public class ClassificationRepository {
 		return pairs;
 	}
 
-	private AggregationOutput getSection(Project currentProject) {
+	private AggregationOutput getSection(Project currentProject,int limit, Filters filtro) {
 		/**
 		 * db.Patent.aggregate( {$match:{"project.$id":new
 		 * ObjectId("51db042d44ae70d2d3649c20")}},
@@ -85,6 +86,17 @@ public class ClassificationRepository {
 		matchProj.put("$match",
 				new BasicDBObject("project.$id", currentProject.getId()));
 
+                DBObject matchComplete = new BasicDBObject();
+                matchComplete.put("$match", new BasicDBObject("completed", filtro.isComplete()));
+                
+                DBObject matchDate = new BasicDBObject();
+                if (filtro.getSelecionaData() == 1){
+                    matchDate.put("$match", new BasicDBObject("publicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim())));
+                }
+                else{
+                    matchDate.put("$match", new BasicDBObject("applicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim())));
+                }
+                
 		DBObject matchBlacklist = new BasicDBObject();
 		matchBlacklist.put("$match", new BasicDBObject("blacklisted", false));
 
@@ -103,13 +115,15 @@ public class ClassificationRepository {
 
 		DBObject sort = new BasicDBObject("$sort", new BasicDBObject(
 				"applicationPerSector", -1));
+                DBObject limit2 = new BasicDBObject("$limit",limit);
 
-		return ds.getCollection(Patent.class).aggregate(matchProj,
+                System.out.println(limit);
+		return ds.getCollection(Patent.class).aggregate(matchProj, matchComplete, matchDate,
 				matchBlacklist, matchMainClassificationExists, project, group,
-				sort);
+				sort, limit2);
 	}
 
-	private AggregationOutput getKlass(Project currentProject, int limit) {
+	private AggregationOutput getKlass(Project currentProject, int limit, Filters filtro) {
 		/**
 		 * db.Patent.aggregate( {$match:{"project.$id":new
 		 * ObjectId("51db042d44ae70d2d3649c20")}},
@@ -124,6 +138,17 @@ public class ClassificationRepository {
 		matchProj.put("$match",
 				new BasicDBObject("project.$id", currentProject.getId()));
 
+                DBObject matchComplete = new BasicDBObject();
+                matchComplete.put("$match", new BasicDBObject("completed", filtro.isComplete()));
+                
+                DBObject matchDate = new BasicDBObject();
+                if (filtro.getSelecionaData() == 1){
+                    matchDate.put("$match", new BasicDBObject("publicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim())));
+                }
+                else{
+                    matchDate.put("$match", new BasicDBObject("applicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim())));
+                }
+                
 		DBObject matchBlacklist = new BasicDBObject();
 		matchBlacklist.put("$match", new BasicDBObject("blacklisted", false));
 
@@ -145,12 +170,12 @@ public class ClassificationRepository {
 		
 		DBObject limit2 = new BasicDBObject("$limit",limit);
 
-		return ds.getCollection(Patent.class).aggregate(matchProj,
+		return ds.getCollection(Patent.class).aggregate(matchProj, matchComplete, matchDate,
 				matchBlacklist, matchMainClassificationExists, project, group,
 				sort, limit2);
 	}
 
-	private AggregationOutput getSubKlass(Project currentProject, int limit) {
+	private AggregationOutput getSubKlass(Project currentProject, int limit, Filters filtro) {
 		/**
 		 * db.Patent.aggregate( {$match:{"project.$id":new
 		 * ObjectId("51db042d44ae70d2d3649c20")}},
@@ -165,6 +190,17 @@ public class ClassificationRepository {
 		matchProj.put("$match",
 				new BasicDBObject("project.$id", currentProject.getId()));
 
+                DBObject matchComplete = new BasicDBObject();
+                matchComplete.put("$match", new BasicDBObject("completed", filtro.isComplete()));
+                
+                DBObject matchDate = new BasicDBObject();
+                if (filtro.getSelecionaData() == 1){
+                    matchDate.put("$match", new BasicDBObject("publicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim())));
+                }
+                else{
+                    matchDate.put("$match", new BasicDBObject("applicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim())));
+                }               
+                
 		DBObject matchBlacklist = new BasicDBObject();
 		matchBlacklist.put("$match", new BasicDBObject("blacklisted", false));
 
@@ -181,12 +217,12 @@ public class ClassificationRepository {
 		
 		DBObject limit2 = new BasicDBObject("$limit",limit);
 
-		return ds.getCollection(Patent.class).aggregate(matchProj,
+		return ds.getCollection(Patent.class).aggregate(matchProj, matchComplete, matchDate,
 				matchMainClassificationExists, matchBlacklist, group, sort, limit2);
 
 	}
 
-	private AggregationOutput getGroup(Project currentProject, int limit) {
+	private AggregationOutput getGroup(Project currentProject, int limit, Filters filtro) {
 		/**
 		 * db.Patent.aggregate( {$match:{"project.$id":new
 		 * ObjectId("51db042d44ae70d2d3649c20")}},
@@ -201,6 +237,17 @@ public class ClassificationRepository {
 		matchProj.put("$match",
 				new BasicDBObject("project.$id", currentProject.getId()));
 
+                DBObject matchComplete = new BasicDBObject();
+                matchComplete.put("$match", new BasicDBObject("completed", filtro.isComplete()));
+                
+                DBObject matchDate = new BasicDBObject();
+                if (filtro.getSelecionaData() == 1){
+                    matchDate.put("$match", new BasicDBObject("publicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim())));
+                }
+                else{
+                    matchDate.put("$match", new BasicDBObject("applicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim())));
+                }
+                
 		DBObject matchBlacklist = new BasicDBObject();
 		matchBlacklist.put("$match", new BasicDBObject("blacklisted", false));
 
@@ -223,13 +270,13 @@ public class ClassificationRepository {
 		
 		DBObject limit2 = new BasicDBObject("$limit",limit);
 
-		return ds.getCollection(Patent.class).aggregate(matchProj,
+		return ds.getCollection(Patent.class).aggregate(matchProj, matchComplete, matchDate,
 				matchMainClassificationExists, matchBlacklist, project, group,
 				sort, limit2);
 
 	}
 
-	private AggregationOutput getSubGroup(Project currentProject, int limit) {
+	private AggregationOutput getSubGroup(Project currentProject, int limit, Filters filtro) {
 
 		/**
 		 * db.Patent.aggregate( {$match:{"project.$id":new
@@ -246,6 +293,17 @@ public class ClassificationRepository {
 		matchProj.put("$match",
 				new BasicDBObject("project.$id", currentProject.getId()));
 
+                DBObject matchComplete = new BasicDBObject();
+                matchComplete.put("$match", new BasicDBObject("completed", filtro.isComplete()));
+                
+                DBObject matchDate = new BasicDBObject();
+                if (filtro.getSelecionaData() == 1){
+                    matchDate.put("$match", new BasicDBObject("publicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim())));
+                }
+                else{
+                    matchDate.put("$match", new BasicDBObject("applicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim())));
+                }
+                
 		DBObject matchBlacklist = new BasicDBObject();
 		matchBlacklist.put("$match", new BasicDBObject("blacklisted", false));
 
@@ -269,7 +327,7 @@ public class ClassificationRepository {
 		
 		DBObject limit2 = new BasicDBObject("$limit",limit);
 
-		return ds.getCollection(Patent.class).aggregate(matchProj,
+		return ds.getCollection(Patent.class).aggregate(matchProj, matchComplete, matchDate,
 				matchMainClassificationExists, matchBlacklist, project, group,
 				sort, limit2);
 
