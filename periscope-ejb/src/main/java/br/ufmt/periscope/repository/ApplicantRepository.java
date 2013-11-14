@@ -98,7 +98,7 @@ public class ApplicantRepository {
 		where.put("project.$id", currentProject.getId());		
 		where.put("applicants", new BasicDBObject("$exists", true));
                 where.put("completed", filtro.isComplete());
-                if (filtro.getSelecionaData() == 1){
+                if (filtro.getSelecionaData() == 0){
                     where.put("publicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim()));
                 }
                 else{

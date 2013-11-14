@@ -35,12 +35,11 @@ public class ReportController {
 	
 	@PostConstruct
 	public void init(){
-            System.out.println(currentProject.getId());
+            
                 setMinDate(patentRepository.getMinDate(currentProject));
                 setMaxDate(patentRepository.getMaxDate(currentProject));
                 filtro.setComplete(false);
                 filtro.setSelecionaData(0);
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 filtro.setInicio(patentRepository.getMinDate(currentProject));
                 filtro.setFim(patentRepository.getMaxDate(currentProject));
         
