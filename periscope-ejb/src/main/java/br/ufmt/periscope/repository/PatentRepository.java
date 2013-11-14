@@ -13,6 +13,9 @@ import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
 
 import com.github.jmkgreen.morphia.Datastore;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCursor;
+import java.util.Date;
 
 @Named
 public class PatentRepository {
@@ -95,5 +98,17 @@ public class PatentRepository {
                 .field("project").equal(project)
                 .field("applicants.name").equal(applicantName)
                 .asList();
+    }
+    
+    public Date getMinDate(Project project){
+        DBCursor dbc = ds.getCollection(Patent.class).find(new BasicDBObject("project.$id" ,project.getId())).sort(new BasicDBObject("applicationDate", 1)).limit(1);
+        Date data = (Date) dbc.next().get("applicationDate");
+        return data;
+    }
+    
+    public Date getMaxDate(Project project) {
+        DBCursor dbc = ds.getCollection(Patent.class).find(new BasicDBObject("project.$id" ,project.getId())).sort(new BasicDBObject("publicationDate", -1)).limit(1);
+        Date data = (Date) dbc.next().get("publicationDate");
+        return data;
     }
 }

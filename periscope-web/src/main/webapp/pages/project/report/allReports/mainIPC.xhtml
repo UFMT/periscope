@@ -42,11 +42,11 @@
 
                     </p:selectOneMenu>
                     <h:outputText value="Inicial:"/>
-                    <p:calendar  value="#{mainIPCController.filtro.inicio}" mindate="01/01/2000" maxdate="31/12/2020" locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
+                    <p:calendar  value="#{mainIPCController.filtro.inicio}" mindate="#{mainIPCController.minDate}" maxdate="#{mainIPCController.maxDate}" locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
                     </p:calendar>
 
                     <h:outputText value="Final:"/>
-                    <p:calendar value="#{mainIPCController.filtro.fim}" mindate="02/01/2000" maxdate="31/12/2020" locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
+                    <p:calendar value="#{mainIPCController.filtro.fim}" mindate="#{mainIPCController.minDate}" maxdate="#{mainIPCController.maxDate}" locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
                     </p:calendar>
 
                     <p:commandButton action="#{mainIPCController.update()}" update="tudo" value="Pesquisar"></p:commandButton>

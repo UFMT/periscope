@@ -15,7 +15,6 @@ import br.ufmt.periscope.util.Filters;
 import com.github.jmkgreen.morphia.Datastore;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-import java.util.Date;
 
 @Named
 public class MainApplicantReport {
@@ -25,8 +24,7 @@ public class MainApplicantReport {
 	
 	public ChartSeries mainApplicantSeries(Project currentProject, int limit, Filters filtro){
 		ChartSeries series = new ChartSeries("Número de Depositos");
-		
-		repo.updateMainApplicants(currentProject, filtro);		
+                repo.updateMainApplicants(currentProject, filtro);		
 		List<DBObject> it = ds.getDB()
 							  .getCollection("mainApplicant").find()
 							  .sort(new BasicDBObject("value",-1))
@@ -43,7 +41,6 @@ public class MainApplicantReport {
 		
 		return series;
 	}
-	
-	
+
 }
 

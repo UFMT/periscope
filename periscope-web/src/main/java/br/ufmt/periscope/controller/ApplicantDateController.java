@@ -15,10 +15,12 @@ import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.qualifier.CurrentProject;
 import br.ufmt.periscope.report.ApplicationDateReport;
 import br.ufmt.periscope.report.Pair;
+import br.ufmt.periscope.repository.PatentRepository;
 import br.ufmt.periscope.util.Filters;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,22 +33,22 @@ public class ApplicantDateController {
     Project currentProject;
     private @Inject
     ApplicationDateReport report;
+    private @Inject PatentRepository patentRepository;
     private CartesianChartModel model;
     private List<Pair> pairs;
     private @Inject
     Filters filtro;
+    private Date minDate, maxDate;
 
     @PostConstruct
     public void init() {
+        setMinDate(patentRepository.getMinDate(currentProject));
+        setMaxDate(patentRepository.getMaxDate(currentProject));
         filtro.setComplete(false);
         filtro.setSelecionaData(0);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        try {
-            filtro.setInicio(simpleDateFormat.parse("01/01/2000"));
-            filtro.setFim(simpleDateFormat.parse("31/12/2020"));
-        } catch (ParseException ex) {
-            Logger.getLogger(ReportController.class.getName()).log(Level.SEVERE, null, ex);
-        }        
+        filtro.setInicio(patentRepository.getMinDate(currentProject));
+        filtro.setFim(patentRepository.getMaxDate(currentProject));
+        
         applicantDateChart();
     }
     
@@ -64,6 +66,30 @@ public class ApplicantDateController {
         }
         Collections.reverse(pairs);
         
+    }
+
+    public Date getMinDate() {
+        return minDate;
+    }
+
+    public void setMinDate(Date minDate) {
+        this.minDate = minDate;
+    }
+
+    public Date getMaxDate() {
+        return maxDate;
+    }
+
+    public void setMaxDate(Date maxDate) {
+        this.maxDate = maxDate;
+    }
+
+    public PatentRepository getPatentRepository() {
+        return patentRepository;
+    }
+
+    public void setPatentRepository(PatentRepository patentRepository) {
+        this.patentRepository = patentRepository;
     }
 
     public CartesianChartModel getModel() {

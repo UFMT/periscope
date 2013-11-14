@@ -41,10 +41,10 @@ public class ApplicationDateRepository {
                 
                 DBObject matchDate = new BasicDBObject();
                 if (filtro.getSelecionaData() == 1){
-                    matchDate.put("$match", new BasicDBObject("publicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim())));
+                    matchDate.put("$match", new BasicDBObject("publicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim())));
                 }
                 else{
-                    matchDate.put("$match", new BasicDBObject("applicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim())));
+                    matchDate.put("$match", new BasicDBObject("applicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim())));
                 }
                 
 		DBObject matchBlacklist = new BasicDBObject();
