@@ -42,7 +42,6 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MapReduceCommand;
 import com.mongodb.MapReduceCommand.OutputType;
-import java.util.Date;
 
 @Named
 public class ApplicantRepository {
@@ -99,11 +98,11 @@ public class ApplicantRepository {
 		where.put("project.$id", currentProject.getId());		
 		where.put("applicants", new BasicDBObject("$exists", true));
                 where.put("completed", filtro.isComplete());
-                if (filtro.getSelecionaData() == 1){
-                    where.put("publicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim()));
+                if (filtro.getSelecionaData() == 0){
+                    where.put("publicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim()));
                 }
                 else{
-                    where.put("applicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim()));
+                    where.put("applicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim()));
                 }
 		
 		DBCollection coll = ds.getCollection(Patent.class);

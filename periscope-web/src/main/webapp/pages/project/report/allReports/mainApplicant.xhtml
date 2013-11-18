@@ -13,6 +13,8 @@
 
         <ui:define name="content">
 
+            <h1>Principais Depositantes</h1>
+            <br></br>
             <h:form id="chart" styleClass="container">
 
                 <center>
@@ -41,11 +43,11 @@
 
                     </p:selectOneMenu>
                     <h:outputText value="Inicial:"/>
-                    <p:calendar  value="#{report.filtro.inicio}" mindate="01/01/2000" maxdate="31/12/2020" locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
+                    <p:calendar  value="#{report.filtro.inicio}" mindate="#{report.minDate}" maxdate="#{report.maxDate}" locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
                     </p:calendar>
 
                     <h:outputText value="Final:"/>
-                    <p:calendar value="#{report.filtro.fim}" mindate="02/01/2000" maxdate="31/12/2020" locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
+                    <p:calendar value="#{report.filtro.fim}" mindate="#{report.minDate}" maxdate="#{report.maxDate}" locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
                     </p:calendar>
 
                     <p:commandButton action="#{report.mainApplicantChart()}" update="tudo" value="Pesquisar"></p:commandButton>

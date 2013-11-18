@@ -90,7 +90,7 @@ public class ClassificationRepository {
                 matchComplete.put("$match", new BasicDBObject("completed", filtro.isComplete()));
                 
                 DBObject matchDate = new BasicDBObject();
-                if (filtro.getSelecionaData() == 1){
+                if (filtro.getSelecionaData() == 0){
                     matchDate.put("$match", new BasicDBObject("publicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim())));
                 }
                 else{
