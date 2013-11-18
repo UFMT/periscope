@@ -54,7 +54,6 @@ public class ApplicantDateController {
     
     public void applicantDateChart (){
         model = new CartesianChartModel();
-        System.out.println("2");
         ChartSeries series = report.applicationDateSeries(currentProject, filtro);
         model.addSeries(series);
 

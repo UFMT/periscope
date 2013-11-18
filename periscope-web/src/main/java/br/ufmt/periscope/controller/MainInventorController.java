@@ -35,10 +35,10 @@ public class MainInventorController {
 	private List<Pair> pairs;
         private @Inject Filters filtro;
         private Date minDate, maxDate;
-	
+
 	private int limit = 5;
-	
-	@PostConstruct
+
+    @PostConstruct
 	public void init(){
                 setMinDate(patentRepository.getMinDate(currentProject));
                 setMaxDate(patentRepository.getMaxDate(currentProject));
@@ -65,50 +65,6 @@ public class MainInventorController {
 		}
 		
 		Collections.reverse(pairs);
-	}
-
-        public Date getMinDate() {
-            return minDate;
-        }
-
-        public void setMinDate(Date minDate) {
-            this.minDate = minDate;
-        }
-
-        public Date getMaxDate() {
-            return maxDate;
-        }
-
-        public void setMaxDate(Date maxDate) {
-            this.maxDate = maxDate;
-        }
-
-        public PatentRepository getPatentRepository() {
-            return patentRepository;
-        }
-
-        public void setPatentRepository(PatentRepository patentRepository) {
-            this.patentRepository = patentRepository;
-        }
-
-	public CartesianChartModel getModel() {
-		return model;
-	}
-
-	public void setModel(CartesianChartModel model) {
-		this.model = model;
-	}
-
-	public List<Pair> getPairs() {
-		return pairs;
-	}
-
-	public void setPairs(List<Pair> pairs) {
-		this.pairs = pairs;
-	}
-
-	public int getLimit() {
-		return limit;
 	}
 
 	public void setLimit(int limit) {

@@ -2,7 +2,6 @@ package br.ufmt.periscope.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -16,184 +15,113 @@ import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.qualifier.CurrentProject;
 import br.ufmt.periscope.report.MainIPCReport;
 import br.ufmt.periscope.report.Pair;
+
 import br.ufmt.periscope.repository.PatentRepository;
-import br.ufmt.periscope.util.Filters;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @ManagedBean
 @ViewScoped
-public class MainIPCController {
+public class MainIPCController extends GenericController {
 
-	private @Inject
-	@CurrentProject
-	Project currentProject;
-	private @Inject
-	MainIPCReport report;
-        private @Inject PatentRepository patentRepository;
-	private CartesianChartModel model;
-	private List<Pair> pairs;
-        private Date minDate, maxDate;
+    private @Inject
+    MainIPCReport report;
+    private boolean klass;
+    private boolean subKlass;
+    private boolean group;
+    private boolean subGroup;
 
-	private boolean klass;
-	private boolean subKlass;
-	private boolean group;
-	private boolean subGroup;
-	
-        private @Inject Filters filtro;
-        
-	private int limit = 5;
+    @PostConstruct
+    @Override
+    public void init() {
+        klass = false;
+        subKlass = false;
+        group = false;
+        subGroup = false;
 
-	@PostConstruct
-	public void init() {
-		klass = false;
-		subKlass = false;
-		group = false;
-		subGroup = false;
-                setMinDate(patentRepository.getMinDate(currentProject));
-                setMaxDate(patentRepository.getMaxDate(currentProject));
-                filtro.setComplete(false);
-                filtro.setSelecionaData(0);
-                filtro.setInicio(patentRepository.getMinDate(currentProject));
-                filtro.setFim(patentRepository.getMaxDate(currentProject));
-            
-		mainIpcChart();
-	}
+        setMinDate(getPatentRepository().getMinDate(getCurrentProject()));
+        setMaxDate(getPatentRepository().getMaxDate(getCurrentProject()));
+        getFiltro().setComplete(false);
+        getFiltro().setSelecionaData(0);
+        getFiltro().setInicio(getPatentRepository().getMinDate(getCurrentProject()));
+        getFiltro().setFim(getPatentRepository().getMaxDate(getCurrentProject()));
 
-	public void update() {
-		if (!klass) {
-			// classe nao esta selecionada
-			// buscar secao
-			subKlass = false;
-			group = false;
-			subGroup = false;
-		} else if (!subKlass) {
-			// classe selecionada e subclasse nao esta
-			// buscar classe
-			group = false;
-			subGroup = false;
-		} else if (!group) {
-			// classe e subclasse selecionadas e grupo nao selecionado
-			// buscar subclasse
-			subGroup = false;
-		} else if (!subGroup) {
-			// classe, subclasse e grupo selecionado, subgrupo nao selecioando
-			// buscar grupo
-		} else {
-			// tudo selecionado
-			// buscar subgrupo
-		}
-
-		mainIpcChart();
-	}
-
-	public void mainIpcChart() {
-		model = new CartesianChartModel();
-		ChartSeries series = report.ipcCount(currentProject, klass, subKlass,
-				group, subGroup, limit, filtro);
-
-		model.addSeries(series);
-
-		setPairs(new ArrayList<Pair>());
-
-		for (Object key : series.getData().keySet()) {
-			Number value = series.getData().get(key);
-			getPairs().add(new Pair(key, value));
-		}
-
-		Collections.reverse(pairs);
-	}
-
-        public Date getMinDate() {
-            return minDate;
-        }
-
-        public void setMinDate(Date minDate) {
-            this.minDate = minDate;
-        }
-
-        public Date getMaxDate() {
-            return maxDate;
-        }
-
-        public void setMaxDate(Date maxDate) {
-            this.maxDate = maxDate;
-        }
-
-        public PatentRepository getPatentRepository() {
-            return patentRepository;
-        }
-
-        public void setPatentRepository(PatentRepository patentRepository) {
-            this.patentRepository = patentRepository;
-        }
-
-	public List<Pair> getPairs() {
-		return pairs;
-	}
-
-	public void setPairs(List<Pair> pairs) {
-		this.pairs = pairs;
-	}
-
-	public CartesianChartModel getModel() {
-		return model;
-	}
-
-	public void setModel(CartesianChartModel model) {
-		this.model = model;
-	}
-
-	public boolean isKlass() {
-		return klass;
-	}
-
-	public void setKlass(boolean klass) {
-		this.klass = klass;
-	}
-
-	public boolean isSubKlass() {
-		return subKlass;
-	}
-
-	public void setSubKlass(boolean subKlass) {
-		this.subKlass = subKlass;
-	}
-
-	public boolean isGroup() {
-		return group;
-	}
-
-	public void setGroup(boolean group) {
-		this.group = group;
-	}
-
-	public boolean isSubGroup() {
-		return subGroup;
-	}
-
-	public void setSubGroup(boolean subGroup) {
-		this.subGroup = subGroup;
-	}
-
-	public int getLimit() {
-		return limit;
-	}
-
-	public void setLimit(int limit) {
-		this.limit = limit;
-	}
-
-    public Filters getFiltro() {
-        return filtro;
+        mainIpcChart();
     }
 
-    public void setFiltro(Filters filtro) {
-        this.filtro = filtro;
+    public void update() {
+        if (!klass) {
+            // classe nao esta selecionada
+            // buscar secao
+            subKlass = false;
+            group = false;
+            subGroup = false;
+        } else if (!subKlass) {
+            // classe selecionada e subclasse nao esta
+            // buscar classe
+            group = false;
+            subGroup = false;
+        } else if (!group) {
+            // classe e subclasse selecionadas e grupo nao selecionado
+            // buscar subclasse
+            subGroup = false;
+        } else if (!subGroup) {
+            // classe, subclasse e grupo selecionado, subgrupo nao selecioando
+            // buscar grupo
+        } else {
+            // tudo selecionado
+            // buscar subgrupo
+        }
+
+        mainIpcChart();
     }
 
-        
+    public void mainIpcChart() {
+        setModel(new CartesianChartModel());
+        ChartSeries series = report.ipcCount(getCurrentProject(), klass, subKlass,
+                group, subGroup, getLimit(), getFiltro());
+
+        getModel().addSeries(series);
+
+        setPairs(new ArrayList<Pair>());
+
+        for (Object key : series.getData().keySet()) {
+            Number value = series.getData().get(key);
+            getPairs().add(new Pair(key, value));
+        }
+
+        Collections.reverse(getPairs());
+    }
+
+    public boolean isKlass() {
+        return klass;
+    }
+
+    public void setKlass(boolean klass) {
+        this.klass = klass;
+    }
+
+    public boolean isSubKlass() {
+        return subKlass;
+    }
+
+    public void setSubKlass(boolean subKlass) {
+        this.subKlass = subKlass;
+    }
+
+    public boolean isGroup() {
+        return group;
+    }
+
+    public void setGroup(boolean group) {
+        this.group = group;
+    }
+
+    public boolean isSubGroup() {
+        return subGroup;
+    }
+
+    public void setSubGroup(boolean subGroup) {
+        this.subGroup = subGroup;
+    }
+    
 }
