@@ -3,25 +3,64 @@ package br.ufmt.periscope.controller;
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.qualifier.CurrentProject;
 import br.ufmt.periscope.report.Pair;
+import br.ufmt.periscope.repository.PatentRepository;
 import br.ufmt.periscope.util.Filters;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import org.primefaces.model.chart.CartesianChartModel;
 
-public class GenericController {
+public abstract class GenericController {
 
     private @Inject
     @CurrentProject
     Project currentProject;
+    private @Inject
+    PatentRepository patentRepository;
     private CartesianChartModel model;
     private List<Pair> pairs;
     private @Inject
     Filters filtro;
     private int limit = 5;
+    private Date minDate, maxDate;
 
     @PostConstruct
     public void init() {
+        setMinDate(getPatentRepository().getMinDate(getCurrentProject()));
+        setMaxDate(getPatentRepository().getMaxDate(getCurrentProject()));
+        getFiltro().setComplete(false);
+        getFiltro().setSelecionaData(0);
+        getFiltro().setInicio(getPatentRepository().getMinDate(getCurrentProject()));
+        getFiltro().setFim(getPatentRepository().getMaxDate(getCurrentProject()));
+
+        refreshChart();
+    }
+
+    public abstract void refreshChart();
+
+    public PatentRepository getPatentRepository() {
+        return patentRepository;
+    }
+
+    public void setPatentRepository(PatentRepository patentRepository) {
+        this.patentRepository = patentRepository;
+    }
+
+    public Date getMinDate() {
+        return minDate;
+    }
+
+    public void setMinDate(Date minDate) {
+        this.minDate = minDate;
+    }
+
+    public Date getMaxDate() {
+        return maxDate;
+    }
+
+    public void setMaxDate(Date maxDate) {
+        this.maxDate = maxDate;
     }
 
     public Project getCurrentProject() {

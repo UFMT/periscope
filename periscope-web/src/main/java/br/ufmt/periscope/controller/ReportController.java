@@ -27,19 +27,7 @@ public class ReportController extends GenericController {
     private @Inject
     MainApplicantReport report;
 
-    @PostConstruct
-    public void init() {
-        setMinDate(getPatentRepository().getMinDate(getCurrentProject()));
-        setMaxDate(getPatentRepository().getMaxDate(getCurrentProject()));
-        getFiltro().setComplete(false);
-        getFiltro().setSelecionaData(0);
-        getFiltro().setInicio(getPatentRepository().getMinDate(getCurrentProject()));
-        getFiltro().setFim(getPatentRepository().getMaxDate(getCurrentProject()));
-
-        mainApplicantChart();
-    }
-
-    public void mainApplicantChart() {
+    public void refreshChart() {
 
         setModel(new CartesianChartModel());
         ChartSeries series = report.mainApplicantSeries(getCurrentProject(), getLimit(), getFiltro());

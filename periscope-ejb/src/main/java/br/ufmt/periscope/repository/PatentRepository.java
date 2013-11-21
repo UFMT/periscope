@@ -100,14 +100,14 @@ public class PatentRepository {
                 .asList();
     }
     
-    public Date getMinDate(Project project){
-        DBCursor dbc = ds.getCollection(Patent.class).find(new BasicDBObject("project.$id" ,project.getId())).sort(new BasicDBObject("applicationDate", 1)).limit(1);
+    public Date getMinDate(Project currentProject){
+        DBCursor dbc = ds.getCollection(Patent.class).find(new BasicDBObject("project.$id" ,currentProject.getId())).sort(new BasicDBObject("applicationDate", 1)).limit(1);
         Date data = (Date) dbc.next().get("applicationDate");
         return data;
     }
     
-    public Date getMaxDate(Project project) {
-        DBCursor dbc = ds.getCollection(Patent.class).find(new BasicDBObject("project.$id" ,project.getId())).sort(new BasicDBObject("publicationDate", -1)).limit(1);
+    public Date getMaxDate(Project currentProject) {
+        DBCursor dbc = ds.getCollection(Patent.class).find(new BasicDBObject("project.$id" ,currentProject.getId())).sort(new BasicDBObject("publicationDate", -1)).limit(1);
         Date data = (Date) dbc.next().get("publicationDate");
         return data;
     }

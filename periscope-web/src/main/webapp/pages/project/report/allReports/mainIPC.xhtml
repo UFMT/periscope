@@ -4,7 +4,8 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:i="http://www.example.com/jsf">
 
 
     <ui:composition template="/template/template.xhtml">
@@ -17,41 +18,10 @@
 
             <h:form id="chart" styleClass="container">
 
-                <center>
-                    <h4>Número de classificações</h4>
-                    <p:spinner value="#{mainIPCController.limit}" min="5" max="20"
-                               style="padding:0 20px 0 0">
-                        <p:ajax listener="#{mainIPCController.mainIpcChart()}"
-                                update="@form" process="@this"/>
-                    </p:spinner>
-                </center>
-
-                <p:selectBooleanCheckbox id="complete" itemLabel="#{msgs['completo']}"
-                                         value="#{mainIPCController.filtro.complete}">
-                    <p:ajax update="tudo" 
-                            listener="#{mainIPCController.update()}" />
-                </p:selectBooleanCheckbox>
-
-                <h:outputScript library="js" name="locales.js"></h:outputScript>
-
-                <h:panelGrid columns="7" cellpadding="5">  
-                    <h:outputText value="Defina o período de interesse:"/> 
-                    <p:selectOneMenu value="#{mainIPCController.filtro.selecionaData}">
-                        <f:selectItem itemLabel="Data de Publicação" itemValue="0" />  
-                        <f:selectItem itemLabel="Data de Depósito" itemValue="1" />  
-
-                    </p:selectOneMenu>
-                    <h:outputText value="Inicial:"/>
-                    <p:calendar  value="#{mainIPCController.filtro.inicio}" mindate="#{mainIPCController.minDate}" maxdate="#{mainIPCController.maxDate}" locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
-                    </p:calendar>
-
-                    <h:outputText value="Final:"/>
-                    <p:calendar value="#{mainIPCController.filtro.fim}" mindate="#{mainIPCController.minDate}" maxdate="#{mainIPCController.maxDate}" locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
-                    </p:calendar>
-
-                    <p:commandButton action="#{mainIPCController.update()}" update="tudo" value="Pesquisar"></p:commandButton>
-                </h:panelGrid>
-
+                <center><h4>Número de classificações</h4></center>
+                
+                <i:filtro controller="#{mainIPCController}"/>
+                
                 <h:panelGrid columns="4">
 
                     <p:selectBooleanCheckbox id="klass" itemLabel="#{msgs['class']}"

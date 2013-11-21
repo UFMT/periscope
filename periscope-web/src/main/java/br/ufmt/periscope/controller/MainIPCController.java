@@ -38,14 +38,7 @@ public class MainIPCController extends GenericController {
         group = false;
         subGroup = false;
 
-        setMinDate(getPatentRepository().getMinDate(getCurrentProject()));
-        setMaxDate(getPatentRepository().getMaxDate(getCurrentProject()));
-        getFiltro().setComplete(false);
-        getFiltro().setSelecionaData(0);
-        getFiltro().setInicio(getPatentRepository().getMinDate(getCurrentProject()));
-        getFiltro().setFim(getPatentRepository().getMaxDate(getCurrentProject()));
-
-        mainIpcChart();
+        super.init();
     }
 
     public void update() {
@@ -72,10 +65,10 @@ public class MainIPCController extends GenericController {
             // buscar subgrupo
         }
 
-        mainIpcChart();
+        refreshChart();
     }
 
-    public void mainIpcChart() {
+    public void refreshChart() {
         setModel(new CartesianChartModel());
         ChartSeries series = report.ipcCount(getCurrentProject(), klass, subKlass,
                 group, subGroup, getLimit(), getFiltro());
@@ -123,5 +116,4 @@ public class MainIPCController extends GenericController {
     public void setSubGroup(boolean subGroup) {
         this.subGroup = subGroup;
     }
-    
 }

@@ -20,65 +20,76 @@ import com.mongodb.DBObject;
 @Named
 public class InventorRepository {
 
-	private @Inject
-	Datastore ds;
+    private @Inject
+    Datastore ds;
 
-	public List<Pair> getInventors(Project currentProject,int limit, Filters filtro) {
+    public List<Pair> getInventors(Project currentProject, int limit, Filters filtro) {
 
-		/**
-		 * db.Patent.aggregate( {$match:{"project.$id":new
-		 * ObjectId("51db042d44ae70d2d3649c20")}}, {$match:{blacklisted:false}},
-		 * {$unwind:"$inventors"},
-		 * {$group:{_id:"$inventors",applicationPerInventor:{$sum:1}}},
-		 * {$sort:{applicationPerInventor:-1}}, { $limit : 5 } );
-		 */
+        /**
+         * db.Patent.aggregate( {$match:{"project.$id":new
+         * ObjectId("51db042d44ae70d2d3649c20")}}, {$match:{blacklisted:false}},
+         * {$unwind:"$inventors"},
+         * {$group:{_id:"$inventors",applicationPerInventor:{$sum:1}}},
+         * {$sort:{applicationPerInventor:-1}}, { $limit : 5 } );
+         */
+        ArrayList<DBObject> parametros = new ArrayList<DBObject>();
 
-		DBObject matchProj = new BasicDBObject();
-		matchProj.put("$match",
-				new BasicDBObject("project.$id", currentProject.getId()));
-                
-                DBObject matchComplete = new BasicDBObject();
-                matchComplete.put("$match", new BasicDBObject("completed", filtro.isComplete()));
-                
-                DBObject matchDate = new BasicDBObject();
-                if (filtro.getSelecionaData() == 1){
-                    matchDate.put("$match", new BasicDBObject("publicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim())));
-                }
-                else{
-                    matchDate.put("$match", new BasicDBObject("applicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim())));
-                }
+        DBObject matchProj = new BasicDBObject();
+        matchProj.put("$match",
+                new BasicDBObject("project.$id", currentProject.getId()));
 
-		DBObject matchBlacklist = new BasicDBObject();
-		matchBlacklist.put("$match", new BasicDBObject("blacklisted", false));
+        if (filtro.isComplete()) {
+            DBObject matchComplete = new BasicDBObject();
+            matchComplete.put("$match", new BasicDBObject("completed", filtro.isComplete()));
+            parametros.add(matchComplete);
+        }
 
-		DBObject unwind = new BasicDBObject("$unwind", "$inventors");
+        DBObject matchDate = new BasicDBObject();
+        if (filtro.getSelecionaData() == 1) {
+            matchDate.put("$match", new BasicDBObject("publicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim())));
+        } else {
+            matchDate.put("$match", new BasicDBObject("applicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim())));
+        }
+        parametros.add(matchDate);
 
-		DBObject group = new BasicDBObject();
-		DBObject fields = new BasicDBObject("_id", "$inventors");
-		fields.put("applicationPerInventor", new BasicDBObject("$sum", 1));
-		group.put("$group", fields);
+        DBObject matchBlacklist = new BasicDBObject();
+        matchBlacklist.put("$match", new BasicDBObject("blacklisted", false));
+        parametros.add(matchBlacklist);
 
-		DBObject sort = new BasicDBObject("$sort", new BasicDBObject(
-				"applicationPerInventor", -1));
+        DBObject unwind = new BasicDBObject("$unwind", "$inventors");
+        parametros.add(unwind);
 
-                System.out.println(limit);
-		DBObject pipeLimit = new BasicDBObject("$limit", limit);
+        DBObject group = new BasicDBObject();
+        parametros.add(group);
+        DBObject fields = new BasicDBObject("_id", "$inventors");
+        fields.put("applicationPerInventor", new BasicDBObject("$sum", 1));
+        group.put("$group", fields);
 
-		AggregationOutput output = ds.getCollection(Patent.class).aggregate(
-				matchProj, matchComplete, matchDate, matchBlacklist, unwind, group, sort, pipeLimit);
+        DBObject sort = new BasicDBObject("$sort", new BasicDBObject(
+                "applicationPerInventor", -1));
+        parametros.add(sort);
 
-		BasicDBList outputResult = (BasicDBList) output.getCommandResult().get(
-				"result");
+        System.out.println(limit);
+        DBObject pipeLimit = new BasicDBObject("$limit", limit);
+        parametros.add(pipeLimit);
 
-		List<Pair> pairs = new ArrayList<Pair>();
-		for (Object object : outputResult) {
-			DBObject aux = (DBObject) object;
-			DBObject inventorName = (DBObject) aux.get("_id");
-			String inventor = inventorName.get("name").toString();
-			Integer count = (Integer) aux.get("applicationPerInventor");
+        DBObject[] parameters = new DBObject[parametros.size()];
+        parameters = parametros.toArray(parameters);
 
-			pairs.add(new Pair(inventor, count));
-		}
-		return pairs;
-	}
+        AggregationOutput output = ds.getCollection(Patent.class).aggregate(matchProj, parameters);
+
+        BasicDBList outputResult = (BasicDBList) output.getCommandResult().get(
+                "result");
+
+        List<Pair> pairs = new ArrayList<Pair>();
+        for (Object object : outputResult) {
+            DBObject aux = (DBObject) object;
+            DBObject inventorName = (DBObject) aux.get("_id");
+            String inventor = inventorName.get("name").toString();
+            Integer count = (Integer) aux.get("applicationPerInventor");
+
+            pairs.add(new Pair(inventor, count));
+        }
+        return pairs;
+    }
 }

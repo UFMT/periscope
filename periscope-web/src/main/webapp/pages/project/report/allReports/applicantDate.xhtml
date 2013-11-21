@@ -3,8 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:i="http://www.example.com/jsf">
 
 
     <ui:composition template="/template/template.xhtml">
@@ -16,31 +16,8 @@
             <h:form id="chart" styleClass="container">
 
                 <h1>Depositos / #{msgs['year']}</h1>
-                <p:selectBooleanCheckbox id="complete" itemLabel="#{msgs['completo']}"
-                                         value="#{applicantDateReport.filtro.complete}">
-                    <p:ajax update="tudo" 
-                            listener="#{applicantDateReport.applicantDateChart()}" />
-                </p:selectBooleanCheckbox>
-
-                <h:outputScript library="js" name="locales.js"></h:outputScript>
-
-                <h:panelGrid columns="7" cellpadding="5">  
-                    <h:outputText value="Defina o período de interesse:"/> 
-                    <p:selectOneMenu value="#{applicantDateReport.filtro.selecionaData}">
-                        <f:selectItem itemLabel="Data de Publicação" itemValue="0" />  
-                        <f:selectItem itemLabel="Data de Depósito" itemValue="1" />  
-
-                    </p:selectOneMenu>
-                    <h:outputText value="Inicial:"/>
-                    <p:calendar  value="#{applicantDateReport.filtro.inicio}" mindate="#{applicantDateReport.minDate}" maxdate="#{applicantDateReport.maxDate}" locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
-                    </p:calendar>
-
-                    <h:outputText value="Final:"/>
-                    <p:calendar value="#{applicantDateReport.filtro.fim}" mindate="#{applicantDateReport.minDate}" maxdate="#{applicantDateReport.maxDate}" locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
-                    </p:calendar>
-
-                    <p:commandButton action="#{applicantDateReport.applicantDateChart()}" update="tudo" value="Pesquisar"></p:commandButton>
-                </h:panelGrid>
+                <br/>
+                <i:filtro controller="#{applicantDateReport}" rendSpinner="false" />
 
 
 

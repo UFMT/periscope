@@ -1,0 +1,9 @@
+
+
+<facelet-taglib>
+    <namespace>http://www.example.com/jsf</namespace>
+    <tag>
+        <tag-name>filtro</tag-name>
+        <source>../components/filtro.xhtml</source>
+    </tag>
+</facelet-taglib>

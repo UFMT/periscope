@@ -4,7 +4,8 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:i="http://www.example.com/jsf">
 
 
     <ui:composition template="/template/template.xhtml">
@@ -12,46 +13,13 @@
         <ui:define name="growl"></ui:define>
 
         <ui:define name="content">
+            
 
             <h1>Principais Depositantes</h1>
             <br></br>
             <h:form id="chart" styleClass="container">
-
-                <center>
-                    <h4>Número de Depositantes</h4>
-                    <p:spinner value="#{report.limit}" min="5" max="20"
-                               style="padding:0 20px 0 0">
-                        <p:ajax listener="#{report.mainApplicantChart()}" update="@form"  />
-                    </p:spinner>
-                </center>
-
                 
-                
-                <p:selectBooleanCheckbox id="complete" itemLabel="#{msgs['completo']}"
-                                         value="#{report.filtro.complete}">
-                    <p:ajax update="tudo" 
-                            listener="#{report.mainApplicantChart()}" />
-                </p:selectBooleanCheckbox>
-
-                <h:outputScript library="js" name="locales.js"></h:outputScript>
-
-                <h:panelGrid columns="7" cellpadding="5">  
-                    <h:outputText value="Defina o período de interesse:"/> 
-                    <p:selectOneMenu value="#{report.filtro.selecionaData}">
-                        <f:selectItem itemLabel="Data de Publicação" itemValue="0" />  
-                        <f:selectItem itemLabel="Data de Depósito" itemValue="1" />  
-
-                    </p:selectOneMenu>
-                    <h:outputText value="Inicial:"/>
-                    <p:calendar  value="#{report.filtro.inicio}" mindate="#{report.minDate}" maxdate="#{report.maxDate}" locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
-                    </p:calendar>
-
-                    <h:outputText value="Final:"/>
-                    <p:calendar value="#{report.filtro.fim}" mindate="#{report.minDate}" maxdate="#{report.maxDate}" locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
-                    </p:calendar>
-
-                    <p:commandButton action="#{report.mainApplicantChart()}" update="tudo" value="Pesquisar"></p:commandButton>
-                </h:panelGrid>
+                <i:filtro controller="#{report}" />
 
                 <h:panelGrid columns="1" id="tudo" styleClass="container" >
 
