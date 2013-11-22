@@ -20,7 +20,7 @@ public class MainInventorReport {
 	public ChartSeries InventorDateSeries(Project currentProject, int limit, Filters filtro) {
 		ChartSeries series = new ChartSeries("Depositos por inventores");
 
-		List<Pair> i = repo.getInventors(currentProject,limit, filtro);
+		List<Pair> i = repo.updateInventors(currentProject,limit, filtro);
 		
 		Collections.reverse(i);
 		

@@ -28,9 +28,11 @@ public class Harmonization {
 		if(rule == null) return;
 		switch (rule.getType()) {
 		case APPLICANT:
+                        System.out.println("applicant");
 			applyApplicantRule(rule);
 			break;
 		case INVENTOR:
+                        System.out.println("inventor");
 			applyInventorRule(rule);
 			break;
 		default:
@@ -71,6 +73,32 @@ public class Harmonization {
 	}
 
 	private void applyInventorRule(Rule rule){
+		ObjectId projectId = rule.getProject().getId();
+		System.out.println(projectId);
+		Mapper mapper = ds.getMapper();	
+		DBObject dbObjectCountry = mapper.toDBObject(rule.getCountry());
+		DBObject dbObjectNature = mapper.toDBObject(rule.getNature());
+		System.out.println(dbObjectCountry);
+		System.out.println(dbObjectNature);
+		DBObject query = BasicDBObjectBuilder
+									.start("project.$id",projectId)
+									.add("inventors.name",BasicDBObjectBuilder
+															.start("$in", rule.getSubstitutions())
+															.get())
+									.get();
+		DBObject updateOp = BasicDBObjectBuilder
+									.start("$set",
+										BasicDBObjectBuilder
+										.start("inventors.$.name",rule.getName())
+										.add("inventors.$.country",dbObjectCountry)
+										.add("inventors.$.nature",dbObjectNature)
+										.get())
+									.get();
+		
+		ds.getCollection(Patent.class).updateMulti(query,updateOp);
+				
+		List<Patent> patents = patentRepository.getAllPatents(rule.getProject());		
+		indexer.indexPatents(patents);
 		
 	}
 }

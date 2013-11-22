@@ -19,11 +19,11 @@ public abstract class GenericController {
     private @Inject
     PatentRepository patentRepository;
     private CartesianChartModel model;
+    private Date minDate, maxDate;
     private List<Pair> pairs;
     private @Inject
     Filters filtro;
     private int limit = 5;
-    private Date minDate, maxDate;
 
     @PostConstruct
     public void init() {
@@ -102,4 +102,5 @@ public abstract class GenericController {
     public void setLimit(int limit) {
         this.limit = limit;
     }
+
 }

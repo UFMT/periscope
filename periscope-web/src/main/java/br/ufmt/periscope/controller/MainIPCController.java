@@ -11,8 +11,6 @@ import javax.inject.Inject;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 
-import br.ufmt.periscope.model.Project;
-import br.ufmt.periscope.qualifier.CurrentProject;
 import br.ufmt.periscope.report.MainIPCReport;
 import br.ufmt.periscope.report.Pair;
 

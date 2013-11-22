@@ -75,7 +75,7 @@
 			</p:column>		
 		</p:dataTable>
 		
-		<p:commandLink value="Criar nova regra"  update="sugestions" oncomplete="sugestionsDialog.show()"
+		<p:commandLink value="Criar nova regra"  update="applicantSugestions" oncomplete="sugestionsDialog.show()"
 				action="#{applicantHarmonizationController.loadSugestions()}"
 				style="color:white;margin-right: 10px" styleClass="btn btn-inverse"/>			
 		<ui:include src="/pages/project/harmonization/dialogApplicantRule.xhtml" />					

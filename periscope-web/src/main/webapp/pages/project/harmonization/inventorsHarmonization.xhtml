@@ -7,8 +7,80 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <f:view contentType="text/html">
-
-	Não implementado ainda.
+	<h:form id="formAl">
+		<p:dataTable id="applicants" var="pa" style="font-size:12px"
+					emptyMessage="Não existem inventores carregados"
+					value="#{inventorHarmonizationController.inventors}" paginator="true"
+					paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+					rowKey="#{pa.object}" sortBy="#{pa.object.name}">
+	
+			<p:columnGroup type="header">
+				<p:row>
+					<p:column rowspan="2" headerText=""/>						
+					<p:column rowspan="2" headerText="Nome" sortBy="#{pa.object.name}"/>
+					<p:column rowspan="2" headerText="Pais" sortBy="#{pa.object.country.name}"/>
+					<p:column rowspan="2" headerText="Docs" sortBy="#{pa.object.documentCount}"/>
+					<p:column rowspan="2" headerText="Ações" />
+				</p:row>
+			</p:columnGroup>
+			<p:column>					
+				 <p:selectBooleanCheckbox
+					onchange="#{inventorHarmonizationController.onSelectInventor()}" value="#{pa.selected}">
+					<p:ajax update=":tabView:formAl"/>
+				</p:selectBooleanCheckbox>	
+			</p:column>			
+			<p:column>														
+					#{pa.object.name}					
+			</p:column>
+			<p:column>														
+					#{pa.object.country == null ? '' : pa.object.country.name}					
+			</p:column>
+			<p:column>														
+					#{pa.object.documentCount}					
+			</p:column>
+			<p:column>
+				<center>
+					<h:form style="margin-bottom:0px">
+						<h:commandLink value="Editar"
+							style="color:white;margin-right: 10px" class="btn btn-inverse">	
+						</h:commandLink>							
+					</h:form>
+				</center>
+			</p:column>
+		</p:dataTable>
+		
+		<p:separator/>
+		
+		<p:dataTable id="selectedApplicants" var="pa" style="font-size:12px"
+					emptyMessage="Não existem depositantes selecionados" widgetVar="tblSelected"
+					value="#{inventorHarmonizationController.selectedInventors}" paginator="true"
+					paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+					rowKey="#{pa.name}" sortBy="#{pa.name}">
+	
+			<p:columnGroup type="header">
+				<p:row>					
+					<p:column rowspan="2" headerText="Nome" sortBy="#{pa.name}"/>
+					<p:column rowspan="2" headerText="Pais" />
+					<p:column rowspan="2" headerText="Docs" sortBy="#{pa.documentCount}"/>				
+				</p:row>
+			</p:columnGroup>		
+			<p:column>														
+					#{pa.name}					
+			</p:column>
+			<p:column>														
+					#{pa.country == null ? '' : pa.country.name}					
+			</p:column>
+			<p:column>														
+					#{pa.documentCount}					
+			</p:column>		
+		</p:dataTable>
+		
+		<p:commandLink value="Criar nova regra"  update="inventorSugestions" oncomplete="invSugestionsDialog.show()"
+				action="#{inventorHarmonizationController.loadSugestions()}"
+				style="color:white;margin-right: 10px" styleClass="btn btn-inverse"/>			
+		<ui:include src="/pages/project/harmonization/dialogInventorRule.xhtml" />
+                
+	</h:form>				
 	
 </f:view>
 </html>
