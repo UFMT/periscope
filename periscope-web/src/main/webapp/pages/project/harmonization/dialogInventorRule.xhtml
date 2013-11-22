@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view contentType="text/html">
+	<p:dialog id="inventorSugestions" widgetVar="invSugestionsDialog" modal="true"
+		header="Criar regra" resizable="false">
+		<h:panelGrid columns="2">		
+			<h:outputLabel value="Nome harmonizado " style="font-weight:bold"/>				
+                        <p:inputText value="#{inventorHarmonizationController.rule.name}"/>
+						
+			<h:outputLabel value="País " style="font-weight:bold"/>				
+			<p:selectOneMenu value="#{inventorHarmonizationController.rule.country.acronym}" >
+				<f:selectItems value="#{inventorHarmonizationController.countries}" var="c" itemValue="#{c.acronym}" itemLabel="#{c.name}"/>					
+			</p:selectOneMenu>
+			
+			<h:outputLabel value="Natureza " style="font-weight:bold"/>
+			<p:selectOneMenu id="cmbNature" value="#{inventorHarmonizationController.rule.nature.name}">
+				<f:selectItem itemLabel="Nenhuma" itemValue=""/>
+			</p:selectOneMenu>						
+		</h:panelGrid>		
+										
+		<h:panelGrid id="panelSugestions" columns="3">
+			<h:column>
+				<h4>Nomes selecionados</h4>				
+				<p:separator/>
+			</h:column>
+			<h:column>
+				<p:spacer width="50"/>
+			</h:column>
+			<h:column>
+				<h4>Sugestões</h4>				
+				<p:separator/>
+			</h:column>
+			<h:column>				
+				<ul>
+					<ui:repeat var="spa"
+						value="#{inventorHarmonizationController.selectedInventors}">
+
+						<li>#{spa.name}</li>
+
+					</ui:repeat>
+				</ul>
+			</h:column>
+			<h:column>
+				<p:spacer width="50"/>
+			</h:column>
+			<h:column>
+				<ul>
+				<ui:repeat var="sug"
+					value="#{inventorHarmonizationController.inventorSugestions}">
+					<li>
+						<p:selectBooleanCheckbox
+							onchange="#{inventorHarmonizationController.onSelectInventorSugestion()}" value="#{sug.selected}">
+							<p:ajax update="@this"/>
+						</p:selectBooleanCheckbox>
+						#{sug.object.name}
+					</li>
+				</ui:repeat>				
+				<h:panelGrid rendered="#{inventorHarmonizationController.inventorSugestions.size() == 0}">
+					<li>Não existem sugestões.</li>
+				</h:panelGrid>
+				</ul>
+			</h:column>
+		</h:panelGrid>
+		<p:spacer height="50"/>
+		<center>
+			<p:commandButton value="Salvar" action="#{inventorHarmonizationController.createRule()}"/>
+
+			<p:commandButton value="Cancelar" immediate="true"
+				oncomplete="invSugestionsDialog.hide()" />
+		</center>
+
+	</p:dialog>
+
+</f:view>
+</html>
