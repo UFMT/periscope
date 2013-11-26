@@ -28,11 +28,11 @@
 
                     <p:barChart id="horizontal" value="#{report.model}"  rendered="#{report.model.series.get(0).getData().size()!=0}"
                                 legendPosition="se" title="Principais Depositantes"
-                                orientation="horizontal" style="height:300px" datatipFormat="%s" />
+                                orientation="horizontal" datatipFormat="%s" />
 
                     <p:dataTable id="applicants"
                                  emptyMessage="Nenhum depositante cadastrado." var="pair"
-                                 value="#{report.pairs}" style="height:300px">
+                                 value="#{report.pairs}">
 
                         <p:column headerText="Nome">
                             <h:outputText value="#{pair.key}" />
