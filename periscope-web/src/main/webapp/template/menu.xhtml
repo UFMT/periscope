@@ -28,6 +28,9 @@
    								<a>#{currentUser}</a>
 							</h:panelGroup>    						
     					</li>
+                                        <li class="#{fn:indexOf(view.viewId,'about') > 0 ? 'active' : ''}">
+                                                <h:commandLink action="about" value="Sobre"/>
+                                        </li>
     					<li>
     						<p:commandLink action="#{sessionBean.logout()}" value="Log Out"/>
     					</li>

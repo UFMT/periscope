@@ -22,6 +22,10 @@
     <navigation-rule>
         <from-view-id>/pages/project/*</from-view-id>
         <navigation-case>
+            <from-outcome>about</from-outcome>
+            <to-view-id>/pages/project/about.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
             <from-outcome>importPatent</from-outcome>
             <to-view-id>/pages/project/patent/patentImport.xhtml</to-view-id>
         </navigation-case>
