@@ -12,7 +12,7 @@
 
         <center>    
 
-            <p:spinner value="#{controller.limit}" min="5" max="20"
+            <p:spinner value="#{controller.limit}" maxlength="3" min="5" max="20"
                        style="padding:0 20px 0 0" rendered="#{rendSpinner}">
                 <p:ajax listener="#{controller.refreshChart()}" update="@form"  />
             </p:spinner>
@@ -36,11 +36,11 @@
 
             </p:selectOneMenu>
             <h:outputText value="Inicial:"/>
-            <p:calendar  value="#{controller.filtro.inicio}" mindate="#{controller.minDate}" maxdate="#{controller.maxDate}" locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
+            <p:calendar  value="#{controller.filtro.inicio}" maxlength="10" mindate="#{controller.minDate}" maxdate="#{controller.maxDate}" locale="#{msgs['calendar']}" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
             </p:calendar>
 
             <h:outputText value="Final:"/>
-            <p:calendar value="#{controller.filtro.fim}" mindate="#{controller.minDate}" maxdate="#{controller.maxDate}" locale="pt" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
+            <p:calendar value="#{controller.filtro.fim}" maxlength="10" mindate="#{controller.minDate}" maxdate="#{controller.maxDate}" locale="#{msgs['calendar']}" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
             </p:calendar>
 
             <p:commandButton action="#{controller.refreshChart()}" update="tudo" value="Pesquisar"></p:commandButton>

@@ -4,7 +4,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:i="http://www.example.com/jsf">
+      xmlns:i="http://www.example.com/jsf"
+      xmlns:f="http://java.sun.com/jsf/core">
 
 
     <ui:composition template="/template/template.xhtml">
@@ -12,12 +13,31 @@
         <ui:define name="growl"></ui:define>
 
         <ui:define name="content">
-            
+
             <h:form id="chart" styleClass="container">
 
                 <h1>Depositos / #{msgs['year']}</h1>
                 <br/>
-                <i:filtro controller="#{applicantDateReport}" rendSpinner="false" />
+                <p:selectBooleanCheckbox id="complete" itemLabel="#{msgs['completo']}"
+                                         value="#{applicantDateReport.filtro.complete}">
+                    <p:ajax update="tudo" 
+                            listener="#{applicantDateReport.refreshChart()}" />
+                </p:selectBooleanCheckbox>
+
+                <h:outputScript library="js" name="locales.js"></h:outputScript>
+
+                <h:panelGrid columns="5" cellpadding="4">  
+
+                    <h:outputText value="Inicial:"/>
+                    <p:calendar  value="#{applicantDateReport.filtro.inicio}" maxlength="10" mindate="#{applicantDateReport.minDate}" maxdate="#{applicantDateReport.maxDate}" locale="#{msgs['calendar']}" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
+                    </p:calendar>
+
+                    <h:outputText value="Final:"/>
+                    <p:calendar value="#{applicantDateReport.filtro.fim}" maxlength="10" mindate="#{applicantDateReport.minDate}" maxdate="#{applicantDateReport.maxDate}" locale="#{msgs['calendar']}" showButtonPanel="false" navigator="true" pattern="dd/MM/yyyy">
+                    </p:calendar>
+
+                    <p:commandButton action="#{applicantDateReport.refreshChart()}" update="tudo" value="Pesquisar"></p:commandButton>
+                </h:panelGrid>
 
 
 

@@ -57,6 +57,10 @@
             <from-outcome>applicationDateReport</from-outcome>
             <to-view-id>/pages/project/report/allReports/applicantDate.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>priorityCountry</from-outcome>
+            <to-view-id>/pages/project/report/allReports/priorityCountry.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>*</from-view-id>

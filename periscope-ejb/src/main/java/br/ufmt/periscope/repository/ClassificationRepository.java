@@ -16,6 +16,7 @@ import com.mongodb.AggregationOutput;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import java.lang.reflect.Array;
 
 @Named
 public class ClassificationRepository {
@@ -124,9 +125,9 @@ public class ClassificationRepository {
         DBObject limit2 = new BasicDBObject("$limit", limit);
         parametros.add(limit2);
 
-        DBObject[] parameters = new  DBObject[parametros.size()];
+        DBObject[] parameters = new DBObject[parametros.size()];
         parameters = parametros.toArray(parameters);
-        return ds.getCollection(Patent.class).aggregate(matchProj,parameters);
+        return ds.getCollection(Patent.class).aggregate(matchProj, parameters);
     }
 
     private AggregationOutput getKlass(Project currentProject, int limit, Filters filtro) {
@@ -139,44 +140,56 @@ public class ClassificationRepository {
          * {$group:{_id:"$section",applicationPerSector:{$sum:1}}},
          * {$sort:{applicationPerSector:-1}} );
          */
+        ArrayList<DBObject> parametros = new ArrayList<DBObject>();
+
         DBObject matchProj = new BasicDBObject();
         matchProj.put("$match",
                 new BasicDBObject("project.$id", currentProject.getId()));
 
-        DBObject matchComplete = new BasicDBObject();
-        matchComplete.put("$match", new BasicDBObject("completed", filtro.isComplete()));
+        if (filtro.isComplete()) {
+
+            DBObject matchComplete = new BasicDBObject();
+            matchComplete.put("$match", new BasicDBObject("completed", filtro.isComplete()));
+            parametros.add(matchComplete);
+        }
 
         DBObject matchDate = new BasicDBObject();
         if (filtro.getSelecionaData() == 1) {
-            matchDate.put("$match", new BasicDBObject("publicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim())));
+            matchDate.put("$match", new BasicDBObject("publicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim())));
         } else {
-            matchDate.put("$match", new BasicDBObject("applicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim())));
+            matchDate.put("$match", new BasicDBObject("applicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim())));
         }
+        parametros.add(matchDate);
 
         DBObject matchBlacklist = new BasicDBObject();
         matchBlacklist.put("$match", new BasicDBObject("blacklisted", false));
+        parametros.add(matchBlacklist);
 
         DBObject matchMainClassificationExists = new BasicDBObject("$match",
                 new BasicDBObject("mainClassification", new BasicDBObject(
                 "$exists", true)));
-
+        parametros.add(matchMainClassificationExists);
         Object[] list = new Object[]{"$mainClassification.klass", 0, 3};
         DBObject section = new BasicDBObject("section", new BasicDBObject(
                 "$substr", list));
         DBObject project = new BasicDBObject("$project", section);
-
+        parametros.add(project);
         DBObject fields = new BasicDBObject("_id", "$section");
         fields.put("applicationPerSector", new BasicDBObject("$sum", 1));
         DBObject group = new BasicDBObject("$group", fields);
+        parametros.add(group);
 
         DBObject sort = new BasicDBObject("$sort", new BasicDBObject(
                 "applicationPerSector", -1));
+        parametros.add(sort);
 
         DBObject limit2 = new BasicDBObject("$limit", limit);
+        parametros.add(limit2);
 
-        return ds.getCollection(Patent.class).aggregate(matchProj, matchComplete, matchDate,
-                matchBlacklist, matchMainClassificationExists, project, group,
-                sort, limit2);
+        DBObject[] parameters = new DBObject[parametros.size()];
+        parameters = (DBObject[]) parametros.toArray(parameters);
+
+        return ds.getCollection(Patent.class).aggregate(matchProj, parameters);
     }
 
     private AggregationOutput getSubKlass(Project currentProject, int limit, Filters filtro) {
@@ -189,38 +202,50 @@ public class ClassificationRepository {
          * ,applicationPerSector:{$sum:1}}}, {$sort:{applicationPerSector:-1}}
          * );
          */
+        ArrayList<DBObject> parametros = new ArrayList<DBObject>();
+
         DBObject matchProj = new BasicDBObject();
         matchProj.put("$match",
                 new BasicDBObject("project.$id", currentProject.getId()));
 
-        DBObject matchComplete = new BasicDBObject();
-        matchComplete.put("$match", new BasicDBObject("completed", filtro.isComplete()));
+        if (filtro.isComplete()) {
+
+            DBObject matchComplete = new BasicDBObject();
+            matchComplete.put("$match", new BasicDBObject("completed", filtro.isComplete()));
+            parametros.add(matchComplete);
+        }
 
         DBObject matchDate = new BasicDBObject();
         if (filtro.getSelecionaData() == 1) {
-            matchDate.put("$match", new BasicDBObject("publicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim())));
+            matchDate.put("$match", new BasicDBObject("publicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim())));
         } else {
-            matchDate.put("$match", new BasicDBObject("applicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim())));
+            matchDate.put("$match", new BasicDBObject("applicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim())));
         }
+        parametros.add(matchDate);
 
         DBObject matchBlacklist = new BasicDBObject();
         matchBlacklist.put("$match", new BasicDBObject("blacklisted", false));
-
+        parametros.add(matchBlacklist);
         DBObject matchMainClassificationExists = new BasicDBObject("$match",
                 new BasicDBObject("mainClassification", new BasicDBObject(
                 "$exists", true)));
-
+        parametros.add(matchMainClassificationExists);
         DBObject fields = new BasicDBObject("_id", "$mainClassification.klass");
         fields.put("applicationPerSector", new BasicDBObject("$sum", 1));
         DBObject group = new BasicDBObject("$group", fields);
+        parametros.add(group);
 
         DBObject sort = new BasicDBObject("$sort", new BasicDBObject(
                 "applicationPerSector", -1));
+        parametros.add(sort);
 
         DBObject limit2 = new BasicDBObject("$limit", limit);
+        parametros.add(limit2);
 
-        return ds.getCollection(Patent.class).aggregate(matchProj, matchComplete, matchDate,
-                matchMainClassificationExists, matchBlacklist, group, sort, limit2);
+        DBObject[] parameters = new DBObject[parametros.size()];
+        parameters = parametros.toArray(parameters);
+
+        return ds.getCollection(Patent.class).aggregate(matchProj, parameters);
 
     }
 
@@ -235,45 +260,59 @@ public class ClassificationRepository {
          * {$group:{_id:"$group",applicationPerSector:{$sum:1}}},
          * {$sort:{applicationPerSector:-1}} );
          */
+        ArrayList<DBObject> parametros = new ArrayList<DBObject>();
+
         DBObject matchProj = new BasicDBObject();
         matchProj.put("$match",
                 new BasicDBObject("project.$id", currentProject.getId()));
 
-        DBObject matchComplete = new BasicDBObject();
-        matchComplete.put("$match", new BasicDBObject("completed", filtro.isComplete()));
+        if (filtro.isComplete()) {
+
+            DBObject matchComplete = new BasicDBObject();
+            matchComplete.put("$match", new BasicDBObject("completed", filtro.isComplete()));
+            parametros.add(matchComplete);
+        }
 
         DBObject matchDate = new BasicDBObject();
         if (filtro.getSelecionaData() == 1) {
-            matchDate.put("$match", new BasicDBObject("publicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim())));
+            matchDate.put("$match", new BasicDBObject("publicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim())));
         } else {
-            matchDate.put("$match", new BasicDBObject("applicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim())));
+            matchDate.put("$match", new BasicDBObject("applicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim())));
         }
+        parametros.add(matchDate);
 
         DBObject matchBlacklist = new BasicDBObject();
         matchBlacklist.put("$match", new BasicDBObject("blacklisted", false));
+        parametros.add(matchBlacklist);
 
         DBObject matchMainClassificationExists = new BasicDBObject("$match",
                 new BasicDBObject("mainClassification", new BasicDBObject(
                 "$exists", true)));
+        parametros.add(matchMainClassificationExists);
 
         Object[] list = {"$mainClassification.klass",
             "$mainClassification.group"};
         DBObject section = new BasicDBObject("group", new BasicDBObject(
                 "$concat", list));
         DBObject project = new BasicDBObject("$project", section);
+        parametros.add(project);
 
         DBObject fields = new BasicDBObject("_id", "$group");
         fields.put("applicationPerSector", new BasicDBObject("$sum", 1));
         DBObject group = new BasicDBObject("$group", fields);
+        parametros.add(group);
 
         DBObject sort = new BasicDBObject("$sort", new BasicDBObject(
                 "applicationPerSector", -1));
+        parametros.add(sort);
 
         DBObject limit2 = new BasicDBObject("$limit", limit);
+        parametros.add(limit2);
 
-        return ds.getCollection(Patent.class).aggregate(matchProj, matchComplete, matchDate,
-                matchMainClassificationExists, matchBlacklist, project, group,
-                sort, limit2);
+        DBObject[] parameters = new DBObject[parametros.size()];
+        parameters = parametros.toArray(parameters);
+
+        return ds.getCollection(Patent.class).aggregate(matchProj, parameters);
 
     }
 
@@ -289,26 +328,34 @@ public class ClassificationRepository {
          * {$group:{_id:"$subgroup",applicationPerSector:{$sum:1}}},
          * {$sort:{applicationPerSector:-1}} );
          */
+        ArrayList<DBObject> parametros = new ArrayList<DBObject>();
+
         DBObject matchProj = new BasicDBObject();
         matchProj.put("$match",
                 new BasicDBObject("project.$id", currentProject.getId()));
+        if (filtro.isComplete()) {
 
-        DBObject matchComplete = new BasicDBObject();
-        matchComplete.put("$match", new BasicDBObject("completed", filtro.isComplete()));
+            DBObject matchComplete = new BasicDBObject();
+            matchComplete.put("$match", new BasicDBObject("completed", filtro.isComplete()));
+            parametros.add(matchComplete);
+        }
 
         DBObject matchDate = new BasicDBObject();
         if (filtro.getSelecionaData() == 1) {
-            matchDate.put("$match", new BasicDBObject("publicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim())));
+            matchDate.put("$match", new BasicDBObject("publicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim())));
         } else {
-            matchDate.put("$match", new BasicDBObject("applicationDate", new BasicDBObject("$gt", filtro.getInicio()).append("$lt", filtro.getFim())));
+            matchDate.put("$match", new BasicDBObject("applicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim())));
         }
+        parametros.add(matchDate);
 
         DBObject matchBlacklist = new BasicDBObject();
         matchBlacklist.put("$match", new BasicDBObject("blacklisted", false));
+        parametros.add(matchBlacklist);
 
         DBObject matchMainClassificationExists = new BasicDBObject("$match",
                 new BasicDBObject("mainClassification", new BasicDBObject(
                 "$exists", true)));
+        parametros.add(matchMainClassificationExists);
 
         Object[] list = {"$mainClassification.klass",
             "$mainClassification.group", "/",
@@ -316,19 +363,24 @@ public class ClassificationRepository {
         DBObject section = new BasicDBObject("group", new BasicDBObject(
                 "$concat", list));
         DBObject project = new BasicDBObject("$project", section);
+        parametros.add(project);
 
         DBObject fields = new BasicDBObject("_id", "$group");
         fields.put("applicationPerSector", new BasicDBObject("$sum", 1));
         DBObject group = new BasicDBObject("$group", fields);
+        parametros.add(group);
 
         DBObject sort = new BasicDBObject("$sort", new BasicDBObject(
                 "applicationPerSector", -1));
+        parametros.add(sort);
 
         DBObject limit2 = new BasicDBObject("$limit", limit);
+        parametros.add(limit2);
+        
+        DBObject[] parameters = new DBObject[parametros.size()];
+        parameters = parametros.toArray(parameters);
 
-        return ds.getCollection(Patent.class).aggregate(matchProj, matchComplete, matchDate,
-                matchMainClassificationExists, matchBlacklist, project, group,
-                sort, limit2);
+        return ds.getCollection(Patent.class).aggregate(matchProj, parameters);
 
     }
 }

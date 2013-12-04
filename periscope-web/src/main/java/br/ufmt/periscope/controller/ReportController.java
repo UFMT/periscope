@@ -1,6 +1,5 @@
 package br.ufmt.periscope.controller;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
@@ -11,8 +10,6 @@ import org.primefaces.model.chart.ChartSeries;
 import br.ufmt.periscope.report.MainApplicantReport;
 import br.ufmt.periscope.report.Pair;
 
-import br.ufmt.periscope.repository.PatentRepository;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collections;;
 

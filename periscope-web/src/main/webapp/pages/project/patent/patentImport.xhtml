@@ -1,44 +1,45 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="/template/template.xhtml">
+    <ui:composition template="/template/template.xhtml">
 
-	<ui:define name="content">
-		<center>
-			<h:form enctype="multipart/form-data">
-				<p:panel id="pnlImport" header="Importar dados">
+        <ui:define name="content">
+            <center>
+                <h:form enctype="multipart/form-data">
+                    <p:panel id="pnlImport" header="Importar dados">
 
-					<p:fileUpload label="Escolha o arquivo" auto="true"						
-						fileUploadListener="#{importPatentController.handleFileUpload}"											
-						update="fileLabel messages"/>
-						
-					<br/>
-					<h:panelGrid columns="2">
-						<p:outputLabel>Origem do arquivo :</p:outputLabel>
-						<p:selectOneMenu value="#{importPatentController.fileOrigin}">
-							<f:selectItems value="#{importPatentController.origins}" />
-						</p:selectOneMenu>
-					</h:panelGrid>
-					<br/>					
-					<p:outputLabel id="fileLabel" style="font-weight:bold"
-						value="Arquivo #{importPatentController.fileUploaded != null ? importPatentController.fileUploaded.fileName : 'não '} enviado." />					
-					<br/>			
-					<p:commandButton id="btnImport" value="#{msgs['import']}" update="messages" action="#{importPatentController.importPatents()}"/>
-					<p:growl id="messages" showDetail="true" />
-				</p:panel>
-				
-				<p:blockUI block="pnlImport" trigger="btnImport">  
-        			Importando ... <br />  
-        			<p:graphicImage value="/imgs/ajax-loader.gif"/>  
-    			</p:blockUI>
-			</h:form>
-		</center>
-	</ui:define>
+                        <p:fileUpload label="Escolha o arquivo" auto="true"						
+                                      fileUploadListener="#{importPatentController.handleFileUpload}"
+                                      allowTypes="/(.csv|.xls)$/"
+                                      update="fileLabel messages"/>
 
-</ui:composition>
+                        <br/>
+                        <h:panelGrid columns="2">
+                            <p:outputLabel>Origem do arquivo :</p:outputLabel>
+                            <p:selectOneMenu value="#{importPatentController.fileOrigin}">
+                                <f:selectItems value="#{importPatentController.origins}" />
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                        <br/>					
+                        <p:outputLabel id="fileLabel" style="font-weight:bold"
+                                       value="Arquivo #{importPatentController.fileUploaded != null ? importPatentController.fileUploaded.fileName : 'não '} enviado." />					
+                        <br/>			
+                        <p:commandButton id="btnImport" value="#{msgs['import']}" update="messages" action="#{importPatentController.importPatents()}"/>
+                        <p:growl id="messages" showDetail="true" />
+                    </p:panel>
+
+                    <p:blockUI block="pnlImport" trigger="btnImport">  
+                        Importando ... <br />  
+                        <p:graphicImage value="/imgs/ajax-loader.gif"/>  
+                    </p:blockUI>
+                </h:form>
+            </center>
+        </ui:define>
+
+    </ui:composition>
 </html>

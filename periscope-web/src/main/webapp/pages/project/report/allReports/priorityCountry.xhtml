@@ -1,40 +1,57 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:i="http://www.example.com/jsf">
 
 
-<ui:composition template="/template/template.xhtml">
+    <ui:composition template="/template/template.xhtml">
 
-	<ui:define name="growl"></ui:define>
+        <ui:define name="growl"></ui:define>
 
-	<ui:define name="content">
+        <ui:define name="content">
 
-		<h1>Data de Prioridade</h1>
-		<h:panelGrid columns="2">
+            <h1>Países de Prioridade</h1>
 
-			<h:column>
-				<p:graphicImage />
-				<p:graphicImage />
-			</h:column>
+            <h:form styleClass="container">
 
-			<h:column>
+                <br />
 
-				<p:dataTable emptyMessage="Nenhum depositante cadastrado.">
+                <i:filtro controller="#{priorityCountryController}" />
 
-					<p:column headerText="#{msgs['year']}" />
+                <h:panelGrid columns="1" id="tudo" styleClass="container" >
+                    
+                    <p:barChart id="horizontal" value="#{priorityCountryController.model}" rendered="#{priorityCountryController.model.series.get(0).getData().size()!=0}"
+                            orientation="horizontal" legendPosition="se" datatipFormat="%s"
+                            title="Paises com Maior Prioridade" style="height:300px"
+                            />
 
-					<p:column headerText="#{msgs['documents.number']}" />
+                <p:dataTable id="inventors"
+                             emptyMessage="Nenhum inventor cadastrado." var="pair"
+                             value="#{priorityCountryController.pairs}" >
 
-				</p:dataTable>
-			</h:column>
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{pair.key}" />
+                    </p:column>
 
-		</h:panelGrid>
+                    <p:column headerText="#{msgs['documents.number']}">
+                        <h:outputText value="#{pair.value}" />
+                    </p:column>
 
-	</ui:define>
+                </p:dataTable>
+                
+                </h:panelGrid>
 
-</ui:composition>
+
+
+            </h:form>
+
+
+
+        </ui:define>
+
+    </ui:composition>
 </html>
