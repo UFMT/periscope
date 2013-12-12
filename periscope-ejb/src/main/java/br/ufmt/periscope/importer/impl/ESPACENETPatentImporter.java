@@ -140,7 +140,7 @@ public class ESPACENETPatentImporter implements PatentImporter {
             }
             nextLine();
         }
-        setAsComplete();
+        // setAsComplete();
         return patent;
     }
 
@@ -192,8 +192,6 @@ public class ESPACENETPatentImporter implements PatentImporter {
             }
 
         }
-        //    pat.setCompleted(true);
-
     }
 
     private void fillPatentXLS(int columnIndex, String contentStrin) {
@@ -233,7 +231,9 @@ public class ESPACENETPatentImporter implements PatentImporter {
                         inventor.setName(name);
                         inventor.setCountry(countryRepository.getCountryByAcronym(country));
                     }
-                    inventors.add(inventor);
+                    if (!name.trim().isEmpty()) {
+                        inventors.add(inventor);
+                    }
                 }
                 patent.setInventors(inventors);
                 break;
@@ -258,7 +258,9 @@ public class ESPACENETPatentImporter implements PatentImporter {
                         applicant.setName(name);
                         applicant.setCountry(countryRepository.getCountryByAcronym(country));
                     }
-                    applicants.add(applicant);
+                    if (!name.trim().isEmpty()) {
+                        applicants.add(applicant);
+                    }
                 }
                 patent.setApplicants(applicants);
                 break;
@@ -335,6 +337,7 @@ public class ESPACENETPatentImporter implements PatentImporter {
         List<Priority> priorities = patent.getPriorities();
         for (int i = 0; i < vet.length; i++) {
             array = vet[i].split(";");
+            System.out.println("Tamanho do Vetor: "+array.length);
             for (int j = 0; j < array.length; j++) {
 
                 String contentString = new String(array[j]);
@@ -356,22 +359,26 @@ public class ESPACENETPatentImporter implements PatentImporter {
                         }
                         break;
                     case 3:
-                        Inventor inventor = new Inventor();
-                        inventor.setName(contentString.replaceAll("\\[.*]", "").trim());
-                        try {
-                            inventor.setCountry(countryRepository.getCountryByAcronym(contentString.substring(contentString.indexOf("[") + 1, contentString.indexOf("]"))));
-                        } catch (IndexOutOfBoundsException ex) {
+                        if (!contentString.replaceAll("\\[.*]", "").trim().isEmpty()) {
+                            Inventor inventor = new Inventor();
+                            inventor.setName(contentString.replaceAll("\\[.*]", "").trim());
+                            try {
+                                inventor.setCountry(countryRepository.getCountryByAcronym(contentString.substring(contentString.indexOf("[") + 1, contentString.indexOf("]"))));
+                            } catch (IndexOutOfBoundsException ex) {
+                            }
+                            inventors.add(inventor);
                         }
-                        inventors.add(inventor);
                         break;
                     case 4:
-                        Applicant applicant = new Applicant();
-                        applicant.setName(contentString.replaceAll("\\[.*]", "").trim());
-                        try {
-                            applicant.setCountry(countryRepository.getCountryByAcronym(contentString.substring(contentString.indexOf("[") + 1, contentString.indexOf("]"))));
-                        } catch (IndexOutOfBoundsException ex) {
+                        if (!contentString.replaceAll("\\[.*]", "").trim().isEmpty()) {
+                            Applicant applicant = new Applicant();
+                            applicant.setName(contentString.replaceAll("\\[.*]", "").trim());
+                            try {
+                                applicant.setCountry(countryRepository.getCountryByAcronym(contentString.substring(contentString.indexOf("[") + 1, contentString.indexOf("]"))));
+                            } catch (IndexOutOfBoundsException ex) {
+                            }
+                            applicants.add(applicant);
                         }
-                        applicants.add(applicant);
                         break;
                     case 5:
                         Classification classification = new Classification();
@@ -399,11 +406,15 @@ public class ESPACENETPatentImporter implements PatentImporter {
                         } catch (IndexOutOfBoundsException ex) {
                         }
                         try {
-                            priority.setValue(contentString.substring(2, contentString.indexOf(" ")));
+                            priority.setValue(contentString.substring(2, contentString.indexOf(" ")).trim());
                         } catch (IndexOutOfBoundsException ex) {
                         }
                         try {
-                            priority.setDate(sdf2.parse(contentString.substring(contentString.indexOf(" "))));
+                            
+                            priority.setDate(sdf2.parse(contentString.substring(contentString.indexOf(" ")).trim()));
+                            System.out.println("O que tem na linha: "+contentString);
+                            System.out.println("O que vai na data"+contentString.substring(contentString.indexOf(" ")));
+                            System.out.println(sdf2.parse(contentString.substring(contentString.indexOf(" ")).trim()));
                         } catch (ParseException ex) {
                             Logger.getLogger(ESPACENETPatentImporter.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (IndexOutOfBoundsException ex) {
@@ -424,22 +435,6 @@ public class ESPACENETPatentImporter implements PatentImporter {
 
     }
 
-    private void setAsComplete() {
-        if (patent.getApplicationNumber() != null) {
-            if (patent.getApplicationDate() != null) {
-                if (patent.getApplicants().size() > 0) {
-                    if (patent.getTitleSelect() != null) {
-                        if (patent.getMainClassification() != null) {
-                            if (patent.getInventors().size() > 0) {
-                                patent.setCompleted(true);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
- 
     private void parseLineCSV() {
         fillPatentCSV();
     }

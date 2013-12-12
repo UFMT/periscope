@@ -97,7 +97,6 @@ public class DPMAPatentImporter implements PatentImporter {
         readClassifications();
         readApplicants();
         readInventors();
-        setAsComplete();
     }
 
     private Boolean testLine(String test) {
@@ -194,22 +193,6 @@ public class DPMAPatentImporter implements PatentImporter {
         } catch (IOException e) {
             line = null;
             e.printStackTrace();
-        }
-    }
-
-    private void setAsComplete() {
-        if (patent.getApplicationNumber() != null) {
-            if (patent.getApplicationDate() != null) {
-                if (patent.getApplicants().size() > 0) {
-                    if (patent.getTitleSelect() != null) {
-                        if (patent.getMainClassification() != null) {
-                            if (patent.getInventors().size() > 0) {
-                                patent.setCompleted(true);
-                            }
-                        }
-                    }
-                }
-            }
         }
     }
 

@@ -16,7 +16,7 @@ public abstract class GenericController {
     private @Inject
     @CurrentProject
     Project currentProject;
-    private @Inject
+    private @Inject 
     PatentRepository patentRepository;
     private CartesianChartModel model;
     private Date minDate, maxDate;

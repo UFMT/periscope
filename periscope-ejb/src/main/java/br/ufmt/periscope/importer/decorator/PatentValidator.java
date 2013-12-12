@@ -33,7 +33,7 @@ public class PatentValidator {
 		
 		patent.setCompleted(false);
 		
-		validatePublicationAndApplicationNumbers();		
+		//validatePublicationAndApplicationNumbers();		
 		setAsComplete();
 		
 	}
