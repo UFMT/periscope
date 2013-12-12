@@ -54,22 +54,25 @@ public class PriorityCountryRepository {
         DBObject unwind = new BasicDBObject("$unwind", "$priorities");
         parametros.add(unwind);
         
+        DBObject sort1 = new BasicDBObject("$sort", new BasicDBObject("priorities.date", 1));
+        parametros.add(sort1);
+        
         DBObject group1 = new BasicDBObject();
-        DBObject idFields = new BasicDBObject("country", "$priorities.country");
-        idFields.put("patent", "$_id");
-        DBObject fields = new BasicDBObject("_id", idFields);
+        
+        DBObject fields = new BasicDBObject("_id", "$_id");
+        fields.put("country", new BasicDBObject("$first", "$priorities.country"));
         group1.put("$group", fields);
         parametros.add(group1);
 
         DBObject group2 = new BasicDBObject();
         parametros.add(group2);
-        fields = new BasicDBObject("_id", "$_id.country");
+        fields = new BasicDBObject("_id", "$country");
         fields.put("prioritiesPerCountry", new BasicDBObject("$sum", 1));
         group2.put("$group", fields);
 
-        DBObject sort = new BasicDBObject("$sort", new BasicDBObject(
+        DBObject sort2 = new BasicDBObject("$sort", new BasicDBObject(
                 "prioritiesPerCountry", -1));
-        parametros.add(sort);
+        parametros.add(sort2);
 
         DBObject pipeLimit = new BasicDBObject("$limit", limit);
         parametros.add(pipeLimit);
