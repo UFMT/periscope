@@ -20,7 +20,6 @@ public class ApplicationDateReport {
 	public ChartSeries applicationDateSeries(Project currentProject, Filters filtro) {
 		ChartSeries series = new ChartSeries("Depositos por ano");
                 
-                System.out.println("3");
 		List<Pair> i = repo.getApplicationsByDate(currentProject, filtro);
                 
                 Collections.reverse(i);

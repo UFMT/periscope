@@ -19,9 +19,9 @@
                 <h1>#{msgs['priority']} / #{msgs['year']}</h1>
                 <br/>
                 <p:selectBooleanCheckbox id="complete" itemLabel="#{msgs['completo']}"
-                                         value="#{applicantDateReport.filtro.complete}">
+                                         value="#{priorityDateController.filtro.complete}">
                     <p:ajax update="tudo" 
-                            listener="#{applicantDateReport.refreshChart()}" />
+                            listener="#{priorityDateController.refreshChart()}" />
                 </p:selectBooleanCheckbox>
 
                 <h:outputScript library="js" name="locales.js"></h:outputScript>
@@ -29,14 +29,14 @@
                 <h:panelGrid columns="5" cellpadding="4">  
 
                     <h:outputText value="Inicial:"/>
-                    <p:calendar  value="#{applicantDateReport.filtro.inicio}" maxlength="10" mindate="#{applicantDateReport.minDate}" maxdate="#{applicantDateReport.maxDate}" locale="#{msgs['calendar']}" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
+                    <p:calendar  value="#{priorityDateController.filtro.inicio}" maxlength="10" mindate="#{applicantDateReport.minDate}" maxdate="#{applicantDateReport.maxDate}" locale="#{msgs['calendar']}" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
                     </p:calendar>
 
                     <h:outputText value="Final:"/>
-                    <p:calendar value="#{applicantDateReport.filtro.fim}" maxlength="10" mindate="#{applicantDateReport.minDate}" maxdate="#{applicantDateReport.maxDate}" locale="#{msgs['calendar']}" showButtonPanel="false" navigator="true" pattern="dd/MM/yyyy">
+                    <p:calendar value="#{priorityDateController.filtro.fim}" maxlength="10" mindate="#{applicantDateReport.minDate}" maxdate="#{applicantDateReport.maxDate}" locale="#{msgs['calendar']}" showButtonPanel="false" navigator="true" pattern="dd/MM/yyyy">
                     </p:calendar>
 
-                    <p:commandButton action="#{applicantDateReport.refreshChart()}" update="tudo" value="Pesquisar"></p:commandButton>
+                    <p:commandButton action="#{priorityDateController.refreshChart()}" update="tudo" value="Pesquisar"></p:commandButton>
                 </h:panelGrid>
 
 
@@ -44,7 +44,7 @@
                 <h:panelGrid id="tudo" columns="2" styleClass="container">
 
 
-                    <p:lineChart id="line" value="#{applicantDateReport.model}" rendered="#{applicantDateReport.model.series.get(0).getData().size()!=0}"
+                    <p:lineChart id="line" value="#{priorityDateController.model}" rendered="#{priorityDateController.model.series.get(0).getData().size()!=0}"
                                  legendPosition="e" title="Número de depositos por ano"/>
 
                     <h:column>
@@ -53,7 +53,7 @@
                     </h:column>
 
                     <h:column>
-                        <p:dataTable emptyMessage="Nenhum depositante cadastrado." var="pair" value="#{applicantDateReport.pairs}"
+                        <p:dataTable emptyMessage="Nenhum depositante cadastrado." var="pair" value="#{priorityDateController.pairs}"
                                      >
 
                             <p:column headerText="#{msgs['year']}">
