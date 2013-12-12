@@ -124,6 +124,8 @@
   name: Algeria
 - acronym: EC
   name: Ecuador
+- acronym: EA
+  name: Eurasian Patent Organization
 - acronym: EE
   name: Estonia
 - acronym: EG
@@ -132,6 +134,8 @@
   name: Western Sahara
 - acronym: ER
   name: Eritrea
+- acronym: EP
+  name: European Patent Office
 - acronym: ES
   name: Spain
 - acronym: ET

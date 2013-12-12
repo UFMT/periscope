@@ -140,7 +140,6 @@ public class ESPACENETPatentImporter implements PatentImporter {
             }
             nextLine();
         }
-        // setAsComplete();
         return patent;
     }
 
@@ -337,7 +336,6 @@ public class ESPACENETPatentImporter implements PatentImporter {
         List<Priority> priorities = patent.getPriorities();
         for (int i = 0; i < vet.length; i++) {
             array = vet[i].split(";");
-            System.out.println("Tamanho do Vetor: "+array.length);
             for (int j = 0; j < array.length; j++) {
 
                 String contentString = new String(array[j]);
@@ -410,11 +408,8 @@ public class ESPACENETPatentImporter implements PatentImporter {
                         } catch (IndexOutOfBoundsException ex) {
                         }
                         try {
-                            
+
                             priority.setDate(sdf2.parse(contentString.substring(contentString.indexOf(" ")).trim()));
-                            System.out.println("O que tem na linha: "+contentString);
-                            System.out.println("O que vai na data"+contentString.substring(contentString.indexOf(" ")));
-                            System.out.println(sdf2.parse(contentString.substring(contentString.indexOf(" ")).trim()));
                         } catch (ParseException ex) {
                             Logger.getLogger(ESPACENETPatentImporter.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (IndexOutOfBoundsException ex) {
