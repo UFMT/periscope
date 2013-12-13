@@ -39,6 +39,7 @@ public class ImportPatentController implements Serializable {
     private String fileOrigin;
     private String[] origins = null;
     private UploadedFile fileUploaded = null;
+    
 
     @PostConstruct
     public void init() {
@@ -47,7 +48,7 @@ public class ImportPatentController implements Serializable {
 
     public void importPatents() {
         if (fileUploaded == null) {
-            FacesMessage msg = new FacesMessage("Erro", "Nenhum arquivo foi enviado.");
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Nenhum arquivo foi enviado.");
             FacesContext.getCurrentInstance().addMessage(null, msg);
         } else {
             try {
@@ -61,12 +62,12 @@ public class ImportPatentController implements Serializable {
                     FacesContext.getCurrentInstance().addMessage(null, msg);
 
                 } else {
-                    FacesMessage msg = new FacesMessage("Erro", "Ocorreu um erro com o arquivo que foi enviado.");
+                    FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Ocorreu um erro com o arquivo que foi enviado.");
                     FacesContext.getCurrentInstance().addMessage(null, msg);
                 }
 
             } catch (IOException e) {
-                FacesMessage msg = new FacesMessage("Erro", "Ocorreu um erro com o arquivo que foi enviado.");
+                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Ocorreu um erro com o arquivo que foi enviado.");
                 FacesContext.getCurrentInstance().addMessage(null, msg);
                 e.printStackTrace();
             }

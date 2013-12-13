@@ -75,7 +75,7 @@ public class PriorityDateRepository {
         group2.put("$group", fields2);
         parametros.add(group2);
         
-        DBObject sort2 = new BasicDBObject("$sort", new BasicDBObject("prioritiesPerYear", -1));
+        DBObject sort2 = new BasicDBObject("$sort", new BasicDBObject("_id", 1));
         parametros.add(sort2);
         
         DBObject[] parameters = new DBObject[parametros.size()];

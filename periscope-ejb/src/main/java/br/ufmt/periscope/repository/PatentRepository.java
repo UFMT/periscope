@@ -13,8 +13,11 @@ import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
 
 import com.github.jmkgreen.morphia.Datastore;
+import com.mongodb.AggregationOutput;
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import java.util.Date;
 
 @Named
@@ -100,8 +103,19 @@ public class PatentRepository {
                 .asList();
     }
     
+    public Boolean isEmpty(Project currentProject){
+        
+        DBObject matchProj = new BasicDBObject("$match", new BasicDBObject("project.$id", currentProject.getId()));
+        AggregationOutput output = ds.getCollection(Patent.class).aggregate(matchProj);
+        BasicDBList outputResult = (BasicDBList) output.getCommandResult().get("result");
+        //System.out.println(currentProject.getId());
+        
+        return outputResult.isEmpty();
+        
+    }
+    
     public Date getMinDate(Project currentProject){
-        DBCursor dbc = ds.getCollection(Patent.class).find(new BasicDBObject("project.$id" ,currentProject.getId())).sort(new BasicDBObject("applicationDate", 1)).limit(1);
+        DBCursor dbc = ds.getCollection(Patent.class).find(new BasicDBObject("project.$id" ,currentProject.getId()), new BasicDBObject("applicationDate", 1)).sort(new BasicDBObject("applicationDate", 1)).limit(1);
         Date data = (Date) dbc.next().get("applicationDate");
         return data;
     }
