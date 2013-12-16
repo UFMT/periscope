@@ -24,11 +24,13 @@ public class ProjectRepository {
 		
 	public List<Project> getProjectList(User user){
 		Query<Project> query = ds.createQuery(Project.class);
-		query.or(
-				query.criteria("owner").equal(user),				 
-				query.criteria("observers").hasThisElement(user),
-				query.criteria("isPublic").equal(true)
-			);
+                if (user.getUserLevel().getAccessLevel() != 10) {
+                    
+                    query.or(
+                            query.criteria("owner").equal(user),
+                            query.criteria("observers").hasThisElement(user),
+                            query.criteria("isPublic").equal(true));
+                }
 		return query.asList();
 	}
 	

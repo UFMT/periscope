@@ -41,11 +41,11 @@
 				<p:column>
 					<center>
 						<h:form style="margin-bottom:0px">
-							<h:commandLink value="Editar" action="editUser" rendered="#{admin or currentUser.id.toString() == user.id.toString()}"
+							<h:commandLink value="Editar" action="editUser" rendered="#{currentUser.userLevel.accessLevel == 10 or currentUser.id.toString() == user.id.toString()}"
 								style="color:white;margin-right: 10px" class="btn btn-inverse">
 								<f:param name="userId" value="#{user.id.toString()}"/>	
 							</h:commandLink>
-							<h:commandLink value="Deletar" style="color:white" rendered="#{admin and currentUser.id.toString() != user.id.toString()}"
+							<h:commandLink value="Deletar" style="color:white" rendered="#{currentUser.userLevel.accessLevel == 10 and currentUser.id.toString() != user.id.toString()}"
 								onclick="if(!confirm('Deseja excluir este usuario ?')) { return false; }"
 								class="btn btn-inverse" action="#{userController.delete(user.id.toString())}"/>
 						</h:form>

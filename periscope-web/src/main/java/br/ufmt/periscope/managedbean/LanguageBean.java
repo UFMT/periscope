@@ -23,14 +23,14 @@ public class LanguageBean implements Serializable{
 	private ResourceBundle messageBundle;
 
 	private String localeCode = "pt_BR";
-	private String localString = "Portugues";
+	private String localString = "Português";
 	
 	private static Map<String,Locale> locales;
 	
 	static {
 		
 		locales = new HashMap<String,Locale>();
-		locales.put("Portugues", new Locale("pt","BR"));
+		locales.put("Português", new Locale("pt","BR"));
 		locales.put("English",new Locale("en","US"));						
 		
 		
@@ -38,7 +38,7 @@ public class LanguageBean implements Serializable{
 	
 	public LanguageBean(){
 		
-		Locale locale = locales.get("Portugues");
+		Locale locale = locales.get("Português");
 		FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
 		setLocaleCode(locale.toString());
 	}
