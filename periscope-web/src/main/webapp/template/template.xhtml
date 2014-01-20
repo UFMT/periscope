@@ -23,7 +23,7 @@
 
 	</h:head>
 
-	<h:body>
+	<h:body id="superbody">
 		<div id="container">
 			<div id="body" class="container-fluid">
 				<div class="row-fluid">
@@ -46,7 +46,16 @@
 			<div id="footer">
 				<ui:include src="/template/footer.xhtml" />				
 			</div>
-		</div>		
+		</div>	
+            <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+                <f:facet name="start">  
+                    <p:graphicImage value="/imgs/ajax-loader.gif" />  
+                </f:facet>  
+
+                <f:facet name="complete">  
+                    <h:outputText value="" />  
+                </f:facet>  
+            </p:ajaxStatus>
 	</h:body>
 	<script type="text/javascript" src="#{facesContext.externalContext.request.contextPath}/js/bootstrap.min.js"/>	
 	<ui:insert name="moreScripts">

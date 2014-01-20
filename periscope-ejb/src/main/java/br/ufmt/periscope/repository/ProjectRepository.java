@@ -24,6 +24,7 @@ public class ProjectRepository {
 		
 	public List<Project> getProjectList(User user){
 		Query<Project> query = ds.createQuery(Project.class);
+                query.order("title");
                 if (user.getUserLevel().getAccessLevel() != 10) {
                     
                     query.or(

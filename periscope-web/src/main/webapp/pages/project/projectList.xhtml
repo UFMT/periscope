@@ -16,6 +16,8 @@
 				value="#{projectController.projects}" paginator="true"
 				paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
 				rowKey="#{project.title}"
+                                sortOrder="ASCENDING"
+                                sortBy="#{project.title}"
                                 >
 
 				<p:columnGroup type="header">

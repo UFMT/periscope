@@ -46,7 +46,7 @@
 						icon="ui-icon-refresh" ajax="false" rendered="#{currentProject.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or currentProject.observers.contains(currentUser)}" />
 															
 					<p:menuitem value="Harmonizar dados" action="harmonizationHome"
-						icon="ui-icon-refresh" ajax="false" rendered="#{currentProject.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or currentProject.observers.contains(currentUser)}"/>
+						icon="ui-icon-refresh" ajax="false" rendered="#{(currentProject.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or currentProject.observers.contains(currentUser)) and (not empty currentProject.patents)}"/>
 				</p:submenu>				
 			</p:panelMenu>		
 		</h:form>

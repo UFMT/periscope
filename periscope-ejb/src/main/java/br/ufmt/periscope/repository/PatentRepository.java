@@ -103,16 +103,7 @@ public class PatentRepository {
                 .asList();
     }
     
-    public Boolean isEmpty(Project currentProject){
-        
-        DBObject matchProj = new BasicDBObject("$match", new BasicDBObject("project.$id", currentProject.getId()));
-        AggregationOutput output = ds.getCollection(Patent.class).aggregate(matchProj);
-        BasicDBList outputResult = (BasicDBList) output.getCommandResult().get("result");
-        //System.out.println(currentProject.getId());
-        
-        return outputResult.isEmpty();
-        
-    }
+    
     
     public Date getMinDate(Project currentProject){
         DBCursor dbc = ds.getCollection(Patent.class).find(new BasicDBObject("project.$id" ,currentProject.getId()), new BasicDBObject("applicationDate", 1)).sort(new BasicDBObject("applicationDate", 1)).limit(1);

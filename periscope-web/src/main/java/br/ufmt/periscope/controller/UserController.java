@@ -36,10 +36,11 @@ public class UserController {
 	@PostConstruct
 	public void init(){
 		
-		for(UserLevel ul : UserLevel.values()){
-			if(ul.getAccessLevel() <= loggedUser.getUserLevel().getAccessLevel())
-				levels.add(ul);
-		}		
+//		for(UserLevel ul : UserLevel.values()){
+//			if(ul.getAccessLevel() <= loggedUser.getUserLevel().getAccessLevel())
+//				levels.add(ul);
+//		}
+                levels.add(UserLevel.USER);
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest req = (HttpServletRequest) context.getExternalContext().getRequest();		
 		if(req.getParameter("userId") != null){

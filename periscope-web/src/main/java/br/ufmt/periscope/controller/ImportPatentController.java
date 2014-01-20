@@ -21,6 +21,7 @@ import br.ufmt.periscope.qualifier.CurrentProject;
 import br.ufmt.periscope.repository.PatentRepository;
 
 import com.github.jmkgreen.morphia.Datastore;
+import org.primefaces.event.FileUploadsCompleteEvent;
 
 @ManagedBean
 @ViewScoped
@@ -39,7 +40,6 @@ public class ImportPatentController implements Serializable {
     private String fileOrigin;
     private String[] origins = null;
     private UploadedFile fileUploaded = null;
-    
 
     @PostConstruct
     public void init() {
@@ -55,12 +55,13 @@ public class ImportPatentController implements Serializable {
                 InputStream is = fileUploaded.getInputstream();
                 PatentImporter importer = importerFactory.getImporter(fileOrigin);
                 if (importer.initWithStream(is)) {
-                
+
                     patentRepository.savePatentToDatabase(importer, currentProject);
 
                     FacesMessage msg = new FacesMessage("Sucesso", "Arquivo importado com sucesso.");
                     FacesContext.getCurrentInstance().addMessage(null, msg);
 
+                    System.out.println(currentProject.getPatents().size());
                 } else {
                     FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Ocorreu um erro com o arquivo que foi enviado.");
                     FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -80,6 +81,10 @@ public class ImportPatentController implements Serializable {
         fileUploaded = event.getFile();
         FacesMessage msg = new FacesMessage("Sucesso", event.getFile().getFileName() + " foi enviado.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public void done(FileUploadsCompleteEvent event) {
+        System.out.println("done");
     }
 
     public UploadedFile getFileUploaded() {

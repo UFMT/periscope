@@ -13,14 +13,14 @@
                 <h:form enctype="multipart/form-data">
                     <p:panel id="pnlImport" header="Importar dados">
 
-                        <p:fileUpload label="Escolha o arquivo" auto="true"						
+                        <p:fileUpload id="fileUpload" label="Escolha o arquivo" auto="true"						
                                       fileUploadListener="#{importPatentController.handleFileUpload}"
                                       mode="advanced"
-                                      multiple="true"
                                       allowTypes="/(.csv|.xls)$/"
-                                      update="fileLabel messages">
-                            <p:ajax event="fileUploadComplete" listener="#{importPatentController.done}"
+                                      update="fileLabel messages fileUpload">
+                    
                         </p:fileUpload>
+                        
 
                         <br/>
                         <h:panelGrid columns="2">
@@ -33,7 +33,7 @@
                         <p:outputLabel id="fileLabel" style="font-weight:bold"
                                        value="Arquivo #{importPatentController.fileUploaded != null ? importPatentController.fileUploaded.fileName : 'não '} enviado." />					
                         <br/>			
-                        <p:commandButton id="btnImport" value="#{msgs['import']}" update="messages" action="#{importPatentController.importPatents()}"/>
+                        <p:commandButton id="btnImport" ajax="#{not empty currentProject.patents}" value="#{msgs['import']}" update="messages :superbody" action="#{importPatentController.importPatents()}"/>
                         <p:growl id="messages" showDetail="true" />
                     </p:panel>
 

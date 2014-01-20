@@ -48,8 +48,8 @@
 					<p:message for="txtEmail"/>
 					
 					<h:outputLabel id="lblLevel" value="Nível de Usuário " style="font-weight:bold"/>				
-					<h:outputLabel value="#{userController.user.userLevel}" rendered="#{(userController.editing and not admin) or userController.user.id.toString() == currentUser.id.toString()}"/>
-					<p:selectOneMenu id="cmbLevel" value="#{userController.user.userLevel}" rendered="#{(not userController.editing or admin) and userController.user.id.toString() != currentUser.id.toString()}">
+					<h:outputLabel value="#{userController.user.userLevel}" rendered="#{(userController.editing and currentUser.userLevel.accessLevel != 10) or userController.user.id.toString() == currentUser.id.toString()}"/>
+					<p:selectOneMenu id="cmbLevel" value="#{userController.user.userLevel}" rendered="#{(not userController.editing or currentUser.userLevel.accessLevel == 10) and userController.user.id.toString() != currentUser.id.toString()}">
 						<f:selectItems value="#{userController.levels}" />					
 					</p:selectOneMenu>
 					<p:messages for="cmbLevel"/>							
