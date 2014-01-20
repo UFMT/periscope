@@ -15,12 +15,12 @@
 			<h:panelGroup rendered="#{empty currentProject.observers}">
 				<span
 					class="label label-#{currentProject.isPublic ? 'success' : 'important'}">
-					#{currentProject.isPublic ? 'Público' : 'Privado'} </span>
+					#{currentProject.isPublic ? msgs['public'] : msgs['private']} </span>
 			</h:panelGroup>
 			<h:panelGroup rendered="#{not empty currentProject.observers}">
 				<span
 					class="label label-#{currentProject.isPublic ? 'success' : 'info'}">
-					#{currentProject.isPublic ? 'Público' : 'Compartilhado'} </span>
+					#{currentProject.isPublic ? msgs['public'] : msgs['shared']} </span>
 			</h:panelGroup>
 		</center>
 	</div>

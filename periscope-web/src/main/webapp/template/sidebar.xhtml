@@ -11,42 +11,42 @@
 		<h:form>
 	
 			<p:panelMenu style="width:95%">									
-                            <p:submenu label="Relatórios" icon="ui-icon-clipboard" rendered="#{sideBarController.renderer}"> 					
+                            <p:submenu label="#{msgs['reports']}" icon="ui-icon-clipboard" rendered="#{not empty currentProject.patents}"> 					
 					
-					<p:submenu label="Visão Geral" icon="ui-icon-clipboard" > 					
+					<p:submenu label="#{msgs['overview']}" icon="ui-icon-clipboard" > 					
 					
-						<p:menuitem value="Principais Depositantes" action="mainApplicantReport"  
+						<p:menuitem value="#{msgs['main.applicant']}" action="mainApplicantReport"  
 							icon="ui-icon-clock" ajax="false" />
 		
-						<p:menuitem value="Principais Inventores" action="mainInventorReport"
+						<p:menuitem value="#{msgs['main.inventor']}" action="mainInventorReport"
 							icon="ui-icon-refresh" ajax="false" />
 																
-						<p:menuitem value="Principais Classificações" action="mainIPCReport"
+                                                <p:menuitem value="#{msgs['main.classification']}" action="mainIPCReport"
 							icon="ui-icon-refresh" ajax="false" />
 							
-						<p:menuitem value="Depósitos por Data" action="applicationDateReport"
+						<p:menuitem value="#{msgs['application.date']}" action="applicationDateReport"
 							icon="ui-icon-refresh" ajax="false" />
 						
-                                                <p:menuitem value="País de Prioridade" action="priorityCountry"
+                                                <p:menuitem value="#{msgs['priority.country']}" action="priorityCountry"
 							icon="ui-icon-refresh" ajax="false" />
                                                 
-                                                <p:menuitem value="Data de Prioridade" action="priorityDate"
+                                                <p:menuitem value="#{msgs['priority.date']}" action="priorityDate"
 							icon="ui-icon-refresh" ajax="false" />
 							
 					</p:submenu>
 				</p:submenu>				
 			</p:panelMenu>
 			<p:panelMenu style="width:95%">									
-				<p:submenu label="Patentes" icon="ui-icon-clipboard" > 					
+                            <p:submenu label="#{msgs['patents']}" icon="ui-icon-clipboard" > 					
 					
-					<p:menuitem value="Listar" action="listPatent"  
-						icon="ui-icon-clock" ajax="false" />
+					<p:menuitem value="#{msgs['list']}" action="listPatent"  
+						icon="ui-icon-clock" ajax="false" rendered="#{not empty currentProject.patents}"/>
 	
 					<p:menuitem value="Importar dados" action="importPatent"
-						icon="ui-icon-refresh" ajax="false" />
+						icon="ui-icon-refresh" ajax="false" rendered="#{currentProject.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or currentProject.observers.contains(currentUser)}" />
 															
 					<p:menuitem value="Harmonizar dados" action="harmonizationHome"
-						icon="ui-icon-refresh" ajax="false" />
+						icon="ui-icon-refresh" ajax="false" rendered="#{currentProject.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or currentProject.observers.contains(currentUser)}"/>
 				</p:submenu>				
 			</p:panelMenu>		
 		</h:form>

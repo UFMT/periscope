@@ -15,7 +15,7 @@
         <ui:define name="content">
             
 
-            <h1>Principais Depositantes</h1>
+            <h1>#{msgs['main.applicant']}</h1>
             <br></br>
             <h:form id="chart" styleClass="container">
                 
@@ -23,18 +23,18 @@
 
                 <h:panelGrid columns="1" id="tudo" styleClass="container" >
 
-                    <p:outputLabel value="Vazio" rendered="#{report.model.series.get(0).getData().size()==0}" />
+                    <p:outputLabel value="#{msgs['empty']}" rendered="#{report.model.series.get(0).getData().size()==0}" />
 
 
                     <p:barChart id="horizontal" value="#{report.model}"  rendered="#{report.model.series.get(0).getData().size()!=0}"
-                                legendPosition="se" title="Principais Depositantes"
+                                legendPosition="se" title="#{msgs['main.applicant']}"
                                 orientation="horizontal" datatipFormat="%s" />
 
                     <p:dataTable id="applicants"
-                                 emptyMessage="Nenhum depositante cadastrado." var="pair"
+                                 emptyMessage="#{msgs['no.applicant']}" var="pair"
                                  value="#{report.pairs}">
 
-                        <p:column headerText="Nome">
+                        <p:column headerText="#{msgs['name']}">
                             <h:outputText value="#{pair.key}" />
                         </p:column>
 

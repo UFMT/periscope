@@ -15,8 +15,12 @@
 
                         <p:fileUpload label="Escolha o arquivo" auto="true"						
                                       fileUploadListener="#{importPatentController.handleFileUpload}"
+                                      mode="advanced"
+                                      multiple="true"
                                       allowTypes="/(.csv|.xls)$/"
-                                      update="fileLabel messages"/>
+                                      update="fileLabel messages">
+                            <p:ajax event="fileUploadComplete" listener="#{importPatentController.done}"
+                        </p:fileUpload>
 
                         <br/>
                         <h:panelGrid columns="2">
