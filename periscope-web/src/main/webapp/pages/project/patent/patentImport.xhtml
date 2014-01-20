@@ -23,11 +23,16 @@
                         
 
                         <br/>
-                        <h:panelGrid columns="2">
+                        <h:panelGrid columns="3">
                             <p:outputLabel>Origem do arquivo :</p:outputLabel>
                             <p:selectOneMenu value="#{importPatentController.fileOrigin}">
                                 <f:selectItems value="#{importPatentController.origins}" />
                             </p:selectOneMenu>
+                            <p:panel toggleOrientation="vertical">
+                                <p:outputLabel style="font-weight: bold">Arquivos suportados</p:outputLabel>
+                                <p:outputLabel><h4><a href="http://worldwide.espacenet.com/" target="_blank "> ESPACENET:</a></h4> .csv e .xls</p:outputLabel>
+                                <p:outputLabel><h4><a href="http://www.dpma.de/english/index.html" target="_blank "> DPMA</a></h4> .csv</p:outputLabel>
+                            </p:panel>
                         </h:panelGrid>
                         <br/>					
                         <p:outputLabel id="fileLabel" style="font-weight:bold"

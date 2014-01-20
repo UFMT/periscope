@@ -1,93 +1,120 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="/template/templateProject.xhtml">
+    <ui:composition template="/template/templateProject.xhtml">
 
-	<ui:define name="content">
-		<center>
-			<h:panelGroup rendered="#{not projectController.editing}">
-				<h1>Novo Projeto</h1>
-			</h:panelGroup>
-			<h:panelGroup rendered="#{projectController.editing}">
-				<h1>Editando Projeto</h1>
-			</h:panelGroup>
-			<br/>
-			<h:form>
-				<h:panelGrid columns="2">
-					<h:panelGrid columns="3" cellpadding="10">
-						<h:outputLabel id="lblTitle" for="txtTitle" value="Título *" style="font-weight:bold"/>				
-						<p:inputText id="txtTitle" value="#{projectController.project.title}"
-							required="true" requiredMessage="Título é obrigatório" />				
-						<p:message for="txtTitle"/>	
-						
-						<h:outputLabel id="lblDescription" for="txtDescription" value="Descrição" style="font-weight:bold"/>				
-						<p:inputTextarea id="txtDescription" value="#{projectController.project.description}"/>				
-						<p:message for="txtDescription"/>
-						
-						<h:outputLabel id="lblPublic" value="Público" style="font-weight:bold"/>				
-						<p:selectOneButton id="cmbPublic" value="#{projectController.project.isPublic}">
-							<f:selectItem itemLabel="Sim" itemValue="true"/>
-							<f:selectItem itemLabel="Não" itemValue="false"/>					
-						</p:selectOneButton>
-						<p:messages for="cmbPublic"/>
-																														
-					</h:panelGrid>
-					<h:panelGroup  id="pnlObservers">
-						<p:dataTable value="#{projectController.project.observers}" id="observers" var="observer"
-							 emptyMessage="Não Existem observadores para este projeto."  rows="10"
-							 paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom"
-							 rowKey="#{observer.firstname}">
+        <ui:define name="content">
+            <center>
+                <h:panelGroup rendered="#{not projectController.editing}">
+                    <h1>Novo Projeto</h1>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{projectController.editing}">
+                    <h1>Editando Projeto</h1>
+                </h:panelGroup>
+                <br/>
+                <h:form>
+                    <h:panelGrid columns="3">
+                        <h:panelGrid columns="3" cellpadding="10">
+                            <h:outputLabel id="lblTitle" for="txtTitle" value="Título *" style="font-weight:bold"/>				
+                            <p:inputText id="txtTitle" value="#{projectController.project.title}"
+                                         required="true" requiredMessage="Título é obrigatório" />				
+                            <p:message for="txtTitle"/>	
 
-							<p:columnGroup type="header">
-								<p:row>
-									<p:column rowspan="2" headerText="Nome" />
-									<p:column rowspan="2" headerText="Ações" />
-								</p:row>
-							</p:columnGroup>
-							<p:column>
-								<center>#{observer}</center>
-							</p:column>
-							<p:column>														
-								<center>
-									<p:commandLink value="x" style="color:white" styleClass="btn btn-info" 
-										action="#{projectController.removeUser(observer.id.toString())}"
-										update="pnlObservers" ajax="false">											
-									</p:commandLink>									
-								</center>					
-							</p:column>
-						</p:dataTable>
-						<br/>
-						<h:panelGrid id="pnlUser" columns="2">
-							<p:selectOneMenu value="#{projectController.selectedUser}">								
-								<f:selectItem noSelectionOption="true" itemLabel="Selecione um usuário"/>
-								<f:selectItems value="#{projectController.freeUsers}" var="u" 
-												itemLabel="#{u}" itemValue="#{u.id.toString()}"/>
-							</p:selectOneMenu>
-							<p:commandLink value="+" ajax="false" actionListener="#{projectController.adduser()}" 
-										 	update="pnlObservers"
-										 	style="color:white" styleClass="btn btn-info"/>
-							
-						</h:panelGrid>					
-					</h:panelGroup>
-				</h:panelGrid>			
-				<h:panelGrid columns="2" cellpadding="10">							
-					
-					<h:commandLink value="Salvar" action="#{projectController.create()}"
-									style="color:white"  class="btn btn-large btn-info" rendered="#{not projectController.editing}"/>
-					<h:commandLink value="Atualizar" action="#{projectController.save()}"
-									style="color:white"  class="btn btn-large btn-info" rendered="#{projectController.editing}"/>
-					<h:commandLink immediate="true" value="Cancelar" action="projectList" 
-									style="color:white" class="btn btn-large btn-info" />
-									
-				</h:panelGrid>	
-			</h:form>
-		</center>
-	</ui:define>
+                            <h:outputLabel id="lblDescription" for="txtDescription" value="Descrição" style="font-weight:bold"/>				
+                            <p:inputTextarea id="txtDescription" value="#{projectController.project.description}"/>				
+                            <p:message for="txtDescription"/>
 
-</ui:composition>
+                            <h:outputLabel id="lblPublic" value="Público" style="font-weight:bold"/>				
+                            <p:selectOneButton id="cmbPublic" value="#{projectController.project.isPublic}">
+                                <f:selectItem itemLabel="Sim" itemValue="true"/>
+                                <f:selectItem itemLabel="Não" itemValue="false"/>					
+                            </p:selectOneButton>
+                            <p:messages for="cmbPublic"/>
+
+                        </h:panelGrid>
+                        <h:panelGroup  id="pnlObservers">
+                            <p:dataTable value="#{projectController.project.observers}" id="observers" var="observer"
+                                         emptyMessage="Não Existem observadores para este projeto."  rows="10"
+                                         paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom"
+                                         rowKey="#{observer.firstname}">
+
+                                <p:columnGroup type="header">
+                                    <p:row>
+                                        <p:column rowspan="2" headerText="Nome" />
+                                        <p:column rowspan="2" headerText="Ações" />
+                                    </p:row>
+                                </p:columnGroup>
+                                <p:column>
+                                    <center>#{observer}</center>
+                                </p:column>
+                                <p:column>														
+                                    <center>
+                                        <p:commandLink value="x" style="color:white" styleClass="btn btn-info" 
+                                                       action="#{projectController.removeUser(observer.id.toString())}"
+                                                       update="pnlObservers" ajax="false">											
+                                        </p:commandLink>									
+                                    </center>					
+                                </p:column>
+                            </p:dataTable>
+                            <br/>
+                            <h:panelGrid id="pnlUser" columns="2">
+                                <p:selectOneMenu value="#{projectController.selectedUser}">								
+                                    <f:selectItem noSelectionOption="true" itemLabel="Selecione um usuário"/>
+                                    <f:selectItems value="#{projectController.freeUsers}" var="u" 
+                                                   itemLabel="#{u}" itemValue="#{u.id.toString()}"/>
+                                </p:selectOneMenu>
+                                <p:commandLink value="+" ajax="false" actionListener="#{projectController.adduser()}" 
+                                               update="pnlObservers"
+                                               style="color:white" styleClass="btn btn-info"/>
+
+                            </h:panelGrid>					
+                        </h:panelGroup>
+                         <p:panel toggleOrientation="vertical">
+                            <h4>Ajuda</h4>
+                            <p:accordionPanel activeIndex="">
+                                <p:tab title="Projetos">
+                                    <p:accordionPanel activeIndex="">
+                                        <p:tab title="Privados">
+                                            <p:outputLabel>Projetos privados são aqueles em que somente seu criador tem acesso e poder de exclusão/edição.</p:outputLabel>
+                                        </p:tab>
+                                        <p:tab title="Públicos">
+                                            <p:outputLabel>Projetos públicos são aqueles em que todo usuário cadastrado no sistema tem acesso, mas, apenas o criador do projeto tem poder de exclusão/edição</p:outputLabel>
+                                        </p:tab>
+                                        <p:tab title="Compartilhados">
+                                            <p:outputLabel>Projetos compartilhados são aqueles em que os usuários selecionados e adicionados tem acesso e poder de exclusão/edição</p:outputLabel>
+                                        </p:tab>
+                                        <p:tab title="Público e Compartilhado">
+                                            <p:outputLabel>O projeto pode ser público e compartilhado, ou seja, todos os usuários cadastrados no sistema tem acesso ao projeto, mas, apenas os usuários selecionados e adicionados na criação ou na edição do projeto podem editar/ecluir o projeto</p:outputLabel>
+                                        </p:tab>    
+                                        <p:tab title="Privado e Compartilhado">
+                                            <p:outputLabel>O projeto pode também ser privado e compartilhado, ou seja, o projeto estará visivel apenas para os usuários selecionados e adicionados na criação ou na edição do projeto e esses tem acesso e poder de exclusão/edição</p:outputLabel>
+                                        </p:tab>    
+                                    </p:accordionPanel>
+                                </p:tab>
+                                <p:tab title="Usuários">
+                                    <p:outputLabel>É possível adicionar usuários ao projeto, assim, o projeto se torna compartilhado. A lista de seleção contém todos os usuários cadastrados, exceto o usuário que logou no sistema, uma vez que esse é o dono do projeto e portanto já está incluso.</p:outputLabel>
+                                </p:tab>
+                            </p:accordionPanel>
+                        </p:panel>
+                    </h:panelGrid>			
+                    <h:panelGrid columns="2" cellpadding="10">							
+
+                        <h:commandLink value="Salvar" action="#{projectController.create()}"
+                                       style="color:white"  class="btn btn-large btn-info" rendered="#{not projectController.editing}"/>
+                        <h:commandLink value="Atualizar" action="#{projectController.save()}"
+                                       style="color:white"  class="btn btn-large btn-info" rendered="#{projectController.editing}"/>
+                        <h:commandLink immediate="true" value="Cancelar" action="projectList" 
+                                       style="color:white" class="btn btn-large btn-info" />
+
+                    </h:panelGrid>	
+                </h:form>
+            </center>
+        </ui:define>
+
+    </ui:composition>
 </html>

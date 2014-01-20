@@ -10,75 +10,42 @@
         <ui:define name="content">
             <ui:include src="/template/flashmessages.xhtml" />
             <center>
-                <h3>Sobre</h3>
+                <h3>#{msgs['about']}</h3>
             </center>
             <p:accordionPanel multiple="true">  
                 <p:tab title="Periscope">  
-                    <h:panelGrid columns="2" cellpadding="10">  
+                    <h:panelGrid columns="2">  
                         <!-- <p:graphicImage value="/images/godfather/godfather1.jpg" />  -->
                         <h:outputText  
-                            value="Este software é o resultado da Cooperação Técnica entre a Coordenação de Estudos e Programas do Centro de Disseminação da Informação Tecnológica - INPI e o Instituto de Computação - UFMT. O objetivo principal é disponibilizar para a comunidade brasileira uma ferramentas que auxilia a utilização das informações contidas no Sistema de Propriedade Industrial." />  
+                            value="#{msgs['description.about']}" />  
                     </h:panelGrid>
                     <p:accordionPanel multiple="true">  
-                        <p:tab title="Equipe">  
-                            <h:panelGrid columns="1" cellpadding="10">  
+                        <p:tab title="#{msgs['credits']}">  
+                            <h:panelGrid columns="1">  
                                 <!-- <p:graphicImage value="/images/godfather/godfather1.jpg" />  -->
-                                <h:outputText value="Gerência: Professor 1"/>
-                                <h:outputText value="Desenvolvimento: Pesquisador 1"/>
-                                    <h:outputText value="Pesquisador 2"/>
-                                    <h:outputText value="Pesquisador 3"/>
-                                    <h:outputText value="Documentação: Pesquisador 1"/>
-                                    <h:outputText value="Pesquisador 2"/>
-                                    <h:outputText value="Internacionalização: Pesquisador 3"/>
-                                    <h:outputText value="Pesquisador 4"/>  
+                                <h:outputText value="#{msgs['project.manager']}"/>
                             </h:panelGrid>  
                         </p:tab>  
-                        <p:tab title=" Tecnologias Utilizadas">  
+                        <p:tab title="#{msgs['technologiesandproducts']}">
+                        </p:tab>
+                        <h:panelGrid columns="2">  
+                            <!--  <p:graphicImage value="/images/godfather/godfather3.jpg" />   -->
+                            <h:outputText value="" />                 
+                        </h:panelGrid>                         
+                        <p:tab title="Universidade Federal de Mato Grosso (UFMT)">  
+                            <h:panelGrid columns="2" cellpadding="10">  
+                                <!-- <p:graphicImage value="/images/godfather/godfather2.jpg" />  -->
+                                <h:outputText value="A Universidade Federal de Mato Grosso (UFMT) é uma universidade pública federal criada em 1970 e vinculada ao Ministério da Educação (Brasil), com campi em Cuiabá onde se situa a atual sede, Rondonópolis, Pontal do Araguaia, Barra do Garças e Sinop no estado de Mato Grosso, Brasil. As atividades de ensino, pesquisa e extensão estão concentradas em 99 cursos de graduação (incluídas as habilitações) e 60 de especialização sustentados em núcleos de investigação e extensão, onde mais de 34 000 estudantes realizam seus estudos." />  
+                            </h:panelGrid>  
+                        </p:tab>  
+                        <p:tab title="Instituto de Computação - UFMT">  
                             <h:panelGrid columns="2" cellpadding="10">  
                                 <!--  <p:graphicImage value="/images/godfather/godfather3.jpg" />   -->
-                                <h:outputText value="" />                 
-                            </h:panelGrid>
-                            <p:accordionPanel multiple="true">  
-                                <p:tab title="Java">  
-                                    <h:panelGrid columns="2" cellpadding="10">  
-                                        <!-- <p:graphicImage value="/images/godfather/godfather1.jpg" />  -->
-                                        <h:outputText  
-                                            value="Java"/>  
-                                    </h:panelGrid>  
-                                </p:tab>  
-                                <p:tab title="JSF">  
-                                    <h:panelGrid columns="2" cellpadding="10">  
-                                        <!--  <p:graphicImage value="/images/godfather/godfather3.jpg" />   -->
-                                        <h:outputText value="JSF" />                 </h:panelGrid>  
-                                </p:tab>
-                                <p:tab title="JBoss">  
-                                    <h:panelGrid columns="2" cellpadding="10">  
-                                        <!--  <p:graphicImage value="/images/godfather/godfather3.jpg" />   -->
-                                        <h:outputText value="JBoss" />                 </h:panelGrid>  
-                                </p:tab>
-
-                            </p:accordionPanel>
+                                <h:outputText value="O  Instituto  de  Computação  (IC),  da  Universidade  Federal de  Mato Grosso, é  uma  unidade  acadêmica  de  excelência  da  área de  computação,  destinada  à  formação  de  pessoas  e   à   pesquisa acadêmica no âmbito da graduação, da pós-graduação e da extensão. Constituído  em  2008  como  resultado  do   desejo   e    esforços   de professores, alunos, técnicos, sociedade em geral e da  sensibilidade da administração superior da UFMT." />                 
+                            </h:panelGrid>  
                         </p:tab>
                     </p:accordionPanel>
-                </p:tab>  
-                <p:tab title=" Instituto Nacional da Propriedade Industrial (INPI)">  
-                    <h:panelGrid columns="2" cellpadding="10">  
-                        <!--  <p:graphicImage value="/images/godfather/godfather3.jpg" />   -->
-                        <h:outputText value="Criado em 1970, o Instituto Nacional da Propriedade Industrial (INPI) assume atualmente uma missão mais sofisticada e complexa.  Vinculada ao Ministério do Desenvolvimento, Indústria e Comércio Exterior (MDIC), esta autarquia federal é responsável pelo aperfeiçoamento, disseminação e gestão do sistema brasileiro de concessão e garantia de direitos de propriedade intelectual para a indústria." />                 
-                    </h:panelGrid>  
                 </p:tab>
-                <p:tab title="Universidade Federal de Mato Grosso (UFMT)">  
-                    <h:panelGrid columns="2" cellpadding="10">  
-                        <!-- <p:graphicImage value="/images/godfather/godfather2.jpg" />  -->
-                        <h:outputText value="A Universidade Federal de Mato Grosso (UFMT) é uma universidade pública federal criada em 1970 e vinculada ao Ministério da Educação (Brasil), com campi em Cuiabá onde se situa a atual sede, Rondonópolis, Pontal do Araguaia, Barra do Garças e Sinop no estado de Mato Grosso, Brasil. As atividades de ensino, pesquisa e extensão estão concentradas em 99 cursos de graduação (incluídas as habilitações) e 60 de especialização sustentados em núcleos de investigação e extensão, onde mais de 34 000 estudantes realizam seus estudos." />  
-                    </h:panelGrid>  
-                </p:tab>  
-                <p:tab title="Instituto de Computação - UFMT">  
-                    <h:panelGrid columns="2" cellpadding="10">  
-                        <!--  <p:graphicImage value="/images/godfather/godfather3.jpg" />   -->
-                        <h:outputText value="O  Instituto  de  Computação  (IC),  da  Universidade  Federal de  Mato Grosso, é  uma  unidade  acadêmica  de  excelência  da  área de  computação,  destinada  à  formação  de  pessoas  e   à   pesquisa acadêmica no âmbito da graduação, da pós-graduação e da extensão. Constituído  em  2008  como  resultado  do   desejo   e    esforços   de professores, alunos, técnicos, sociedade em geral e da  sensibilidade da administração superior da UFMT." />                 
-                    </h:panelGrid>  
-                </p:tab>  
             </p:accordionPanel>  
         </ui:define>
     </ui:composition>
