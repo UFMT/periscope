@@ -1,0 +1,8 @@
+- name: Empresa Privada
+- name: Pessoa Física
+- name: Universidade Privada
+- name: Instituição de Pesquisa Pública
+- name: Instituição de Pesquisa Privada
+- name: Empresa Pública
+- name: Universidade Pública
+---

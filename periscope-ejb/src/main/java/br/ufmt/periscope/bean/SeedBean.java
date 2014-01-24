@@ -1,5 +1,6 @@
 package br.ufmt.periscope.bean;
 
+import br.ufmt.periscope.model.ApplicantType;
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
@@ -65,6 +66,19 @@ public class SeedBean {
 	}
 
 	private void initApplicantTypes() {
+            if (ds.getCount(ApplicantType.class) == 0l) {
+                log.info("Nenhuma Natureza encontrada.");
+                List<ApplicantType> applicantTypes = Fixjure
+                        .listOf(ApplicantType.class)
+                        .from(YamlSource
+                        .newYamlResource("applicantType-inicial.yaml"))
+                        .create();
+                Iterator<ApplicantType> it = applicantTypes.iterator();
+                while(it.hasNext()){
+                    ds.save(it.next());
+                }
+                log.info("Cadastrado "+applicantTypes.size()+" Naturezas.");
+            }
 
 	}
 
