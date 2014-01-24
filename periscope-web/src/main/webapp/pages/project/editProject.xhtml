@@ -18,7 +18,7 @@
                 </h:panelGroup>
                 <br/>
                 <h:form>
-                    <h:panelGrid columns="3">
+                    <h:panelGrid columns="2">
                         <h:panelGrid columns="3" cellpadding="10">
                             <h:outputLabel id="lblTitle" for="txtTitle" value="Título *" style="font-weight:bold"/>				
                             <p:inputText id="txtTitle" value="#{projectController.project.title}"
@@ -74,11 +74,27 @@
 
                             </h:panelGrid>					
                         </h:panelGroup>
-                         <p:panel toggleOrientation="vertical">
+                    </h:panelGrid>	
+                    <h:panelGroup id="panelHelp">
+                        <p:panel toggleOrientation="vertical" style="background-color: #f5f5f5">
                             <h4>Ajuda</h4>
+                            <p:outputLabel id="projectsHelp" value="Projeto"/>
+                            <p:tooltip for="projectsHelp">
+                                <h:outputText escape="false">
+                                    Privados <br/>
+                                    Projetos privados são aqueles em que somente seu criador tem acesso e poder de exclusão/edição.<br/>
+                                    Usuários
+
+                                </h:outputText>
+                            </p:tooltip>
+                            <p:outputLabel>Usuário</p:outputLabel>
+
+
+
+
                             <p:accordionPanel activeIndex="">
                                 <p:tab title="Projetos">
-                                    <p:accordionPanel activeIndex="">
+                                    <p:accordionPanel activeIndex="" id="painelajuda" >
                                         <p:tab title="Privados">
                                             <p:outputLabel>Projetos privados são aqueles em que somente seu criador tem acesso e poder de exclusão/edição.</p:outputLabel>
                                         </p:tab>
@@ -101,7 +117,7 @@
                                 </p:tab>
                             </p:accordionPanel>
                         </p:panel>
-                    </h:panelGrid>			
+                    </h:panelGroup>
                     <h:panelGrid columns="2" cellpadding="10">							
 
                         <h:commandLink value="Salvar" action="#{projectController.create()}"

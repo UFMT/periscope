@@ -72,6 +72,7 @@ public class ProjectController {
 		}	
 		if(user != null){
 			this.project.getObservers().remove(user);
+                        selectedUser = null;
 		}
 	}
 	public String create(){	
