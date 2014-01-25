@@ -18,9 +18,9 @@
                                       mode="advanced"
                                       allowTypes="/(.csv|.xls)$/"
                                       update="fileLabel messages fileUpload">
-                    
+
                         </p:fileUpload>
-                        
+
 
                         <br/>
                         <h:panelGrid columns="3">
@@ -30,8 +30,17 @@
                             </p:selectOneMenu>
                             <p:panel toggleOrientation="vertical">
                                 <p:outputLabel style="font-weight: bold">Arquivos suportados</p:outputLabel>
-                                <p:outputLabel><h4><a href="http://worldwide.espacenet.com/" target="_blank "> ESPACENET:</a></h4> .csv e .xls</p:outputLabel>
-                                <p:outputLabel><h4><a href="http://www.dpma.de/english/index.html" target="_blank "> DPMA</a></h4> .csv</p:outputLabel>
+                                <p:outputLabel id="espacenetHelp"><h4><a href="http://worldwide.espacenet.com/" target="_blank "> ESPACENET</a></h4> .csv e .xls</p:outputLabel>
+                                <p:tooltip for="espacenetHelp">
+                                    <p:outputLabel value="#{msgs['espacenet.help']}" escape="false"/>
+                                    <p:graphicImage value="/imgs/espacenetHelp.png"/>
+
+                                </p:tooltip>
+                                <p:outputLabel id="dpmaHelp"><h4><a href="https://register.dpma.de/DPMAregister/pat/einsteiger" target="_blank "> DPMA</a></h4> .csv</p:outputLabel>
+                                <p:tooltip for="dpmaHelp">
+                                    <p:outputLabel value="#{msgs['dpma.help']}" escape="false"/>
+                                    <p:graphicImage value="/imgs/dpmaHelp.png"/>
+                                </p:tooltip>
                             </p:panel>
                         </h:panelGrid>
                         <br/>					

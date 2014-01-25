@@ -12,46 +12,46 @@
             <center>
                 <h3>#{msgs['about']}</h3>
             </center>
-            <p:accordionPanel multiple="true">  
-                <p:tab title="Periscope">  
-                    <h:panelGrid columns="2">  
-                        <h:outputText  
-                            value="#{msgs['description.about']}" />  
+            <p:accordionPanel multiple="true">
+                <p:tab title="Periscope">
+                    <h:panelGrid columns="2">
+                        <h:outputText
+                            value="#{msgs['description.about']}" />
                     </h:panelGrid>
-                    <p:accordionPanel activeIndex="" multiple="true">  
-                        <p:tab title="#{msgs['credits']}">  
-                            <h:panelGrid columns="1">  
+                    <p:accordionPanel activeIndex="" multiple="true">
+                        <p:tab title="#{msgs['credits']}">
+                            <h:panelGrid columns="1">
                                 <h:outputText value="#{msgs['project.manager']}" escape="false"/>
                                 <h:outputText value="#{msgs['manager.project']}" escape="false"/>
                                 <h:outputText value="#{msgs['project.development']}" escape="false"/>
                                 <h:outputText value="#{msgs['developers']}" escape="false"/>
                                 <h:outputText value="#{msgs['project.contribution']}" escape="false"/>
                                 <h:outputText value="#{msgs['contributors']}" escape="false"/>
-                            </h:panelGrid>  
-                        </p:tab>  
+                            </h:panelGrid>
+                        </p:tab>
                         <p:tab title="#{msgs['technologiesandproducts']}">
-                            <h:panelGrid columns="1">  
+                            <h:panelGrid columns="1">
                                 <h:outputText value="#{msgs['technologiesandproducts.links']}" escape="false"/>
-                            </h:panelGrid>  
+                            </h:panelGrid>
                         </p:tab>
                     </p:accordionPanel>
                 </p:tab>
-                <p:tab title="Universidade Federal de Mato Grosso (UFMT)">  
-                    <h:panelGrid columns="2" cellpadding="10">  
-                        <h:outputText value="A Universidade Federal de Mato Grosso (UFMT) é uma universidade pública federal criada em 1970 e vinculada ao Ministério da Educação (Brasil), com campi em Cuiabá onde se situa a atual sede, Rondonópolis, Pontal do Araguaia, Barra do Garças e Sinop no estado de Mato Grosso, Brasil. As atividades de ensino, pesquisa e extensão estão concentradas em 99 cursos de graduação (incluídas as habilitações) e 60 de especialização sustentados em núcleos de investigação e extensão, onde mais de 34 000 estudantes realizam seus estudos." />  
-                    </h:panelGrid>  
-                </p:tab>  
-                <p:tab title="Instituto de Computação - UFMT">  
-                    <h:panelGrid columns="2" cellpadding="10">  
-                        <h:outputText value="O  Instituto  de  Computação  (IC),  da  Universidade  Federal de  Mato Grosso, é  uma  unidade  acadêmica  de  excelência  da  área de  computação,  destinada  à  formação  de  pessoas  e   à   pesquisa acadêmica no âmbito da graduação, da pós-graduação e da extensão. Constituído  em  2008  como  resultado  do   desejo   e    esforços   de professores, alunos, técnicos, sociedade em geral e da  sensibilidade da administração superior da UFMT." />                 
-                    </h:panelGrid>  
+                <p:tab title="Universidade Federal de Mato Grosso (UFMT)">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <h:outputText value="A Universidade Federal de Mato Grosso (UFMT) é uma universidade pública federal criada em 1970 e vinculada ao Ministério da Educação (Brasil), com campi em Cuiabá onde se situa a atual sede, Rondonópolis, Pontal do Araguaia, Barra do Garças e Sinop no estado de Mato Grosso, Brasil. As atividades de ensino, pesquisa e extensão estão concentradas em 99 cursos de graduação (incluídas as habilitações) e 60 de especialização sustentados em núcleos de investigação e extensão, onde mais de 34 000 estudantes realizam seus estudos." />
+                    </h:panelGrid>
                 </p:tab>
-            </p:accordionPanel> 
+                <p:tab title="Instituto de Computação - UFMT">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <h:outputText value="O Instituto de Computação (IC), da Universidade Federal de Mato Grosso, é uma unidade acadêmica de excelência da área de computação, destinada à formação de pessoas e à pesquisa acadêmica no âmbito da graduação, da pós-graduação e da extensão. Constituído em 2008 como resultado do desejo e esforços de professores, alunos, técnicos, sociedade em geral e da sensibilidade da administração superior da UFMT." />
+                    </h:panelGrid>
+                </p:tab>
+            </p:accordionPanel>
             <p:accordionPanel activeIndex="">
                 <p:tab title="#{msgs['license']}">
-                    <h:panelGrid columns="1">  
+                    <h:panelGrid columns="1">
                         <h:outputText value="#{msgs['license.description']}" escape="false"/>
-                    </h:panelGrid>  
+                    </h:panelGrid>
                 </p:tab>
             </p:accordionPanel>
         </ui:define>
