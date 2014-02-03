@@ -25,6 +25,6 @@ public class ApplicantTypeRepository {
 	}	
 	
 	public List<ApplicantType> getAll(){
-		return ds.createQuery(ApplicantType.class).asList();
+		return ds.createQuery(ApplicantType.class).order("name").asList();
 	}
 }
