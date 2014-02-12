@@ -14,6 +14,7 @@ public class Inventor implements Serializable {
     private Integer documentCount = 0;
 
     public Inventor() {
+        country = new Country();
     }
 
     public Inventor(String name) {

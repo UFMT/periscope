@@ -34,6 +34,10 @@
             <to-view-id>/pages/project/patent/patentList.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
+            <from-outcome>editPatent</from-outcome>
+            <to-view-id>/pages/project/patent/patentEdit.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
             <from-outcome>harmonizationHome</from-outcome>
             <to-view-id>/pages/project/harmonization/harmonizationHome.xhtml</to-view-id>
         </navigation-case>
@@ -119,5 +123,10 @@
         </resource-bundle>
         <message-bundle>messages</message-bundle>
     </application>
+    <converter>
+        <converter-id>applicantsConverter</converter-id>
+        <converter-class>br.ufmt.periscope.converter.ApplicantsConverter</converter-class>
+    </converter>
+
     
 </faces-config>

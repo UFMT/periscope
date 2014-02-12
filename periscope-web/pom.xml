@@ -108,6 +108,7 @@
    </dependencyManagement>
    <properties>
    	<javaee6.web.spec.version>2.0.0.Final</javaee6.web.spec.version>
+      <netbeans.hint.deploy.server>JBoss4</netbeans.hint.deploy.server>
    </properties>
 
 </project>

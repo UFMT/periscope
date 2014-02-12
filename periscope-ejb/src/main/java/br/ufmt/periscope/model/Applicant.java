@@ -20,6 +20,7 @@ public class Applicant implements Serializable {
     private Integer documentCount = 0;
 
     public Applicant() {
+        country = new Country();
     }
 
     public Applicant(String name) {
