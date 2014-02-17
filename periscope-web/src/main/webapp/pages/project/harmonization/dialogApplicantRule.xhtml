@@ -21,7 +21,7 @@
 			<h:outputLabel value="Natureza " style="font-weight:bold"/>
 			<p:selectOneMenu id="cmbNature" value="#{applicantHarmonizationController.rule.nature.name}">
 				<f:selectItem itemLabel="Nenhuma" itemValue=""/>
-				<f:selectItems value="#{applicantHarmonizationController.applicantTypes}" var="t" itemValue="#{t.name}" itemLabel="#{t.name}" />	
+				<f:selectItems value="#{applicantHarmonizationController.applicantTypes}" var="t" itemValue="#{t.name}" itemLabel="#{msgs[t.name]}" />	
 			</p:selectOneMenu>						
 		</h:panelGrid>		
 										
