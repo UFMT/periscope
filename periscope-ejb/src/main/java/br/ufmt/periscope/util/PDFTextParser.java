@@ -13,10 +13,6 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.util.PDFTextStripper;
 
-/**
- *
- * @author cristhian
- */
 public class PDFTextParser {
     PDFParser parser;
     String parsedText;

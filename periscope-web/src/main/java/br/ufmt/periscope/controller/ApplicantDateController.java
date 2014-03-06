@@ -10,6 +10,7 @@ import org.primefaces.model.chart.ChartSeries;
 
 import br.ufmt.periscope.report.ApplicationDateReport;
 import br.ufmt.periscope.report.Pair;
+import br.ufmt.periscope.util.PDFTextParser;
 import java.util.Collections;
 
 @ManagedBean(name = "applicantDateReport")
@@ -31,6 +32,11 @@ public class ApplicantDateController extends GenericController{
             getPairs().add(new Pair(key, value));
         }
         Collections.reverse(getPairs());
+        
+    }
+    
+    public void test(){
+        PDFTextParser pdftp = new PDFTextParser();
         
     }
 

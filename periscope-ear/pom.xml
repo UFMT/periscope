@@ -26,6 +26,20 @@
             <groupId>br.ufmt</groupId>
             <artifactId>periscope-ejb</artifactId>
             <type>ejb</type>
+            <exclusions>
+                <exclusion>
+                    <artifactId>fontbox</artifactId>
+                    <groupId>org.apache.pdfbox</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>pdfbox</artifactId>
+                    <groupId>org.apache.pdfbox</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jempbox</artifactId>
+                    <groupId>org.apache.pdfbox</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
       
     </dependencies>

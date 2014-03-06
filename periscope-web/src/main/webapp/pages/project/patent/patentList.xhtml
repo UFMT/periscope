@@ -29,7 +29,7 @@
 				emptyMessage="#{msgs['registered.patent']}"
 				value="#{patentController.patents}" paginator="true"
 				paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
-				rowKey="#{patent.id}"
+                                rowKey="#{patent.id}" lazy="true"
                                 >
 
 				<p:columnGroup type="header">
