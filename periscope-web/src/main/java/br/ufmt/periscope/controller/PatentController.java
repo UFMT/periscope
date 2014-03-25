@@ -3,6 +3,7 @@ package br.ufmt.periscope.controller;
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Classification;
 import br.ufmt.periscope.model.Country;
+import br.ufmt.periscope.model.Files;
 import br.ufmt.periscope.model.Inventor;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -21,9 +22,20 @@ import br.ufmt.periscope.repository.ApplicantRepository;
 import br.ufmt.periscope.repository.CountryRepository;
 import br.ufmt.periscope.repository.InventorRepository;
 import br.ufmt.periscope.repository.PatentRepository;
+import com.mongodb.DB;
+import com.mongodb.Mongo;
+import com.mongodb.gridfs.GridFS;
+import com.mongodb.gridfs.GridFSDBFile;
+import com.mongodb.gridfs.GridFSFile;
+import com.mongodb.gridfs.GridFSInputFile;
+import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import org.bson.types.ObjectId;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 @ManagedBean
 @ViewScoped
@@ -39,6 +51,7 @@ public class PatentController {
     private String[] filters = {"complete", "incomplete", "darklist"};
     private int totalCount = 0;
     private Patent selectedPatent;
+    private UploadedFile file;
     private @Inject
     CountryRepository countryRepository;
     private List<Country> countries = new ArrayList<Country>();
@@ -63,11 +76,22 @@ public class PatentController {
         HttpServletRequest req = (HttpServletRequest) context.getExternalContext().getRequest();
         if (req.getParameter("patentId") != null) {
             selectedPatent = patentRepository.getPatentWithId(currentProject, new ObjectId(req.getParameter("patentId"))).get(0);
+            System.out.println("nome: " + selectedPatent.getPresentationFile());
         }
         countries = countryRepository.getAll();
         applicants = applicantRepository.getApplicants(currentProject);
         inventors = inventorRepository.getInventors(currentProject);
         updateList();
+    }
+
+    public void teste() throws UnknownHostException {
+        Mongo mongo = new Mongo("localhost", 27017);
+        DB db = mongo.getDB("Periscope");
+        GridFS gfsPhoto = new GridFS(db);
+        System.out.println("1");
+        GridFSDBFile imageForOutput = gfsPhoto.findOne("Preto.png");
+        System.out.println("2");
+        System.out.println(imageForOutput);
     }
 
     public String save() {
@@ -163,6 +187,24 @@ public class PatentController {
 ////        System.out.println(selectedPatent.getApplicantsToString());
 ////        System.out.println(selectedPatent.getMainClassification().getValue());
 //    }
+    public void handleImageUpload(FileUploadEvent event) throws UnknownHostException, IOException {
+        file = event.getFile();
+        Mongo mongo = new Mongo("localhost", 27017);
+        DB db = mongo.getDB("Periscope");
+        GridFS fs = new GridFS(db);
+        System.out.println(file.getFileName());
+        GridFSInputFile gfsFiles = fs.createFile(file.getInputstream());
+        gfsFiles.setFilename(file.getFileName());
+        gfsFiles.save();
+        GridFSFile gg = gfsFiles;
+        Files novo = new Files((ObjectId) gg.getId());
+        selectedPatent.setPresentationFile(novo);
+        save();
+
+        FacesMessage msg = new FacesMessage("Sucesso", event.getFile().getFileName() + " foi enviado.");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
     public void updateList() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest req = (HttpServletRequest) context
@@ -265,5 +307,13 @@ public class PatentController {
 
     public void setInventors(List<Inventor> inventors) {
         this.inventors = inventors;
+    }
+
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
     }
 }

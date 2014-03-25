@@ -20,7 +20,9 @@ public class Patent {
 	
 	private String titleSelect;	
 	private String abstractSelect;
-		
+        
+        @Reference private Files presentationFile;
+        
 	private @Embedded Classification mainClassification;
 	private @Embedded List<Classification> classifications = new ArrayList<Classification>();
 	private @Embedded List<Priority> priorities = new ArrayList<Priority>();
@@ -49,6 +51,15 @@ public class Patent {
 	public void setId(ObjectId id) {
 		this.id = id;
 	}
+
+        public Files getPresentationFile() {
+            return presentationFile;
+        }
+
+        public void setPresentationFile(Files files) {
+            this.presentationFile = files;
+        }
+        
 	public String getTitleSelect() {
 		return titleSelect;
 	}
@@ -157,7 +168,7 @@ public class Patent {
 	public void setShared(Boolean shared) {
 		this.shared = shared;
 	}
-	
+
 	public String getApplicantsToString(){
 		if(applicants == null){
 			return "";
@@ -181,6 +192,6 @@ public class Patent {
 			return Arrays.toString(priorities.toArray());
 		}
 	}
-	
+        
 
 }

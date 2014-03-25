@@ -198,6 +198,23 @@
                         </p:dialog>
                     </p:tab>
 
+                    <p:tab id="tab5" title="Folha de Rosto">
+                        <h:form>  
+                            <p:panelGrid columns="1">
+                                <p:commandButton value="Teste" action="#{patentController.teste()}"
+                                                 ajax="false" />
+                                <p:fileUpload fileUploadListener="#{patentController.handleImageUpload}" 
+                                              mode="advanced" dragDropSupport="false"  
+                                              update="messages image isso" sizeLimit="100000"
+                                              showButtons="false" 
+                                              allowTypes="/(\.|\/)(gif|jpeg|png)$/" />  
+
+                                <p:growl id="messages" showDetail="true"/>
+                                <p:outputLabel id="isso" value=""/>
+                                <p:graphicImage id="image" value=""/>
+                            </p:panelGrid>
+                        </h:form>  
+                    </p:tab>
                 </p:tabView>
 
 
