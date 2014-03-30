@@ -22,7 +22,7 @@
                         </ui:repeat>				  
                     </ul>
                     <h:outputText styleClass="pull-right" style="font-size:16px"
-                                  value="Listando #{patentController.partialCount} de #{patentController.totalCount} patentes cadastradas."/>
+                                  value="#{msgs['listing']} #{patentController.partialCount} #{msgs['of']} #{patentController.totalCount} #{msgs['patents.registered']}."/>
                 </h:form>			
                 <br/>						
                 <p:dataTable id="patents" var="patent" style="font-size:10px"
@@ -34,19 +34,19 @@
 
                     <p:columnGroup type="header">
                         <p:row>
-                            <p:column rowspan="2" headerText="Lingua" />
-                            <p:column rowspan="2" headerText="Título" />
-                            <p:column rowspan="2" headerText="Data da Publicação" />
-                            <p:column rowspan="2" headerText="Classificação" />
-                            <p:column rowspan="2" headerText="Número de Depósito" />
-                            <p:column rowspan="2" headerText="Depositantes" />
-                            <p:column rowspan="2" headerText="Inventores" />
+                            <p:column rowspan="2" headerText="#{msgs['language']}" />
+                            <p:column rowspan="2" headerText="#{msgs['title']}" />
+                            <p:column rowspan="2" headerText="#{msgs['publication.date']}" />
+                            <p:column rowspan="2" headerText="#{msgs['classification']}" />
+                            <p:column rowspan="2" headerText="#{msgs['application.number']}" />
+                            <p:column rowspan="2" headerText="#{msgs['applicants']}" />
+                            <p:column rowspan="2" headerText="#{msgs['inventors']}" />
                             
 <!--                            <p:column rowspan="2" headerText="Prioridade" />-->
                             
                             
                             <!--  <p:column rowspan="2" headerText="Lista Negra" /> -->
-                            <p:column rowspan="2" headerText="Ações" />
+                            <p:column rowspan="2" headerText="#{msgs['actions']}" />
                         </p:row>
                     </p:columnGroup>			
                     <p:column>
@@ -59,7 +59,8 @@
                         #{patent.publicationDate.toLocaleString()}					
                     </p:column>
                     <p:column>														
-                        #{patent.mainClassification.value}						
+                        #{patent.mainClassification.klass} 
+                        #{patent.mainClassification.group}/#{patent.mainClassification.subgroup}						
                     </p:column>
                     <p:column>														
                         #{patent.applicationNumber}					
@@ -86,24 +87,26 @@
                     <p:column>
                         <center>
                             <h:form style="margin-bottom:0px">
-                                <h:commandLink value="Editar" action="editPatent" 
-                                               style="color:white;margin-right: 10px" class="btn btn-inverse" >
+                                <h:commandLink title="#{msgs['edit']}" action="editPatent" 
+                                               style="color:black" class="btn ui-icon-arrowthick-1-s" >
                                     <f:param name="patentId" value="#{patent.id}" />
                                 </h:commandLink>
-                                <p:commandButton value="DP" ajax="false" 
-                                                 icon="ui-icon-arrowthichk-s" 
+                                <p:commandButton title="#{msgs['download.file']}" ajax="false" 
+                                                 icon="ui-icon-arrowthick-1-s"
+                                                 rendered="#{patent.presentationFile != null}"
                                                  action="#{patentController.preDownloadPresentation}">  
                                     <p:fileDownload  value="#{patentController.download}" />  
                                 </p:commandButton>
-                                <p:commandButton value="DI" ajax="false" 
-                                                 icon="ui-icon-arrowthichk-s" 
+                                <p:commandButton title="#{msgs['download.patent']}" ajax="false" 
+                                                 icon="ui-icon-arrowthick-1-s" 
+                                                 rendered="#{patent.patentInfo != null}"
                                                  action="#{patentController.preDownloadPatent}">  
                                     <p:fileDownload  value="#{patentController.download}" />  
                                 </p:commandButton>
-                                <h:commandLink value="Lista Negra" action="#{patentController.updateBlackListPatent()}" 
-                                               style="color:white" class="btn btn-inverse" rendered="#{not patent.blacklisted}"/>
-                                <h:commandLink value="Retirar da Lista Negra" action="#{patentController.updateBlackListPatent()}" 
-                                               style="color:white" class="btn btn-inverse" rendered="#{patent.blacklisted}"/>	
+                                <p:commandButton title="#{msgs['darklist']}" ajax="false" action="#{patentController.updateBlackListPatent()}" 
+                                                 icon="ui-icon-cancel" rendered="#{not patent.blacklisted}"/>
+                                <p:commandButton title="#{msgs['undarklist']}" ajax="false" action="#{patentController.updateBlackListPatent()}" 
+                                                 icon="ui-icon-arrowreturn-1-w" rendered="#{patent.blacklisted}"/>	
 
                             </h:form>
                         </center>
@@ -111,7 +114,7 @@
                 </p:dataTable>
                 <br />
                 <h:form>
-                    <h:commandLink value="Importar patentes" style="color:white"
+                    <h:commandLink value="#{msgs['import.patent']}" style="color:white"
                                    class="btn btn-large btn-info" action="importPatent"/>
                 </h:form>			
 
