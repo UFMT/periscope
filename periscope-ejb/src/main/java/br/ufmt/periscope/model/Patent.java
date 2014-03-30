@@ -22,6 +22,7 @@ public class Patent {
 	private String abstractSelect;
         
         @Reference private Files presentationFile;
+        @Reference private Files patentInfo;
         
 	private @Embedded Classification mainClassification;
 	private @Embedded List<Classification> classifications = new ArrayList<Classification>();
@@ -59,6 +60,15 @@ public class Patent {
         public void setPresentationFile(Files files) {
             this.presentationFile = files;
         }
+
+        public Files getPatentInfo() {
+            return patentInfo;
+        }
+
+        public void setPatentInfo(Files patentInfo) {
+            this.patentInfo = patentInfo;
+        }
+        
         
 	public String getTitleSelect() {
 		return titleSelect;

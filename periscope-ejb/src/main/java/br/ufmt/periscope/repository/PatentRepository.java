@@ -2,7 +2,6 @@ package br.ufmt.periscope.repository;
 
 import br.ufmt.periscope.importer.PatentImporter;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -13,11 +12,12 @@ import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
 
 import com.github.jmkgreen.morphia.Datastore;
-import com.mongodb.AggregationOutput;
-import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
 import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
+import com.mongodb.Mongo;
+import com.mongodb.gridfs.GridFS;
+import java.net.UnknownHostException;
 import java.util.Date;
 import org.bson.types.ObjectId;
 
@@ -63,7 +63,7 @@ public class PatentRepository {
         }
 
     }
-    
+
     public boolean patentExistsForProject(Patent patent, Project project) {
         return ds.find(Patent.class)
                 .field("publicationNumber").equal(patent.getPublicationNumber())
@@ -76,10 +76,10 @@ public class PatentRepository {
         ds.save(patent);
     }
 
-    public void savePatent(Patent patent){
+    public void savePatent(Patent patent) {
         ds.save(patent);
     }
-    
+
     public List<Patent> getPatentsComplete(Project project, Boolean complete) {
         return ds.find(Patent.class)
                 .field("completed").equal(complete)
@@ -101,33 +101,38 @@ public class PatentRepository {
                 .asList();
     }
 
-    public List<Patent> getPatentWithId (Project project, ObjectId id){
-        
+    public List<Patent> getPatentWithId(Project project, ObjectId id) {
+
         return ds.find(Patent.class)
                 .field("project").equal(project)
                 .field("_id").equal(id)
                 .asList();
-        
+
     }
-    
+
     public List<Patent> getPatentWithApplicant(Project project, String applicantName) {
         return ds.find(Patent.class)
                 .field("project").equal(project)
                 .field("applicants.name").equal(applicantName)
                 .asList();
     }
-    
-    
-    
-    public Date getMinDate(Project currentProject){
-        DBCursor dbc = ds.getCollection(Patent.class).find(new BasicDBObject("project.$id" ,currentProject.getId())).sort(new BasicDBObject("applicationDate", 1)).limit(1);
+
+    public Date getMinDate(Project currentProject) {
+        DBCursor dbc = ds.getCollection(Patent.class).find(new BasicDBObject("project.$id", currentProject.getId())).sort(new BasicDBObject("applicationDate", 1)).limit(1);
         Date data = (Date) dbc.next().get("applicationDate");
         return data;
     }
-    
+
     public Date getMaxDate(Project currentProject) {
-        DBCursor dbc = ds.getCollection(Patent.class).find(new BasicDBObject("project.$id" ,currentProject.getId())).sort(new BasicDBObject("publicationDate", -1)).limit(1);
+        DBCursor dbc = ds.getCollection(Patent.class).find(new BasicDBObject("project.$id", currentProject.getId())).sort(new BasicDBObject("publicationDate", -1)).limit(1);
         Date data = (Date) dbc.next().get("publicationDate");
         return data;
+    }
+
+    public GridFS getFs() throws UnknownHostException {
+        Mongo mongo = new Mongo("localhost", 27017);
+        DB db = mongo.getDB("Periscope");
+        GridFS fs = new GridFS(db);
+        return fs;
     }
 }

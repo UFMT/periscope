@@ -1,7 +1,6 @@
 package br.ufmt.periscope.controller;
 
 import br.ufmt.periscope.model.Applicant;
-import br.ufmt.periscope.model.Classification;
 import br.ufmt.periscope.model.Country;
 import br.ufmt.periscope.model.Files;
 import br.ufmt.periscope.model.Inventor;
@@ -26,15 +25,23 @@ import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.gridfs.GridFS;
 import com.mongodb.gridfs.GridFSDBFile;
-import com.mongodb.gridfs.GridFSFile;
 import com.mongodb.gridfs.GridFSInputFile;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import org.bson.types.ObjectId;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 @ManagedBean
@@ -68,8 +75,54 @@ public class PatentController {
     private @Inject
     Inventor newInventor;
 
+    private StreamedContent download;
+
+    public StreamedContent getDownload() {
+        return download;
+    }
+
+    public void setDownload(StreamedContent download) {
+        this.download = download;
+    }
+
+    public void preDownloadPresentation() throws UnknownHostException, IOException {
+        GridFS fs = patentRepository.getFs();
+        GridFSDBFile gfile = fs.findOne(patents.getRowData().getPresentationFile().getId());
+        System.out.println("pre1: " + gfile.getFilename());
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        long writeTo = gfile.writeTo(out);
+        byte[] data = out.toByteArray();
+        ByteArrayInputStream istream = new ByteArrayInputStream(data);
+        System.out.println("pre2: "+ istream.toString());
+        InputStream arquivo = istream;
+        System.out.println("inputou: " + arquivo.toString());
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        System.out.println("contextou ?");
+        setDownload(new DefaultStreamedContent(arquivo, externalContext.getMimeType(gfile.getFilename()), gfile.getFilename()));
+        System.out.println("finalizou: " + download.getName());
+        
+    }
+    
+    public void preDownloadPatent() throws UnknownHostException, IOException {
+        GridFS fs = patentRepository.getFs();
+        GridFSDBFile gfile = fs.findOne(patents.getRowData().getPatentInfo().getId());
+        System.out.println("pre1: " + gfile.getFilename());
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        long writeTo = gfile.writeTo(out);
+        byte[] data = out.toByteArray();
+        ByteArrayInputStream istream = new ByteArrayInputStream(data);
+        System.out.println("pre2: "+ istream.toString());
+        InputStream arquivo = istream;
+        System.out.println("inputou: " + arquivo.toString());
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        System.out.println("contextou ?");
+        setDownload(new DefaultStreamedContent(arquivo, externalContext.getMimeType(gfile.getFilename()), gfile.getFilename()));
+        System.out.println("finalizou: " + download.getName());
+        
+    }
+
     @PostConstruct
-    public void init() {
+    public void init() throws UnknownHostException {
         patents = new ListDataModel<Patent>(patentRepository.getAllPatents(currentProject));
         totalCount = patents.getRowCount();
         FacesContext context = FacesContext.getCurrentInstance();
@@ -77,21 +130,12 @@ public class PatentController {
         if (req.getParameter("patentId") != null) {
             selectedPatent = patentRepository.getPatentWithId(currentProject, new ObjectId(req.getParameter("patentId"))).get(0);
             System.out.println("nome: " + selectedPatent.getPresentationFile());
+            
         }
         countries = countryRepository.getAll();
         applicants = applicantRepository.getApplicants(currentProject);
         inventors = inventorRepository.getInventors(currentProject);
         updateList();
-    }
-
-    public void teste() throws UnknownHostException {
-        Mongo mongo = new Mongo("localhost", 27017);
-        DB db = mongo.getDB("Periscope");
-        GridFS gfsPhoto = new GridFS(db);
-        System.out.println("1");
-        GridFSDBFile imageForOutput = gfsPhoto.findOne("Preto.png");
-        System.out.println("2");
-        System.out.println(imageForOutput);
     }
 
     public String save() {
@@ -187,18 +231,43 @@ public class PatentController {
 ////        System.out.println(selectedPatent.getApplicantsToString());
 ////        System.out.println(selectedPatent.getMainClassification().getValue());
 //    }
-    public void handleImageUpload(FileUploadEvent event) throws UnknownHostException, IOException {
+    public void uploadPresentationFile(FileUploadEvent event) throws UnknownHostException, IOException {
         file = event.getFile();
-        Mongo mongo = new Mongo("localhost", 27017);
-        DB db = mongo.getDB("Periscope");
-        GridFS fs = new GridFS(db);
+        GridFS fs = patentRepository.getFs();
         System.out.println(file.getFileName());
         GridFSInputFile gfsFiles = fs.createFile(file.getInputstream());
         gfsFiles.setFilename(file.getFileName());
         gfsFiles.save();
-        GridFSFile gg = gfsFiles;
-        Files novo = new Files((ObjectId) gg.getId());
-        selectedPatent.setPresentationFile(novo);
+        if (selectedPatent.getPresentationFile() == null) {
+            Files novo = new Files((ObjectId) gfsFiles.getId());
+            selectedPatent.setPresentationFile(novo);
+        } else {
+            fs.remove(selectedPatent.getPresentationFile().getId());
+            Files novo = new Files((ObjectId) gfsFiles.getId());
+            selectedPatent.setPresentationFile(novo);
+        }
+        save();
+
+        FacesMessage msg = new FacesMessage("Sucesso", event.getFile().getFileName() + " foi enviado.");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        
+    }
+    
+    public void uploadPatentInfo(FileUploadEvent event) throws UnknownHostException, IOException{
+        file = event.getFile();
+        GridFS fs = patentRepository.getFs();
+        System.out.println(file.getFileName());
+        GridFSInputFile gfsFiles = fs.createFile(file.getInputstream());
+        gfsFiles.setFilename(file.getFileName());
+        gfsFiles.save();
+        if (selectedPatent.getPatentInfo() == null) {
+            Files novo = new Files((ObjectId) gfsFiles.getId());
+            selectedPatent.setPatentInfo(novo);
+        } else {
+            fs.remove(selectedPatent.getPatentInfo().getId());
+            Files novo = new Files((ObjectId) gfsFiles.getId());
+            selectedPatent.setPatentInfo(novo);
+        }
         save();
 
         FacesMessage msg = new FacesMessage("Sucesso", event.getFile().getFileName() + " foi enviado.");

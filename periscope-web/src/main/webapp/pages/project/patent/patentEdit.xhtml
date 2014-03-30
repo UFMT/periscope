@@ -199,15 +199,31 @@
                     </p:tab>
 
                     <p:tab id="tab5" title="Folha de Rosto">
-                        <h:form>  
+                        <h:form> 
+                            <p:outputLabel value="#{patentController.selectedPatent.presentationFile.id}"/>
                             <p:panelGrid columns="1">
-                                <p:commandButton value="Teste" action="#{patentController.teste()}"
-                                                 ajax="false" />
-                                <p:fileUpload fileUploadListener="#{patentController.handleImageUpload}" 
+                                <p:fileUpload fileUploadListener="#{patentController.uploadPresentationFile}" 
                                               mode="advanced" dragDropSupport="false"  
-                                              update="messages image isso" sizeLimit="100000"
+                                              update="messages image isso" sizeLimit="1000000"
                                               showButtons="false" 
                                               allowTypes="/(\.|\/)(gif|jpeg|png)$/" />  
+
+                                <p:growl id="messages" showDetail="true"/>
+                                <p:outputLabel id="isso" value=""/>
+                                <p:graphicImage id="image" value=""/>
+                            </p:panelGrid>
+                        </h:form>  
+                    </p:tab>
+
+                    <p:tab id="tab6" title="Informação Patente">
+                        <h:form>
+                            <p:outputLabel value="#{patentController.selectedPatent.patentInfo.id}"/>
+                            <p:panelGrid columns="1">
+                                <p:fileUpload fileUploadListener="#{patentController.uploadPatentInfo}" 
+                                              mode="advanced" dragDropSupport="false"  
+                                              update="messages image isso" sizeLimit="10000000"
+                                              showButtons="false" 
+                                              allowTypes="/(\.|\/)(doc|docx|odt|pdf|txt)$/" />  
 
                                 <p:growl id="messages" showDetail="true"/>
                                 <p:outputLabel id="isso" value=""/>
