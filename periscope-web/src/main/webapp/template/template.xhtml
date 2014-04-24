@@ -47,9 +47,10 @@
 				<ui:include src="/template/footer.xhtml" />				
 			</div>
 		</div>	
-            <p:ajaxStatus style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">  
+            <p:ajaxStatus>  
+                
                 <f:facet name="start">  
-                    <p:graphicImage value="/imgs/ajax-loader.gif" />  
+                        <p:graphicImage value="/imgs/ajax-loader.gif" style="position: absolute;left: 50%; top: 50%;"/>                     
                 </f:facet>  
 
                 <f:facet name="complete">  
