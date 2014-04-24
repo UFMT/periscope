@@ -29,13 +29,13 @@
                              emptyMessage="#{msgs['registered.patent']}"
                              value="#{patentController.patents}" paginator="true"
                              paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
-                             rowKey="#{patent.id}" lazy="true"
+                             rowKey="#{patent.id}" lazy="true" filterEvent="enter"
                              >
 
                     <p:columnGroup type="header">
                         <p:row>
                             <p:column rowspan="2" headerText="#{msgs['language']}" />
-                            <p:column rowspan="2" headerText="#{msgs['title']}" />
+                            <p:column rowspan="2" headerText="#{msgs['title']}" filterBy="#{patent.titleSelect}" filterMatchMode="contains"/>
                             <p:column rowspan="2" headerText="#{msgs['publication.date']}" />
                             <p:column rowspan="2" headerText="#{msgs['classification']}" />
                             <p:column rowspan="2" headerText="#{msgs['application.number']}" />
