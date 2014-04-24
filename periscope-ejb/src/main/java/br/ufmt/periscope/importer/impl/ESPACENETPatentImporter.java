@@ -193,26 +193,27 @@ public class ESPACENETPatentImporter implements PatentImporter {
         }
     }
 
-    private void fillPatentXLS(int columnIndex, String contentStrin) {
-
+    private void fillPatentXLS(int columnIndex, String contentString) {
+        String aux;
+        StringTokenizer st;
+        
         switch (columnIndex) {
             case 0:
-                patent.setTitleSelect(contentStrin);
+                patent.setTitleSelect(contentString);
                 break;
             case 1:
-                patent.setPublicationNumber(contentStrin);
+                patent.setPublicationNumber(contentString);
                 break;
             case 2:
                 try {
-                    patent.setPublicationDate(sdf.parse(contentStrin));
+                    patent.setPublicationDate(sdf.parse(contentString));
                 } catch (ParseException ex) {
                     Logger.getLogger(ESPACENETPatentImporter.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
             case 3:
                 List<Inventor> inventors = patent.getInventors();
-                String aux;
-                StringTokenizer st = new StringTokenizer(contentStrin, "\n");
+                st = new StringTokenizer(contentString, "\n");
                 while (st.hasMoreTokens()) {
                     StringTokenizer st2 = new StringTokenizer(st.nextToken());
                     Inventor inventor = new Inventor();
@@ -223,11 +224,12 @@ public class ESPACENETPatentImporter implements PatentImporter {
                         if (aux.matches("\\[.+\\]+")) {
                             aux = aux.replace("[", "");
                             aux = aux.replace("]", "");
-                            country = aux;
+                            country = aux.trim();
                         } else {
                             name = name.concat(aux + " ");
                         }
                         inventor.setName(name);
+                        System.out.println("Nome do Inventor: " + inventor.getName());
                         inventor.setCountry(countryRepository.getCountryByAcronym(country));
                     }
                     if (!name.trim().isEmpty()) {
@@ -238,8 +240,7 @@ public class ESPACENETPatentImporter implements PatentImporter {
                 break;
             case 4:
                 List<Applicant> applicants = patent.getApplicants();
-
-                st = new StringTokenizer(contentStrin, "\n");
+                st = new StringTokenizer(contentString, "\n");
                 while (st.hasMoreTokens()) {
                     StringTokenizer st2 = new StringTokenizer(st.nextToken());
                     Applicant applicant = new Applicant();
@@ -250,11 +251,12 @@ public class ESPACENETPatentImporter implements PatentImporter {
                         if (aux.matches("\\[.+\\]+")) {
                             aux = aux.replace("[", "");
                             aux = aux.replace("]", "");
-                            country = aux;
+                            country = aux.trim();
                         } else {
                             name = name.concat(aux + " ");
                         }
                         applicant.setName(name);
+                        System.out.println("Nome do Aplicante: " + applicant.getName());
                         applicant.setCountry(countryRepository.getCountryByAcronym(country));
                     }
                     if (!name.trim().isEmpty()) {
@@ -265,7 +267,7 @@ public class ESPACENETPatentImporter implements PatentImporter {
                 break;
             case 5:
                 List<Classification> classifications = patent.getClassifications();
-                st = new StringTokenizer(contentStrin, "\n");
+                st = new StringTokenizer(contentString, "\n");
                 while (st.hasMoreTokens()) {
                     Classification classification = new Classification();
                     classification.setType(ClassificationType.IC);
@@ -282,18 +284,18 @@ public class ESPACENETPatentImporter implements PatentImporter {
                 //"Cooperative Patent Classification: ";
                 break;
             case 7:
-                patent.setApplicationNumber(contentStrin);
+                patent.setApplicationNumber(contentString);
                 break;
             case 8:
                 try {
-                    patent.setApplicationDate(sdf2.parse(contentStrin));
+                    patent.setApplicationDate(sdf2.parse(contentString));
                 } catch (ParseException ex) {
                     Logger.getLogger(ESPACENETPatentImporter.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 break;
             case 9:
                 List<Priority> priorities = patent.getPriorities();
-                st = new StringTokenizer(contentStrin, "\n");
+                st = new StringTokenizer(contentString, "\n");
                 while (st.hasMoreTokens()) {
                     aux = st.nextToken();
                     Priority priority = new Priority();
@@ -360,6 +362,7 @@ public class ESPACENETPatentImporter implements PatentImporter {
                         if (!contentString.replaceAll("\\[.*]", "").trim().isEmpty()) {
                             Inventor inventor = new Inventor();
                             inventor.setName(contentString.replaceAll("\\[.*]", "").trim());
+
                             try {
                                 inventor.setCountry(countryRepository.getCountryByAcronym(contentString.substring(contentString.indexOf("[") + 1, contentString.indexOf("]"))));
                             } catch (IndexOutOfBoundsException ex) {
