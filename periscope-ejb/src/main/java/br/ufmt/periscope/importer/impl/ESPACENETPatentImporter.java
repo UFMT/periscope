@@ -71,10 +71,10 @@ public class ESPACENETPatentImporter implements PatentImporter {
 
             //Detectando o tipo de arquivo, a primeira linha do CSV sempre começa com "Title" ...
             if (!br.readLine().matches("\"Title.*")) {
-                fileType = new String("xls");
+                fileType = "xls";
                 xlsManipulator();
             } else {
-                fileType = new String("csv");
+                fileType = "csv";
                 next();
             }
 
@@ -172,6 +172,8 @@ public class ESPACENETPatentImporter implements PatentImporter {
      */
     private void parseLineXLS() {
 
+        String contentString;
+
         patent.setLanguage(lang);
 
         row = rowIterator.next(); //Percorrendo cada linha (patente)
@@ -184,8 +186,10 @@ public class ESPACENETPatentImporter implements PatentImporter {
             switch (cell.getCellType()) {
 
                 case Cell.CELL_TYPE_STRING:
-                    fillPatentXLS(cell.getColumnIndex(), cell.getStringCellValue());
+                    contentString = cell.getStringCellValue().replaceAll("[\u2002]", " "); // Isso é para substituir o caracter especial por espaço em codificaçao UTF8
+                    fillPatentXLS(cell.getColumnIndex(), contentString.replaceAll("[\u00e2][\u20ac][\u201a]", " ")); // // Isso é para substituir o caracter especial por espaço em codificaçao CP1252
                     break;
+                
                 default:
                     break;
             }
@@ -196,7 +200,6 @@ public class ESPACENETPatentImporter implements PatentImporter {
     private void fillPatentXLS(int columnIndex, String contentString) {
         String aux;
         StringTokenizer st;
-        
         switch (columnIndex) {
             case 0:
                 patent.setTitleSelect(contentString);
@@ -229,7 +232,6 @@ public class ESPACENETPatentImporter implements PatentImporter {
                             name = name.concat(aux + " ");
                         }
                         inventor.setName(name);
-                        System.out.println("Nome do Inventor: " + inventor.getName());
                         inventor.setCountry(countryRepository.getCountryByAcronym(country));
                     }
                     if (!name.trim().isEmpty()) {
@@ -256,7 +258,6 @@ public class ESPACENETPatentImporter implements PatentImporter {
                             name = name.concat(aux + " ");
                         }
                         applicant.setName(name);
-                        System.out.println("Nome do Aplicante: " + applicant.getName());
                         applicant.setCountry(countryRepository.getCountryByAcronym(country));
                     }
                     if (!name.trim().isEmpty()) {
@@ -299,7 +300,7 @@ public class ESPACENETPatentImporter implements PatentImporter {
                 while (st.hasMoreTokens()) {
                     aux = st.nextToken();
                     Priority priority = new Priority();
-                    priority.setCountry(countryRepository.getCountryByAcronym(aux.substring(0, 1)));
+                    priority.setCountry(countryRepository.getCountryByAcronym(aux.substring(0, 2)));
                     StringTokenizer st2 = new StringTokenizer(aux);
                     aux = st2.nextToken();
                     priority.setValue(aux.substring(2));
@@ -340,7 +341,7 @@ public class ESPACENETPatentImporter implements PatentImporter {
             array = vet[i].split(";");
             for (int j = 0; j < array.length; j++) {
 
-                String contentString = new String(array[j]);
+                String contentString = array[j];
                 contentString = contentString.replaceAll("\"", "");
                 contentString = contentString.trim();
 
