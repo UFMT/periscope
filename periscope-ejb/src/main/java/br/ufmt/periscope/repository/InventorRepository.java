@@ -1,5 +1,6 @@
 package br.ufmt.periscope.repository;
 
+import br.ufmt.periscope.indexer.LuceneIndexerResources;
 import br.ufmt.periscope.model.Inventor;
 import java.util.ArrayList;
 import java.util.List;
@@ -155,17 +156,23 @@ public class InventorRepository {
 		try {
 			StringBuilder queryBuilder = new StringBuilder();			
 			for(String name : names){
-				String[] terms = name.split(" ",-2);
-				for(String term : terms){
-					//if(term.length() >= 4){		
-						queryBuilder.append(term+"~ ");
-						queryBuilder.append(term+"* ");
-					//}
-				}	
-				
-				//queryBuilder.append("NOT \""+name+"\" ");	
-				queryBuilder.append("\""+name+"\"~10 ");
-			}		
+				 String[] terms = name.split(" ");
+                for (String term : terms) {
+                    //if(term.length() >= 4){		
+                    if(!LuceneIndexerResources.getStopwords().contains(term)){
+                        //queryBuilder.append(term + "* ");
+                        if(!queryBuilder.toString().contains(term))
+                        {
+                            queryBuilder.append(term + "~0.99 ");
+                        }
+                    }
+                    
+                    //}
+                }
+
+                //queryBuilder.append("NOT \""+name+"\" ");	
+                queryBuilder.append(name.trim() + "~0.99 ");
+            }	
 						
 			TopScoreDocCollector collector = TopScoreDocCollector.create(1000, true);			
 			BooleanQuery bq = new BooleanQuery();			

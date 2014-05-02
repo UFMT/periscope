@@ -110,7 +110,7 @@ public class ApplicantHarmonizationController implements Serializable{
 			names[i] = pa.getName();
 			i++;
 		}
-		Set<String> sugestions = applicantRepository.getApplicantSugestions(currentProject, 10, names);
+		Set<String> sugestions = applicantRepository.getApplicantSugestions(currentProject, 100, names);
 		List<Applicant> aplicants = new ArrayList<Applicant>();
 		for(String sugestion : sugestions){
 			aplicants.add(new Applicant(sugestion));
