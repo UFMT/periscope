@@ -1518,6 +1518,10 @@ table {
   border-spacing: 0;
 }
 
+.alignTop {
+  vertical-align: top;
+}
+
 .table {
   width: 100%;
   margin-bottom: 18px;
