@@ -59,4 +59,17 @@ public class Inventor implements Serializable {
     public String toString() {
         return name;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o instanceof Inventor){
+            Inventor inventor = (Inventor) o;
+            if(inventor.name.equals(this.name) && inventor.country.getAcronym().equals(this.country.getAcronym())){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    
 }

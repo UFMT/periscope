@@ -50,13 +50,13 @@
                         </p:row>
                     </p:columnGroup>			
                     <p:column>
-                        #{patent.language}
+                        #{patent.applicationNumber.substring(0, 2)}
                     </p:column>
                     <p:column width="150">
                         <center>#{patent.titleSelect}</center>
                     </p:column>	
                     <p:column>														
-                        #{patent.publicationDate.toLocaleString()}					
+                        #{patent.publicationDate.toLocaleString().substring(0, 10)}					
                     </p:column>
                     <p:column>														
                         #{patent.mainClassification.klass} 
@@ -87,20 +87,20 @@
                     <p:column>
                         <center>
                             <h:form style="margin-bottom:0px">
-                                <h:commandLink title="#{msgs['edit']}" action="editPatent" 
-                                               style="color:black" class="btn ui-icon-arrowthick-1-s" >
+                                <p:commandButton ajax="false" title="#{msgs['edit']}" action="editPatent" 
+                                                 icon="ui-icon-pencil">
                                     <f:param name="patentId" value="#{patent.id}" />
-                                </h:commandLink>
+                                </p:commandButton>
                                 <p:commandButton title="#{msgs['download.file']}" ajax="false" 
                                                  icon="ui-icon-arrowthick-1-s"
                                                  rendered="#{patent.presentationFile != null}"
-                                                 action="#{patentController.preDownloadPresentation}">  
+                                                 actionListener="#{patentController.preDownloadPresentation(patent)}">  
                                     <p:fileDownload  value="#{patentController.download}" />  
                                 </p:commandButton>
                                 <p:commandButton title="#{msgs['download.patent']}" ajax="false" 
                                                  icon="ui-icon-arrowthick-1-s" 
                                                  rendered="#{patent.patentInfo != null}"
-                                                 action="#{patentController.preDownloadPatent}">  
+                                                 actionListener="#{patentController.preDownloadPatent(patent)}">  
                                     <p:fileDownload  value="#{patentController.download}" />  
                                 </p:commandButton>
                                 <p:commandButton title="#{msgs['darklist']}" ajax="false" action="#{patentController.updateBlackListPatent()}" 

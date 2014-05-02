@@ -79,4 +79,17 @@ public class Applicant implements Serializable {
     public String toString() {
         return name;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o instanceof Applicant){
+            Applicant applicant = (Applicant) o;
+            if(applicant.name.equals(this.name) && applicant.country.getAcronym().equals(this.country.getAcronym())){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    
 }

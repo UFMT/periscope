@@ -26,13 +26,16 @@ import com.mongodb.gridfs.GridFSDBFile;
 import com.mongodb.gridfs.GridFSInputFile;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
+import javax.servlet.http.HttpServletResponse;
 import org.bson.types.ObjectId;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
@@ -75,17 +78,18 @@ public class PatentController {
     Inventor newInventor;
 
     private StreamedContent download;
-
-    
+    private OutputStream outPut;
 
     /**
      * Pre-loads the patent's presentation file before user can download it
+     *
+     * @param patent
      * @throws UnknownHostException
      * @throws IOException
      */
-    public void preDownloadPresentation() throws UnknownHostException, IOException {
+    public void preDownloadPresentation(Patent patent) throws UnknownHostException, IOException {
         GridFS fs = patentRepository.getFs();
-        GridFSDBFile gfile = fs.findOne(patents.getRowData().getPresentationFile().getId());
+        GridFSDBFile gfile = fs.findOne(patent.getPresentationFile().getId());
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         long writeTo = gfile.writeTo(out);
         byte[] data = out.toByteArray();
@@ -93,17 +97,19 @@ public class PatentController {
         InputStream arquivo = istream;
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         setDownload(new DefaultStreamedContent(arquivo, externalContext.getMimeType(gfile.getFilename()), gfile.getFilename()));
-        
+
     }
-    
+
     /**
      * Pre-loads the patent's info file before user can download it
+     *
+     * @param patent
      * @throws UnknownHostException
      * @throws IOException
      */
-    public void preDownloadPatent() throws UnknownHostException, IOException {
+    public void preDownloadPatent(Patent patent) throws UnknownHostException, IOException {
         GridFS fs = patentRepository.getFs();
-        GridFSDBFile gfile = fs.findOne(patents.getRowData().getPatentInfo().getId());
+        GridFSDBFile gfile = fs.findOne(patent.getPatentInfo().getId());
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         long writeTo = gfile.writeTo(out);
         byte[] data = out.toByteArray();
@@ -111,33 +117,49 @@ public class PatentController {
         InputStream arquivo = istream;
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         setDownload(new DefaultStreamedContent(arquivo, externalContext.getMimeType(gfile.getFilename()), gfile.getFilename()));
-        
+
     }
 
     /**
      * Controller constructor<BR/>
      * Loads project's patents, countries, applicants and inventors
+     *
      * @throws UnknownHostException
      */
     @PostConstruct
-    public void init() throws UnknownHostException {
+    public void init() throws UnknownHostException, IOException {
         patents = new ListDataModel<Patent>(patentRepository.getAllPatents(currentProject));
         totalCount = patents.getRowCount();
+        countries = countryRepository.getAll();
+        applicants = applicantRepository.getApplicants(currentProject);
+        inventors = inventorRepository.getInventors(currentProject);
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest req = (HttpServletRequest) context.getExternalContext().getRequest();
         if (req.getParameter("patentId") != null) {
             selectedPatent = patentRepository.getPatentWithId(currentProject, new ObjectId(req.getParameter("patentId"))).get(0);
-            System.out.println("nome: " + selectedPatent.getPresentationFile());
-            
+            updateApplicants();
+            updateInventors();
         }
-        countries = countryRepository.getAll();
-        applicants = applicantRepository.getApplicants(currentProject);
-        inventors = inventorRepository.getInventors(currentProject);
+
         updateList();
+    }
+
+    public void updateApplicants() {
+        for (int i = 0; i < selectedPatent.getApplicants().size(); i++) {
+            applicants.remove(selectedPatent.getApplicants().get(i));
+        }
+    }
+
+    public void updateInventors() {
+        for (int i = 0; i < selectedPatent.getInventors().size(); i++) {
+            inventors.remove(selectedPatent.getInventors().get(i));
+
+        }
     }
 
     /**
      * Save the edited patent
+     *
      * @return
      */
     public String save() {
@@ -154,6 +176,7 @@ public class PatentController {
 
     /**
      * Add new priority to patents's priorities list
+     *
      * @return
      */
     public String addPriority() {
@@ -166,6 +189,7 @@ public class PatentController {
 
     /**
      * delete priority from patent's priorities list
+     *
      * @param priority
      * @return
      */
@@ -185,12 +209,13 @@ public class PatentController {
 
     /**
      * Adds new applicant to project's applicants list
+     *
      * @return
      */
     public String newApplicant() {
         List<Applicant> list = selectedPatent.getApplicants();
         newApplicant.setCountry(countryRepository.getCountryByAcronym(newApplicant.getCountry().getAcronym()));
-        if (!applicants.contains(newApplicant)) {
+        if (!selectedPatent.getApplicants().contains(newApplicant) || !applicants.contains(newApplicant)) {
             list.add(newApplicant);
             selectedPatent.setApplicants(list);
         }
@@ -199,27 +224,28 @@ public class PatentController {
 
     /**
      * Adds a applicant to the patent's applicants list
+     *
      * @param applicant
      * @return
      */
     public String addApplicant(Applicant applicant) {
         List<Applicant> list = selectedPatent.getApplicants();
-        if (!list.contains(applicant)) {
-            System.out.println(applicant.getName());
-            list.add(applicant);
-            selectedPatent.setApplicants(list);
-        }
+        applicants.remove(applicant);
+        list.add(applicant);
+        selectedPatent.setApplicants(list);
         return "";
     }
 
     /**
      * Deletes a applicant from the patent's applicants list
+     *
      * @param applicant
      * @return
      */
     public String deleteApplicant(Applicant applicant) {
         List<Applicant> list = selectedPatent.getApplicants();
         list.remove(applicant);
+        applicants.add(applicant);
         selectedPatent.setApplicants(list);
         return "";
     }
@@ -233,12 +259,13 @@ public class PatentController {
 
     /**
      * Adds new inventor the the project's inventors list
+     *
      * @return
      */
     public String newInventor() {
         List<Inventor> list = selectedPatent.getInventors();
         newInventor.setCountry(countryRepository.getCountryByAcronym(newInventor.getCountry().getAcronym()));
-        if (!inventors.contains(newInventor)) {
+        if (!inventors.contains(newInventor) || !selectedPatent.getInventors().contains(newInventor)) {
             list.add(newInventor);
             selectedPatent.setInventors(list);
         }
@@ -247,38 +274,42 @@ public class PatentController {
 
     /**
      * Adds a inventor to the patent's inventors list
+     *
      * @param inventor
      * @return
      */
     public String addInventor(Inventor inventor) {
         List<Inventor> list = selectedPatent.getInventors();
-        if (!list.contains(inventor)) {
-            list.add(inventor);
-            selectedPatent.setInventors(list);
-        }
+        list.add(inventor);
+        inventors.remove(inventor);
+        selectedPatent.setInventors(list);
         return "";
     }
 
     /**
      * Deletes a inventor from the patent's inventors list
+     *
      * @param inventor
      * @return
      */
     public String deleteInventor(Inventor inventor) {
         List<Inventor> list = selectedPatent.getInventors();
         list.remove(inventor);
+        inventors.add(inventor);
         selectedPatent.setInventors(list);
         return "";
     }
 
     /**
-     * Handles the uploading of the presentation file to the patent
-     * If the pantet alredy has a presentation file the method will delete the file from database before uploading a new one
+     * Handles the uploading of the presentation file to the patent If the
+     * pantet alredy has a presentation file the method will delete the file
+     * from database before uploading a new one
+     *
      * @param event
      * @throws UnknownHostException
      * @throws IOException
      */
-        public void uploadPresentationFile(FileUploadEvent event) throws UnknownHostException, IOException {
+    public void uploadPresentationFile(FileUploadEvent event) throws UnknownHostException, IOException {
         file = event.getFile();
         GridFS fs = patentRepository.getFs();
         System.out.println(file.getFileName());
@@ -297,17 +328,19 @@ public class PatentController {
 
         FacesMessage msg = new FacesMessage("Sucesso", event.getFile().getFileName() + " foi enviado.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
-        
+
     }
-    
+
     /**
-     * Handles the uploading of the Patent Info file to the patent
-     * If the pantet alredy has a Patent Info file the method will delete the file from database before uploading a new one
+     * Handles the uploading of the Patent Info file to the patent If the pantet
+     * alredy has a Patent Info file the method will delete the file from
+     * database before uploading a new one
+     *
      * @param event
      * @throws UnknownHostException
      * @throws IOException
      */
-    public void uploadPatentInfo(FileUploadEvent event) throws UnknownHostException, IOException{
+    public void uploadPatentInfo(FileUploadEvent event) throws UnknownHostException, IOException {
         file = event.getFile();
         GridFS fs = patentRepository.getFs();
         System.out.println(file.getFileName());
@@ -322,7 +355,6 @@ public class PatentController {
             Files novo = new Files((ObjectId) gfsFiles.getId());
             selectedPatent.setPatentInfo(novo);
         }
-        save();
 
         FacesMessage msg = new FacesMessage("Sucesso", event.getFile().getFileName() + " foi enviado.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -350,7 +382,6 @@ public class PatentController {
         }
     }
 
-    
     /**
      * Sends a patent to the black list
      */
@@ -398,7 +429,7 @@ public class PatentController {
     public void setDownload(StreamedContent download) {
         this.download = download;
     }
-    
+
     /**
      *
      * @return
@@ -411,7 +442,6 @@ public class PatentController {
      *
      * @return
      */
-    
     public int getPartialCount() {
         return patents.getRowCount();
     }
