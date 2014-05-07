@@ -14,7 +14,7 @@
                     <ul class="nav nav-pills pull-left">
                         <ui:repeat var="type" value="#{patentController.filters}">
                             <li class="#{(param['listType'] == type or patentController.type == type) ? 'active' : ''}">
-                                <p:commandLink value="#{msgs[type]}" update=":formType :patents" 
+                                <p:commandLink value="#{msgs[type]}" update=":formType" 
                                                action="#{patentController.updateList}">			    
                                     <f:param name="listType" value="#{type}"/>
                                 </p:commandLink>
@@ -23,95 +23,87 @@
                     </ul>
                     <h:outputText styleClass="pull-right" style="font-size:16px"
                                   value="#{msgs['listing']} #{patentController.partialCount} #{msgs['of']} #{patentController.totalCount} #{msgs['patents.registered']}."/>
-                </h:form>			
-                <br/>						
-                <p:dataTable id="patents" var="patent" style="font-size:10px"
-                             emptyMessage="#{msgs['registered.patent']}"
-                             value="#{patentController.patents}" paginator="true"
-                             paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
-                             rowKey="#{patent.id}" lazy="true" filterEvent="enter"
-                             >
+                			
+                <br/>	
+               
+                    <p:dataTable id="patents" var="item" style="font-size:10px"
+                                 emptyMessage="#{msgs['registered.patent']}"
+                                 value="#{patentController.patents}" paginator="true"
+                                 paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+                                 rowKey="#{item.id}" lazy="true" filterEvent="enter" 
+                                 >
 
-                    <p:columnGroup type="header">
-                        <p:row>
-                            <p:column rowspan="2" headerText="#{msgs['country']}" />
-                            <p:column rowspan="2" headerText="#{msgs['title']}" filterBy="#{patent.titleSelect}" filterMatchMode="contains"/>
-                            <p:column rowspan="2" headerText="#{msgs['publication.date']}" />
-                            <p:column rowspan="2" headerText="#{msgs['classification']}" />
-                            <p:column rowspan="2" headerText="#{msgs['application.number']}" />
-                            <p:column rowspan="2" headerText="#{msgs['applicants']}" />
-                            <p:column rowspan="2" headerText="#{msgs['inventors']}" />
-                            
-<!--                            <p:column rowspan="2" headerText="Prioridade" />-->
-                            
-                            
-                            <!--  <p:column rowspan="2" headerText="Lista Negra" /> -->
-                            <p:column rowspan="2" headerText="#{msgs['actions']}" />
-                        </p:row>
-                    </p:columnGroup>			
-                    <p:column>
-                        #{patent.applicationNumber.substring(0, 2)}
-                    </p:column>
-                    <p:column width="150">
-                        <center>#{patent.titleSelect}</center>
-                    </p:column>	
-                    <p:column>														
-                        #{patent.publicationDate.toLocaleString().substring(0, 10)}					
-                    </p:column>
-                    <p:column>														
-                        #{patent.mainClassification.klass} 
-                        #{patent.mainClassification.group}/#{patent.mainClassification.subgroup}						
-                    </p:column>
-                    <p:column>														
-                        #{patent.applicationNumber}					
-                    </p:column>
-                    <p:column>														
-                        #{patent.applicantsToString}					
-                    </p:column>
-                    <p:column>														
-                        #{patent.inventorsToString}					
-                    </p:column>
-<!--                    <p:column>														
-                        #{patent.prioritiesToString}					
+                        <p:column  headerText="#{msgs['language']}" >
+                            #{item.language}
+                        </p:column>
+                        <p:column width="150" headerText="#{msgs['title']}" filterBy="#{item.titleSelect}" >
+                            <center>#{item.titleSelect}</center>
+                        </p:column>	
+                        <p:column  headerText="#{msgs['publication.date']}" sortBy="#{item.publicationDate}">														
+                            #{item.publicationDate.toLocaleString()}					
+                        </p:column>
+                        <p:column headerText="#{msgs['classification']}" >														
+                            #{item.mainClassification.klass} 
+                            #{item.mainClassification.group}/#{item.mainClassification.subgroup}						
+                        </p:column>
+                        <p:column headerText="#{msgs['application.number']}" >														
+                            #{item.applicationNumber}					
+                        </p:column>
+                        <p:column headerText="#{msgs['applicants']}">														
+                            #{item.applicantsToString}					
+                        </p:column>
+                        <p:column headerText="#{msgs['inventors']}" >														
+                            #{item.inventorsToString}					
+                        </p:column>
+                        <!--                    <p:column>														
+                        #{item.prioritiesToString}					
                     </p:column>-->
-                    
-                    <!-- 
-                    <p:column>
+
+                        <!-- 
+                        <p:column>
+                                <center>
+                                        <span class="label label-#{item.blacklisted ? 'inverse' : 'success'}">
+                        #{item.blacklisted ? 'Sim' : 'Não'}
+                </span>
+        </center>
+    </p:column>
+                        -->
+                        <p:column  headerText="#{msgs['actions']}" >
                             <center>
-                                    <span class="label label-#{patent.blacklisted ? 'inverse' : 'success'}">
-                    #{patent.blacklisted ? 'Sim' : 'Não'}
+                                    <span class="label label-#{item.blacklisted ? 'inverse' : 'success'}">
+                    #{item.blacklisted ? 'Sim' : 'Não'}
             </span>
     </center>
 </p:column>
                     -->
                     <p:column>
                         <center>
-                            <h:form style="margin-bottom:0px">
+                            
                                 <p:commandButton ajax="false" title="#{msgs['edit']}" action="editPatent" 
                                                  icon="ui-icon-pencil">
-                                    <f:param name="patentId" value="#{patent.id}" />
+                                    <f:param name="patentId" value="#{item.id}" />
                                 </p:commandButton>
                                 <p:commandButton title="#{msgs['download.file']}" ajax="false" 
                                                  icon="ui-icon-arrowthick-1-s"
-                                                 rendered="#{patent.presentationFile != null}"
+                                                 rendered="#{item.presentationFile != null}"
                                                  actionListener="#{patentController.preDownloadPresentation(patent)}">  
                                     <p:fileDownload  value="#{patentController.download}" />  
                                 </p:commandButton>
                                 <p:commandButton title="#{msgs['download.patent']}" ajax="false" 
                                                  icon="ui-icon-arrowthick-1-s" 
-                                                 rendered="#{patent.patentInfo != null}"
+                                                 rendered="#{item.patentInfo != null}"
                                                  actionListener="#{patentController.preDownloadPatent(patent)}">  
                                     <p:fileDownload  value="#{patentController.download}" />  
                                 </p:commandButton>
                                 <p:commandButton title="#{msgs['darklist']}" ajax="false" action="#{patentController.updateBlackListPatent()}" 
-                                                 icon="ui-icon-cancel" rendered="#{not patent.blacklisted}"/>
+                                                 icon="ui-icon-cancel" rendered="#{not item.blacklisted}"/>
                                 <p:commandButton title="#{msgs['undarklist']}" ajax="false" action="#{patentController.updateBlackListPatent()}" 
-                                                 icon="ui-icon-arrowreturn-1-w" rendered="#{patent.blacklisted}"/>	
+                                                 icon="ui-icon-arrowreturn-1-w" rendered="#{item.blacklisted}"/>	
 
-                            </h:form>
-                        </center>
-                    </p:column>
-                </p:dataTable>
+                            </center>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
                 <br />
                 <h:form>
                     <h:commandLink value="#{msgs['import.patent']}" style="color:white"

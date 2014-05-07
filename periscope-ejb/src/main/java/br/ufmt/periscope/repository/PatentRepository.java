@@ -12,6 +12,7 @@ import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
 
 import com.github.jmkgreen.morphia.Datastore;
+import com.github.jmkgreen.morphia.query.Query;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCursor;
@@ -19,6 +20,7 @@ import com.mongodb.Mongo;
 import com.mongodb.gridfs.GridFS;
 import java.net.UnknownHostException;
 import java.util.Date;
+import java.util.Map;
 import org.bson.types.ObjectId;
 
 @Named
@@ -28,6 +30,11 @@ public class PatentRepository {
     private Datastore ds;
     private @Inject
     PatentIndexer patentIndexer;
+    private @Inject
+    Project currentProject;
+    private Boolean completed;
+    private Boolean blacklisted;
+    private int rowCount;
 
     public void savePatentToDatabase(PatentImporter patents, Project project) {
         List<Patent> patentsCache = new ArrayList<Patent>();
@@ -135,4 +142,57 @@ public class PatentRepository {
         GridFS fs = new GridFS(db);
         return fs;
     }
+
+    public List<Patent> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters) {
+        Query query = ds.find(Patent.class)
+                .field("project").equal(this.currentProject)
+                .field("completed").equal(this.completed)
+                .field("blacklisted").equal(this.blacklisted);
+        
+        if (sortField != null) {
+            query = query.order((sortOrder == 1 ? "-" : "") + sortField);
+        }
+        for (Map.Entry<String, String> entry : filters.entrySet()) {
+            String column = entry.getKey();
+            String value = entry.getValue();
+            query.field(column).containsIgnoreCase(value);
+        }
+        setRowCount(query.asList().size());
+        query.offset(first).limit(pageSize);
+        
+        return query.asList();
+    }
+
+    public Project getCurrentProject() {
+        return currentProject;
+    }
+
+    public void setCurrentProject(Project currentProject) {
+        this.currentProject = currentProject;
+    }
+
+    public Boolean getCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(Boolean completed) {
+        this.completed = completed;
+    }
+
+    public Boolean getBlacklisted() {
+        return blacklisted;
+    }
+
+    public void setBlacklisted(Boolean blacklisted) {
+        this.blacklisted = blacklisted;
+    }
+
+    public int getRowCount() {
+        return rowCount;
+    }
+
+    public void setRowCount(int rowCount) {
+        this.rowCount = rowCount;
+    }
+    
 }

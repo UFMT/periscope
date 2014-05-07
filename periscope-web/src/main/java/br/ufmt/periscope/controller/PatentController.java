@@ -1,5 +1,6 @@
 package br.ufmt.periscope.controller;
 
+import br.ufmt.periscope.lazy.LazyPatentDataModel;
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Country;
 import br.ufmt.periscope.model.Files;
@@ -55,7 +56,7 @@ public class PatentController {
     Project currentProject;
     private @Inject
     PatentRepository patentRepository;
-    private DataModel<Patent> patents = null;
+    private @Inject LazyPatentDataModel patents;
     private String type = "complete";
     private String[] filters = {"complete", "incomplete", "darklist"};
     private int totalCount = 0;
@@ -76,9 +77,7 @@ public class PatentController {
     Priority newPriority;
     private @Inject
     Inventor newInventor;
-
     private StreamedContent download;
-    private OutputStream outPut;
 
     /**
      * Pre-loads the patent's presentation file before user can download it
@@ -127,16 +126,20 @@ public class PatentController {
      * @throws UnknownHostException
      */
     @PostConstruct
-    public void init() throws UnknownHostException, IOException {
-        patents = new ListDataModel<Patent>(patentRepository.getAllPatents(currentProject));
+    public void init() throws UnknownHostException {
+        patents.getRepo().setBlacklisted(false);
+        patents.getRepo().setCompleted(false);
+        patents.getRepo().setCurrentProject(currentProject);
         totalCount = patents.getRowCount();
         countries = countryRepository.getAll();
         applicants = applicantRepository.getApplicants(currentProject);
         inventors = inventorRepository.getInventors(currentProject);
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest req = (HttpServletRequest) context.getExternalContext().getRequest();
+        System.out.println("edit");
         if (req.getParameter("patentId") != null) {
             selectedPatent = patentRepository.getPatentWithId(currentProject, new ObjectId(req.getParameter("patentId"))).get(0);
+            System.out.println("selecpatent");
             updateApplicants();
             updateInventors();
         }
@@ -280,9 +283,11 @@ public class PatentController {
      */
     public String addInventor(Inventor inventor) {
         List<Inventor> list = selectedPatent.getInventors();
-        list.add(inventor);
-        inventors.remove(inventor);
-        selectedPatent.setInventors(list);
+        if (!list.contains(inventor)) {
+            list.add(inventor);
+            inventors.remove(inventor);
+            selectedPatent.setInventors(list);
+        }
         return "";
     }
 
@@ -369,16 +374,20 @@ public class PatentController {
                 .getExternalContext().getRequest();
         String param = req.getParameter("listType");
         if (param != null) {
-            type = req.getParameter("listType");
+            this.type = req.getParameter("listType");
         }
         if (type.contentEquals("complete")) {
-            patents = new ListDataModel<Patent>(patentRepository.getPatentsComplete(currentProject, true));
+            patents.getRepo().setBlacklisted(false);
+            patents.getRepo().setCompleted(true);
         } else if (type.contentEquals("incomplete")) {
-            patents = new ListDataModel<Patent>(patentRepository.getPatentsComplete(currentProject, false));
+            patents.getRepo().setBlacklisted(false);
+            patents.getRepo().setCompleted(false);
         } else if (type.contentEquals("darklist")) {
-            patents = new ListDataModel<Patent>(patentRepository.getPatentsDarklist(currentProject, true));
+            patents.getRepo().setBlacklisted(true);
+            patents.getRepo().setCompleted(true);
         } else {
-            patents = new ListDataModel<Patent>(patentRepository.getPatentsDarklist(currentProject, false));
+            patents.getRepo().setBlacklisted(false);
+            patents.getRepo().setCompleted(true);
         }
     }
 
@@ -403,7 +412,7 @@ public class PatentController {
      * @param patents
      */
     public void setPatents(DataModel<Patent> patents) {
-        this.patents = patents;
+        this.patents = (LazyPatentDataModel) patents;
     }
 
     /**
