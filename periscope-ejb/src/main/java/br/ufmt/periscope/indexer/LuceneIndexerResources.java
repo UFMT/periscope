@@ -25,16 +25,14 @@ import com.github.mongoutils.lucene.MapDirectory;
 import com.github.mongoutils.lucene.MapDirectoryEntry;
 import com.github.mongoutils.lucene.MapDirectoryEntrySerializer;
 import com.mongodb.DBCollection;
-import java.util.ArrayList;
-import java.util.List;
-import org.apache.lucene.analysis.StopFilter;
+import org.apache.lucene.analysis.Analyzer;
 
 @Named
 public class LuceneIndexerResources {
 
     private @Inject
     Datastore ds;
-    
+
     @Produces
     public IndexReader getReader(Directory dir) {
         try {
@@ -68,26 +66,13 @@ public class LuceneIndexerResources {
     }
 
     @Produces
-    private StandardAnalyzer getAnalyzer() {
-        return new StandardAnalyzer(Version.LUCENE_36, StopFilter.makeStopSet(Version.LUCENE_36, getStopwords()));
+    private Analyzer getAnalyzer() {
+        //return new StandardAnalyzer(Version.LUCENE_36);
+        return new PatenteeAnalyzer(Version.LUCENE_36);
     }
 
-    public final static List<String> getStopwords() {
-        List<String> list = new ArrayList<String>();
-        list.add("CORP");
-        list.add("INC");
-        list.add("UNIV");
-        list.add("CO");
-        list.add("UNIV");
-        list.add("INST");
-        list.add("LTD");
-        list.add("TECH");
-        list.add("DISPLAY");
-        return list;
-    }
-    
     @Produces
-    private IndexWriterConfig getIndexConfig(StandardAnalyzer analyzer) {
+    private IndexWriterConfig getIndexConfig(Analyzer analyzer) {
         //return new IndexWriterConfig(Version.LUCENE_36, analyzer);
         IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_36, analyzer);
 
@@ -136,6 +121,7 @@ public class LuceneIndexerResources {
             e.printStackTrace();
         }
     }
+
 //	public void disposesSearcher(@Disposes IndexSearcher searcher){
 //		try {
 //			System.out.println("Disposing searcher");

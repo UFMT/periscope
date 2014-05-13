@@ -1,6 +1,5 @@
 package br.ufmt.periscope.repository;
 
-import br.ufmt.periscope.indexer.LuceneIndexerResources;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,6 +42,12 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MapReduceCommand;
 import com.mongodb.MapReduceCommand.OutputType;
+import java.io.StringReader;
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.FuzzyQuery;
 
 @Named
 public class ApplicantRepository {
@@ -52,7 +57,7 @@ public class ApplicantRepository {
     private @Inject
     IndexReader reader;
     private @Inject
-    StandardAnalyzer analyzer;
+    Analyzer analyzer;
 
     public Applicant getApplicantByName(String name) {
 
@@ -76,7 +81,6 @@ public class ApplicantRepository {
         }
         System.out.println("NULO");
         return null;
-
 
     }
 
@@ -151,54 +155,66 @@ public class ApplicantRepository {
 
         Set<String> results = new HashSet<String>();
         try {
-            StringBuilder queryBuilder = new StringBuilder();
-            for (String name : names) {
-                String[] terms = name.split(" ");
-                for (String term : terms) {
-                    //if(term.length() >= 4){		
-                    if(!LuceneIndexerResources.getStopwords().contains(term)){
-                        //queryBuilder.append(term + "* ");
-                        if(!queryBuilder.toString().contains(term))
-                        {
-                            queryBuilder.append(term + "~0.99 ");
-                        }
-                    }
-                    
-                    //}
-                }
-
-                //queryBuilder.append("NOT \""+name+"\" ");	
-                queryBuilder.append(name.trim() + "~0.99 ");
-            }
-
-            TopScoreDocCollector collector = TopScoreDocCollector.create(1000, true);
-            BooleanQuery bq = new BooleanQuery();
-            Query queryPa = new QueryParser(Version.LUCENE_36, "applicant", analyzer)
-                    .parse(queryBuilder.toString());
-            queryPa.setBoost(10f);
+//            StringBuilder queryBuilder = new StringBuilder();
+//            for (String name : names) {
+//                String[] terms = name.split(" ", -2);
+//                for (String term : terms) {
+//                    //if(term.length() >= 4){		
+//                    queryBuilder.append(term + "~ ");
+//                    queryBuilder.append(term + "* ");
+//                    //}
+//                }
+//
+//                //queryBuilder.append("NOT \""+name+"\" ");	
+//                queryBuilder.append("\"" + name + "\"~10 ");
+//            }
 
             Query queryProject = new QueryParser(Version.LUCENE_36, "project", analyzer)
                     .parse(project.getId().toString());
             queryProject.setBoost(0.1f);
 
-            bq.add(queryPa, Occur.MUST);
-            bq.add(queryProject, Occur.MUST);
-            System.out.println(bq);
-
             IndexSearcher searcher = new IndexSearcher(reader);
-            searcher.search(bq, collector);
 
-            ScoreDoc[] hits = collector.topDocs().scoreDocs;
-            System.out.println("Found " + hits.length + " hits.");
-            for (int i = 0; i < hits.length; ++i) {
-                int docId = hits[i].doc;
-                Document d = searcher.doc(docId);
-                //System.out.println((i + 1) + ". " + d.get("applicant") + "\t" + hits[i].score );		      
-                results.add(d.get("applicant"));
-                System.out.println("Sugestão: "+d.get("applicant"));
+            for (String name : names) {
+                // Cria uma stream de tokens com o analyzer
+                TokenStream stream = analyzer.tokenStream("applicant", new StringReader(name));
+                // Passa os atributos da stream para que seja possível recuperar seu valor puro de texto
+                CharTermAttribute attr = stream.getAttribute(CharTermAttribute.class);
+                // resetar a stream é necessário fazer, não sei o porque, mais se não o fizer da erro
+                stream.reset();
+                // Recuperando o valor de texto da stream
+                name = "";
+                while (stream.incrementToken()) {
+                    name = name + attr.toString();
+                }
+                stream.end();
+                stream.close();
 
-                if (results.size() == top) {
-                    break;
+                TopScoreDocCollector collector = TopScoreDocCollector.create(1000, true);
+                BooleanQuery bq = new BooleanQuery();
+                //Query queryPa = new QueryParser(Version.LUCENE_36, "applicant", analyzer)
+                //       .parse(queryBuilder.toString());
+                //queryPa.setBoost(10f);
+
+                Query query = new FuzzyQuery(new Term("applicant", name));
+
+                bq.add(query, Occur.MUST);
+                bq.add(queryProject, Occur.MUST);
+                System.out.println(bq);
+
+                searcher.search(bq, collector);
+
+                ScoreDoc[] hits = collector.topDocs().scoreDocs;
+                System.out.println("Found " + hits.length + " hits.");
+                for (int i = 0; i < hits.length; ++i) {
+                    int docId = hits[i].doc;
+                    Document d = searcher.doc(docId);
+                    System.out.println((i + 1) + ". " + d.get("applicant") + "\t" + hits[i].score );		      
+                    results.add(d.get("applicant"));
+
+                    if (results.size() == top) {
+                        break;
+                    }
                 }
             }
             for (String name : names) {
@@ -216,7 +232,6 @@ public class ApplicantRepository {
             e.printStackTrace();
         }
         return results;
-
 
     }
 }

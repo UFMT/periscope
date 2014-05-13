@@ -23,19 +23,25 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
@@ -45,12 +51,14 @@ import org.apache.lucene.util.Version;
 @Named
 public class InventorRepository {
 
-	private @Inject
-	Datastore ds;
-	private @Inject IndexReader reader;
-	private @Inject StandardAnalyzer analyzer;
+    private @Inject
+    Datastore ds;
+    private @Inject
+    IndexReader reader;
+    private @Inject
+    Analyzer analyzer;
 
-	public List<Pair> updateInventors(Project currentProject,int limit, Filters filtro) {
+    public List<Pair> updateInventors(Project currentProject, int limit, Filters filtro) {
 
         /**
          * db.Patent.aggregate( {$match:{"project.$id":new
@@ -118,105 +126,119 @@ public class InventorRepository {
             pairs.add(new Pair(inventor, count));
         }
         return pairs;
-	}
-        
-	public ArrayList<Inventor> getInventors(Project currentProject) {
-		Map<String,Inventor> map = new HashMap<String, Inventor>();
-		
-		HashMultiset<String> bag = HashMultiset.create(); 
-		
-		BasicDBObject where = new BasicDBObject();		
-		where.put("project.$id", currentProject.getId());		
-		where.put("inventors", new BasicDBObject("$exists", true));
-		
-		BasicDBObject keys = new BasicDBObject();
-		keys.put("inventors",1);
-								
-		DBCursor cursor = ds.getCollection(Patent.class).find(where, keys);
-		Mapper mapper = ds.getMapper();
-		EntityCache ec = mapper.createEntityCache();
-		while(cursor.hasNext()){
-			
-			BasicDBList objList = (BasicDBList) cursor.next().get("inventors");			
-			Iterator<Object> itList = objList.iterator();
-			while(itList.hasNext()){
-				Inventor pa = (Inventor) mapper.fromDBObject(Inventor.class,(DBObject) itList.next(), ec);
-				bag.add(pa.getName());
-				pa.setDocumentCount(bag.count(pa.getName()));
-				map.put(pa.getName(),pa);
-			}								
-						
-		}
-		return new ArrayList<Inventor>(map.values());
-	}
-        
-	public Set<String> getInventorSugestions(Project project,int top,String... names){
-		
-	    Set<String> results = new HashSet<String>();							
-		try {
-			StringBuilder queryBuilder = new StringBuilder();			
-			for(String name : names){
-				 String[] terms = name.split(" ");
-                for (String term : terms) {
-                    //if(term.length() >= 4){		
-                    if(!LuceneIndexerResources.getStopwords().contains(term)){
-                        //queryBuilder.append(term + "* ");
-                        if(!queryBuilder.toString().contains(term))
-                        {
-                            queryBuilder.append(term + "~0.99 ");
-                        }
-                    }
-                    
-                    //}
-                }
+    }
 
-                //queryBuilder.append("NOT \""+name+"\" ");	
-                queryBuilder.append(name.trim() + "~0.99 ");
-            }	
-						
-			TopScoreDocCollector collector = TopScoreDocCollector.create(1000, true);			
-			BooleanQuery bq = new BooleanQuery();			
-			Query queryPa = new QueryParser(Version.LUCENE_36, "inventor", analyzer)
-											.parse(queryBuilder.toString());
-			queryPa.setBoost(10f);		
-			
-			Query queryProject = new QueryParser(Version.LUCENE_36, "project", analyzer)
-											.parse(project.getId().toString());
-			queryProject.setBoost(0.1f);					
-			
-			bq.add(queryPa, BooleanClause.Occur.MUST);
-			bq.add(queryProject,BooleanClause.Occur.MUST);
-			System.out.println(bq);
-			
-			IndexSearcher searcher = new IndexSearcher(reader);
-			searcher.search(bq, collector);							
-			
-			ScoreDoc[] hits = collector.topDocs().scoreDocs;
-		    System.out.println("Found " + hits.length + " hits.");
-		    for(int i=0;i<hits.length;++i) {	    			    	
-		      int docId = hits[i].doc;
-		      Document d = searcher.doc(docId);	      		      
-		      //System.out.println((i + 1) + ". " + d.get("applicant") + "\t" + hits[i].score );		      
-		      results.add(d.get("inventor"));
-		      
-		      if(results.size() == top ) break;
-		    }
-		    for(String name : names){
-		    	results.remove(name);
-		    }
-		    searcher.close();
-		    
-		    return results;
-		    		
-		} catch (CorruptIndexException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return results;		
-				
-		
-	}
+    public ArrayList<Inventor> getInventors(Project currentProject) {
+        Map<String, Inventor> map = new HashMap<String, Inventor>();
+
+        HashMultiset<String> bag = HashMultiset.create();
+
+        BasicDBObject where = new BasicDBObject();
+        where.put("project.$id", currentProject.getId());
+        where.put("inventors", new BasicDBObject("$exists", true));
+
+        BasicDBObject keys = new BasicDBObject();
+        keys.put("inventors", 1);
+
+        DBCursor cursor = ds.getCollection(Patent.class).find(where, keys);
+        Mapper mapper = ds.getMapper();
+        EntityCache ec = mapper.createEntityCache();
+        while (cursor.hasNext()) {
+
+            BasicDBList objList = (BasicDBList) cursor.next().get("inventors");
+            Iterator<Object> itList = objList.iterator();
+            while (itList.hasNext()) {
+                Inventor pa = (Inventor) mapper.fromDBObject(Inventor.class, (DBObject) itList.next(), ec);
+                bag.add(pa.getName());
+                pa.setDocumentCount(bag.count(pa.getName()));
+                map.put(pa.getName(), pa);
+            }
+
+        }
+        return new ArrayList<Inventor>(map.values());
+    }
+
+    public Set<String> getInventorSugestions(Project project, int top, String... names) {
+
+        Set<String> results = new HashSet<String>();
+        try {
+//            StringBuilder queryBuilder = new StringBuilder();
+//            for (String name : names) {
+//                String[] terms = name.split(" ", -2);
+//                for (String term : terms) {
+//                    //if(term.length() >= 4){		
+//                    queryBuilder.append(term + "~ ");
+//                    queryBuilder.append(term + "* ");
+//                    //}
+//                }
+//
+//                //queryBuilder.append("NOT \""+name+"\" ");	
+//                queryBuilder.append("\"" + name + "\"~10 ");
+//            }
+
+            Query queryProject = new QueryParser(Version.LUCENE_36, "project", analyzer)
+                    .parse(project.getId().toString());
+            queryProject.setBoost(0.1f);
+
+            IndexSearcher searcher = new IndexSearcher(reader);
+
+            for (String name : names) {
+                // Cria uma stream de tokens com o analyzer
+                TokenStream stream = analyzer.tokenStream("applicant", new StringReader(name));
+                // Passa os atributos da stream para que seja possível recuperar seu valor puro de texto
+                CharTermAttribute attr = stream.getAttribute(CharTermAttribute.class);
+                // resetar a stream é necessário fazer, não sei o porque, mais se não o fizer da erro
+                stream.reset();
+                // Recuperando o valor de texto da stream
+                name = "";
+                while (stream.incrementToken()) {
+                    name = name + attr.toString();
+                }
+                stream.end();
+                stream.close();
+
+                TopScoreDocCollector collector = TopScoreDocCollector.create(1000, true);
+                BooleanQuery bq = new BooleanQuery();
+                //Query queryPa = new QueryParser(Version.LUCENE_36, "applicant", analyzer)
+                //       .parse(queryBuilder.toString());
+                //queryPa.setBoost(10f);
+
+                Query query = new FuzzyQuery(new Term("applicant", name));
+
+                bq.add(query, BooleanClause.Occur.MUST);
+                bq.add(queryProject, BooleanClause.Occur.MUST);
+                System.out.println(bq);
+
+                searcher.search(bq, collector);
+
+                ScoreDoc[] hits = collector.topDocs().scoreDocs;
+                System.out.println("Found " + hits.length + " hits.");
+                for (int i = 0; i < hits.length; ++i) {
+                    int docId = hits[i].doc;
+                    Document d = searcher.doc(docId);
+                    System.out.println((i + 1) + ". " + d.get("applicant") + "\t" + hits[i].score);
+                    results.add(d.get("applicant"));
+
+                    if (results.size() == top) {
+                        break;
+                    }
+                }
+            }
+            for (String name : names) {
+                results.remove(name);
+            }
+            searcher.close();
+
+            return results;
+
+        } catch (CorruptIndexException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return results;
+
+    }
 }
