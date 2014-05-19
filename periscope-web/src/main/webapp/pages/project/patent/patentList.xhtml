@@ -23,9 +23,9 @@
                     </ul>
                     <h:outputText styleClass="pull-right" style="font-size:16px"
                                   value="#{msgs['listing']} #{patentController.partialCount} #{msgs['of']} #{patentController.totalCount} #{msgs['patents.registered']}."/>
-                			
-                <br/>	
-               
+
+                    <br/>	
+
                     <p:dataTable id="patents" var="item" style="font-size:10px"
                                  emptyMessage="#{msgs['registered.patent']}"
                                  value="#{patentController.patents}" paginator="true"
@@ -33,14 +33,14 @@
                                  rowKey="#{item.id}" lazy="true" filterEvent="enter" 
                                  >
 
-                        <p:column  headerText="#{msgs['language']}" >
-                            #{item.language}
+                        <p:column  headerText="#{msgs['country']}" >
+                            #{item.applicationNumber.substring(0, 2)}
                         </p:column>
                         <p:column width="150" headerText="#{msgs['title']}" filterBy="#{item.titleSelect}" >
                             <center>#{item.titleSelect}</center>
                         </p:column>	
                         <p:column  headerText="#{msgs['publication.date']}" sortBy="#{item.publicationDate}">														
-                            #{item.publicationDate.toLocaleString()}					
+                            #{item.publicationDate.toLocaleString().substring(0, 10)}					
                         </p:column>
                         <p:column headerText="#{msgs['classification']}" >														
                             #{item.mainClassification.klass} 
@@ -68,17 +68,9 @@
         </center>
     </p:column>
                         -->
-                        <p:column  headerText="#{msgs['actions']}" >
+                        <p:column headerText="#{msgs['actions']}">
                             <center>
-                                    <span class="label label-#{item.blacklisted ? 'inverse' : 'success'}">
-                    #{item.blacklisted ? 'Sim' : 'Não'}
-            </span>
-    </center>
-</p:column>
-                    -->
-                    <p:column>
-                        <center>
-                            
+
                                 <p:commandButton ajax="false" title="#{msgs['edit']}" action="editPatent" 
                                                  icon="ui-icon-pencil">
                                     <f:param name="patentId" value="#{item.id}" />
