@@ -107,7 +107,7 @@ public class PatentRepository {
                 .field("project").equal(project)
                 .asList();
     }
-
+    
     public List<Patent> getPatentWithId(Project project, ObjectId id) {
 
         return ds.find(Patent.class)
@@ -162,7 +162,26 @@ public class PatentRepository {
         
         return query.asList();
     }
-
+    
+    public List<Patent> loadBrazilian(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters) {
+        Query query = ds.find(Patent.class)
+                .field("project").equal(this.currentProject)
+                .field("completed").equal(this.completed)
+                .field("blacklisted").equal(this.blacklisted)
+                .field("priorities.country.acronym").equal("BR");
+        if (sortField != null) {
+            query = query.order((sortOrder == 1 ? "-" : "") + sortField);
+        }
+        for (Map.Entry<String, String> entry : filters.entrySet()) {
+            String column = entry.getKey();
+            String value = entry.getValue();
+            query.field(column).containsIgnoreCase(value);
+        }
+        setRowCount(query.asList().size());
+        query.offset(first).limit(pageSize);
+        
+        return query.asList();
+    }
     public Project getCurrentProject() {
         return currentProject;
     }

@@ -1,5 +1,6 @@
 package br.ufmt.periscope.controller;
 
+import br.ufmt.periscope.lazy.LazyPatentBrazilianDataModel;
 import br.ufmt.periscope.lazy.LazyPatentDataModel;
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Country;
@@ -44,14 +45,14 @@ import org.primefaces.model.UploadedFile;
  */
 @ManagedBean
 @ViewScoped
-public class PatentController {
+public class PatentBrazilianController {
 
     private @Inject
     @CurrentProject
     Project currentProject;
     private @Inject
     PatentRepository patentRepository;
-    private @Inject LazyPatentDataModel patents;
+    private @Inject LazyPatentBrazilianDataModel patents;
     private String type = "complete";
     private String[] filters = {"complete", "incomplete", "darklist"};
     private int totalCount = 0;
@@ -407,7 +408,7 @@ public class PatentController {
      * @param patents
      */
     public void setPatents(DataModel<Patent> patents) {
-        this.patents = (LazyPatentDataModel) patents;
+        this.patents = (LazyPatentBrazilianDataModel) patents;
     }
 
     /**

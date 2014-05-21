@@ -1,40 +1,65 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
 
-<ui:composition template="/template/template.xhtml">
+    <ui:composition template="/template/template.xhtml">
 
-	<ui:define name="growl"></ui:define>
+        <ui:define name="growl"></ui:define>
 
-	<ui:define name="content">
+        <ui:define name="content">
 
-		<h1>Data de Prioridade</h1>
-		<h:panelGrid columns="2">
+            <h1>#{msgs['docsOfNationalPriority']}</h1>
+            <h:panelGrid columns="2">
 
-			<h:column>
-				<p:graphicImage />
-				<p:graphicImage />
-			</h:column>
+                <h:column>
+                    <p:graphicImage />
+                    <p:graphicImage />
+                </h:column>
 
-			<h:column>
+                <h:column>
+                    <h:form>
+                        <p:dataTable id="patents" var="item" style="font-size:10px"
+                                     emptyMessage="#{msgs['registered.patent']}"
+                                     value="#{patentBrazilianController.patents}" paginator="true"
+                                     paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+                                     rowKey="#{item.id}" lazy="true" filterEvent="enter" 
+                                     >
 
-				<p:dataTable emptyMessage="Nenhum depositante cadastrado.">
+                            <p:column  headerText="#{msgs['country']}">
+                                #{item.applicationNumber.substring(0, 2)}
+                            </p:column>
+                            <p:column width="150" headerText="#{msgs['title']}" filterBy="#{item.titleSelect}" >
+                                <center>#{item.titleSelect}</center>
+                            </p:column>	
+                            <p:column  headerText="#{msgs['publication.date']}" sortBy="#{item.publicationDate}">														
+                                #{item.publicationDate.toLocaleString().substring(0, 10)}					
+                            </p:column>
+                            <p:column headerText="#{msgs['classification']}" >														
+                                #{item.mainClassification.klass} 
+                                #{item.mainClassification.group}/#{item.mainClassification.subgroup}						
+                            </p:column>
+                            <p:column headerText="#{msgs['application.number']}" >														
+                                #{item.applicationNumber}					
+                            </p:column>
+                            <p:column headerText="#{msgs['applicants']}">														
+                                #{item.applicantsToString}					
+                            </p:column>
+                            <p:column headerText="#{msgs['inventors']}" >														
+                                #{item.inventorsToString}					
+                            </p:column>
+                            
+                        </p:dataTable>
+                    </h:form>
+                </h:column>
 
-					<p:column headerText="#{msgs['year']}" />
+            </h:panelGrid>
 
-					<p:column headerText="#{msgs['documents.number']}" />
+        </ui:define>
 
-				</p:dataTable>
-			</h:column>
-
-		</h:panelGrid>
-
-	</ui:define>
-
-</ui:composition>
+    </ui:composition>
 </html>
