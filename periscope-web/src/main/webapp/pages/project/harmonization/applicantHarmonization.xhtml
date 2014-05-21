@@ -29,9 +29,9 @@
                          emptyMessage="Não existem depositantes carregados"
                          value="#{applicantHarmonizationController.applicants}" paginator="true"
                          paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
-                         rowKey="#{pa.object}" sortBy="#{pa.object.name}" filterEvent="enter" lazy="false">
+                         rowKey="#{pa.name}" filterEvent="enter" lazy="true">
 
-                <f:facet name="header">  
+<!--                <f:facet name="header">  
                     <p:outputPanel>  
                         <h:panelGrid columns="3">
                             <p:outputLabel id="searchNameLabel" value="#{msgs['searchName']}:"/>
@@ -39,33 +39,24 @@
                             <p:button id="btnSearch" value="#{msgs['search']}"/>
                         </h:panelGrid>
                     </p:outputPanel>  
-                </f:facet>
+                </f:facet>-->
 
-                <p:columnGroup type="header">
-                    <p:row>
-                        <p:column rowspan="2" headerText=""/>						
-                        <p:column rowspan="2" headerText="Nome" sortBy="#{pa.object.name}" filterBy="#{pa.object.name}" filterMatchMode="contains"/>
-                        <p:column rowspan="2" headerText="Pais" sortBy="#{pa.object.country.name}"/>
-                        <p:column rowspan="2" headerText="Docs" sortBy="#{pa.object.documentCount}"/>
-                        <p:column rowspan="2" headerText="Ações" />
-                    </p:row>
-                </p:columnGroup>
-                <p:column>					
-                    <p:selectBooleanCheckbox
-                        onchange="#{applicantHarmonizationController.onSelectApplicant()}" value="#{pa.selected}">
-                        <p:ajax update=":tabView:formAll"/>
+                <p:column headerText="">					
+                    <p:selectBooleanCheckbox id="campo" 
+                        value="#{pa.selected}" >
+                        <p:ajax event="change" update=":tabView:formAll:selectedApplicants,@this" listener="#{applicantHarmonizationController.onSelectApplicant(pa)}"/>
                     </p:selectBooleanCheckbox>	
                 </p:column>			
-                <p:column>														
-                    #{pa.object.name}					
+                <p:column headerText="Nome" sortBy="#{pa.name}" filterBy="#{pa.name}">														
+                    #{pa.name}					
                 </p:column>
-                <p:column>														
-                    #{pa.object.country == null ? '' : pa.object.country.name}					
+                <p:column headerText="Pais" sortBy="#{pa.country.name}">														
+                    #{pa.country == null ? '' : pa.country.name}					
+                </p:column >
+                <p:column headerText="Docs" sortBy="#{pa.documentCount}">														
+                    #{pa.documentCount}					
                 </p:column>
-                <p:column>														
-                    #{pa.object.documentCount}					
-                </p:column>
-                <p:column>
+                <p:column headerText="Ações" >
                     <center>
                         <h:form style="margin-bottom:0px">
                             <h:commandLink value="Editar"

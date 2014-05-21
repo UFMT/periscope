@@ -88,10 +88,13 @@ public class PriorityDateRepository {
         List<Pair> pairs = new ArrayList<Pair>();
         for (Object object : outputResult) {
             DBObject aux = (DBObject) object;
-            String year = aux.get("_id").toString();
-            Integer count = (Integer) aux.get("prioritiesPerYear");
-            
-            pairs.add(new Pair(year, count));
+            if (!aux.get("_id").toString().equals("-1")) {
+                
+                String year = aux.get("_id").toString();
+                Integer count = (Integer) aux.get("prioritiesPerYear");
+
+                pairs.add(new Pair(year, count));
+            }
         }
         
         return pairs;

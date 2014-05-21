@@ -68,7 +68,7 @@ public class ApplicationDateRepository {
 
         DBObject sort = new BasicDBObject("$sort", new BasicDBObject("_id", 1));
         parametros.add(sort);
-        
+
         DBObject[] parameters = new DBObject[parametros.size()];
         parameters = parametros.toArray(parameters);
 
@@ -81,10 +81,13 @@ public class ApplicationDateRepository {
         List<Pair> pairs = new ArrayList<Pair>();
         for (Object object : outputResult) {
             DBObject aux = (DBObject) object;
-            String year = aux.get("_id").toString();
-            Integer count = (Integer) aux.get("applicationPerYear");
+            if (!aux.get("_id").toString().equals("-1")) {
 
-            pairs.add(new Pair(year, count));
+                String year = aux.get("_id").toString();
+                Integer count = (Integer) aux.get("applicationPerYear");
+
+                pairs.add(new Pair(year, count));
+            }
         }
         return pairs;
     }

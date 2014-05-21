@@ -18,6 +18,8 @@ public class Applicant implements Serializable {
     private Boolean harmonized = false;
     @Transient
     private Integer documentCount = 0;
+    @Transient
+    private Boolean selected = false;
 
     public Applicant() {
         country = new Country();
@@ -75,6 +77,14 @@ public class Applicant implements Serializable {
         this.documentCount = documentCount;
     }
 
+    public Boolean getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Boolean selected) {
+        this.selected = selected;
+    }
+
     @Override
     public String toString() {
         return name;
@@ -82,14 +92,19 @@ public class Applicant implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if(o instanceof Applicant){
+        if (o instanceof Applicant) {
             Applicant applicant = (Applicant) o;
-            if(applicant.name.equals(this.name) && applicant.country.getAcronym().equals(this.country.getAcronym())){
+            if (applicant.name.equals(this.name)) {
+                if (applicant.country != null) {
+                    if (applicant.country.getAcronym().equals(this.country.getAcronym())) {
+                        return true;
+                    }
+                }else if(this.country == null) {
+                    return true;
+                }
                 return true;
             }
         }
         return false;
     }
-    
-    
 }
