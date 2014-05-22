@@ -27,6 +27,7 @@ public class MainIPCController extends GenericController {
     private boolean subKlass;
     private boolean group;
     private boolean subGroup;
+    private boolean description;
 
     @PostConstruct
     @Override
@@ -75,9 +76,42 @@ public class MainIPCController extends GenericController {
 
         setPairs(new ArrayList<Pair>());
 
+        this.description = false;
+        String description;
         for (Object key : series.getData().keySet()) {
             Number value = series.getData().get(key);
-            getPairs().add(new Pair(key, value));
+            String ipc = (String) key;
+            description = null;
+            if (ipc != null && ipc.length() == 1) {
+                this.description = true;
+                switch (ipc.charAt(0)) {
+                    case 'A':
+                        description = "Necessidades Humanas";
+                        break;
+                    case 'B':
+                        description = "Operações de Processamento; Transporte";
+                        break;
+                    case 'C':
+                        description = "Química e Metalurgia";
+                        break;
+                    case 'D':
+                        description = "Têxteis e Papel";
+                        break;
+                    case 'F':
+                        description = "Engenharia Mecânica; Iluminação; Aquecimento; Arma";
+                        break;
+                    case 'E':
+                        description = "Construções Fixas";
+                        break;
+                    case 'G':
+                        description = "Física";
+                        break;
+                    case 'H':
+                        description = "Eletricidade";
+                        break;
+                }
+            }
+            getPairs().add(new Pair(key, value, description));
         }
 
         Collections.reverse(getPairs());
@@ -114,4 +148,14 @@ public class MainIPCController extends GenericController {
     public void setSubGroup(boolean subGroup) {
         this.subGroup = subGroup;
     }
+
+    public boolean isDescription() {
+        return description;
+    }
+
+    public void setDescription(boolean description) {
+        this.description = description;
+    }
+    
+    
 }

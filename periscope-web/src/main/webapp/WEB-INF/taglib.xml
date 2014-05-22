@@ -1,7 +1,7 @@
 
 
 <facelet-taglib>
-    <namespace>http://www.example.com/jsf</namespace>
+    <namespace>http://www.periscope.com/jsf</namespace>
     <tag>
         <tag-name>filtro</tag-name>
         <source>../components/filtro.xhtml</source>

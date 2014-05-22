@@ -5,7 +5,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:i="http://www.example.com/jsf">
+      xmlns:i="http://www.periscope.com/jsf">
 
 
     <ui:composition template="/template/template.xhtml">
@@ -19,9 +19,9 @@
             <h:form id="chart" styleClass="container">
 
                 <center><h4>Número de classificações</h4></center>
-                
+
                 <i:filtro controller="#{mainIPCController}"/>
-                
+
                 <h:panelGrid columns="4">
 
                     <p:selectBooleanCheckbox id="klass" itemLabel="#{msgs['class']}"
@@ -54,43 +54,47 @@
                     </p:selectBooleanCheckbox>
 
                 </h:panelGrid>
-             
+
 
                 <h:panelGrid id="tudo" columns="2" styleClass="container">
 
-                        
-                        
-                            <p:barChart id="horizontal" value="#{mainIPCController.model}" rendered="#{mainIPCController.model.series.get(0).getData().size()!=0}"
+
+
+                    <p:barChart id="horizontal" value="#{mainIPCController.model}" rendered="#{mainIPCController.model.series.get(0).getData().size()!=0}"
                                 orientation="horizontal" legendPosition="e" datatipFormat="%s"
                                 title="Principais classificações" style="width:600px ; height:300px" />
-                        
-                        <h:column>
-                            <p:graphicImage />
-                            <p:graphicImage />
-                        </h:column>
 
-                        <h:column>
+                    <h:column>
+                        <p:graphicImage />
+                        <p:graphicImage />
+                    </h:column>
 
-                            <p:dataTable id="datatable"
-                                         emptyMessage="Nenhuma classificacao cadastrada." var="ipc"
-                                         value="#{mainIPCController.pairs}" >
+                    <h:column>
+
+                        <p:dataTable id="datatable"
+                                     emptyMessage="Nenhuma classificacao cadastrada." var="ipc"
+                                     value="#{mainIPCController.pairs}" >
 
                                                 <!-- 					<p:column headerText="#{msgs['position']}" > -->
-                                <!-- 						<h:outputText value="ipc." /> -->
-                                <!-- 					</p:column> -->
+                            <!-- 						<h:outputText value="ipc." /> -->
+                            <!-- 					</p:column> -->
 
-                                <p:column headerText="#{msgs['classification']}">
-                                    <h:outputText value="#{ipc.key}" />
-                                </p:column>
+                            <p:column headerText="#{msgs['classification']}">
+                                <h:outputText value="#{ipc.key}" />
+                            </p:column>
 
-                                <p:column headerText="#{msgs['documents.number']}">
-                                    <h:outputText value="#{ipc.value}" />
-                                </p:column>
+                            <p:column headerText="#{msgs['description']}" rendered="#{mainIPCController.description}">
+                                <h:outputText value="#{ipc.description}" />
+                            </p:column>
 
-                            </p:dataTable>
-                        </h:column>
+                            <p:column headerText="#{msgs['documents.number']}">
+                                <h:outputText value="#{ipc.value}" />
+                            </p:column>
 
-                    </h:panelGrid>
+                        </p:dataTable>
+                    </h:column>
+
+                </h:panelGrid>
             </h:form>
 
         </ui:define>
