@@ -14,6 +14,10 @@ public class Applicant implements Serializable, Comparable<Applicant> {
     @Embedded
     private Country country;
     @Embedded
+    private Region region;
+    @Embedded
+    private State state;
+    @Embedded
     private ApplicantType type;
     private Boolean harmonized = false;
     @Transient
@@ -45,6 +49,22 @@ public class Applicant implements Serializable, Comparable<Applicant> {
         this.acronym = acronym;
     }
 
+    public Region getRegion() {
+        return region;
+    }
+
+    public void setRegion(Region region) {
+        this.region = region;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+    
     public Country getCountry() {
         return country;
     }

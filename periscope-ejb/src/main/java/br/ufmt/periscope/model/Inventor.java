@@ -9,6 +9,10 @@ public class Inventor implements Serializable {
     private String name;
     @Embedded
     private Country country;
+    @Embedded
+    private Region region;
+    @Embedded
+    private State state;
     private Boolean harmonized = false;
     
     private Integer documentCount = 0;
@@ -20,8 +24,22 @@ public class Inventor implements Serializable {
     public Inventor(String name) {
         this.name = name;
     }
-    
-    
+
+    public Region getRegion() {
+        return region;
+    }
+
+    public void setRegion(Region region) {
+        this.region = region;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
 
     public String getName() {
         return name;
