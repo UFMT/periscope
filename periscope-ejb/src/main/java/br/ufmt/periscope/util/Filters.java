@@ -1,6 +1,5 @@
 package br.ufmt.periscope.util;
 
-import br.ufmt.periscope.model.Applicant;
 import java.util.Date;
 
 public class Filters {

@@ -44,11 +44,8 @@ public class ApplicationDateRepository {
         }
 
         DBObject matchDate = new BasicDBObject();
-        if (filtro.getSelecionaData() == 0) {
-            matchDate.put("$match", new BasicDBObject("publicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim())));
-        } else {
-            matchDate.put("$match", new BasicDBObject("applicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim())));
-        }
+        matchDate.put("$match", new BasicDBObject("applicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim())));
+
         parametros.add(matchDate);
 
         DBObject matchBlacklist = new BasicDBObject();
