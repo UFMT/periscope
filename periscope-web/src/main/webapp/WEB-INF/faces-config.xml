@@ -77,6 +77,10 @@
             <from-outcome>priorityDate</from-outcome>
             <to-view-id>/pages/project/report/allReports/priorityDate.xhtml</to-view-id>
         </navigation-case>
+         <navigation-case>
+            <from-outcome>natureApplicant</from-outcome>
+            <to-view-id>/pages/project/report/allReports/natureApplicant.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>*</from-view-id>

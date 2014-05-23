@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+
+    <ui:composition template="/template/template.xhtml">
+
+        <ui:define name="growl"></ui:define>
+
+        <ui:define name="content">
+
+            <h1>#{msgs['natureDepositor']}</h1>
+
+            <h:form styleClass="container">
+
+                <br />
+
+
+                <h:panelGrid columns="1" id="tudo" styleClass="container" >
+                    
+                    <p:barChart id="horizontal" value="#{natureApplicantController.model}" rendered="#{natureApplicantController.model.series.get(0).getData().size()!=0}"
+                            orientation="horizontal" legendPosition="se" datatipFormat="%s"
+                            title="#{msgs.natureDepositor}" />
+
+                <p:dataTable id="inventors"
+                             emptyMessage="Nenhum inventor cadastrado." var="pair"
+                             value="#{natureApplicantController.pairs}">
+
+                    <p:column headerText="#{msgs.name}">
+                        <h:outputText value="#{pair.key}" />
+                    </p:column>
+
+                    <p:column headerText="#{msgs['documents.number']}">
+                        <h:outputText value="#{pair.value}" />
+                    </p:column>
+
+                </p:dataTable>
+                
+                </h:panelGrid>
+
+
+
+            </h:form>
+
+
+
+        </ui:define>
+
+    </ui:composition>
+</html>
