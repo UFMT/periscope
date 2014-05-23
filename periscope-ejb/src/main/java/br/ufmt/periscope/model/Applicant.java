@@ -6,7 +6,7 @@ import com.github.jmkgreen.morphia.annotations.Embedded;
 import com.github.jmkgreen.morphia.annotations.Transient;
 
 @Embedded
-public class Applicant implements Serializable {
+public class Applicant implements Serializable, Comparable<Applicant> {
 
     private static final long serialVersionUID = 8189474165213004815L;
     private String name;
@@ -99,12 +99,29 @@ public class Applicant implements Serializable {
                     if (applicant.country.getAcronym().equals(this.country.getAcronym())) {
                         return true;
                     }
-                }else if(this.country == null) {
+                } else if (this.country == null) {
                     return true;
                 }
                 return true;
             }
         }
         return false;
+    }
+
+    @Override
+    public int compareTo(Applicant o) {
+        int ret;
+        ret = this.name.compareTo(o.name);
+        if (ret == 0) {
+            if (this.country != null) {
+                ret = this.country.compareTo(o.country);
+                if (ret == 0) {
+                    if (this.acronym != null) {
+                        return this.acronym.compareTo(o.acronym);
+                    }
+                }
+            }
+        }
+        return ret;
     }
 }

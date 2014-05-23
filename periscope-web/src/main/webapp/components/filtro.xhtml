@@ -7,7 +7,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
     <ui:composition>
-        
+
         <c:if test='#{empty rendSpinner}' ><c:set var="rendSpinner" value="true"/> </c:if>
 
         <center>    
@@ -28,13 +28,15 @@
 
         <h:outputScript library="js" name="locales.js"></h:outputScript>
 
-        <h:panelGrid columns="7" cellpadding="5">  
+        <h:panelGrid columns="2" cellpadding="5">  
             <h:outputText value="#{msgs['period.interest']}:"/> 
             <p:selectOneMenu value="#{controller.filtro.selecionaData}">
                 <f:selectItem itemLabel="#{msgs['publication.date']}" itemValue="0" />  
                 <f:selectItem itemLabel="#{msgs['application.date']}" itemValue="1" />  
 
             </p:selectOneMenu>
+
+
             <h:outputText value="#{msgs['from']}:"/>
             <p:calendar  value="#{controller.filtro.inicio}" maxlength="10" mindate="#{controller.minDate}" maxdate="#{controller.maxDate}" locale="#{msgs['calendar']}" showButtonPanel="true" navigator="true" pattern="#{msgs['date.pattern']}">
             </p:calendar>
@@ -44,6 +46,7 @@
             </p:calendar>
 
             <p:commandButton action="#{controller.refreshChart()}" update="tudo" value="#{msgs['update']}"></p:commandButton>
+            <br/>
         </h:panelGrid>
     </ui:composition>
 </html>

@@ -54,6 +54,10 @@
             <to-view-id>/pages/project/report/allReports/mainInventor.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
+            <from-outcome>mainTechnologicalProfile</from-outcome>
+            <to-view-id>/pages/project/report/allReports/mainTechnologicalProfile.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
             <from-outcome>mainIPCReport</from-outcome>
             <to-view-id>/pages/project/report/allReports/mainIPC.xhtml</to-view-id>
         </navigation-case>

@@ -1,18 +1,17 @@
 package br.ufmt.periscope.util;
 
+import br.ufmt.periscope.model.Applicant;
 import java.util.Date;
 
 public class Filters {
-    
+
     private boolean complete;
     private int selecionaData;
     private Date inicio, fim;
+    private String applicantName;
 
-    
     public Filters() {
     }
-    
-    
 
     public boolean isComplete() {
         return complete;
@@ -45,6 +44,13 @@ public class Filters {
     public void setFim(Date fim) {
         this.fim = fim;
     }
-    
-    
+
+    public String getApplicantName() {
+        return applicantName;
+    }
+
+    public void setApplicantName(String applicantName) {
+        this.applicantName = applicantName;
+    }
+
 }

@@ -37,10 +37,13 @@ public class MainIPCController extends GenericController {
         group = false;
         subGroup = false;
 
+        setLimit(8);
         super.init();
+        
     }
 
     public void update() {
+        System.out.println(getFiltro().getApplicantName());
         if (!klass) {
             // classe nao esta selecionada
             // buscar secao

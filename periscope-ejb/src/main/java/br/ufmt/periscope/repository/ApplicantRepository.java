@@ -45,6 +45,7 @@ import com.mongodb.DBObject;
 import com.mongodb.MapReduceCommand;
 import com.mongodb.MapReduceCommand.OutputType;
 import java.io.StringReader;
+import java.util.Collections;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
@@ -101,7 +102,7 @@ public class ApplicantRepository {
         BasicDBObject keys = new BasicDBObject();
         keys.put("applicants", 1);
 
-        DBCursor cursor = ds.getCollection(Patent.class).find(where, keys);
+        DBCursor cursor = ds.getCollection(Patent.class).find(where, keys).sort(new BasicDBObject("applicants.name",1));
         Mapper mapper = ds.getMapper();
         EntityCache ec = mapper.createEntityCache();
         while (cursor.hasNext()) {
@@ -116,7 +117,9 @@ public class ApplicantRepository {
             }
 
         }
-        return new ArrayList<Applicant>(map.values());
+        List<Applicant> ret = new ArrayList<Applicant>(map.values());
+        Collections.sort(ret);
+        return ret;
     }
 
     public void updateMainApplicants(Project currentProject, Filters filtro) {
