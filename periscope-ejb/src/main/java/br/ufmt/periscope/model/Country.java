@@ -11,7 +11,7 @@ public class Country implements Comparable<Country> {
 
     private String acronym;
     private String name;
-    private List<Region> region = new ArrayList<Region>();
+    private List<State> states = new ArrayList<State>();
 
     public Country() {
     }
@@ -32,14 +32,13 @@ public class Country implements Comparable<Country> {
         this.name = name;
     }
 
-    public List<Region> getRegion() {
-        return region;
+    public List<State> getStates() {
+        return states;
     }
 
-    public void setRegion(List<Region> region) {
-        this.region = region;
+    public void setStates(List<State> states) {
+        this.states = states;
     }
-    
     
 
     @Override

@@ -14,8 +14,15 @@
 			<p:inputText value="#{applicantHarmonizationController.rule.name}"/>
 						
 			<h:outputLabel value="País " style="font-weight:bold"/>				
-			<p:selectOneMenu value="#{applicantHarmonizationController.rule.country.acronym}" >
-				<f:selectItems value="#{applicantHarmonizationController.countries}" var="c" itemValue="#{c.acronym}" itemLabel="#{c.name}"/>					
+                        <p:selectOneMenu value="#{applicantHarmonizationController.rule.country.acronym}" valueChangeListener="#{applicantHarmonizationController.selectListener}">
+                            <f:selectItems value="#{applicantHarmonizationController.countries}" var="c" itemValue="#{c.acronym}" itemLabel="#{c.name}"/>
+                            <p:ajax event="change" update="@this,state"/>
+			</p:selectOneMenu>
+                        
+                        <h:outputLabel value="Estado" style="font-weight: bold"/>
+                        <p:selectOneMenu value="#{applicantHarmonizationController.rule.state.acronym}"  id="state">
+                            <f:selectItem itemLabel="Nenhuma" itemValue=""/>
+                            <f:selectItems  value="#{applicantHarmonizationController.states}" var="c" itemValue="#{c.acronym}" itemLabel="#{c.name}"/>
 			</p:selectOneMenu>
 			
 			<h:outputLabel value="Natureza " style="font-weight:bold"/>

@@ -7,6 +7,7 @@ import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.model.Rule;
 import br.ufmt.periscope.model.RuleType;
+import br.ufmt.periscope.model.State;
 import br.ufmt.periscope.qualifier.CurrentProject;
 import br.ufmt.periscope.report.Pair;
 import br.ufmt.periscope.repository.ApplicantRepository;
@@ -19,6 +20,7 @@ import br.ufmt.periscope.util.SelectObject;
 import com.github.jmkgreen.morphia.Datastore;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -29,6 +31,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
@@ -55,6 +58,7 @@ public class InventorHarmonizationController implements Serializable{
 	private @Inject RuleRepository ruleRepository;
 	private @Inject CountryRepository countryRepository;
 	private List<Country> countries = new ArrayList<Country>();
+        private List<State> states;
 	private Rule rule = new Rule();
         
 	
@@ -64,6 +68,12 @@ public class InventorHarmonizationController implements Serializable{
 		countries = countryRepository.getAll();		
 		inventors = new ListDataModel<SelectObject<Inventor>>(SelectObject.convertToSelectObjects(pas));		
 	}
+        public void selectListener(ValueChangeEvent event) {
+            String acronym = (String) event.getNewValue();
+            Country country = countryRepository.getCountryByAcronym(acronym);
+            states = country.getStates();
+            Collections.sort(states);
+        }
 
 	public void onSelectInventor(){
 		Iterator<SelectObject<Inventor>> it = inventors.iterator();
@@ -100,6 +110,12 @@ public class InventorHarmonizationController implements Serializable{
 			rule.setNature(null);
 		}								
 		rule.setCountry(countryRepository.getCountryByAcronym(rule.getCountry().getAcronym()));
+                for (State state : rule.getCountry().getStates()) {
+                    if(state.getAcronym().equals(rule.getState().getAcronym())){
+                        System.out.println("setou");
+                        rule.setState(state);
+                    }
+                }
 		rule.setSubstitutions(new HashSet<String>(substitutions));				
 		ruleRepository.save(rule);		
 		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
@@ -164,7 +180,16 @@ public class InventorHarmonizationController implements Serializable{
     public void setInventorSugestions(List<SelectObject<Inventor>> inventorSugestions) {
         this.inventorSugestions = inventorSugestions;
     }
+
+    public List<State> getStates() {
+        return states;
+    }
+
+    public void setStates(List<State> states) {
+        this.states = states;
+    }
         
+    
         
         
 	

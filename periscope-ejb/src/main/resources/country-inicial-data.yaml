@@ -60,76 +60,88 @@
   name: Bolivia
 - acronym: BR
   name: Brasil
-  region:
-      - name: Sudeste
+  states:
+      - name: São Paulo
+        acronym: SP
+        region: SE
+      - name: Rio de Janeiro
+        acronym: RJ
+        region: SE
+      - name: Espiríto Santo
+        acronym: ES
+        region: SE
+      - name: Minas Gerais
+        acronym: MG
+        region: SE
+      - name: Paraná
+        acronym: PR
+        region: S
+      - name: Santa Catarina
+        acronym: SC
+        region: S
+      - name: Rio Grande do Sul
+        acronym: RS
+        region: S
+      - name: Goiás
+        acronym: GO
+        region: CO
+      - name: Distrito Federal
+        acronym: DF
+        region: CO
+      - name: Mato Grosso
+        acronym: MT
+        region: CO
+      - name: Mato Grosso do Sul
+        acronym: MS
+        region: CO
+      - name: Acre
+        acronym: AC
+        region: N
+      - name: Rondônia
+        acronym: RO
+        region: N
+      - name: Amazonas
+        acronym: AM
+        region: N
+      - name: Roraima
+        acronym: RR
+        region: N
+      - name: Amapá
+        acronym: AP
+        region: N
+      - name: Tocantins
+        acronym: TO
+        region: N
+      - name: Pará
+        acronym: PA
+        region: N
+      - name: Bahia
+        acronym: BA
+        region: NE
+      - name: Sergipe
         acronym: SE
-        state:
-            - name: São Paulo
-              acronym: SP
-            - name: Rio de Janeiro
-              acronym: RJ
-            - name: Espiríto Santo
-              acronym: ES
-            - name: Minas Gerais
-              acronym: MG
-      - name: Sul
-        acronym: S
-        state:
-            - name: Paraná
-              acronym: PR
-            - name: Santa Catarina
-              acronym: SC
-            - name: Rio Grande do Sul
-              acronym: RS
-      - name: Centro-Oeste
-        acronym: MW
-        state:
-            - name: Goiás
-              acronym: GO
-            - name: Distrito Federal
-              acronym: DF
-            - name: Mato Grosso
-              acronym: MT
-            - name: Mato Grosso do Sul
-              acronym: MS
-      - name: Norte
-        acronym: N
-        state:
-            - name: Acre
-              acronym: AC
-            - name: Rondônia
-              acronym: RO
-            - name: Amazonas
-              acronym: AM
-            - name: Roraima
-              acronym: RR
-            - name: Amapá
-              acronym: AP
-            - name: Tocantins
-              acronym: TO
-            - name: Pará
-              acronym: PA
-      - name: Nordeste
-        acronym: NE
-        state:
-            - name: Bahia
-              acronym: BA
-            - name: Sergipe
-              acronym: SE
-            - name: Alagoas
-              acronym: AL
-            - name: Pernambuco
-              acronym: PE
-            - name: Paraíba
-              acronym: PB
-            - name: Rio Grande do Norte
-              acronym: RN
-            - name: Ceará
-              acronym: CE
-            - name: Piauí
-              acronym: PI
-            - name: Maranhão
-              acronym: MA
+        region: NE
+      - name: Alagoas
+        acronym: AL
+        region: NE
+      - name: Pernambuco
+        acronym: PE
+        region: NE
+      - name: Paraíba
+        acronym: PB
+        region: NE
+      - name: Rio Grande do Norte
+        acronym: RN
+        region: NE
+      - name: Ceará
+        acronym: CE
+        region: NE
+      - name: Piauí
+        acronym: PI
+        region: NE
+      - name: Maranhão
+        acronym: MA
+        region: NE
 - acronym: BS
   name: Bahama
 - acronym: BT

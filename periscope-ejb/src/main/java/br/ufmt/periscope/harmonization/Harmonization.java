@@ -45,10 +45,10 @@ public class Harmonization {
 		ObjectId projectId = rule.getProject().getId();
 		System.out.println(projectId);
 		Mapper mapper = ds.getMapper();	
+                rule.getCountry().setStates(null);
 		DBObject dbObjectCountry = mapper.toDBObject(rule.getCountry());
+                DBObject dbObjectState = mapper.toDBObject(rule.getState());
 		DBObject dbObjectNature = mapper.toDBObject(rule.getNature());
-		System.out.println(dbObjectCountry);
-		System.out.println(dbObjectNature);
 		DBObject query = BasicDBObjectBuilder
 									.start("project.$id",projectId)
 									.add("applicants.name",BasicDBObjectBuilder
@@ -60,6 +60,7 @@ public class Harmonization {
 										BasicDBObjectBuilder
 										.start("applicants.$.name",rule.getName())
 										.add("applicants.$.country",dbObjectCountry)
+                                                                                .add("applicants.$.state", dbObjectState)
 										.add("applicants.$.nature",dbObjectNature)
 										.get())
 									.get();
@@ -75,11 +76,11 @@ public class Harmonization {
 	private void applyInventorRule(Rule rule){
 		ObjectId projectId = rule.getProject().getId();
 		System.out.println(projectId);
-		Mapper mapper = ds.getMapper();	
+		Mapper mapper = ds.getMapper();
+                rule.getCountry().setStates(null);
 		DBObject dbObjectCountry = mapper.toDBObject(rule.getCountry());
+                DBObject dbObjectState = mapper.toDBObject(rule.getState());
 		DBObject dbObjectNature = mapper.toDBObject(rule.getNature());
-		System.out.println(dbObjectCountry);
-		System.out.println(dbObjectNature);
 		DBObject query = BasicDBObjectBuilder
 									.start("project.$id",projectId)
 									.add("inventors.name",BasicDBObjectBuilder
@@ -91,6 +92,7 @@ public class Harmonization {
 										BasicDBObjectBuilder
 										.start("inventors.$.name",rule.getName())
 										.add("inventors.$.country",dbObjectCountry)
+                                                                                .add("inventors.$.state", dbObjectState)
 										.add("inventors.$.nature",dbObjectNature)
 										.get())
 									.get();

@@ -14,14 +14,15 @@
                         <p:inputText value="#{inventorHarmonizationController.rule.name}"/>
 						
 			<h:outputLabel value="País " style="font-weight:bold"/>				
-			<p:selectOneMenu value="#{inventorHarmonizationController.rule.country.acronym}" >
+                        <p:selectOneMenu value="#{inventorHarmonizationController.rule.country.acronym}" valueChangeListener="#{inventorHarmonizationController.selectListener}">
 				<f:selectItems value="#{inventorHarmonizationController.countries}" var="c" itemValue="#{c.acronym}" itemLabel="#{c.name}"/>					
+                                <p:ajax event="change" update="@this,state"/>
+                        </p:selectOneMenu>
+                        <h:outputLabel value="Estado" style="font-weight: bold"/>
+                        <p:selectOneMenu value="#{inventorHarmonizationController.rule.state.acronym}"  id="state">
+                            <f:selectItem itemLabel="Nenhuma" itemValue=""/>
+                            <f:selectItems  value="#{inventorHarmonizationController.states}" var="s" itemValue="#{s.acronym}" itemLabel="#{s.name}"/>
 			</p:selectOneMenu>
-			
-<!--			<h:outputLabel value="Natureza " style="font-weight:bold"/>
-			<p:selectOneMenu id="cmbNature" value="#{inventorHarmonizationController.rule.nature.name}">
-				<f:selectItem itemLabel="Nenhuma" itemValue=""/>
-			</p:selectOneMenu>						-->
                         <br/>
                         <br/>
 		</h:panelGrid>		

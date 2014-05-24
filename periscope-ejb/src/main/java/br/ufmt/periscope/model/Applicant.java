@@ -14,8 +14,6 @@ public class Applicant implements Serializable, Comparable<Applicant> {
     @Embedded
     private Country country;
     @Embedded
-    private Region region;
-    @Embedded
     private State state;
     @Embedded
     private ApplicantType type;
@@ -48,15 +46,7 @@ public class Applicant implements Serializable, Comparable<Applicant> {
     public void setAcronym(String acronym) {
         this.acronym = acronym;
     }
-
-    public Region getRegion() {
-        return region;
-    }
-
-    public void setRegion(Region region) {
-        this.region = region;
-    }
-
+    
     public State getState() {
         return state;
     }

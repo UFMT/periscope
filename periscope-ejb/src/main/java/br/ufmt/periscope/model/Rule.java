@@ -1,17 +1,16 @@
 package br.ufmt.periscope.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.bson.types.ObjectId;
-
 import com.github.jmkgreen.morphia.annotations.Embedded;
 import com.github.jmkgreen.morphia.annotations.Entity;
 import com.github.jmkgreen.morphia.annotations.Id;
 import com.github.jmkgreen.morphia.annotations.Reference;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import org.bson.types.ObjectId;
 
 @Entity
-public class Rule {
+public class Rule implements Serializable{
 
 	@Id
 	private ObjectId id;
@@ -23,6 +22,9 @@ public class Rule {
 	
 	@Embedded
 	private Country country;
+        
+        @Embedded
+        private State state;
 	
 	@Embedded
 	private ApplicantType nature;
@@ -33,6 +35,7 @@ public class Rule {
 	
 	public Rule(){
 		country = new Country();
+                state = new State();
 		nature = new ApplicantType();
 		substitutions = new HashSet<String>();
 	}
@@ -96,6 +99,14 @@ public class Rule {
 	public Project getProject() {
 		return project;
 	}
+
+        public State getState() {
+            return state;
+        }
+
+        public void setState(State state) {
+            this.state = state;
+        }
 
 	public void setProject(Project project) {
 		this.project = project;

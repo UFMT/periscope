@@ -1,23 +1,6 @@
 package br.ufmt.periscope.controller.harmonization;
 
 import br.ufmt.periscope.lazy.LazyApplicantDataModel;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.logging.Logger;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.context.Flash;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
-import javax.inject.Inject;
-
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.ApplicantType;
 import br.ufmt.periscope.model.Country;
@@ -25,14 +8,31 @@ import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.model.Rule;
 import br.ufmt.periscope.model.RuleType;
+import br.ufmt.periscope.model.State;
 import br.ufmt.periscope.qualifier.CurrentProject;
 import br.ufmt.periscope.repository.ApplicantRepository;
 import br.ufmt.periscope.repository.ApplicantTypeRepository;
 import br.ufmt.periscope.repository.CountryRepository;
 import br.ufmt.periscope.repository.RuleRepository;
 import br.ufmt.periscope.util.SelectObject;
-
 import com.github.jmkgreen.morphia.Datastore;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
+import javax.faces.event.ValueChangeEvent;
+import javax.faces.model.DataModel;
+import javax.faces.model.ListDataModel;
+import javax.inject.Inject;
 
 @ManagedBean
 @ViewScoped
@@ -61,6 +61,7 @@ public class ApplicantHarmonizationController implements Serializable {
     private List<SelectObject<Applicant>> applicantSugestions = null;
     private List<Country> countries = new ArrayList<Country>();
     private List<ApplicantType> applicantTypes = new ArrayList<ApplicantType>();
+    private List<State> states;
     private Rule rule = new Rule();
 
     @PostConstruct
@@ -78,10 +79,17 @@ public class ApplicantHarmonizationController implements Serializable {
 
         if (pa.getSelected()) {
             selectedApplicants.add(pa);
-        }else {
+        } else {
             selectedApplicants.remove(pa);
         }
 
+    }
+
+    public void selectListener(ValueChangeEvent event) {
+        String acronym = (String) event.getNewValue();
+        Country country = countryRepository.getCountryByAcronym(acronym);
+        states = country.getStates();
+        Collections.sort(states);
     }
 
     public void onSelectApplicantSugestion() {
@@ -108,6 +116,12 @@ public class ApplicantHarmonizationController implements Serializable {
             rule.setNature(null);
         }
         rule.setCountry(countryRepository.getCountryByAcronym(rule.getCountry().getAcronym()));
+        for (State state : rule.getCountry().getStates()) {
+            if(state.getAcronym().equals(rule.getState().getAcronym())){
+                rule.setState(state);
+            }
+        }
+        
         rule.setSubstitutions(new HashSet<String>(substitutions));
         ruleRepository.save(rule);
         Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
@@ -128,8 +142,9 @@ public class ApplicantHarmonizationController implements Serializable {
             aplicants.add(new Applicant(sugestion));
         }
         setApplicantSugestions(new ArrayList<SelectObject<Applicant>>(SelectObject.convertToSelectObjects(aplicants)));
+        System.out.println("terminou !");
     }
-    
+
     public void metodo(Applicant pa) {
         if (selectedApplicants.contains(pa)) {
             pa.setSelected(true);
@@ -139,7 +154,7 @@ public class ApplicantHarmonizationController implements Serializable {
     }
 
     public DataModel<Applicant> getApplicants() {
-        
+
         return applicants;
     }
 
@@ -186,4 +201,13 @@ public class ApplicantHarmonizationController implements Serializable {
     public void setApplicantTypes(List<ApplicantType> applicantTypes) {
         this.applicantTypes = applicantTypes;
     }
+
+    public List<State> getStates() {
+        return states;
+    }
+
+    public void setStates(List<State> states) {
+        this.states = states;
+    }
+    
 }
