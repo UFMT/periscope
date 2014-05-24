@@ -1,40 +1,46 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
 
-<ui:composition template="/template/template.xhtml">
+    <ui:composition template="/template/template.xhtml">
 
-	<ui:define name="growl"></ui:define>
+        <ui:define name="growl"></ui:define>
 
-	<ui:define name="content">
+        <ui:define name="content">
 
-		<h1>Data de Prioridade</h1>
-		<h:panelGrid columns="2">
+            <h1>Distribuição por Estado</h1>
+            <h:form styleClass="container">
+                
+                <h:panelGrid columns="1" id="tudo" styleClass="container" >
 
-			<h:column>
-				<p:graphicImage />
-				<p:graphicImage />
-			</h:column>
+                    <p:barChart id="horizontal" value="#{stateDistribuitionController.model}" rendered="#{stateDistribuitionController.model.series.get(0).getData().size()!=0}"
+                                orientation="horizontal" legendPosition="se" datatipFormat="%s"
+                                title="Número Patentes por Estado" />
+                    <p:dataTable id="states"
+                                 emptyMessage="Nenhuma patente brasileira" var="pair"
+                                 value="#{stateDistribuitionController.pairs}">
 
-			<h:column>
+                        <p:column headerText="Estado">
+                            <h:outputText value="#{pair.key}" />
+                        </p:column>
 
-				<p:dataTable emptyMessage="Nenhum depositante cadastrado.">
+                        <p:column headerText="#{msgs['documents.number']}">
+                            <h:outputText value="#{pair.value}" />
+                        </p:column>
 
-					<p:column headerText="#{msgs['year']}" />
+                    </p:dataTable>
 
-					<p:column headerText="#{msgs['documents.number']}" />
 
-				</p:dataTable>
-			</h:column>
 
-		</h:panelGrid>
+                </h:panelGrid>
+            </h:form>
 
-	</ui:define>
+        </ui:define>
 
-</ui:composition>
+    </ui:composition>
 </html>
