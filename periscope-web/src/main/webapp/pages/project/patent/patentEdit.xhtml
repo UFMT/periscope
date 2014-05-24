@@ -113,9 +113,9 @@
                                 <p:outputLabel value="#{msgs['applicants.available']}"/>
                                 <p:dataTable id="addApplicants" var="applicant" style="font-size:10px"
                                              emptyMessage="#{msgs['no.applicant']}"
-                                             value="#{patentController.applicants}" paginator="true"
+                                             value="#{applicantHarmonizationController.applicants}" paginator="true"
                                              paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
-                                             >
+                                             lazy="true">
                                     <p:column headerText="#{msgs['name']}" sortBy="#{applicant.name}">														
                                         #{applicant.name}
                                     </p:column>
