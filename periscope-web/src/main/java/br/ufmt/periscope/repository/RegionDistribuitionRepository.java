@@ -14,18 +14,18 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
-public class StateDistribuitionRepository {
+public class RegionDistribuitionRepository {
     
     private @Inject
     Datastore ds;
     
 
-    public List<Pair> getStateDistribuitions(Project currentProject) {
+    public List<Pair> getRegionDistribuitions(Project currentProject) {
         
 //        db.Patent.aggregate({$unwind:"$applicants"},
 //        {$project:{applicants:1}},
 //        {$match:{"applicants.country.acronym":"BR"}}, {$project:{"applicants.state":1}}
-//        ,{$group:{_id:{_id:"$_id",state:"$applicants.state"}}},{$group:{_id:"$_id.state.acronym",count:{$sum:1}}},{$sort : {count: -1}})
+//        ,{$group:{_id:{_id:"$_id",state:"$applicants.state"}}},{$group:{_id:"$_id.state.region",count:{$sum:1}}},{$sort : {count: -1}})
         
         System.out.println("entrou repositorio");
         ArrayList<DBObject> parametros = new ArrayList<DBObject>();
@@ -52,7 +52,7 @@ public class StateDistribuitionRepository {
         DBObject group = new BasicDBObject("$group", _id);
         parametros.add(group);
         
-        DBObject id2 = new BasicDBObject("_id", "$_id.state.acronym");
+        DBObject id2 = new BasicDBObject("_id", "$_id.state.region");
         id2.put("count", new BasicDBObject("$sum", 1));
         
         DBObject group2 = new BasicDBObject("$group", id2);
