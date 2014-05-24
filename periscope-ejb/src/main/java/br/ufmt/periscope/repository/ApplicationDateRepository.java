@@ -78,13 +78,13 @@ public class ApplicationDateRepository {
         List<Pair> pairs = new ArrayList<Pair>();
         for (Object object : outputResult) {
             DBObject aux = (DBObject) object;
-            if (!aux.get("_id").toString().equals("-1")) {
+//            if (!aux.get("_id").toString().equals("-1")) {
 
-                String year = aux.get("_id").toString();
-                Integer count = (Integer) aux.get("applicationPerYear");
+            String year = aux.get("_id").toString();
+            Integer count = (Integer) aux.get("applicationPerYear");
 
-                pairs.add(new Pair(year, count));
-            }
+            pairs.add(new Pair(year, count));
+//            }
         }
         return pairs;
     }

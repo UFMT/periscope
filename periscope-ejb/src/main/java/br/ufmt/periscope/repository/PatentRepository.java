@@ -127,6 +127,7 @@ public class PatentRepository {
     public Date getMinDate(Project currentProject) {
         DBCursor dbc = ds.getCollection(Patent.class).find(new BasicDBObject("project.$id", currentProject.getId())).sort(new BasicDBObject("applicationDate", 1)).limit(1);
         Date data = (Date) dbc.next().get("applicationDate");
+        System.out.println(data);
         return data;
     }
 

@@ -15,29 +15,37 @@ import java.util.Collections;
 
 @ManagedBean(name = "applicantDateReport")
 @ViewScoped
-public class ApplicantDateController extends GenericController{
+public class ApplicantDateController extends GenericController {
 
     private @Inject
     ApplicationDateReport report;
-    
-    public void refreshChart(){
+
+    public void refreshChart() {
         setModel(new CartesianChartModel());
         ChartSeries series = report.applicationDateSeries(getCurrentProject(), getFiltro());
         getModel().addSeries(series);
 
         setPairs(new ArrayList<Pair>());
 
+        Object keyInvalid = null;
         for (Object key : series.getData().keySet()) {
+
             Number value = series.getData().get(key);
+            if (value.intValue() != -1) {
+                keyInvalid = key;
+            }
             getPairs().add(new Pair(key, value));
+
+        }
+        if (keyInvalid != null) {
+            series.getData().remove(keyInvalid);
         }
         Collections.reverse(getPairs());
-        
-    }
-    
-    public void test(){
-        PDFTextParser pdftp = new PDFTextParser();
-        
+
     }
 
+    public void test() {
+        PDFTextParser pdftp = new PDFTextParser();
+
+    }
 }
