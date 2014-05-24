@@ -1,66 +1,64 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
-<f:view contentType="text/html">
+    <f:view contentType="text/html">
 
-	<div class="well">
-		<h:form>
-	
-			<p:panelMenu style="width:95%">									
-                            <p:submenu label="#{msgs['reports']}" icon="ui-icon-clipboard" rendered="#{not empty currentProject.patents}"> 					
-					
-					<p:submenu label="#{msgs['overview']}" icon="ui-icon-clipboard" > 					
-					
-						<p:menuitem value="#{msgs['main.applicant']}" action="mainApplicantReport"  
-							icon="ui-icon-clock" ajax="false" />
-		
-						<p:menuitem value="#{msgs['main.inventor']}" action="mainInventorReport"
-							icon="ui-icon-refresh" ajax="false" />
-																
-                                                <p:menuitem value="#{msgs['main.classification']}" action="mainIPCReport"
-							icon="ui-icon-refresh" ajax="false" />
-							
-						<p:menuitem value="#{msgs['application.date']}" action="applicationDateReport"
-							icon="ui-icon-refresh" ajax="false" />
-						
-                                                <p:menuitem value="#{msgs['priority.country']}" action="priorityCountry"
-							icon="ui-icon-refresh" ajax="false" />
-                                                
-                                                <p:menuitem value="#{msgs['priority.date']}" action="priorityDate"
-							icon="ui-icon-refresh" ajax="false" />
-                                                
-                                                <p:menuitem value="#{msgs['docsOfNationalPriority']}" action="docsOfNationalPriority"
-							icon="ui-icon-refresh" ajax="false" />
+        <div class="well">
+            <h:form>
 
-                                                
-                                                <p:menuitem value="#{msgs['technologicalProfile']}" action="mainTechnologicalProfile"
+                <p:panelMenu style="width:95%">									
+                    <p:submenu label="#{msgs['reports']}" icon="ui-icon-clipboard" rendered="#{not empty currentProject.patents}"> 					
 
-                                                <p:menuitem value="#{msgs['natureDepositor']}" action="natureApplicant"
+                        <p:submenu label="#{msgs['overview']}" icon="ui-icon-clipboard" > 					
 
-							icon="ui-icon-refresh" ajax="false" />
-							
-					</p:submenu>
-				</p:submenu>				
-			</p:panelMenu>
-			<p:panelMenu style="width:95%">									
-                            <p:submenu label="#{msgs['patents']}" icon="ui-icon-clipboard" > 					
-					
-					<p:menuitem value="#{msgs['list']}" action="listPatent"  
-						icon="ui-icon-clock" ajax="false" rendered="#{not empty currentProject.patents}"/>
-	
-					<p:menuitem value="Importar dados" action="importPatent"
-						icon="ui-icon-refresh" ajax="false" rendered="#{currentProject.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or currentProject.observers.contains(currentUser)}" />
-															
-					<p:menuitem value="Harmonizar dados" action="harmonizationHome"
-						icon="ui-icon-refresh" ajax="false" rendered="#{(currentProject.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or currentProject.observers.contains(currentUser)) and (not empty currentProject.patents)}"/>
-				</p:submenu>				
-			</p:panelMenu>		
-		</h:form>
-	</div>
-</f:view>
+                            <p:menuitem value="#{msgs['main.applicant']}" action="mainApplicantReport"  
+                                        icon="ui-icon-clock" ajax="false" />
+
+                            <p:menuitem value="#{msgs['main.inventor']}" action="mainInventorReport"
+                                        icon="ui-icon-refresh" ajax="false" />
+
+                            <p:menuitem value="#{msgs['main.classification']}" action="mainIPCReport"
+                                        icon="ui-icon-refresh" ajax="false" />
+
+                            <p:menuitem value="#{msgs['application.date']}" action="applicationDateReport"
+                                        icon="ui-icon-refresh" ajax="false" />
+
+                            <p:menuitem value="#{msgs['priority.country']}" action="priorityCountry"
+                                        icon="ui-icon-refresh" ajax="false" />
+
+                            <p:menuitem value="#{msgs['priority.date']}" action="priorityDate"
+                                        icon="ui-icon-refresh" ajax="false" />
+
+                            <p:menuitem value="#{msgs['docsOfNationalPriority']}" action="docsOfNationalPriority"
+                                        icon="ui-icon-refresh" ajax="false" />
+
+
+                            <p:menuitem value="#{msgs['technologicalProfile']}" action="mainTechnologicalProfile" icon="ui-icon-refresh" ajax="false" />
+
+                            <p:menuitem value="#{msgs['natureDepositor']}" action="natureApplicant" icon="ui-icon-refresh" ajax="false" />
+
+                        </p:submenu>
+                    </p:submenu>				
+                </p:panelMenu>
+                <p:panelMenu style="width:95%">									
+                    <p:submenu label="#{msgs['patents']}" icon="ui-icon-clipboard" > 					
+
+                        <p:menuitem value="#{msgs['list']}" action="listPatent"  
+                                    icon="ui-icon-clock" ajax="false" rendered="#{not empty currentProject.patents}"/>
+
+                        <p:menuitem value="Importar dados" action="importPatent"
+                                    icon="ui-icon-refresh" ajax="false" rendered="#{currentProject.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or currentProject.observers.contains(currentUser)}" />
+
+                        <p:menuitem value="Harmonizar dados" action="harmonizationHome"
+                                    icon="ui-icon-refresh" ajax="false" rendered="#{(currentProject.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or currentProject.observers.contains(currentUser)) and (not empty currentProject.patents)}"/>
+                    </p:submenu>				
+                </p:panelMenu>		
+            </h:form>
+        </div>
+    </f:view>
 
 </html>
