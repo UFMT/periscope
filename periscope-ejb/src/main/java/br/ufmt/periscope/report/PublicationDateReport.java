@@ -8,19 +8,19 @@ import javax.inject.Named;
 import org.primefaces.model.chart.ChartSeries;
 
 import br.ufmt.periscope.model.Project;
-import br.ufmt.periscope.repository.ApplicationDateRepository;
+import br.ufmt.periscope.repository.PublicationDateRepository;
 import br.ufmt.periscope.util.Filters;
 import java.util.Collections;
 
 @Named
 public class PublicationDateReport {
 
-	private @Inject	ApplicationDateRepository repo;
+	private @Inject	PublicationDateRepository repo;
 
-	public ChartSeries applicationDateSeries(Project currentProject, Filters filtro) {
+	public ChartSeries publicationDateSeries(Project currentProject, Filters filtro) {
 		ChartSeries series = new ChartSeries("Depositos por ano");
                 
-		List<Pair> i = repo.getApplicationsByDate(currentProject, filtro);
+		List<Pair> i = repo.getPublicationsByDate(currentProject, filtro);
                 
                 Collections.reverse(i);
 		

@@ -58,7 +58,7 @@ public class PublicationDateRepository {
 
         DBObject group = new BasicDBObject();
         DBObject fields = new BasicDBObject("_id", "$year1");
-        fields.put("publilicationPerYear", new BasicDBObject("$sum", 1));
+        fields.put("publicationPerYear", new BasicDBObject("$sum", 1));
         group.put("$group", fields);
         parametros.add(group);
 

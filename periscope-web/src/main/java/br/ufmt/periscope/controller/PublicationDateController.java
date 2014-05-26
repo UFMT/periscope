@@ -8,8 +8,8 @@ import javax.inject.Inject;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 
-import br.ufmt.periscope.report.ApplicationDateReport;
 import br.ufmt.periscope.report.Pair;
+import br.ufmt.periscope.report.PublicationDateReport;
 import br.ufmt.periscope.util.PDFTextParser;
 import java.util.Collections;
 
@@ -18,11 +18,11 @@ import java.util.Collections;
 public class PublicationDateController extends GenericController {
 
     private @Inject
-    ApplicationDateReport report;
+    PublicationDateReport report;
 
     public void refreshChart() {
         setModel(new CartesianChartModel());
-        ChartSeries series = report.applicationDateSeries(getCurrentProject(), getFiltro());
+        ChartSeries series = report.publicationDateSeries(getCurrentProject(), getFiltro());
         getModel().addSeries(series);
 
         setPairs(new ArrayList<Pair>());
