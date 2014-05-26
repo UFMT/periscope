@@ -204,7 +204,7 @@ public class ApplicantRepository {
                 //       .parse(queryBuilder.toString());
                 //queryPa.setBoost(10f);
 
-                Query query = new FuzzyQuery(new Term("applicant", name));
+                Query query = new FuzzyQuery(new Term("applicant", name),0.8f);
 
                 bq.add(query, Occur.MUST);
                 bq.add(queryProject, Occur.MUST);
