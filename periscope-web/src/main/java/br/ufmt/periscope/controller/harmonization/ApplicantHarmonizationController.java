@@ -63,6 +63,7 @@ public class ApplicantHarmonizationController implements Serializable {
     private List<ApplicantType> applicantTypes = new ArrayList<ApplicantType>();
     private List<State> states;
     private Rule rule = new Rule();
+    private String acronymDefault = "BR";
 
     @PostConstruct
     public void init() {
@@ -72,6 +73,11 @@ public class ApplicantHarmonizationController implements Serializable {
         applicants.getApplicantRepository().setCurrentProject(currentProject);
         selectedApplicants.clear();
         applicants.setSelectedApplicants(selectedApplicants);
+        
+        rule.setCountry(countryRepository.getCountryByAcronym(acronymDefault));
+        Country country = countryRepository.getCountryByAcronym(acronymDefault);
+        states = country.getStates();
+        Collections.sort(states);
 //		applicants = new ListDataModel<SelectObject<Applicant>>(SelectObject.convertToSelectObjects(pas));		
     }
 
@@ -86,9 +92,11 @@ public class ApplicantHarmonizationController implements Serializable {
     }
 
     public void selectListener(ValueChangeEvent event) {
+        
         String acronym = (String) event.getNewValue();
         Country country = countryRepository.getCountryByAcronym(acronym);
         states = country.getStates();
+        System.out.println("estados:"+states);
         Collections.sort(states);
     }
 

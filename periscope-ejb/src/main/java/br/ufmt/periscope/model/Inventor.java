@@ -4,15 +4,16 @@ import com.github.jmkgreen.morphia.annotations.Embedded;
 import java.io.Serializable;
 
 @Embedded
-public class Inventor implements Serializable {
+public class Inventor implements Serializable, Comparable<Inventor> {
 
     private String name;
+    private String acronym;
     @Embedded
     private Country country;
     @Embedded
     private State state;
     private Boolean harmonized = false;
-    
+
     private Integer documentCount = 0;
 
     public Inventor() {
@@ -32,6 +33,9 @@ public class Inventor implements Serializable {
     }
 
     public String getName() {
+        if(name != null){
+            name = name.toUpperCase();
+        }
         return name;
     }
 
@@ -62,7 +66,15 @@ public class Inventor implements Serializable {
     public void setDocumentCount(Integer documentCount) {
         this.documentCount = documentCount;
     }
-    
+
+    public String getAcronym() {
+        return acronym;
+    }
+
+    public void setAcronym(String acronym) {
+        this.acronym = acronym;
+    }
+
     @Override
     public String toString() {
         return name;
@@ -70,14 +82,24 @@ public class Inventor implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if(o instanceof Inventor){
+        if (o instanceof Inventor) {
             Inventor inventor = (Inventor) o;
-            if(inventor.name.equals(this.name) && inventor.country.getAcronym().equals(this.country.getAcronym())){
+            if (inventor.name.equals(this.name) && inventor.country.getAcronym().equals(this.country.getAcronym())) {
                 return true;
             }
         }
         return false;
     }
-    
-    
+
+    @Override
+    public int compareTo(Inventor o) {
+        int ret = this.name.compareTo(o.name);
+        if (ret == 0) {
+            if (this.country != null) {
+                ret = this.country.getAcronym().compareTo(o.getCountry().getAcronym());
+            }
+        }
+        return ret;
+    }
+
 }

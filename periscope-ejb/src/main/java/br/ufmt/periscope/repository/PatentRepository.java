@@ -34,7 +34,7 @@ public class PatentRepository {
     Project currentProject;
     private Boolean completed;
     private Boolean blacklisted;
-    private int rowCount;
+    private Integer rowCount = null;
 
     public void savePatentToDatabase(PatentImporter patents, Project project) {
         List<Patent> patentsCache = new ArrayList<Patent>();
@@ -107,7 +107,7 @@ public class PatentRepository {
                 .field("project").equal(project)
                 .asList();
     }
-    
+
     public List<Patent> getPatentWithId(Project project, ObjectId id) {
 
         return ds.find(Patent.class)
@@ -149,7 +149,7 @@ public class PatentRepository {
                 .field("project").equal(this.currentProject)
                 .field("completed").equal(this.completed)
                 .field("blacklisted").equal(this.blacklisted);
-        
+
         if (sortField != null) {
             query = query.order((sortOrder == 1 ? "-" : "") + sortField);
         }
@@ -158,12 +158,13 @@ public class PatentRepository {
             String value = entry.getValue();
             query.field(column).containsIgnoreCase(value);
         }
-        setRowCount(query.asList().size());
+        setRowCount((int) ds.getCount(query));
+        System.out.println("TOTAL:"+getRowCount());
         query.offset(first).limit(pageSize);
-        
+
         return query.asList();
     }
-    
+
     public List<Patent> loadBrazilian(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters) {
         Query query = ds.find(Patent.class)
                 .field("project").equal(this.currentProject)
@@ -178,11 +179,13 @@ public class PatentRepository {
             String value = entry.getValue();
             query.field(column).containsIgnoreCase(value);
         }
-        setRowCount(query.asList().size());
+        setRowCount((int) ds.getCount(query));
+
         query.offset(first).limit(pageSize);
-        
+
         return query.asList();
     }
+
     public Project getCurrentProject() {
         return currentProject;
     }
@@ -208,11 +211,19 @@ public class PatentRepository {
     }
 
     public int getRowCount() {
+        if (rowCount == null) {
+            Query query = ds.find(Patent.class)
+                    .field("project").equal(this.currentProject)
+                    .field("completed").equal(this.completed)
+                    .field("blacklisted").equal(this.blacklisted);  
+            
+            rowCount = (int) ds.getCount(query);
+        }
         return rowCount;
     }
 
     public void setRowCount(int rowCount) {
         this.rowCount = rowCount;
     }
-    
+
 }

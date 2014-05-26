@@ -12,6 +12,9 @@
 		<h:panelGrid columns="2">		
 			<h:outputLabel value="Nome harmonizado " style="font-weight:bold"/>				
 			<p:inputText value="#{applicantHarmonizationController.rule.name}"/>
+                        
+                        <h:outputLabel value="#{msgs['acronym']} " style="font-weight:bold" />				
+                        <p:inputText value="#{applicantHarmonizationController.rule.acronym}"/>
 						
 			<h:outputLabel value="País " style="font-weight:bold"/>				
                         <p:selectOneMenu value="#{applicantHarmonizationController.rule.country.acronym}" valueChangeListener="#{applicantHarmonizationController.selectListener}">

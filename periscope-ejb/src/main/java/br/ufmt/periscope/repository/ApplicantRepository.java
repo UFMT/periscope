@@ -60,7 +60,7 @@ public class ApplicantRepository {
     private @Inject
     IndexReader reader;
     private @Inject
-	Analyzer analyzer;
+    Analyzer analyzer;
     private @Inject
     Project currentProject;
     private int count;
@@ -102,7 +102,7 @@ public class ApplicantRepository {
         BasicDBObject keys = new BasicDBObject();
         keys.put("applicants", 1);
 
-        DBCursor cursor = ds.getCollection(Patent.class).find(where, keys).sort(new BasicDBObject("applicants.name",1));
+        DBCursor cursor = ds.getCollection(Patent.class).find(where, keys).sort(new BasicDBObject("applicants.name", 1));
         Mapper mapper = ds.getMapper();
         EntityCache ec = mapper.createEntityCache();
         while (cursor.hasNext()) {
@@ -217,7 +217,7 @@ public class ApplicantRepository {
                 for (int i = 0; i < hits.length; ++i) {
                     int docId = hits[i].doc;
                     Document d = searcher.doc(docId);
-                    System.out.println((i + 1) + ". " + d.get("applicant") + "\t" + hits[i].score );		      
+                    System.out.println((i + 1) + ". " + d.get("applicant") + "\t" + hits[i].score);
                     results.add(d.get("applicant"));
 
                     if (results.size() == top) {
@@ -242,7 +242,7 @@ public class ApplicantRepository {
         return results;
 
     }
-   
+
     public List<Applicant> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters) {
 
         ArrayList<DBObject> parametros = new ArrayList<DBObject>();
@@ -265,35 +265,38 @@ public class ApplicantRepository {
         DBObject group = new BasicDBObject();
         group.put("$group", fields);
         parametros.add(group);
-       
+
         if (sortField != null) {
             if ("documentCount".equals(sortField)) {
-                DBObject sort = new BasicDBObject("$sort", new BasicDBObject(sortField, (sortOrder == 0? 1 : -1 )));
-            parametros.add(sort);
+                DBObject sort = new BasicDBObject("$sort", new BasicDBObject(sortField, (sortOrder == 0 ? 1 : -1)));
+                parametros.add(sort);
             } else {
                 DBObject sort = new BasicDBObject("$sort", new BasicDBObject("_id." + sortField, (sortOrder == 0 ? 1 : -1)));
                 parametros.add(sort);
             }
+        } else {
+            DBObject sort = new BasicDBObject("$sort", new BasicDBObject("_id.name", 1));
+            parametros.add(sort);
         }
 
         for (Map.Entry<String, String> entry : filters.entrySet()) {
             String column = entry.getKey();
             String value = entry.getValue();
-            DBObject regex = new BasicDBObject("$regex", value ).append("$options", "i");
-            DBObject matchFilter = new BasicDBObject("$match", new BasicDBObject("_id."+column, regex));
+            DBObject regex = new BasicDBObject("$regex", value).append("$options", "i");
+            DBObject matchFilter = new BasicDBObject("$match", new BasicDBObject("_id." + column, regex));
             parametros.add(matchFilter);
         }
-        
+
         DBObject[] counter = new DBObject[parametros.size()];
         counter = parametros.toArray(counter);
 
         AggregationOutput outputCount = ds.getCollection(Patent.class).aggregate(matchProj, counter);
         BasicDBList outputListCount = (BasicDBList) outputCount.getCommandResult().get("result");
         this.setCount(outputListCount.size());
-        
+
         DBObject skip = new BasicDBObject("$skip", first);
         parametros.add(skip);
-        
+
         DBObject limit = new BasicDBObject("$limit", pageSize);
         parametros.add(limit);
 
@@ -325,7 +328,6 @@ public class ApplicantRepository {
             datasource.add(applicant);
         }
 
-
         return datasource;
     }
 
@@ -336,7 +338,7 @@ public class ApplicantRepository {
     public void setCount(int count) {
         this.count = count;
     }
-    
+
     public Project getCurrentProject() {
         return currentProject;
     }

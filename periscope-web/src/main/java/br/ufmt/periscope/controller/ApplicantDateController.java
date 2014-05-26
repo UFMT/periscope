@@ -31,7 +31,7 @@ public class ApplicantDateController extends GenericController {
         for (Object key : series.getData().keySet()) {
 
             Number value = series.getData().get(key);
-            if (value.intValue() != -1) {
+            if (value.intValue() == -1) {
                 keyInvalid = key;
             }
             getPairs().add(new Pair(key, value));

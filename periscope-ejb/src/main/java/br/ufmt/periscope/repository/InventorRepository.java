@@ -24,6 +24,7 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -155,7 +156,9 @@ public class InventorRepository {
             }
 
         }
-        return new ArrayList<Inventor>(map.values());
+        ArrayList<Inventor> inventors = new ArrayList<Inventor>(map.values());
+        Collections.sort(inventors);
+        return inventors;
     }
 
     public Set<String> getInventorSugestions(Project project, int top, String... names) {

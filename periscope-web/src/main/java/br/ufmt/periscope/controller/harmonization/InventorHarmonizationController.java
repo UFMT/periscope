@@ -36,126 +36,135 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
 
-
 @ManagedBean
 @ViewScoped
-public class InventorHarmonizationController implements Serializable{
-    
-	private static final long serialVersionUID = 7744517674295407077L;
-	
-	private @Inject Logger log;
-	private @Inject Datastore ds;
-	private @Inject @CurrentProject Project currentProject;
-	private @Inject ApplicantRepository applicantRepository;
-        
-        private @Inject InventorRepository inventorRepository;
-        private DataModel<SelectObject<Inventor>> inventors = null;
-        private List<Inventor> selectedInventors = new ArrayList<Inventor>();
-        private List<SelectObject<Inventor>> inventorSugestions = null;
-        private List<Inventor> selectedInventorSugestions = new ArrayList<Inventor>();
-        
-        
-	private @Inject RuleRepository ruleRepository;
-	private @Inject CountryRepository countryRepository;
-	private List<Country> countries = new ArrayList<Country>();
-        private List<State> states;
-	private Rule rule = new Rule();
-        
-	
-	@PostConstruct
-	public void init(){
-		ArrayList<Inventor> pas = inventorRepository.getInventors(currentProject);
-		countries = countryRepository.getAll();		
-		inventors = new ListDataModel<SelectObject<Inventor>>(SelectObject.convertToSelectObjects(pas));		
-	}
-        public void selectListener(ValueChangeEvent event) {
-            String acronym = (String) event.getNewValue();
-            Country country = countryRepository.getCountryByAcronym(acronym);
-            states = country.getStates();
-            Collections.sort(states);
+public class InventorHarmonizationController implements Serializable {
+
+    private static final long serialVersionUID = 7744517674295407077L;
+
+    private @Inject
+    Logger log;
+    private @Inject
+    Datastore ds;
+    private @Inject
+    @CurrentProject
+    Project currentProject;
+    private @Inject
+    ApplicantRepository applicantRepository;
+
+    private @Inject
+    InventorRepository inventorRepository;
+    private DataModel<SelectObject<Inventor>> inventors = null;
+    private List<Inventor> selectedInventors = new ArrayList<Inventor>();
+    private List<SelectObject<Inventor>> inventorSugestions = null;
+    private List<Inventor> selectedInventorSugestions = new ArrayList<Inventor>();
+
+    private @Inject
+    RuleRepository ruleRepository;
+    private @Inject
+    CountryRepository countryRepository;
+    private List<Country> countries = new ArrayList<Country>();
+    private List<State> states;
+    private Rule rule = new Rule();
+    private String acronymDefault = "BR";
+
+    @PostConstruct
+    public void init() {
+        ArrayList<Inventor> pas = inventorRepository.getInventors(currentProject);
+        countries = countryRepository.getAll();
+        inventors = new ListDataModel<SelectObject<Inventor>>(SelectObject.convertToSelectObjects(pas));
+
+        rule.setCountry(countryRepository.getCountryByAcronym(acronymDefault));
+        Country country = countryRepository.getCountryByAcronym(acronymDefault);
+        states = country.getStates();
+        Collections.sort(states);
+    }
+
+    public void selectListener(ValueChangeEvent event) {
+        String acronym = (String) event.getNewValue();
+        Country country = countryRepository.getCountryByAcronym(acronym);
+        states = country.getStates();
+        Collections.sort(states);
+    }
+
+    public void onSelectInventor() {
+        Iterator<SelectObject<Inventor>> it = inventors.iterator();
+        selectedInventors.clear();
+        while (it.hasNext()) {
+            SelectObject<Inventor> pa = it.next();
+            if (pa.isSelected()) {
+                selectedInventors.add(pa.getObject());
+            }
         }
+    }
 
-	public void onSelectInventor(){
-		Iterator<SelectObject<Inventor>> it = inventors.iterator();
-		selectedInventors.clear();
-		while(it.hasNext()){
-			SelectObject<Inventor> pa = it.next();
-			if(pa.isSelected()){
-				selectedInventors.add(pa.getObject());
-			}
-		}
-	}
-	
-	public void onSelectInventorSugestion(){
-		Iterator<SelectObject<Inventor>> it = inventorSugestions.iterator();
-		selectedInventorSugestions.clear();
-		while(it.hasNext()){
-			SelectObject<Inventor> pa = it.next();
-			if(pa.isSelected()){
-				selectedInventorSugestions.add(pa.getObject());
-			}
-		}
-	}
-	
-	public String createRule(){
+    public void onSelectInventorSugestion() {
+        Iterator<SelectObject<Inventor>> it = inventorSugestions.iterator();
+        selectedInventorSugestions.clear();
+        while (it.hasNext()) {
+            SelectObject<Inventor> pa = it.next();
+            if (pa.isSelected()) {
+                selectedInventorSugestions.add(pa.getObject());
+            }
+        }
+    }
 
-		rule.setType(RuleType.INVENTOR);
-		rule.setProject(currentProject);
-		selectedInventors.addAll(selectedInventorSugestions);
-		List<String> substitutions = new ArrayList<String>();
-		for(Inventor pa : selectedInventors){
-			substitutions.add(pa.getName());
-		}	
-		if(rule.getNature().getName().contentEquals("")){
-			rule.setNature(null);
-		}								
-		rule.setCountry(countryRepository.getCountryByAcronym(rule.getCountry().getAcronym()));
-                for (State state : rule.getCountry().getStates()) {
-                    if(state.getAcronym().equals(rule.getState().getAcronym())){
-                        System.out.println("setou");
-                        rule.setState(state);
-                    }
-                }
-		rule.setSubstitutions(new HashSet<String>(substitutions));				
-		ruleRepository.save(rule);		
-		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-		flash.put("success","Regra criada com sucesso");
-		return "listRule";
-	}
-	
-	public void loadSugestions(){		
-		String[] names = new String[selectedInventors.size()];
-		int i = 0;
-		for(Inventor pa : selectedInventors){
-			names[i] = pa.getName();
-			i++;
-		}
-		Set<String> sugestions = inventorRepository.getInventorSugestions(currentProject, 10, names);
-		List<Inventor> inventores = new ArrayList<Inventor>();
-		for(String sugestion : sugestions){
-			inventores.add(new Inventor(sugestion));
-		}
-		setInventorSugestions(new ArrayList<SelectObject<Inventor>>(SelectObject.convertToSelectObjects(inventores)));
-	}
-	
+    public String createRule() {
 
+        rule.setType(RuleType.INVENTOR);
+        rule.setProject(currentProject);
+        selectedInventors.addAll(selectedInventorSugestions);
+        List<String> substitutions = new ArrayList<String>();
+        for (Inventor pa : selectedInventors) {
+            substitutions.add(pa.getName());
+        }
+        if (rule.getNature().getName().contentEquals("")) {
+            rule.setNature(null);
+        }
+        rule.setCountry(countryRepository.getCountryByAcronym(rule.getCountry().getAcronym()));
+        for (State state : rule.getCountry().getStates()) {
+            if (state.getAcronym().equals(rule.getState().getAcronym())) {
+                System.out.println("setou");
+                rule.setState(state);
+            }
+        }
+        rule.setSubstitutions(new HashSet<String>(substitutions));
+        ruleRepository.save(rule);
+        Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+        flash.put("success", "Regra criada com sucesso");
+        return "listRule";
+    }
 
-	public Rule getRule() {
-		return rule;
-	}
+    public void loadSugestions() {
+        String[] names = new String[selectedInventors.size()];
+        int i = 0;
+        for (Inventor pa : selectedInventors) {
+            names[i] = pa.getName();
+            i++;
+        }
+        Set<String> sugestions = inventorRepository.getInventorSugestions(currentProject, 10, names);
+        List<Inventor> inventores = new ArrayList<Inventor>();
+        for (String sugestion : sugestions) {
+            inventores.add(new Inventor(sugestion));
+        }
+        setInventorSugestions(new ArrayList<SelectObject<Inventor>>(SelectObject.convertToSelectObjects(inventores)));
+    }
 
-	public void setRule(Rule rule) {
-		this.rule = rule;
-	}
+    public Rule getRule() {
+        return rule;
+    }
 
-	public List<Country> getCountries() {
-		return countries;
-	}
+    public void setRule(Rule rule) {
+        this.rule = rule;
+    }
 
-	public void setCountries(List<Country> countries) {
-		this.countries = countries;
-	}
+    public List<Country> getCountries() {
+        return countries;
+    }
 
+    public void setCountries(List<Country> countries) {
+        this.countries = countries;
+    }
 
     public DataModel<SelectObject<Inventor>> getInventors() {
         return inventors;
@@ -188,9 +197,5 @@ public class InventorHarmonizationController implements Serializable{
     public void setStates(List<State> states) {
         this.states = states;
     }
-        
-    
-        
-        
-	
+
 }

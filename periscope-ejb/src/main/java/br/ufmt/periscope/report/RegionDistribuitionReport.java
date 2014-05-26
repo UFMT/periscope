@@ -6,6 +6,7 @@
 package br.ufmt.periscope.report;
 
 import br.ufmt.periscope.model.Project;
+import br.ufmt.periscope.report.Pair;
 import br.ufmt.periscope.repository.RegionDistribuitionRepository;
 import java.util.Collections;
 import java.util.List;

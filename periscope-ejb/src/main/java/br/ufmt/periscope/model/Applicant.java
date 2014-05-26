@@ -32,6 +32,9 @@ public class Applicant implements Serializable, Comparable<Applicant> {
     }
 
     public String getName() {
+        if(name != null){
+            name = name.toUpperCase();
+        }
         return name;
     }
 

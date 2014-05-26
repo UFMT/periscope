@@ -17,6 +17,9 @@ public class Country implements Comparable<Country> {
     }
 
     public String getAcronym() {
+        if(acronym != null){
+            acronym = acronym.toUpperCase();
+        }
         return acronym;
     }
 
@@ -25,6 +28,9 @@ public class Country implements Comparable<Country> {
     }
 
     public String getName() {
+        if(name != null){
+            name = name.toUpperCase();
+        }
         return name;
     }
 
