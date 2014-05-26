@@ -1,13 +1,16 @@
 package br.ufmt.periscope.controller;
 
+import br.ufmt.periscope.model.Country;
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.qualifier.CurrentProject;
 import br.ufmt.periscope.report.Pair;
 import br.ufmt.periscope.repository.PatentRepository;
 import br.ufmt.periscope.util.Filters;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 import org.primefaces.model.chart.CartesianChartModel;
 
@@ -16,7 +19,7 @@ public abstract class GenericController {
     private @Inject
     @CurrentProject
     Project currentProject;
-    private @Inject 
+    private @Inject
     PatentRepository patentRepository;
     private CartesianChartModel model;
     private Date minDate, maxDate;
@@ -27,12 +30,12 @@ public abstract class GenericController {
 
     @PostConstruct
     public void init() {
-        setMinDate(getPatentRepository().getMinDate(getCurrentProject()));
-        setMaxDate(getPatentRepository().getMaxDate(getCurrentProject()));
+        setMinDate(getPatentRepository().getMinDate(getCurrentProject(), 0));
+        setMaxDate(getPatentRepository().getMaxDate(getCurrentProject(), 0));
         getFiltro().setComplete(false);
         getFiltro().setSelecionaData(0);
-        getFiltro().setInicio(getPatentRepository().getMinDate(getCurrentProject()));
-        getFiltro().setFim(getPatentRepository().getMaxDate(getCurrentProject()));
+        getFiltro().setInicio(getPatentRepository().getMinDate(getCurrentProject(), 0));
+        getFiltro().setFim(getPatentRepository().getMaxDate(getCurrentProject(), 0));
 
         refreshChart();
     }
@@ -101,6 +104,14 @@ public abstract class GenericController {
 
     public void setLimit(int limit) {
         this.limit = limit;
+    }
+
+    public void selectListener(ValueChangeEvent event) {
+        int sel = getFiltro().getSelecionaData();
+        System.out.println("trocando data:" + event.getNewValue() + " sel:" + sel);
+        getFiltro().setInicio(getPatentRepository().getMinDate(getCurrentProject(), sel));
+        getFiltro().setFim(getPatentRepository().getMaxDate(getCurrentProject(), sel));
+
     }
 
 }

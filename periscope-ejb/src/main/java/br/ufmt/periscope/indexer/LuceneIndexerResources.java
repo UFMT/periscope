@@ -102,7 +102,7 @@ public class LuceneIndexerResources {
 
     public void disposesWriter(@Disposes IndexWriter writer) {
         try {
-            System.out.println("Disposing Writer");
+//            System.out.println("Disposing Writer");
             writer.deleteUnusedFiles();
             writer.commit();
             writer.close();
@@ -115,7 +115,7 @@ public class LuceneIndexerResources {
 
     public void disposesReader(@Disposes IndexReader reader) {
         try {
-            System.out.println("Disposing Reader");
+//            System.out.println("Disposing Reader");
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,92 +1,91 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
-<f:view contentType="text/html">
-	<p:dialog id="applicantSugestions" widgetVar="sugestionsDialog" modal="true"
-		header="Criar regra" resizable="false">
-		<h:panelGrid columns="2">		
-			<h:outputLabel value="Nome harmonizado " style="font-weight:bold"/>				
-			<p:inputText value="#{applicantHarmonizationController.rule.name}"/>
-                        
-                        <h:outputLabel value="#{msgs['acronym']} " style="font-weight:bold" />				
-                        <p:inputText value="#{applicantHarmonizationController.rule.acronym}"/>
-						
-			<h:outputLabel value="País " style="font-weight:bold"/>				
-                        <p:selectOneMenu value="#{applicantHarmonizationController.rule.country.acronym}" valueChangeListener="#{applicantHarmonizationController.selectListener}">
-                            <f:selectItems value="#{applicantHarmonizationController.countries}" var="c" itemValue="#{c.acronym}" itemLabel="#{c.name}"/>
-                            <p:ajax event="change" update="@this,state"/>
-			</p:selectOneMenu>
-                        
-                        <h:outputLabel value="Estado" style="font-weight: bold"/>
-                        <p:selectOneMenu value="#{applicantHarmonizationController.rule.state.acronym}"  id="state">
-                            <f:selectItem itemLabel="Nenhuma" itemValue=""/>
-                            <f:selectItems  value="#{applicantHarmonizationController.states}" var="c" itemValue="#{c.acronym}" itemLabel="#{c.name}"/>
-			</p:selectOneMenu>
-			
-			<h:outputLabel value="Natureza " style="font-weight:bold"/>
-			<p:selectOneMenu id="cmbNature" value="#{applicantHarmonizationController.rule.nature.name}">
-				<f:selectItem itemLabel="Nenhuma" itemValue=""/>
-				<f:selectItems value="#{applicantHarmonizationController.applicantTypes}" var="t" itemValue="#{t.name}" itemLabel="#{msgs[t.name]}" />	
-			</p:selectOneMenu>						
-		</h:panelGrid>		
-										
-		<h:panelGrid id="panelSugestions" columns="3">
-			<h:column>
-				<h4>Nomes selecionados</h4>				
-				<p:separator/>
-			</h:column>
-			<h:column>
-				<p:spacer width="50"/>
-			</h:column>
-			<h:column>
-				<h4>Sugestões</h4>				
-				<p:separator/>
-			</h:column>
-			<h:column>				
-				<ul>
-					<ui:repeat var="spa"
-						value="#{applicantHarmonizationController.selectedApplicants}">
+    <f:view contentType="text/html">
+        <p:dialog id="applicantSugestions" widgetVar="sugestionsDialog" modal="true"
+                  header="Criar regra" resizable="false">
+            
+            <h:panelGrid columns="2" id="panelApplicantHarmonized">		
+                <h:outputLabel value="Nome harmonizado " style="font-weight:bold"/>				
+                <p:inputText value="#{applicantHarmonizationController.rule.name}"/>
 
-						<li>#{spa.name}</li>
+                <h:outputLabel value="#{msgs['acronym']} " style="font-weight:bold" />				
+                <p:inputText value="#{applicantHarmonizationController.rule.acronym}"/>
 
-					</ui:repeat>
-				</ul>
-			</h:column>
-			<h:column>
-				<p:spacer width="50"/>
-			</h:column>
-			<h:column>
-				<ul>
-				<ui:repeat var="sug"
-					value="#{applicantHarmonizationController.applicantSugestions}">
-					<li>
-						<p:selectBooleanCheckbox
-							onchange="#{applicantHarmonizationController.onSelectApplicantSugestion()}" value="#{sug.selected}">
-							<p:ajax update="@this"/>
-						</p:selectBooleanCheckbox>
-						#{sug.object.name}
-					</li>
-				</ui:repeat>				
-				<h:panelGrid rendered="#{applicantHarmonizationController.applicantSugestions.size() == 0}">
-					<li>Não existem sugestões.</li>
-				</h:panelGrid>
-				</ul>
-			</h:column>
-		</h:panelGrid>
-		<p:spacer height="50"/>
-		<center>
-			<p:commandButton value="Salvar" action="#{applicantHarmonizationController.createRule()}"/>
+                <h:outputLabel value="País " style="font-weight:bold"/>				
+                <p:selectOneMenu value="#{applicantHarmonizationController.rule.country.acronym}" valueChangeListener="#{applicantHarmonizationController.selectListener}">
+                    <f:selectItems value="#{applicantHarmonizationController.countries}" var="c" itemValue="#{c.acronym}" itemLabel="#{c.name}"/>
+                    <p:ajax event="change" update="@this,state"/>
+                </p:selectOneMenu>
 
-			<p:commandButton value="Cancelar" immediate="true"
-				oncomplete="sugestionsDialog.hide()" />
-		</center>
+                <h:outputLabel value="Estado" style="font-weight: bold"/>
+                <p:selectOneMenu value="#{applicantHarmonizationController.rule.state.acronym}"  id="state">
+                    <f:selectItem itemLabel="Nenhuma" itemValue=""/>
+                    <f:selectItems  value="#{applicantHarmonizationController.states}" var="c" itemValue="#{c.acronym}" itemLabel="#{c.name}"/>
+                </p:selectOneMenu>
 
-	</p:dialog>
+                <h:outputLabel value="Natureza " style="font-weight:bold"/>
+                <p:selectOneMenu id="cmbNature" value="#{applicantHarmonizationController.rule.nature.name}">
+                    <f:selectItem itemLabel="Nenhuma" itemValue=""/>
+                    <f:selectItems value="#{applicantHarmonizationController.applicantTypes}" var="t" itemValue="#{t.name}" itemLabel="#{msgs[t.name]}" />	
+                </p:selectOneMenu>						
+            </h:panelGrid>		
 
-</f:view>
+            <h:panelGrid id="panelSugestions" columns="3">
+                <h:column>
+                    <h4>Nomes selecionados</h4>				
+                    <p:separator/>
+                </h:column>
+                <h:column>
+                    <p:spacer width="50"/>
+                </h:column>
+                <h:column>
+                    <h4>Sugestões</h4>				
+                    <p:separator/>
+                </h:column>
+                <h:column>				
+                    <p:dataTable value="#{applicantHarmonizationController.selectedApplicants}" selectionMode="single"
+                                  rowKey="#{spa.name}"
+                                 selection="#{applicantHarmonizationController.selectedRadio}" var="spa">
+                        <p:ajax event="rowSelect" listener="#{applicantHarmonizationController.onSelectApplicantFill}" update=":#{p:component('panelApplicantHarmonized')}" />
+                        <p:column headerText="#{msgs['name']}">#{spa.name}</p:column>
+                    </p:dataTable>
+                </h:column>
+                <h:column>
+                    <p:spacer width="50"/>
+                </h:column>
+                <h:column>
+                    <ul>
+                        <ui:repeat var="sug"
+                                   value="#{applicantHarmonizationController.applicantSugestions}">
+                            <li>
+                                <p:selectBooleanCheckbox
+                                    onchange="#{applicantHarmonizationController.onSelectApplicantSugestion()}" value="#{sug.selected}">
+                                    <p:ajax update="@this"/>
+                                </p:selectBooleanCheckbox>
+                                #{sug.object.name}
+                            </li>
+                        </ui:repeat>				
+                        <h:panelGrid rendered="#{applicantHarmonizationController.applicantSugestions.size() == 0}">
+                            <li>Não existem sugestões.</li>
+                        </h:panelGrid>
+                    </ul>
+                </h:column>
+            </h:panelGrid>
+            <p:spacer height="50"/>
+            <center>
+                <p:commandButton value="Salvar" action="#{applicantHarmonizationController.createRule()}"/>
+
+                <p:commandButton value="Cancelar" immediate="true"
+                                 oncomplete="sugestionsDialog.hide()" />
+            </center>
+
+        </p:dialog>
+
+    </f:view>
 </html>

@@ -1,6 +1,7 @@
 package br.ufmt.periscope.model;
 
 import com.github.jmkgreen.morphia.annotations.Embedded;
+import com.github.jmkgreen.morphia.annotations.Transient;
 import java.io.Serializable;
 
 @Embedded
@@ -13,6 +14,8 @@ public class Inventor implements Serializable, Comparable<Inventor> {
     @Embedded
     private State state;
     private Boolean harmonized = false;
+    @Transient
+    private Boolean selected = false;
 
     private Integer documentCount = 0;
 
@@ -33,7 +36,7 @@ public class Inventor implements Serializable, Comparable<Inventor> {
     }
 
     public String getName() {
-        if(name != null){
+        if (name != null) {
             name = name.toUpperCase();
         }
         return name;
@@ -73,6 +76,14 @@ public class Inventor implements Serializable, Comparable<Inventor> {
 
     public void setAcronym(String acronym) {
         this.acronym = acronym;
+    }
+
+    public Boolean getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Boolean selected) {
+        this.selected = selected;
     }
 
     @Override

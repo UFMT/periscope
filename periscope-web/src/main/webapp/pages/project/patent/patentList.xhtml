@@ -21,17 +21,20 @@
                             </li>
                         </ui:repeat>				  
                     </ul>
-                    <h:outputText styleClass="pull-right" style="font-size:16px"
-                                  value="#{msgs['listing']} #{patentController.partialCount} #{msgs['of']} #{patentController.totalCount} #{msgs['patents.registered']}."/>
-
-                    <br/>	
+                    
 
                     <p:dataTable id="patents" var="item" style="font-size:10px"
                                  emptyMessage="#{msgs['registered.patent']}"
                                  value="#{patentController.patents}" paginator="true"
-                                 paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+                                 
+                                 paginatorAlwaysVisible="false" rows="10" 
                                  rowKey="#{item.id}" lazy="true" filterEvent="enter" 
                                  >
+
+                        <f:facet name="header" >
+                            <p:outputLabel value="#{msgs['listing']} #{patentController.partialCount} #{msgs['of']} #{patentController.totalCount} #{msgs['patents.registered']}." style="font-size:20px"/>
+                            
+                        </f:facet>
 
                         <p:column  headerText="#{msgs['country']}" >
                             #{item.applicationNumber.substring(0, 2)}

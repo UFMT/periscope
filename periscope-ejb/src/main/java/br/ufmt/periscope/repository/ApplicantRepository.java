@@ -12,7 +12,6 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
@@ -27,9 +26,11 @@ import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.util.Version;
 
 import br.ufmt.periscope.model.Applicant;
+import br.ufmt.periscope.model.ApplicantType;
 import br.ufmt.periscope.model.Country;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
+import br.ufmt.periscope.model.State;
 import br.ufmt.periscope.util.Filters;
 
 import com.github.jmkgreen.morphia.Datastore;
@@ -204,7 +205,7 @@ public class ApplicantRepository {
                 //       .parse(queryBuilder.toString());
                 //queryPa.setBoost(10f);
 
-                Query query = new FuzzyQuery(new Term("applicant", name),0.8f);
+                Query query = new FuzzyQuery(new Term("applicant", name), 0.8f);
 
                 bq.add(query, Occur.MUST);
                 bq.add(queryProject, Occur.MUST);
@@ -247,24 +248,42 @@ public class ApplicantRepository {
 
         ArrayList<DBObject> parametros = new ArrayList<DBObject>();
 
-        DBObject matchProj = new BasicDBObject();
-        matchProj.put("$match", new BasicDBObject("project.$id", currentProject.getId()));
+        DBObject match = new BasicDBObject();
 
-        DBObject matchBlackList = new BasicDBObject();
-        matchBlackList.put("$match", new BasicDBObject("blacklisted", false));
-        parametros.add(matchBlackList);
+        DBObject matchProj = new BasicDBObject();
+        matchProj.put("project.$id", currentProject.getId());
+        matchProj.put("blacklisted", false);
 
         DBObject unwind = new BasicDBObject("$unwind", "$applicants");
         parametros.add(unwind);
 
+        DBObject matchFilterItem = new BasicDBObject();
+        for (Map.Entry<String, String> entry : filters.entrySet()) {
+            String column = entry.getKey();
+            String value = entry.getValue();
+            DBObject regex = new BasicDBObject("$regex", value).append("$options", "i");
+            matchFilterItem.put("applicants." + column, regex);
+        }
+        DBObject matchFilter = new BasicDBObject();
+        matchFilter.put("$match", matchFilterItem);
+        parametros.add(matchFilter);
+
         DBObject idData = new BasicDBObject("name", "$applicants.name");
         idData.put("country", "$applicants.country");
+        idData.put("state", "$applicants.state");
+        idData.put("acronym", "$applicants.acronym");
+        idData.put("nature", "$applicants.nature");
         idData.put("harmonized", "$applicants.harmonized");
         DBObject fields = new BasicDBObject("_id", idData);
         fields.put("documentCount", new BasicDBObject("$sum", 1));
         DBObject group = new BasicDBObject();
         group.put("$group", fields);
         parametros.add(group);
+
+        fields = new BasicDBObject("_id", "nome");
+        fields.put("documentCount", new BasicDBObject("$sum", 1));
+        DBObject groupTotal = new BasicDBObject();
+        groupTotal.put("$group", fields);
 
         if (sortField != null) {
             if ("documentCount".equals(sortField)) {
@@ -279,21 +298,6 @@ public class ApplicantRepository {
             parametros.add(sort);
         }
 
-        for (Map.Entry<String, String> entry : filters.entrySet()) {
-            String column = entry.getKey();
-            String value = entry.getValue();
-            DBObject regex = new BasicDBObject("$regex", value).append("$options", "i");
-            DBObject matchFilter = new BasicDBObject("$match", new BasicDBObject("_id." + column, regex));
-            parametros.add(matchFilter);
-        }
-
-        DBObject[] counter = new DBObject[parametros.size()];
-        counter = parametros.toArray(counter);
-
-        AggregationOutput outputCount = ds.getCollection(Patent.class).aggregate(matchProj, counter);
-        BasicDBList outputListCount = (BasicDBList) outputCount.getCommandResult().get("result");
-        this.setCount(outputListCount.size());
-
         DBObject skip = new BasicDBObject("$skip", first);
         parametros.add(skip);
 
@@ -303,16 +307,40 @@ public class ApplicantRepository {
         DBObject[] parameters = new DBObject[parametros.size()];
         parameters = parametros.toArray(parameters);
 
-        AggregationOutput output = ds.getCollection(Patent.class).aggregate(matchProj, parameters);
+        match.put("$match", matchProj);
+
+        AggregationOutput outputTotal = ds.getCollection(Patent.class).aggregate(match, unwind, matchFilter, group, groupTotal);
+
+        BasicDBList outputListTotal = (BasicDBList) outputTotal.getCommandResult().get("result");
+        for (Object patent : outputListTotal) {
+            DBObject result = (DBObject) patent;
+            this.setCount(Integer.parseInt(result.get("documentCount").toString()));
+            break;
+        }
+
+        AggregationOutput output = ds.getCollection(Patent.class).aggregate(match, parameters);
         System.out.println(output.getCommand().toString());
         BasicDBList outputList = (BasicDBList) output.getCommandResult().get("result");
 
+//        this.setCount(output.);
         List<Applicant> datasource = new ArrayList<Applicant>();
         for (Object patent : outputList) {
             DBObject aux = (DBObject) patent;
             DBObject result = (DBObject) aux.get("_id");
             Applicant applicant = new Applicant();
             applicant.setName(result.get("name").toString());
+            if (result.get("acronym") != null) {
+                applicant.setAcronym(result.get("acronym").toString());
+            }
+            DBObject nature = (DBObject) result.get("nature");
+            if (nature != null) {
+                ApplicantType realApplicantType = new ApplicantType();
+                realApplicantType.setName((String) nature.get("name"));
+                applicant.setType(realApplicantType);
+            } else {
+                applicant.setType(null);
+            }
+            
             DBObject country = (DBObject) result.get("country");
             if (country != null) {
 
@@ -322,6 +350,17 @@ public class ApplicantRepository {
                 applicant.setCountry(realCountry);
             } else {
                 applicant.setCountry(null);
+            }
+
+            DBObject state = (DBObject) result.get("state");
+            if (state != null) {
+                State realState = new State();
+                realState.setAcronym((String) state.get("acronym"));
+                realState.setRegion((String) state.get("region"));
+                realState.setName((String) state.get("name"));
+                applicant.setState(realState);
+            } else {
+                applicant.setState(null);
             }
             applicant.setHarmonized((Boolean) result.get("harmonized"));
             applicant.setDocumentCount((Integer) aux.get("documentCount"));

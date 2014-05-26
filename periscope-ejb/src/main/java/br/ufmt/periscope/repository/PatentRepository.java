@@ -124,16 +124,25 @@ public class PatentRepository {
                 .asList();
     }
 
-    public Date getMinDate(Project currentProject) {
-        DBCursor dbc = ds.getCollection(Patent.class).find(new BasicDBObject("project.$id", currentProject.getId())).sort(new BasicDBObject("applicationDate", 1)).limit(1);
-        Date data = (Date) dbc.next().get("applicationDate");
+    public Date getMinDate(Project currentProject, int selectedDate) {
+        String date = "publicationDate";
+        if (selectedDate == 2) {
+            date = "applicationDate";
+        }
+        System.out.println("Date:" + date);
+        DBCursor dbc = ds.getCollection(Patent.class).find(new BasicDBObject("project.$id", currentProject.getId())).sort(new BasicDBObject(date, 1)).limit(1);
+        Date data = (Date) dbc.next().get(date);
         System.out.println(data);
         return data;
     }
 
-    public Date getMaxDate(Project currentProject) {
-        DBCursor dbc = ds.getCollection(Patent.class).find(new BasicDBObject("project.$id", currentProject.getId())).sort(new BasicDBObject("publicationDate", -1)).limit(1);
-        Date data = (Date) dbc.next().get("publicationDate");
+    public Date getMaxDate(Project currentProject, int selectedDate) {
+        String date = "publicationDate";
+        if (selectedDate == 2) {
+            date = "applicationDate";
+        }
+        DBCursor dbc = ds.getCollection(Patent.class).find(new BasicDBObject("project.$id", currentProject.getId())).sort(new BasicDBObject(date, -1)).limit(1);
+        Date data = (Date) dbc.next().get(date);
         return data;
     }
 
@@ -158,8 +167,7 @@ public class PatentRepository {
             String value = entry.getValue();
             query.field(column).containsIgnoreCase(value);
         }
-        setRowCount((int) ds.getCount(query));
-        System.out.println("TOTAL:"+getRowCount());
+        setRowCount((int) query.countAll());
         query.offset(first).limit(pageSize);
 
         return query.asList();
@@ -179,7 +187,7 @@ public class PatentRepository {
             String value = entry.getValue();
             query.field(column).containsIgnoreCase(value);
         }
-        setRowCount((int) ds.getCount(query));
+        setRowCount((int) query.countAll());
 
         query.offset(first).limit(pageSize);
 
@@ -212,12 +220,11 @@ public class PatentRepository {
 
     public int getRowCount() {
         if (rowCount == null) {
+
             Query query = ds.find(Patent.class)
-                    .field("project").equal(this.currentProject)
-                    .field("completed").equal(this.completed)
-                    .field("blacklisted").equal(this.blacklisted);  
-            
-            rowCount = (int) ds.getCount(query);
+                    .field("project").equal(this.currentProject);
+
+            rowCount = (int) query.countAll();
         }
         return rowCount;
     }

@@ -74,24 +74,23 @@
                         <p:columnGroup type="header">
                             <p:row>						
                                 <p:column rowspan="2" headerText="Nome" sortBy="#{rule.name}"/>
+                                <p:column rowspan="2" headerText="#{msgs['acronym']}" sortBy="#{rule.acronym}"/>
                                 <p:column rowspan="2" headerText="Substituições" />
                                 <p:column rowspan="2" headerText="Pais" sortBy="#{rule.country.name}"/>
-                                <p:column rowspan="2" headerText="Natureza" sortBy="#{rule.nature.name}"/>
                                 <p:column rowspan="2" headerText="Ações" />
                             </p:row>
                         </p:columnGroup>		
                         <p:column>														
                             #{rule.name}					
                         </p:column>
-
+                        <p:column>														
+                            #{rule.acronym}					
+                        </p:column>
                         <p:column>														
                             #{rule.substitutions}					
                         </p:column>
                         <p:column>														
                             #{rule.country == null ? '' : rule.country.name}					
-                        </p:column>
-                        <p:column>														
-                            #{rule.nature == null ? '' : rule.nature.name}					
                         </p:column>
                         <p:column>
                             <center>

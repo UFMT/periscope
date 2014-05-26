@@ -1,5 +1,6 @@
 package br.ufmt.periscope.controller.harmonization;
 
+import br.ufmt.periscope.lazy.LazyInventorDataModel;
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.ApplicantType;
 import br.ufmt.periscope.model.Country;
@@ -54,7 +55,7 @@ public class InventorHarmonizationController implements Serializable {
 
     private @Inject
     InventorRepository inventorRepository;
-    private DataModel<SelectObject<Inventor>> inventors = null;
+    private @Inject LazyInventorDataModel inventors;
     private List<Inventor> selectedInventors = new ArrayList<Inventor>();
     private List<SelectObject<Inventor>> inventorSugestions = null;
     private List<Inventor> selectedInventorSugestions = new ArrayList<Inventor>();
@@ -67,12 +68,15 @@ public class InventorHarmonizationController implements Serializable {
     private List<State> states;
     private Rule rule = new Rule();
     private String acronymDefault = "BR";
+    private Inventor selectedRadio;
 
     @PostConstruct
     public void init() {
         ArrayList<Inventor> pas = inventorRepository.getInventors(currentProject);
         countries = countryRepository.getAll();
-        inventors = new ListDataModel<SelectObject<Inventor>>(SelectObject.convertToSelectObjects(pas));
+        inventors.getInventorRepository().setCurrentProject(currentProject);
+        selectedInventors.clear();
+        inventors.setSelectedInventors(selectedInventors);
 
         rule.setCountry(countryRepository.getCountryByAcronym(acronymDefault));
         Country country = countryRepository.getCountryByAcronym(acronymDefault);
@@ -82,20 +86,23 @@ public class InventorHarmonizationController implements Serializable {
 
     public void selectListener(ValueChangeEvent event) {
         String acronym = (String) event.getNewValue();
+         searchState(acronym);
+    }
+    
+    private void searchState(String acronym){
         Country country = countryRepository.getCountryByAcronym(acronym);
         states = country.getStates();
         Collections.sort(states);
     }
 
-    public void onSelectInventor() {
-        Iterator<SelectObject<Inventor>> it = inventors.iterator();
-        selectedInventors.clear();
-        while (it.hasNext()) {
-            SelectObject<Inventor> pa = it.next();
-            if (pa.isSelected()) {
-                selectedInventors.add(pa.getObject());
-            }
+    public void onSelectInventor(Inventor pa) {
+        System.out.println("INVENTOR:"+pa.getSelected());
+        if (pa.getSelected()) {
+            selectedInventors.add(pa);
+        } else {
+            selectedInventors.remove(pa);
         }
+        
     }
 
     public void onSelectInventorSugestion() {
@@ -105,6 +112,30 @@ public class InventorHarmonizationController implements Serializable {
             SelectObject<Inventor> pa = it.next();
             if (pa.isSelected()) {
                 selectedInventorSugestions.add(pa.getObject());
+            }
+        }
+    }
+    
+    public void onSelectInventorFill() {
+        if (selectedRadio != null) {
+            rule.setName(null);
+            rule.setAcronym(null);
+            rule.setCountry(null);
+            rule.setNature(null);
+            rule.setState(null);
+            if (selectedRadio.getName() != null) {
+                rule.setName(selectedRadio.getName());
+            }
+            if (selectedRadio.getAcronym() != null) {
+                rule.setAcronym(selectedRadio.getAcronym());
+            }
+            if (selectedRadio.getCountry() != null) {
+                selectedRadio.getCountry().setStates(null);
+                rule.setCountry(selectedRadio.getCountry());
+                searchState(selectedRadio.getCountry().getAcronym());
+            }
+            if (selectedRadio.getState()!= null) {
+                rule.setState(selectedRadio.getState());
             }
         }
     }
@@ -118,13 +149,9 @@ public class InventorHarmonizationController implements Serializable {
         for (Inventor pa : selectedInventors) {
             substitutions.add(pa.getName());
         }
-        if (rule.getNature().getName().contentEquals("")) {
-            rule.setNature(null);
-        }
         rule.setCountry(countryRepository.getCountryByAcronym(rule.getCountry().getAcronym()));
         for (State state : rule.getCountry().getStates()) {
             if (state.getAcronym().equals(rule.getState().getAcronym())) {
-                System.out.println("setou");
                 rule.setState(state);
             }
         }
@@ -137,6 +164,10 @@ public class InventorHarmonizationController implements Serializable {
 
     public void loadSugestions() {
         String[] names = new String[selectedInventors.size()];
+
+        selectedRadio = selectedInventors.get(0);
+        onSelectInventorFill();
+
         int i = 0;
         for (Inventor pa : selectedInventors) {
             names[i] = pa.getName();
@@ -148,6 +179,14 @@ public class InventorHarmonizationController implements Serializable {
             inventores.add(new Inventor(sugestion));
         }
         setInventorSugestions(new ArrayList<SelectObject<Inventor>>(SelectObject.convertToSelectObjects(inventores)));
+    }
+    
+    public void metodo(Inventor pa) {
+        if (selectedInventors.contains(pa)) {
+            pa.setSelected(true);
+        } else {
+            pa.setSelected(false);
+        }
     }
 
     public Rule getRule() {
@@ -166,11 +205,11 @@ public class InventorHarmonizationController implements Serializable {
         this.countries = countries;
     }
 
-    public DataModel<SelectObject<Inventor>> getInventors() {
+    public DataModel<Inventor> getInventors() {
         return inventors;
     }
 
-    public void setInventors(DataModel<SelectObject<Inventor>> inventors) {
+    public void setInventors(LazyInventorDataModel inventors) {
         this.inventors = inventors;
     }
 
@@ -196,6 +235,14 @@ public class InventorHarmonizationController implements Serializable {
 
     public void setStates(List<State> states) {
         this.states = states;
+    }
+
+    public Inventor getSelectedRadio() {
+        return selectedRadio;
+    }
+
+    public void setSelectedRadio(Inventor selectedRadio) {
+        this.selectedRadio = selectedRadio;
     }
 
 }

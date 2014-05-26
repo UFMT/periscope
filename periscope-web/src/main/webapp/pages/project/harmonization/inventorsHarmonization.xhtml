@@ -12,33 +12,26 @@
 					emptyMessage="Não existem inventores carregados"
 					value="#{inventorHarmonizationController.inventors}" paginator="true"
 					paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
-					rowKey="#{pa.object}" sortBy="#{pa.object.name}">
+					rowKey="#{pa.name}" filterEvent="enter" lazy="true">
 	
-			<p:columnGroup type="header">
-				<p:row>
-					<p:column rowspan="2" headerText=""/>						
-					<p:column rowspan="2" headerText="Nome" sortBy="#{pa.object.name}"/>
-					<p:column rowspan="2" headerText="Pais" sortBy="#{pa.object.country.name}"/>
-					<p:column rowspan="2" headerText="Docs" sortBy="#{pa.object.documentCount}"/>
-					<p:column rowspan="2" headerText="Ações" />
-				</p:row>
-			</p:columnGroup>
-			<p:column>					
-				 <p:selectBooleanCheckbox
-					onchange="#{inventorHarmonizationController.onSelectInventor()}" value="#{pa.selected}">
-					<p:ajax update=":tabView:formAl"/>
-				</p:selectBooleanCheckbox>	
-			</p:column>			
-			<p:column>														
-					#{pa.object.name}					
+
+	
+                    <p:column headerText="">					
+                        <p:selectBooleanCheckbox id="campo" 
+                                value="#{pa.selected}" >
+                                <p:ajax event="change" update=":tabView:formAl:selectedInventors,@this" listener="#{inventorHarmonizationController.onSelectInventor(pa)}"/>
+                            </p:selectBooleanCheckbox>	
+                        </p:column>		
+			<p:column headerText="Nome" sortBy="#{pa.name}" filterBy="#{pa.name}">														
+					#{pa.name}					
 			</p:column>
-			<p:column>														
-					#{pa.object.country == null ? '' : pa.object.country.name}					
+			<p:column headerText="Pais" sortBy="#{pa.country.name}">														
+					#{pa.country == null ? '' : pa.country.name}					
 			</p:column>
-			<p:column>														
-					#{pa.object.documentCount}					
+			<p:column headerText="Docs" sortBy="#{pa.documentCount}">														
+					#{pa.documentCount}					
 			</p:column>
-			<p:column>
+			<p:column headerText="Ações">
 				<center>
 					<h:form style="margin-bottom:0px">
 						<h:commandLink value="Editar"
@@ -51,7 +44,7 @@
 		
 		<p:separator/>
 		
-		<p:dataTable id="selectedApplicants" var="pa" style="font-size:12px"
+		<p:dataTable id="selectedInventors" var="pa" style="font-size:12px"
 					emptyMessage="Não existem depositantes selecionados" widgetVar="tblSelected"
 					value="#{inventorHarmonizationController.selectedInventors}" paginator="true"
 					paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"

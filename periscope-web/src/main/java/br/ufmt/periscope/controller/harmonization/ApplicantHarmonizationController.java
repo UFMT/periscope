@@ -37,7 +37,7 @@ import javax.inject.Inject;
 @ManagedBean
 @ViewScoped
 public class ApplicantHarmonizationController implements Serializable {
-
+    
     private static final long serialVersionUID = 7744517674295407077L;
     private @Inject
     Logger log;
@@ -59,12 +59,14 @@ public class ApplicantHarmonizationController implements Serializable {
     private List<Applicant> selectedApplicants = new ArrayList<Applicant>();
     private List<Applicant> selectedApplicantSugestions = new ArrayList<Applicant>();
     private List<SelectObject<Applicant>> applicantSugestions = null;
+    private List<SelectObject<Applicant>> selectedsApplicantSugestions = null;
     private List<Country> countries = new ArrayList<Country>();
     private List<ApplicantType> applicantTypes = new ArrayList<ApplicantType>();
     private List<State> states;
     private Rule rule = new Rule();
     private String acronymDefault = "BR";
-
+    private Applicant selectedRadio;
+    
     @PostConstruct
     public void init() {
 //		List<Applicant> pas = applicantRepository.getApplicants(currentProject);
@@ -80,26 +82,28 @@ public class ApplicantHarmonizationController implements Serializable {
         Collections.sort(states);
 //		applicants = new ListDataModel<SelectObject<Applicant>>(SelectObject.convertToSelectObjects(pas));		
     }
-
+    
     public void onSelectApplicant(Applicant pa) {
-
+        
         if (pa.getSelected()) {
             selectedApplicants.add(pa);
         } else {
             selectedApplicants.remove(pa);
         }
-
-    }
-
-    public void selectListener(ValueChangeEvent event) {
         
+    }
+    
+    public void selectListener(ValueChangeEvent event) {
         String acronym = (String) event.getNewValue();
+        searchState(acronym);
+    }
+    
+    private void searchState(String acronym){
         Country country = countryRepository.getCountryByAcronym(acronym);
         states = country.getStates();
-        System.out.println("estados:"+states);
         Collections.sort(states);
     }
-
+    
     public void onSelectApplicantSugestion() {
         Iterator<SelectObject<Applicant>> it = applicantSugestions.iterator();
         selectedApplicantSugestions.clear();
@@ -110,12 +114,41 @@ public class ApplicantHarmonizationController implements Serializable {
             }
         }
     }
-
+    
+    public void onSelectApplicantFill() {
+        if (selectedRadio != null) {
+            rule.setName(null);
+            rule.setAcronym(null);
+            rule.setCountry(null);
+            rule.setNature(null);
+            rule.setState(null);
+            if (selectedRadio.getName() != null) {
+                rule.setName(selectedRadio.getName());
+            }
+            if (selectedRadio.getAcronym() != null) {
+                rule.setAcronym(selectedRadio.getAcronym());
+            }
+            if (selectedRadio.getCountry() != null) {
+                selectedRadio.getCountry().setStates(null);
+                rule.setCountry(selectedRadio.getCountry());
+                searchState(selectedRadio.getCountry().getAcronym());
+            }
+            if (selectedRadio.getType() != null) {
+                rule.setNature(selectedRadio.getType());
+            }
+            if (selectedRadio.getState()!= null) {
+                rule.setState(selectedRadio.getState());
+            }
+        }
+    }
+    
     public String createRule() {
-
+        
         rule.setType(RuleType.APPLICANT);
         rule.setProject(currentProject);
-        selectedApplicants.addAll(selectedApplicantSugestions);
+        if (selectedApplicantSugestions != null) {
+            selectedApplicants.addAll(selectedApplicantSugestions);
+        }
         List<String> substitutions = new ArrayList<String>();
         for (Applicant pa : selectedApplicants) {
             substitutions.add(pa.getName());
@@ -125,7 +158,7 @@ public class ApplicantHarmonizationController implements Serializable {
         }
         rule.setCountry(countryRepository.getCountryByAcronym(rule.getCountry().getAcronym()));
         for (State state : rule.getCountry().getStates()) {
-            if(state.getAcronym().equals(rule.getState().getAcronym())){
+            if (state.getAcronym().equals(rule.getState().getAcronym())) {
                 rule.setState(state);
             }
         }
@@ -136,9 +169,12 @@ public class ApplicantHarmonizationController implements Serializable {
         flash.put("success", "Regra criada com sucesso");
         return "listRule";
     }
-
+    
     public void loadSugestions() {
         String[] names = new String[selectedApplicants.size()];
+        
+        selectedRadio = selectedApplicants.get(0);
+        onSelectApplicantFill();
         int i = 0;
         for (Applicant pa : selectedApplicants) {
             names[i] = pa.getName();
@@ -150,9 +186,9 @@ public class ApplicantHarmonizationController implements Serializable {
             aplicants.add(new Applicant(sugestion));
         }
         setApplicantSugestions(new ArrayList<SelectObject<Applicant>>(SelectObject.convertToSelectObjects(aplicants)));
-        System.out.println("terminou !");
+        
     }
-
+    
     public void metodo(Applicant pa) {
         if (selectedApplicants.contains(pa)) {
             pa.setSelected(true);
@@ -160,62 +196,78 @@ public class ApplicantHarmonizationController implements Serializable {
             pa.setSelected(false);
         }
     }
-
+    
     public DataModel<Applicant> getApplicants() {
-
+        
         return applicants;
     }
-
+    
     public void setApplicants(LazyApplicantDataModel applicants) {
         this.applicants = applicants;
     }
-
+    
     public List<Applicant> getSelectedApplicants() {
         return selectedApplicants;
     }
-
+    
     public void setSelectedApplicants(List<Applicant> selectedApplicants) {
         this.selectedApplicants = selectedApplicants;
     }
-
+    
     public Rule getRule() {
         return rule;
     }
-
+    
     public void setRule(Rule rule) {
         this.rule = rule;
     }
-
+    
     public List<SelectObject<Applicant>> getApplicantSugestions() {
         return applicantSugestions;
     }
-
+    
     public void setApplicantSugestions(List<SelectObject<Applicant>> applicantSugestions) {
         this.applicantSugestions = applicantSugestions;
     }
-
+    
     public List<Country> getCountries() {
         return countries;
     }
-
+    
     public void setCountries(List<Country> countries) {
         this.countries = countries;
     }
-
+    
     public List<ApplicantType> getApplicantTypes() {
         return applicantTypes;
     }
-
+    
     public void setApplicantTypes(List<ApplicantType> applicantTypes) {
         this.applicantTypes = applicantTypes;
     }
-
+    
     public List<State> getStates() {
         return states;
     }
-
+    
     public void setStates(List<State> states) {
         this.states = states;
+    }
+    
+    public Applicant getSelectedRadio() {
+        return selectedRadio;
+    }
+    
+    public void setSelectedRadio(Applicant selectedRadio) {
+        this.selectedRadio = selectedRadio;
+    }
+    
+    public List<SelectObject<Applicant>> getSelectedsApplicantSugestions() {
+        return selectedsApplicantSugestions;
+    }
+    
+    public void setSelectedsApplicantSugestions(List<SelectObject<Applicant>> selectedsApplicantSugestions) {
+        this.selectedsApplicantSugestions = selectedsApplicantSugestions;
     }
     
 }

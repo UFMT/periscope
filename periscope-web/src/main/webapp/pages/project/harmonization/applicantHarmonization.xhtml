@@ -50,6 +50,9 @@
                 <p:column headerText="Nome" sortBy="#{pa.name}" filterBy="#{pa.name}">														
                     #{pa.name}					
                 </p:column>
+                <p:column headerText="#{msgs['acronym']}">	
+                    #{pa.acronym}					
+                </p:column>
                 <p:column headerText="Pais" sortBy="#{pa.country.name}">														
                     #{pa.country == null ? '' : pa.country.name}					
                 </p:column >
@@ -78,12 +81,16 @@
                 <p:columnGroup type="header">
                     <p:row>					
                         <p:column rowspan="2" headerText="Nome" sortBy="#{pa.name}"/>
+                        <p:column rowspan="2" headerText="#{msgs['acronym']}" />
                         <p:column rowspan="2" headerText="Pais" />
                         <p:column rowspan="2" headerText="Docs" sortBy="#{pa.documentCount}"/>				
                     </p:row>
                 </p:columnGroup>		
                 <p:column>														
                     #{pa.name}					
+                </p:column>
+                <p:column>														
+                    #{pa.acronym}					
                 </p:column>
                 <p:column>														
                     #{pa.country == null ? '' : pa.country.name}					

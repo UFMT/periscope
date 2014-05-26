@@ -107,6 +107,9 @@ public class Rule implements Serializable {
     }
 
     public State getState() {
+        if(state == null){
+            state = new State();
+        }
         return state;
     }
 
