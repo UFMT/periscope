@@ -77,15 +77,19 @@
             <from-outcome>priorityDate</from-outcome>
             <to-view-id>/pages/project/report/allReports/priorityDate.xhtml</to-view-id>
         </navigation-case>
-         <navigation-case>
+        <navigation-case>
+            <from-outcome>publicationDate</from-outcome>
+            <to-view-id>/pages/project/report/allReports/publicationDate.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
             <from-outcome>natureApplicant</from-outcome>
             <to-view-id>/pages/project/report/allReports/natureApplicant.xhtml</to-view-id>
         </navigation-case>
-         <navigation-case>
+        <navigation-case>
             <from-outcome>stateDistribuition</from-outcome>
             <to-view-id>/pages/project/report/allReports/stateDistribuition.xhtml</to-view-id>
         </navigation-case>
-         <navigation-case>
+        <navigation-case>
             <from-outcome>regionDistribuition</from-outcome>
             <to-view-id>/pages/project/report/allReports/regionalDistribuition.xhtml</to-view-id>
         </navigation-case>

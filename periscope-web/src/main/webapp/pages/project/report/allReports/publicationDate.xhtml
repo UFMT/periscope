@@ -1,40 +1,75 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:i="http://www.periscope.com/jsf"
+      xmlns:f="http://java.sun.com/jsf/core">
 
 
-<ui:composition template="/template/template.xhtml">
+    <ui:composition template="/template/template.xhtml">
 
-	<ui:define name="growl"></ui:define>
+        <ui:define name="growl"></ui:define>
 
-	<ui:define name="content">
+        <ui:define name="content">
 
-		<h1>Data de Prioridade</h1>
-		<h:panelGrid columns="2">
+            <h:form id="chart" styleClass="container">
 
-			<h:column>
-				<p:graphicImage />
-				<p:graphicImage />
-			</h:column>
+                <h1>Publicações / #{msgs['year']}</h1>
+                <br/>
+                <p:selectBooleanCheckbox id="complete" itemLabel="#{msgs['completo']}"
+                                         value="#{publicantDateReport.filtro.complete}">
+                    <p:ajax update="tudo" 
+                            listener="#{publicantDateReport.refreshChart()}" />
+                </p:selectBooleanCheckbox>
 
-			<h:column>
+                <h:outputScript library="js" name="locales.js"></h:outputScript>
 
-				<p:dataTable emptyMessage="Nenhum depositante cadastrado.">
+                <h:panelGrid columns="5" cellpadding="4">  
 
-					<p:column headerText="#{msgs['year']}" />
+                    <h:outputText value="Inicial:"/>
+                    <p:calendar  value="#{publicantDateReport.filtro.inicio}" maxlength="10" mindate="#{publicantDateReport.minDate}" maxdate="#{publicantDateReport.maxDate}" locale="#{msgs['calendar']}" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
+                    </p:calendar>
 
-					<p:column headerText="#{msgs['documents.number']}" />
+                    <h:outputText value="Final:"/>
+                    <p:calendar value="#{publicantDateReport.filtro.fim}" maxlength="10" mindate="#{publicantDateReport.minDate}" maxdate="#{publicantDateReport.maxDate}" locale="#{msgs['calendar']}" showButtonPanel="false" navigator="true" pattern="dd/MM/yyyy">
+                    </p:calendar>
 
-				</p:dataTable>
-			</h:column>
+                    <p:commandButton action="#{publicantDateReport.refreshChart()}" update="tudo" value="Pesquisar"></p:commandButton>
+                </h:panelGrid>
 
-		</h:panelGrid>
 
-	</ui:define>
 
-</ui:composition>
+                <h:panelGrid id="tudo" columns="2" styleClass="container">
+
+
+                    <p:lineChart id="line" value="#{publicantDateReport.model}" rendered="#{publicantDateReport.model.series.get(0).getData().size()!=0}"
+                                 legendPosition="e" title="Número de depositos por ano"/>
+
+                    <h:column>
+                        <p:graphicImage />
+                        <p:graphicImage />
+                    </h:column>
+
+                    <h:column>
+                        <p:dataTable emptyMessage="Nenhum depositante cadastrado." var="pair" value="#{publicantDateReport.pairs}"
+                                     >
+
+                            <p:column headerText="#{msgs['year']}">
+                                <h:outputText value="#{pair.key}" />
+                            </p:column>
+
+                            <p:column headerText="#{msgs['documents.number']}">
+                                <h:outputText value="#{pair.value}" />
+                            </p:column>
+
+                        </p:dataTable>
+                    </h:column>
+
+                </h:panelGrid>
+            </h:form>
+        </ui:define>
+
+    </ui:composition>
 </html>
