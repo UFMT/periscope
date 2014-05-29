@@ -88,7 +88,7 @@
                                 <p:outputLabel value="#{msgs['patent.applicants']}"/>
                                 <p:dataTable id="deleteApplicants" var="applicant" style="font-size:10px"
                                              emptyMessage="#{msg['no.applicant']}"
-                                             value="#{patentController.selectedPatent.applicants}" paginator="true"
+                                             value="#{patentController.applicants.selectedApplicants}" paginator="true"
                                              paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
                                              >
                                     <p:column headerText="#{msgs['name']}" sortBy="#{applicant.name}">														
@@ -111,21 +111,21 @@
 
                             <h:column>
                                 <p:outputLabel value="#{msgs['applicants.available']}"/>
-                                <p:dataTable id="addApplicants" var="applicant" style="font-size:10px"
-                                             emptyMessage="#{msgs['no.applicant']}"
+                                <p:dataTable id="addApplicants" var="ap" style="font-size:10px"
+                                             emptyMessage="#{msgs['no.applicant']}" lazy="true"
                                              value="#{patentController.applicants}" paginator="true"
                                              paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
                                              >
-                                    <p:column headerText="#{msgs['name']}" sortBy="#{applicant.name}">														
-                                        #{applicant.name}
+                                    <p:column headerText="#{msgs['name']}" sortBy="#{ap.name}" >														
+                                        #{ap.name}
                                     </p:column>
-                                    <p:column headerText="#{msgs['country']}" sortBy="#{applicant.country.acronym}">														
-                                        #{applicant.country.acronym}
+                                    <p:column headerText="#{msgs['country']}" sortBy="#{ap.country.acronym}" >														
+                                        #{ap.country.acronym}
                                     </p:column>
                                     <p:column>														
                                         <p:commandButton value="#{msgs['link']}" ajax="false" 
                                                          update="applicants" 
-                                                         action="#{patentController.addApplicant(applicant)}"/>
+                                                         action="#{patentController.addApplicant(ap)}"/>
                                     </p:column>
                                 </p:dataTable>
                             </h:column>
@@ -187,20 +187,20 @@
 
                             <h:column>
                                 <p:outputLabel value="#{msgs['inventors.available']}"/>
-                                <p:dataTable id="addInventors" var="inventor" style="font-size:10px"
-                                             emptyMessage="#{msgs['no.inventor']}"
+                                <p:dataTable id="addInventors" var="inv" style="font-size:10px"
+                                             emptyMessage="#{msgs['no.inventor']}" lazy="true"
                                              value="#{patentController.inventors}" paginator="true"
                                              paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
                                              >
-                                    <p:column headerText="#{msgs['name']}" sortBy="#{inventor.name}">														
-                                        #{inventor.name}
+                                    <p:column headerText="#{msgs['name']}" sortBy="#{inv.name}">														
+                                        #{inv.name}
                                     </p:column>
-                                    <p:column headerText="#{msgs['country']}" sortBy="#{inventor.country.acronym}">														
-                                        #{inventor.country.acronym}
+                                    <p:column headerText="#{msgs['country']}" sortBy="#{inv.country.acronym}" >
+                                        #{inv.country.acronym}
                                     </p:column>
                                     <p:column>														
                                         <p:commandButton value="#{msgs['link']}" ajax="false" update="inventors" 
-                                                         action="#{patentController.addInventor(inventor)}"/>
+                                                         action="#{patentController.addInventor(inv)}"/>
                                     </p:column>
                                 </p:dataTable>
                             </h:column>

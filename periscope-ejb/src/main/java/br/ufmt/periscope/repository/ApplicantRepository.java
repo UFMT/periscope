@@ -65,6 +65,7 @@ public class ApplicantRepository {
     private @Inject
     Project currentProject;
     private int count;
+    private List<Applicant> list;
 
     public Applicant getApplicantByName(String name) {
 
@@ -244,7 +245,7 @@ public class ApplicantRepository {
 
     }
 
-    public List<Applicant> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters) {
+    public List<Applicant> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters, List<Applicant> list) {
 
         ArrayList<DBObject> parametros = new ArrayList<DBObject>();
 
@@ -265,7 +266,18 @@ public class ApplicantRepository {
             matchFilterItem.put("applicants." + column, regex);
         }
         DBObject matchFilter = new BasicDBObject();
+        if (list != null){
+            BasicDBList lista = new BasicDBList();
+            List<String> t = new ArrayList<String>();
+            for (Applicant ap : list) {
+                t.add(ap.getName());
+            }
+            lista.addAll(t);
+            matchFilterItem.put("applicants.name", new BasicDBObject("$nin", lista));
+        }
         matchFilter.put("$match", matchFilterItem);
+        
+        
         parametros.add(matchFilter);
 
         DBObject idData = new BasicDBObject("name", "$applicants.name");
@@ -310,6 +322,8 @@ public class ApplicantRepository {
         match.put("$match", matchProj);
 
         AggregationOutput outputTotal = ds.getCollection(Patent.class).aggregate(match, unwind, matchFilter, group, groupTotal);
+        System.out.println("CHEGOU AQUI");
+        System.out.println(outputTotal.getCommand().toString());
 
         BasicDBList outputListTotal = (BasicDBList) outputTotal.getCommandResult().get("result");
         for (Object patent : outputListTotal) {
@@ -369,6 +383,10 @@ public class ApplicantRepository {
 
         return datasource;
     }
+    
+    public List<Applicant> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters){
+        return load(first, pageSize, sortField, sortOrder, filters, null);
+    }
 
     public int getCount() {
         return count;
@@ -385,4 +403,14 @@ public class ApplicantRepository {
     public void setCurrentProject(Project currentProject) {
         this.currentProject = currentProject;
     }
+
+    public List<Applicant> getList() {
+        return list;
+    }
+
+    public void setList(List<Applicant> list) {
+        this.list = list;
+    }
+    
+    
 }

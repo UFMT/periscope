@@ -39,7 +39,7 @@ public class LazyInventorDataModel extends LazyDataModel<Inventor> {
 
     @Override
     public List<Inventor> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
-        datasource = inventorRepository.load(first, pageSize, sortField, sortOrder.ordinal(), filters);
+        datasource = inventorRepository.load(first, pageSize, sortField, sortOrder.ordinal(), filters, this.selectedInventors);
         setRowCount(inventorRepository.getCount());
         for (Inventor inventor : datasource) {
             if (this.selectedInventors.contains(inventor)) {

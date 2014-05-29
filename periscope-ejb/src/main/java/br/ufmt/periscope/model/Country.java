@@ -2,12 +2,13 @@ package br.ufmt.periscope.model;
 
 import com.github.jmkgreen.morphia.annotations.Embedded;
 import com.github.jmkgreen.morphia.annotations.Entity;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Embedded
 @Entity
-public class Country implements Comparable<Country> {
+public class Country implements Serializable, Comparable<Country> {
 
     private String acronym;
     private String name;

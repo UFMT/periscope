@@ -115,7 +115,7 @@ public class Applicant implements Serializable, Comparable<Applicant> {
                 } else if (this.country == null) {
                     return true;
                 }
-                return true;
+                return false;
             }
         }
         return false;

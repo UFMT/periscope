@@ -39,10 +39,12 @@ public class LazyApplicantDataModel extends LazyDataModel<Applicant> {
 
     @Override
     public List<Applicant> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
-        datasource = applicantRepository.load(first, pageSize, sortField, sortOrder.ordinal(), filters);
+        datasource = applicantRepository.load(first, pageSize, sortField, sortOrder.ordinal(), filters, this.selectedApplicants);
         setRowCount(applicantRepository.getCount());
         for (Applicant applicant : datasource) {
+            System.out.println(applicant.getName()+" "+applicant.getCountry().getAcronym());
             if (this.selectedApplicants.contains(applicant)) {
+                
                 applicant.setSelected(true);
             }
         }

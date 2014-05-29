@@ -1,24 +1,17 @@
 package br.ufmt.periscope.controller;
 
+import br.ufmt.periscope.lazy.LazyApplicantDataModel;
+import br.ufmt.periscope.lazy.LazyInventorDataModel;
 import br.ufmt.periscope.lazy.LazyPatentDataModel;
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Country;
 import br.ufmt.periscope.model.Files;
 import br.ufmt.periscope.model.Inventor;
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.model.DataModel;
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Priority;
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.qualifier.CurrentProject;
-import br.ufmt.periscope.repository.ApplicantRepository;
 import br.ufmt.periscope.repository.CountryRepository;
-import br.ufmt.periscope.repository.InventorRepository;
 import br.ufmt.periscope.repository.PatentRepository;
 import com.mongodb.gridfs.GridFS;
 import com.mongodb.gridfs.GridFSDBFile;
@@ -30,18 +23,21 @@ import java.io.InputStream;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.faces.model.DataModel;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import org.bson.types.ObjectId;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
-/**
- *
- * @author PH
- */
 @ManagedBean
 @ViewScoped
 public class PatentController {
@@ -51,7 +47,8 @@ public class PatentController {
     Project currentProject;
     private @Inject
     PatentRepository patentRepository;
-    private @Inject LazyPatentDataModel patents;
+    private @Inject
+    LazyPatentDataModel patents;
     private String type = "complete";
     private String[] filters = {"complete", "incomplete", "darklist"};
     private int totalCount = 0;
@@ -61,11 +58,9 @@ public class PatentController {
     CountryRepository countryRepository;
     private List<Country> countries = new ArrayList<Country>();
     private @Inject
-    ApplicantRepository applicantRepository;
-    private List<Applicant> applicants = new ArrayList<Applicant>();
+    LazyApplicantDataModel applicants;
     private @Inject
-    InventorRepository inventorRepository;
-    private List<Inventor> inventors = new ArrayList<Inventor>();
+    LazyInventorDataModel inventors;
     private @Inject
     Applicant newApplicant;
     private @Inject
@@ -118,17 +113,16 @@ public class PatentController {
      * Controller constructor<BR/>
      * Loads project's patents, countries, applicants and inventors
      *
-     * @throws UnknownHostException
      */
     @PostConstruct
-    public void init(){
+    public void init() {
         patents.getRepo().setBlacklisted(false);
         patents.getRepo().setCompleted(false);
         patents.getRepo().setCurrentProject(currentProject);
         totalCount = patents.getRowCount();
         countries = countryRepository.getAll();
-        applicants = applicantRepository.getApplicants(currentProject);
-        inventors = inventorRepository.getInventors(currentProject);
+        applicants.getApplicantRepository().setCurrentProject(currentProject);
+        inventors.getInventorRepository().setCurrentProject(currentProject);
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest req = (HttpServletRequest) context.getExternalContext().getRequest();
         System.out.println("edit");
@@ -143,16 +137,11 @@ public class PatentController {
     }
 
     public void updateApplicants() {
-        for (int i = 0; i < selectedPatent.getApplicants().size(); i++) {
-            applicants.remove(selectedPatent.getApplicants().get(i));
-        }
+        applicants.setSelectedApplicants(selectedPatent.getApplicants());
     }
 
     public void updateInventors() {
-        for (int i = 0; i < selectedPatent.getInventors().size(); i++) {
-            inventors.remove(selectedPatent.getInventors().get(i));
-
-        }
+        inventors.setSelectedInventors(selectedPatent.getInventors());
     }
 
     /**
@@ -161,6 +150,8 @@ public class PatentController {
      * @return
      */
     public String save() {
+        selectedPatent.setApplicants(applicants.getSelectedApplicants());
+        selectedPatent.setInventors(inventors.getSelectedInventors());
         patentRepository.savePatent(selectedPatent);
         return "listPatent";
     }
@@ -211,11 +202,12 @@ public class PatentController {
      * @return
      */
     public String newApplicant() {
-        List<Applicant> list = selectedPatent.getApplicants();
         newApplicant.setCountry(countryRepository.getCountryByAcronym(newApplicant.getCountry().getAcronym()));
-        if (!selectedPatent.getApplicants().contains(newApplicant) || !applicants.contains(newApplicant)) {
-            list.add(newApplicant);
-            selectedPatent.setApplicants(list);
+        if (!selectedPatent.getApplicants().contains(newApplicant) /**
+                 * || !applicants.contains(newApplicant)*
+                 */
+                ) {
+            applicants.getSelectedApplicants().add(newApplicant);
         }
         return "";
     }
@@ -227,10 +219,7 @@ public class PatentController {
      * @return
      */
     public String addApplicant(Applicant applicant) {
-        List<Applicant> list = selectedPatent.getApplicants();
-        applicants.remove(applicant);
-        list.add(applicant);
-        selectedPatent.setApplicants(list);
+        applicants.getSelectedApplicants().add(applicant);
         return "";
     }
 
@@ -241,10 +230,7 @@ public class PatentController {
      * @return
      */
     public String deleteApplicant(Applicant applicant) {
-        List<Applicant> list = selectedPatent.getApplicants();
-        list.remove(applicant);
-        applicants.add(applicant);
-        selectedPatent.setApplicants(list);
+        applicants.getSelectedApplicants().remove(applicant);
         return "";
     }
 
@@ -263,7 +249,10 @@ public class PatentController {
     public String newInventor() {
         List<Inventor> list = selectedPatent.getInventors();
         newInventor.setCountry(countryRepository.getCountryByAcronym(newInventor.getCountry().getAcronym()));
-        if (!inventors.contains(newInventor) || !selectedPatent.getInventors().contains(newInventor)) {
+        if (/**
+                 * !inventors.contains(newInventor) ||*
+                 */
+                !selectedPatent.getInventors().contains(newInventor)) {
             list.add(newInventor);
             selectedPatent.setInventors(list);
         }
@@ -277,12 +266,7 @@ public class PatentController {
      * @return
      */
     public String addInventor(Inventor inventor) {
-        List<Inventor> list = selectedPatent.getInventors();
-        if (!list.contains(inventor)) {
-            list.add(inventor);
-            inventors.remove(inventor);
-            selectedPatent.setInventors(list);
-        }
+        inventors.getSelectedInventors().add(inventor);
         return "";
     }
 
@@ -293,10 +277,7 @@ public class PatentController {
      * @return
      */
     public String deleteInventor(Inventor inventor) {
-        List<Inventor> list = selectedPatent.getInventors();
-        list.remove(inventor);
-        inventors.add(inventor);
-        selectedPatent.setInventors(list);
+        inventors.getSelectedInventors().remove(inventor);
         return "";
     }
 
@@ -542,7 +523,7 @@ public class PatentController {
      *
      * @return
      */
-    public List<Applicant> getApplicants() {
+    public LazyApplicantDataModel getApplicants() {
         return applicants;
     }
 
@@ -550,7 +531,7 @@ public class PatentController {
      *
      * @param applicants
      */
-    public void setApplicants(List<Applicant> applicants) {
+    public void setApplicants(LazyApplicantDataModel applicants) {
         this.applicants = applicants;
     }
 
@@ -558,7 +539,7 @@ public class PatentController {
      *
      * @return
      */
-    public List<Inventor> getInventors() {
+    public LazyInventorDataModel getInventors() {
         return inventors;
     }
 
@@ -566,7 +547,7 @@ public class PatentController {
      *
      * @param inventors
      */
-    public void setInventors(List<Inventor> inventors) {
+    public void setInventors(LazyInventorDataModel inventors) {
         this.inventors = inventors;
     }
 

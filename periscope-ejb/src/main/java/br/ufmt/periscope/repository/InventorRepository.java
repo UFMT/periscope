@@ -1,21 +1,14 @@
 package br.ufmt.periscope.repository;
 
 import br.ufmt.periscope.indexer.LuceneIndexerResources;
-import br.ufmt.periscope.model.Inventor;
+import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Country;
 import br.ufmt.periscope.model.Inventor;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.model.State;
 import br.ufmt.periscope.report.Pair;
 import br.ufmt.periscope.util.Filters;
-
 import com.github.jmkgreen.morphia.Datastore;
 import com.github.jmkgreen.morphia.mapping.Mapper;
 import com.github.jmkgreen.morphia.mapping.cache.EntityCache;
@@ -27,12 +20,16 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.inject.Inject;
+import javax.inject.Named;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -251,7 +248,7 @@ public class InventorRepository {
 
     }
     
-    public List<Inventor> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters) {
+    public List<Inventor> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters, List<Inventor> list) {
 
         ArrayList<DBObject> parametros = new ArrayList<DBObject>();
 
@@ -272,6 +269,15 @@ public class InventorRepository {
             matchFilterItem.put("inventors." + column, regex);
         }
         DBObject matchFilter = new BasicDBObject();
+        if (list != null){
+            BasicDBList lista = new BasicDBList();
+            List<String> t = new ArrayList<String>();
+            for (Inventor inv : list) {
+                t.add(inv.getName());
+            }
+            lista.addAll(t);
+            matchFilterItem.put("inventors.name", new BasicDBObject("$nin", lista));
+        }
         matchFilter.put("$match", matchFilterItem);
         parametros.add(matchFilter);
 
@@ -368,6 +374,9 @@ public class InventorRepository {
         return datasource;
     }
 
+    public List<Inventor> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters){
+        return load(first, pageSize, sortField, sortOrder, filters, null);
+    }
     public int getCount() {
         return count;
     }
