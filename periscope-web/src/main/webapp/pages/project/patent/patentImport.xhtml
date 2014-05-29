@@ -13,11 +13,13 @@
                 <h:form enctype="multipart/form-data">
                     <p:panel id="pnlImport" header="Importar dados">
 
-                        <p:fileUpload id="fileUpload" label="Escolha o arquivo" auto="true"						
+                        <p:fileUpload id="fileUpload" label="Escolha o arquivo"
+                                      
                                       fileUploadListener="#{importPatentController.handleFileUpload}"
                                       mode="advanced"
                                       allowTypes="/(.csv|.xls)$/"
-                                      update="fileLabel messages fileUpload">
+                                      multiple="true"
+                                      update="messages">
 
                         </p:fileUpload>
 
@@ -44,17 +46,11 @@
                             </p:panel>
                         </h:panelGrid>
                         <br/>					
-                        <p:outputLabel id="fileLabel" style="font-weight:bold"
-                                       value="Arquivo #{importPatentController.fileUploaded != null ? importPatentController.fileUploaded.fileName : 'não '} enviado." />					
-                        <br/>			
-                        <p:commandButton id="btnImport" ajax="#{not empty currentProject.patents}" value="#{msgs['import']}" update="messages :superbody" action="#{importPatentController.importPatents()}"/>
+		
+                        <p:commandButton id="btnImport"  ajax="#{not empty currentProject.patents}" value="#{msgs['import']}" update="messages :superbody" action="#{importPatentController.importPatents()}"/>
                         <p:growl id="messages" showDetail="true" />
                     </p:panel>
 
-                    <p:blockUI block="pnlImport" trigger="btnImport">  
-                        Importando ... <br />  
-                        <p:graphicImage value="/imgs/ajax-loader.gif"/>  
-                    </p:blockUI>
                 </h:form>
             </center>
         </ui:define>
