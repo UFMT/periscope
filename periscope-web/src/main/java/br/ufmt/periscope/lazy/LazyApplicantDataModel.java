@@ -42,7 +42,7 @@ public class LazyApplicantDataModel extends LazyDataModel<Applicant> {
         datasource = applicantRepository.load(first, pageSize, sortField, sortOrder.ordinal(), filters, this.selectedApplicants);
         setRowCount(applicantRepository.getCount());
         for (Applicant applicant : datasource) {
-            System.out.println(applicant.getName()+" "+applicant.getCountry().getAcronym());
+//            System.out.println(applicant.getName()+" "+applicant.getCountry().getAcronym());
             if (this.selectedApplicants.contains(applicant)) {
                 
                 applicant.setSelected(true);

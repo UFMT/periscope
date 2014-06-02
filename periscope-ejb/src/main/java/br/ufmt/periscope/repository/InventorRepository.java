@@ -247,7 +247,7 @@ public class InventorRepository {
         return results;
 
     }
-    
+
     public List<Inventor> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters, List<Inventor> list) {
 
         ArrayList<DBObject> parametros = new ArrayList<DBObject>();
@@ -268,18 +268,21 @@ public class InventorRepository {
             DBObject regex = new BasicDBObject("$regex", value).append("$options", "i");
             matchFilterItem.put("inventors." + column, regex);
         }
+        DBObject matchSearch = new BasicDBObject("$match", matchFilterItem);
+        parametros.add(matchSearch);
+
         DBObject matchFilter = new BasicDBObject();
-        if (list != null){
+        if (list != null) {
             BasicDBList lista = new BasicDBList();
             List<String> t = new ArrayList<String>();
             for (Inventor inv : list) {
                 t.add(inv.getName());
             }
             lista.addAll(t);
-            matchFilterItem.put("inventors.name", new BasicDBObject("$nin", lista));
+            matchFilter.put("inventors.name", new BasicDBObject("$nin", lista));
         }
-        matchFilter.put("$match", matchFilterItem);
-        parametros.add(matchFilter);
+        DBObject matchEdit = new BasicDBObject("$match", matchFilter);
+        parametros.add(matchEdit);
 
         DBObject idData = new BasicDBObject("name", "$inventors.name");
         idData.put("country", "$inventors.country");
@@ -321,7 +324,7 @@ public class InventorRepository {
 
         match.put("$match", matchProj);
 
-        AggregationOutput outputTotal = ds.getCollection(Patent.class).aggregate(match, unwind, matchFilter, group, groupTotal);
+        AggregationOutput outputTotal = ds.getCollection(Patent.class).aggregate(match, unwind, matchEdit, matchSearch, group, groupTotal);
 
         BasicDBList outputListTotal = (BasicDBList) outputTotal.getCommandResult().get("result");
         for (Object patent : outputListTotal) {
@@ -344,7 +347,7 @@ public class InventorRepository {
             if (result.get("acronym") != null) {
                 inventor.setAcronym(result.get("acronym").toString());
             }
-            
+
             DBObject country = (DBObject) result.get("country");
             if (country != null) {
 
@@ -374,9 +377,10 @@ public class InventorRepository {
         return datasource;
     }
 
-    public List<Inventor> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters){
+    public List<Inventor> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters) {
         return load(first, pageSize, sortField, sortOrder, filters, null);
     }
+
     public int getCount() {
         return count;
     }

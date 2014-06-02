@@ -265,6 +265,10 @@ public class ApplicantRepository {
             DBObject regex = new BasicDBObject("$regex", value).append("$options", "i");
             matchFilterItem.put("applicants." + column, regex);
         }
+        DBObject matchSearch = new BasicDBObject("$match", matchFilterItem);
+        parametros.add(matchSearch);
+        
+        
         DBObject matchFilter = new BasicDBObject();
         if (list != null){
             BasicDBList lista = new BasicDBList();
@@ -273,12 +277,12 @@ public class ApplicantRepository {
                 t.add(ap.getName());
             }
             lista.addAll(t);
-            matchFilterItem.put("applicants.name", new BasicDBObject("$nin", lista));
+            matchFilter.put("applicants.name", new BasicDBObject("$nin", lista));
         }
-        matchFilter.put("$match", matchFilterItem);
+        DBObject matchEdit = new BasicDBObject("$match", matchFilter);
+        parametros.add(matchEdit);
         
         
-        parametros.add(matchFilter);
 
         DBObject idData = new BasicDBObject("name", "$applicants.name");
         idData.put("country", "$applicants.country");
@@ -321,7 +325,7 @@ public class ApplicantRepository {
 
         match.put("$match", matchProj);
 
-        AggregationOutput outputTotal = ds.getCollection(Patent.class).aggregate(match, unwind, matchFilter, group, groupTotal);
+        AggregationOutput outputTotal = ds.getCollection(Patent.class).aggregate(match, unwind, matchEdit, matchSearch, group, groupTotal);
         System.out.println("CHEGOU AQUI");
         System.out.println(outputTotal.getCommand().toString());
 
