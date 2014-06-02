@@ -44,7 +44,7 @@
                 <p:column headerText="">					
                     <p:selectBooleanCheckbox id="campo" 
                         value="#{pa.selected}" >
-                        <p:ajax event="change" update=":tabView:formAll:selectedApplicants,@this" listener="#{applicantHarmonizationController.onSelectApplicant(pa)}"/>
+                        <p:ajax event="change" update=":tabView:formAll:selectedApplicants,@this,:#{p:component('panelSugestions')}" listener="#{applicantHarmonizationController.onSelectApplicant(pa)}"/>
                     </p:selectBooleanCheckbox>	
                 </p:column>			
                 <p:column headerText="Nome" sortBy="#{pa.name}" filterBy="#{pa.name}">														

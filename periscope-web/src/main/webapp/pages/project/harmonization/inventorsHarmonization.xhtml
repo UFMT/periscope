@@ -19,7 +19,7 @@
                     <p:column headerText="">					
                         <p:selectBooleanCheckbox id="campo" 
                                 value="#{pa.selected}" >
-                                <p:ajax event="change" update=":tabView:formAl:selectedInventors,@this" listener="#{inventorHarmonizationController.onSelectInventor(pa)}"/>
+                                <p:ajax event="change" update=":tabView:formAl:selectedInventors,@this,:#{p:component('panelSugestions')}" listener="#{inventorHarmonizationController.onSelectInventor(pa)}"/>
                             </p:selectBooleanCheckbox>	
                         </p:column>		
 			<p:column headerText="Nome" sortBy="#{pa.name}" filterBy="#{pa.name}">														

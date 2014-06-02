@@ -213,16 +213,16 @@ public class InventorRepository {
 
                 bq.add(query, BooleanClause.Occur.MUST);
                 bq.add(queryProject, BooleanClause.Occur.MUST);
-                System.out.println(bq);
+//                System.out.println(bq);
 
                 searcher.search(bq, collector);
 
                 ScoreDoc[] hits = collector.topDocs().scoreDocs;
-                System.out.println("Found " + hits.length + " hits.");
+//                System.out.println("Found " + hits.length + " hits.");
                 for (int i = 0; i < hits.length; ++i) {
                     int docId = hits[i].doc;
                     Document d = searcher.doc(docId);
-                    System.out.println((i + 1) + ". " + d.get("inventor") + "\t" + hits[i].score);
+//                    System.out.println((i + 1) + ". " + d.get("inventor") + "\t" + hits[i].score);
                     results.add(d.get("inventor"));
 
                     if (results.size() == top) {

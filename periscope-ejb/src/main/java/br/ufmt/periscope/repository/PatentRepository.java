@@ -16,6 +16,7 @@ import com.github.jmkgreen.morphia.query.Query;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.gridfs.GridFS;
 import java.net.UnknownHostException;
@@ -130,7 +131,9 @@ public class PatentRepository {
             date = "applicationDate";
         }
         System.out.println("Date:" + date);
-        DBCursor dbc = ds.getCollection(Patent.class).find(new BasicDBObject("project.$id", currentProject.getId())).sort(new BasicDBObject(date, 1)).limit(1);
+        BasicDBObject filters =  new BasicDBObject("project.$id", currentProject.getId());
+        filters.put("blacklisted", false);
+        DBCursor dbc = ds.getCollection(Patent.class).find(filters).sort(new BasicDBObject(date, 1)).limit(1);
         Date data = (Date) dbc.next().get(date);
         System.out.println(data);
         return data;
@@ -141,7 +144,9 @@ public class PatentRepository {
         if (selectedDate == 2) {
             date = "applicationDate";
         }
-        DBCursor dbc = ds.getCollection(Patent.class).find(new BasicDBObject("project.$id", currentProject.getId())).sort(new BasicDBObject(date, -1)).limit(1);
+        BasicDBObject filters =  new BasicDBObject("project.$id", currentProject.getId());
+        filters.put("blacklisted", false);
+        DBCursor dbc = ds.getCollection(Patent.class).find(filters).sort(new BasicDBObject(date, -1)).limit(1);
         Date data = (Date) dbc.next().get(date);
         return data;
     }

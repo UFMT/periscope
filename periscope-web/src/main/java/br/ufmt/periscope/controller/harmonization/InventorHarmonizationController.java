@@ -55,7 +55,8 @@ public class InventorHarmonizationController implements Serializable {
 
     private @Inject
     InventorRepository inventorRepository;
-    private @Inject LazyInventorDataModel inventors;
+    private @Inject
+    LazyInventorDataModel inventors;
     private List<Inventor> selectedInventors = new ArrayList<Inventor>();
     private List<SelectObject<Inventor>> inventorSugestions = null;
     private List<Inventor> selectedInventorSugestions = new ArrayList<Inventor>();
@@ -67,6 +68,7 @@ public class InventorHarmonizationController implements Serializable {
     private List<Country> countries = new ArrayList<Country>();
     private List<State> states;
     private Rule rule = new Rule();
+    private Country defaultCountry;
     private String acronymDefault = "BR";
     private Inventor selectedRadio;
 
@@ -78,31 +80,31 @@ public class InventorHarmonizationController implements Serializable {
         selectedInventors.clear();
         inventors.setSelectedInventors(selectedInventors);
 
-        rule.setCountry(countryRepository.getCountryByAcronym(acronymDefault));
-        Country country = countryRepository.getCountryByAcronym(acronymDefault);
-        states = country.getStates();
+        defaultCountry = countryRepository.getCountryByAcronym(acronymDefault);
+        rule.setCountry(defaultCountry);
+        states = defaultCountry.getStates();
         Collections.sort(states);
     }
 
     public void selectListener(ValueChangeEvent event) {
         String acronym = (String) event.getNewValue();
-         searchState(acronym);
+        searchState(acronym);
     }
-    
-    private void searchState(String acronym){
+
+    private void searchState(String acronym) {
         Country country = countryRepository.getCountryByAcronym(acronym);
         states = country.getStates();
         Collections.sort(states);
     }
 
     public void onSelectInventor(Inventor pa) {
-        System.out.println("INVENTOR:"+pa.getSelected());
+//        System.out.println("INVENTOR:"+pa.getSelected());
         if (pa.getSelected()) {
             selectedInventors.add(pa);
         } else {
             selectedInventors.remove(pa);
         }
-        
+
     }
 
     public void onSelectInventorSugestion() {
@@ -115,14 +117,14 @@ public class InventorHarmonizationController implements Serializable {
             }
         }
     }
-    
+
     public void onSelectInventorFill() {
+        rule.setName(null);
+        rule.setAcronym(null);
+        rule.setCountry(defaultCountry);
+        rule.setNature(null);
+        rule.setState(null);
         if (selectedRadio != null) {
-            rule.setName(null);
-            rule.setAcronym(null);
-            rule.setCountry(null);
-            rule.setNature(null);
-            rule.setState(null);
             if (selectedRadio.getName() != null) {
                 rule.setName(selectedRadio.getName());
             }
@@ -134,7 +136,7 @@ public class InventorHarmonizationController implements Serializable {
                 rule.setCountry(selectedRadio.getCountry());
                 searchState(selectedRadio.getCountry().getAcronym());
             }
-            if (selectedRadio.getState()!= null) {
+            if (selectedRadio.getState() != null) {
                 rule.setState(selectedRadio.getState());
             }
         }
@@ -180,7 +182,7 @@ public class InventorHarmonizationController implements Serializable {
         }
         setInventorSugestions(new ArrayList<SelectObject<Inventor>>(SelectObject.convertToSelectObjects(inventores)));
     }
-    
+
     public void metodo(Inventor pa) {
         if (selectedInventors.contains(pa)) {
             pa.setSelected(true);

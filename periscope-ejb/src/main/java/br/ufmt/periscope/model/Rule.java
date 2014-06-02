@@ -87,6 +87,9 @@ public class Rule implements Serializable {
     }
 
     public ApplicantType getNature() {
+        if(nature == null){
+            nature = new ApplicantType();
+        }
         return nature;
     }
 
