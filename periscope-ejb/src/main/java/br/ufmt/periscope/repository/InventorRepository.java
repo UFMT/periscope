@@ -279,7 +279,7 @@ public class InventorRepository {
                 t.add(inv.getName());
             }
             lista.addAll(t);
-            matchFilter.put("inventors.name", new BasicDBObject("$nin", lista));
+            matchFilterItem.put("inventors.name", new BasicDBObject("$nin", lista));
         }
         DBObject matchEdit = new BasicDBObject("$match", matchFilter);
         parametros.add(matchEdit);
@@ -376,8 +376,42 @@ public class InventorRepository {
 
         return datasource;
     }
+    
+    public boolean exists(Inventor inventor){
+        
+        System.out.println("entrou aqui");
+        ArrayList<DBObject> parametros = new ArrayList<DBObject>();
 
-    public List<Inventor> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters) {
+        DBObject matchProj = new BasicDBObject();
+        matchProj.put("project.$id", currentProject.getId());
+        matchProj.put("blacklisted", false);
+        DBObject matchP = new BasicDBObject("$match", matchProj);
+
+        DBObject unwind = new BasicDBObject("$unwind", "$inventors");
+        parametros.add(unwind);
+        
+        DBObject fields = new BasicDBObject("inventors.country.acronym", inventor.getCountry().getAcronym());
+        fields.put("inventors.name", inventor.getName());
+        DBObject match = new BasicDBObject ("$match", fields);
+        parametros.add(match);
+        
+        DBObject idData = new BasicDBObject("name", "$inventors.name");
+        DBObject field = new BasicDBObject("_id", idData);
+        DBObject group = new BasicDBObject("$group", field);
+        parametros.add(group);
+        
+        DBObject[] parameters = new DBObject[parametros.size()];
+        parameters = parametros.toArray(parameters);
+
+        System.out.println("foi antes");
+        AggregationOutput output = ds.getCollection(Patent.class).aggregate(matchP, parameters);
+        
+        BasicDBList outputList = (BasicDBList) output.getCommandResult().get("result");
+        return outputList.size() == 0;
+        
+    }
+    
+    public List<Inventor> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters){
         return load(first, pageSize, sortField, sortOrder, filters, null);
     }
 

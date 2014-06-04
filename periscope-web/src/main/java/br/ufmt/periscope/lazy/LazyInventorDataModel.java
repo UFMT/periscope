@@ -64,4 +64,8 @@ public class LazyInventorDataModel extends LazyDataModel<Inventor> {
     public void setSelectedInventors(List<Inventor> selectedInventors) {
         this.selectedInventors = selectedInventors;
     }
+
+    public boolean verify(Inventor newInventor) {
+        return inventorRepository.exists(newInventor);
+    }
 }

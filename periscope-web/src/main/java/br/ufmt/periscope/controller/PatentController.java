@@ -203,10 +203,15 @@ public class PatentController {
      */
     public String newApplicant() {
         newApplicant.setCountry(countryRepository.getCountryByAcronym(newApplicant.getCountry().getAcronym()));
-        if (!selectedPatent.getApplicants().contains(newApplicant) /**
-                 * || !applicants.contains(newApplicant)*
-                 */
-                ) {
+        if (applicants.verify(newApplicant)){
+            for (Applicant a : applicants.getSelectedApplicants()) {
+                System.out.println("nome: "+a.getName());
+                System.out.println("país: "+a.getCountry().getAcronym());
+                if (a.equals(newApplicant)){
+                    return "";
+                }
+            }
+            System.out.println("Não é igual po !");
             applicants.getSelectedApplicants().add(newApplicant);
         }
         return "";
@@ -247,14 +252,16 @@ public class PatentController {
      * @return
      */
     public String newInventor() {
-        List<Inventor> list = selectedPatent.getInventors();
         newInventor.setCountry(countryRepository.getCountryByAcronym(newInventor.getCountry().getAcronym()));
-        if (/**
-                 * !inventors.contains(newInventor) ||*
-                 */
-                !selectedPatent.getInventors().contains(newInventor)) {
-            list.add(newInventor);
-            selectedPatent.setInventors(list);
+        if (inventors.verify(newInventor)){
+            for (Inventor i : inventors.getSelectedInventors()) {
+                System.out.println("nome: "+i.getName());
+                System.out.println("país: "+i.getCountry().getAcronym());
+                if (i.equals(newInventor)){
+                    return "";
+                }
+            }
+            inventors.getSelectedInventors().add(newInventor);
         }
         return "";
     }

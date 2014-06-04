@@ -31,6 +31,7 @@ import br.ufmt.periscope.model.Country;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.model.State;
+import br.ufmt.periscope.report.Pair;
 import br.ufmt.periscope.util.Filters;
 
 import com.github.jmkgreen.morphia.Datastore;
@@ -390,6 +391,40 @@ public class ApplicantRepository {
     
     public List<Applicant> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters){
         return load(first, pageSize, sortField, sortOrder, filters, null);
+    }
+    
+    public boolean exists(Applicant applicant){
+        
+        System.out.println("entrou aqui");
+        ArrayList<DBObject> parametros = new ArrayList<DBObject>();
+
+        DBObject matchProj = new BasicDBObject();
+        matchProj.put("project.$id", currentProject.getId());
+        matchProj.put("blacklisted", false);
+        DBObject matchP = new BasicDBObject("$match", matchProj);
+
+        DBObject unwind = new BasicDBObject("$unwind", "$applicants");
+        parametros.add(unwind);
+        
+        DBObject fields = new BasicDBObject("applicants.country.acronym", applicant.getCountry().getAcronym());
+        fields.put("applicants.name", applicant.getName());
+        DBObject match = new BasicDBObject ("$match", fields);
+        parametros.add(match);
+        
+        DBObject idData = new BasicDBObject("name", "$applicants.name");
+        DBObject field = new BasicDBObject("_id", idData);
+        DBObject group = new BasicDBObject("$group", field);
+        parametros.add(group);
+        
+        DBObject[] parameters = new DBObject[parametros.size()];
+        parameters = parametros.toArray(parameters);
+
+        System.out.println("foi antes");
+        AggregationOutput output = ds.getCollection(Patent.class).aggregate(matchP, parameters);
+        
+        BasicDBList outputList = (BasicDBList) output.getCommandResult().get("result");
+        return outputList.size() == 0;
+        
     }
 
     public int getCount() {
