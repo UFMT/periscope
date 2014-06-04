@@ -95,7 +95,7 @@ public class Inventor implements Serializable, Comparable<Inventor> {
     public boolean equals(Object o) {
         if (o instanceof Inventor) {
             Inventor inventor = (Inventor) o;
-            if (inventor.name.equals(this.name)) {
+            if (inventor.getName().equals(this.getName())) {
                 if(inventor.country != null){
                     if(inventor.country.getAcronym().equals(this.country.getAcronym())){
                         return true;

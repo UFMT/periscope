@@ -451,5 +451,4 @@ public class ApplicantRepository {
         this.list = list;
     }
     
-    
 }

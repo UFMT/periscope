@@ -107,7 +107,7 @@ public class Applicant implements Serializable, Comparable<Applicant> {
     public boolean equals(Object o) {
         if (o instanceof Applicant) {
             Applicant applicant = (Applicant) o;
-            if (applicant.name.equals(this.name)) {
+            if (applicant.getName().equals(this.getName())) {
                 if (applicant.country != null) {
                     if (applicant.country.getAcronym().equals(this.country.getAcronym())) {
                         return true;
