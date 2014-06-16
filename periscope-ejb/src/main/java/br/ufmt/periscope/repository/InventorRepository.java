@@ -1,7 +1,5 @@
 package br.ufmt.periscope.repository;
 
-import br.ufmt.periscope.indexer.LuceneIndexerResources;
-import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Country;
 import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.model.Patent;
@@ -28,18 +26,19 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.FuzzyQuery;
@@ -233,7 +232,7 @@ public class InventorRepository {
             for (String name : names) {
                 results.remove(name);
             }
-            searcher.close();
+            //searcher.close();
 
             return results;
 

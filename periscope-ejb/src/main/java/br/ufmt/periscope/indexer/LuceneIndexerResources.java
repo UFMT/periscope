@@ -2,16 +2,8 @@ package br.ufmt.periscope.indexer;
 
 import br.ufmt.periscope.model.Project;
 import com.github.jmkgreen.morphia.Datastore;
-import com.github.mongoutils.collections.DBObjectSerializer;
-import com.github.mongoutils.collections.MongoConcurrentMap;
-import com.github.mongoutils.collections.SimpleFieldDBObjectSerializer;
-import com.github.mongoutils.lucene.MapDirectory;
-import com.github.mongoutils.lucene.MapDirectoryEntry;
-import com.github.mongoutils.lucene.MapDirectoryEntrySerializer;
-import com.mongodb.DBCollection;
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.ConcurrentMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.inject.Disposes;
@@ -28,6 +20,7 @@ import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.LockObtainFailedException;
 import org.apache.lucene.store.SimpleFSLockFactory;
 import org.apache.lucene.util.Version;
+
 
 @Named
 public class LuceneIndexerResources {

@@ -3,14 +3,14 @@ package br.ufmt.periscope.indexer;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import org.apache.lucene.analysis.ASCIIFoldingFilter;
+import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilter;
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.CharArraySet;
-import org.apache.lucene.analysis.LowerCaseFilter;
-import org.apache.lucene.analysis.StopFilter;
+import org.apache.lucene.analysis.util.CharArraySet;
+import org.apache.lucene.analysis.core.LowerCaseFilter;
+import org.apache.lucene.analysis.core.StopFilter;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.Tokenizer;
-import org.apache.lucene.analysis.WhitespaceTokenizer;
+import org.apache.lucene.analysis.core.WhitespaceTokenizer;
 
 import org.apache.lucene.util.Version;
 
@@ -23,26 +23,26 @@ public class PatenteeAnalyzer extends Analyzer {
         this.matchVersion = matchVersion;
     }
 
-    @Override
-    public TokenStream tokenStream(String field, Reader reader) {
-        // Get the stopwords set
-        CharArraySet stopWords = this.stopWords();
-        // Iniciate a WhitespaceTokenizer, to remove the stop words in next step
-        Tokenizer source = new WhitespaceTokenizer(Version.LUCENE_36, reader);
-
-        /*
-         * This part will : 
-         * Normalize all characters to lowercase 
-         * Turn accented letters to they ASCII equivalents 
-         * Remove all the stopwords from source
-         * Condense the string
-         * TODO: Remove the punctuation characters
-         */
-        TokenStream sink = new CondenseFilter(new StopFilter(matchVersion, new ASCIIFoldingFilter(
-                new LowerCaseFilter(matchVersion, source)), stopWords));
-        
-        return sink;
-    }
+//    @Override
+//    public TokenStream tokenStream(String field, Reader reader) {
+//        // Get the stopwords set
+//        CharArraySet stopWords = this.stopWords();
+//        // Iniciate a WhitespaceTokenizer, to remove the stop words in next step
+//        Tokenizer source = new WhitespaceTokenizer(Version.LUCENE_36, reader);
+//
+//        /*
+//         * This part will : 
+//         * Normalize all characters to lowercase 
+//         * Turn accented letters to they ASCII equivalents 
+//         * Remove all the stopwords from source
+//         * Condense the string
+//         * TODO: Remove the punctuation characters
+//         */
+//        TokenStream sink = new CondenseFilter(new StopFilter(matchVersion, new ASCIIFoldingFilter(
+//                new LowerCaseFilter(matchVersion, source)), stopWords));
+//        
+//        return sink;
+//    }
 
     /**
      * Create the stop words set
@@ -61,6 +61,11 @@ public class PatenteeAnalyzer extends Analyzer {
         }
         // Return it
         return cstopWords;
+    }
+
+    @Override
+    protected TokenStreamComponents createComponents(String string, Reader reader) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
