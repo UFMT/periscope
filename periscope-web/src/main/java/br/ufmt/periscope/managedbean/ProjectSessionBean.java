@@ -26,7 +26,7 @@ public class ProjectSessionBean implements Serializable {
     private static final long serialVersionUID = -202445705543842694L;
 
     private Datastore ds;
-    private Project projectInstance;
+    private Project openProject, currentProject;
 
     @PostConstruct
     public void init() {
@@ -35,16 +35,16 @@ public class ProjectSessionBean implements Serializable {
 
     public String openProject(String idProject) {
       //  projectInstance = ds.get(Project.class, new ObjectId(idProject));
-        projectInstance = new Project();
         
+        openProject = new Project();
         DBObject resultProject = ds.getCollection(Project.class).findOne(new BasicDBObject("_id", new ObjectId(idProject)), new BasicDBObject("patents", new BasicDBObject("$slice", 1)));
        
-        projectInstance.setDescription((String) resultProject.get("description"));
-        projectInstance.setTitle((String) resultProject.get("title"));
-        projectInstance.setId((ObjectId) resultProject.get("_id"));
-        projectInstance.setIsPublic((Boolean) resultProject.get("isPublic"));
-        projectInstance.setPatents((List<Patent>) resultProject.get("patents"));
-      
+        openProject.setDescription((String) resultProject.get("description"));
+        openProject.setTitle((String) resultProject.get("title"));
+        openProject.setId((ObjectId) resultProject.get("_id"));
+        openProject.setIsPublic((Boolean) resultProject.get("isPublic"));
+        openProject.setPatents((List<Patent>) resultProject.get("patents"));
+       
         if (isProjectSelected()) {
             return "projectHome";
         } else {
@@ -53,14 +53,20 @@ public class ProjectSessionBean implements Serializable {
     }
 
     public boolean isProjectSelected() {
-        return projectInstance != null;
+        return openProject != null;
     }
-
+    
+    private boolean currentProjectIsNull(){
+        return currentProject == null;
+    }
+    
     @Named
     @Produces
     @CurrentProject
     public Project getCurrentProject() {
-        return ds.get(Project.class, projectInstance.getId());
+        if(currentProjectIsNull())
+            currentProject = ds.get(Project.class, openProject.getId());
+        return currentProject;
     }
 
 }
