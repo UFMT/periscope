@@ -64,7 +64,7 @@ public class ProjectSessionBean implements Serializable {
     @Produces
     @CurrentProject
     public Project getCurrentProject() {
-        if(currentProjectIsNull())
+        if(currentProjectIsNull() || !currentProject.getId().equals(openProject.getId()))
             currentProject = ds.get(Project.class, openProject.getId());
         return currentProject;
     }
