@@ -178,7 +178,7 @@ public class ApplicantRepository {
 //                queryBuilder.append("\"" + name + "\"~10 ");
 //            }
 
-            Query queryProject = new QueryParser(Version.LUCENE_36, "project", analyzer)
+            Query queryProject = new QueryParser(Version.LUCENE_47, "project", analyzer)
                     .parse(project.getId().toString());
             queryProject.setBoost(0.1f);
 
@@ -201,7 +201,7 @@ public class ApplicantRepository {
 
                 TopScoreDocCollector collector = TopScoreDocCollector.create(1000, true);
                 BooleanQuery bq = new BooleanQuery();
-                //Query queryPa = new QueryParser(Version.LUCENE_36, "applicant", analyzer)
+                //Query queryPa = new QueryParser(Version.LUCENE_47, "applicant", analyzer)
                 //       .parse(queryBuilder.toString());
                 //queryPa.setBoost(10f);
 

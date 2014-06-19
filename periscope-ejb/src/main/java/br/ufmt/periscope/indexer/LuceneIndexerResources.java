@@ -1,26 +1,25 @@
 package br.ufmt.periscope.indexer;
 
 import br.ufmt.periscope.model.Project;
-import com.github.jmkgreen.morphia.Datastore;
-import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.LockObtainFailedException;
 import org.apache.lucene.store.SimpleFSLockFactory;
 import org.apache.lucene.util.Version;
-
+import com.github.jmkgreen.morphia.Datastore;
+import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
 
 @Named
 public class LuceneIndexerResources {
@@ -99,7 +98,7 @@ public class LuceneIndexerResources {
         Directory dir = null;
         try {
             System.out.println("Titulo do projeto: "+currentProject.getTitle());
-            dir = FSDirectory.open(new File("/home/adrian/periscope"), new SimpleFSLockFactory());
+            dir = FSDirectory.open(new File(System.getProperty("user.home")+"/periscope"), new SimpleFSLockFactory());
         } catch (IOException ex) {
             Logger.getLogger(LuceneIndexerResources.class.getName()).log(Level.SEVERE, null, ex);
         }
