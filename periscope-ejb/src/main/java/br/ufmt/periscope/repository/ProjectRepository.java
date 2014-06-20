@@ -24,6 +24,7 @@ public class ProjectRepository {
 		
 	public List<Project> getProjectList(User user){
 		Query<Project> query = ds.createQuery(Project.class);
+                query.retrievedFields(false,"patents");
                 query.order("title");
                 if (user.getUserLevel().getAccessLevel() != 10) {
                     
@@ -32,7 +33,8 @@ public class ProjectRepository {
                             query.criteria("observers").hasThisElement(user),
                             query.criteria("isPublic").equal(true));
                 }
-		return query.asList();
+                List<Project> projetos = query.asList();
+		return projetos;
 	}
 	
 	public void deleteProject(String id){

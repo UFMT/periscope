@@ -1,30 +1,5 @@
 package br.ufmt.periscope.repository;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import org.apache.lucene.document.Document;
-import org.apache.lucene.index.CorruptIndexException;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.queryParser.QueryParser;
-import org.apache.lucene.search.BooleanClause.Occur;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TopScoreDocCollector;
-import org.apache.lucene.util.Version;
-
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.ApplicantType;
 import br.ufmt.periscope.model.Country;
@@ -33,7 +8,6 @@ import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.model.State;
 import br.ufmt.periscope.report.Pair;
 import br.ufmt.periscope.util.Filters;
-
 import com.github.jmkgreen.morphia.Datastore;
 import com.github.jmkgreen.morphia.mapping.Mapper;
 import com.github.jmkgreen.morphia.mapping.cache.EntityCache;
@@ -46,13 +20,37 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MapReduceCommand;
 import com.mongodb.MapReduceCommand.OutputType;
+import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.inject.Inject;
+import javax.inject.Named;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.index.CorruptIndexException;
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.FuzzyQuery;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TopScoreDocCollector;
+import org.apache.lucene.util.Version;
 
 @Named
 public class ApplicantRepository {
@@ -180,7 +178,7 @@ public class ApplicantRepository {
 //                queryBuilder.append("\"" + name + "\"~10 ");
 //            }
 
-            Query queryProject = new QueryParser(Version.LUCENE_36, "project", analyzer)
+            Query queryProject = new QueryParser(Version.LUCENE_47, "project", analyzer)
                     .parse(project.getId().toString());
             queryProject.setBoost(0.1f);
 
@@ -203,11 +201,11 @@ public class ApplicantRepository {
 
                 TopScoreDocCollector collector = TopScoreDocCollector.create(1000, true);
                 BooleanQuery bq = new BooleanQuery();
-                //Query queryPa = new QueryParser(Version.LUCENE_36, "applicant", analyzer)
+                //Query queryPa = new QueryParser(Version.LUCENE_47, "applicant", analyzer)
                 //       .parse(queryBuilder.toString());
                 //queryPa.setBoost(10f);
 
-                Query query = new FuzzyQuery(new Term("applicant", name), 0.8f);
+                Query query = new FuzzyQuery(new Term("applicant", name));
 
                 bq.add(query, Occur.MUST);
                 bq.add(queryProject, Occur.MUST);
@@ -231,7 +229,7 @@ public class ApplicantRepository {
             for (String name : names) {
                 results.remove(name);
             }
-            searcher.close();
+           // searcher.close();
 
             return results;
 

@@ -3,14 +3,15 @@ package br.ufmt.periscope.indexer;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import org.apache.lucene.analysis.ASCIIFoldingFilter;
+import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilter;
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.CharArraySet;
-import org.apache.lucene.analysis.LowerCaseFilter;
-import org.apache.lucene.analysis.StopFilter;
+import org.apache.lucene.analysis.util.CharArraySet;
+import org.apache.lucene.analysis.core.LowerCaseFilter;
+import org.apache.lucene.analysis.core.StopFilter;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.Tokenizer;
-import org.apache.lucene.analysis.WhitespaceTokenizer;
+import org.apache.lucene.analysis.core.WhitespaceTokenizer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 
 import org.apache.lucene.util.Version;
 
@@ -24,10 +25,7 @@ public class PatenteeAnalyzer extends Analyzer {
     }
 
     @Override
-    public TokenStream tokenStream(String field, Reader reader) {
-        // Get the stopwords set
-        CharArraySet stopWords = this.stopWords();
-        // Iniciate a WhitespaceTokenizer, to remove the stop words in next step
+    protected TokenStreamComponents createComponents(String string, Reader reader) {
         Tokenizer source = new WhitespaceTokenizer(Version.LUCENE_36, reader);
 
         /*
@@ -39,28 +37,9 @@ public class PatenteeAnalyzer extends Analyzer {
          * TODO: Remove the punctuation characters
          */
         TokenStream sink = new CondenseFilter(new StopFilter(matchVersion, new ASCIIFoldingFilter(
-                new LowerCaseFilter(matchVersion, source)), stopWords));
-        
-        return sink;
-    }
+                new LowerCaseFilter(matchVersion, source)), StandardAnalyzer.STOP_WORDS_SET));
 
-    /**
-     * Create the stop words set
-     *
-     * TODO: Change the source, beacause is a String vector from this class
-     *
-     * @return a CharArraySet from stop words
-     */
-    private CharArraySet stopWords() {
-        // Instanciate the CharArraySet
-        CharArraySet cstopWords = new CharArraySet(Version.LUCENE_CURRENT, 2,
-                true);
-        // Get from the souce, here is a Array of strings
-        for (String s : stopWords) {
-            cstopWords.add(s);
-        }
-        // Return it
-        return cstopWords;
+        return new TokenStreamComponents(source,sink);
     }
 
 }

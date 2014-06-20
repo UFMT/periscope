@@ -19,72 +19,79 @@ import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
+import java.util.logging.Level;
+import javax.enterprise.context.RequestScoped;
 
-@Named
+@Named @RequestScoped
 public class PatentIndexer {
 
-	private @Inject IndexWriter writer;
-	private @Inject IndexReader reader;
-	private @Inject Analyzer analyzer;
-	private @Inject Logger log;
-			
-	public void indexPatents(Iterable<Patent> patents){		
-		Iterator<Patent> it = patents.iterator();
-		while(it.hasNext()){
-			Patent p = it.next();
-			if(p == null) continue;
-			indexPatent(p);
-		}		
-	}	
-	
-	public void deleteIndexesForProject(Project project){
-		log.info("Deletando indices para o projeto " +project.getTitle());
-		try {
-			writer.deleteDocuments(new Term("project",project.getId().toString()));			
-			log.info("Indices deletados com sucesso");
-			return;
-		} catch (CorruptIndexException e) {
-			e.printStackTrace();
-		} catch (IOException e) {		
-			e.printStackTrace();
-		}	
-		log.info("Ocorreu algum erro deletando os indices.");
-	}
-	
+    private @Inject
+    IndexWriter writer;
+    private @Inject
+    IndexReader reader;
+    private @Inject
+    Analyzer analyzer;
+    private @Inject
+    Logger log;
+
+    public void indexPatents(Iterable<Patent> patents) {
+        Iterator<Patent> it = patents.iterator();
+        while (it.hasNext()) {
+            Patent p = it.next();
+            if (p == null) {
+                continue;
+            }
+            indexPatent(p);
+        }
+    }
+
+    public void deleteIndexesForProject(Project project) {
+        log.info("Deletando indices para o projeto " + project.getTitle());
+        try {
+            writer.deleteDocuments(new Term("project", project.getId().toString()));
+            log.info("Indices deletados com sucesso");
+            return;
+        } catch (CorruptIndexException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        log.info("Ocorreu algum erro deletando os indices.");
+    }
+
 //	public void updateIndexPatent(Patent p){
 //		indexPatent(p);
 //	}
-	
-	private void indexPatent(Patent p) {
-		Document doc = new Document();	    
-    			
-		doc.add(new Field("id",p.getPublicationNumber()+p.getProject().getId().toString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
-    	doc.add(new Field("publicationNumber",p.getPublicationNumber(), Field.Store.YES, Field.Index.ANALYZED));
-    	doc.add(new Field("project",p.getProject().getId().toString(), Field.Store.YES, Field.Index.ANALYZED));
-    	doc.add(new Field("titleSelect",p.getTitleSelect(), Field.Store.YES, Field.Index.ANALYZED));    	
-    	if(p.getAbstractSelect() != null)
-    		doc.add(new Field("abstractSelect",p.getAbstractSelect(), Field.Store.YES, Field.Index.ANALYZED));
-    	
-    	for(Applicant pa : p.getApplicants()){
-    		doc.add(new Field("applicant", pa.getName(), Field.Store.YES, Field.Index.ANALYZED));
-    	}
-    	
-    	for(Inventor pi : p.getInventors()){
-    		doc.add(new Field("inventor", pi.getName(), Field.Store.YES, Field.Index.ANALYZED));
-    	}
-    	
-    	try {
-    		Term key = new Term("id",doc.get("id"));
-    		//writer.updateDocument(key, doc); 		
-    	    writer.deleteDocuments(key);    	    
-			writer.addDocument(doc);
-			//writer.commit();
-			
-		} catch (CorruptIndexException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
+    private void indexPatent(Patent p) {
+        Document doc = new Document();
+
+        doc.add(new Field("id", p.getPublicationNumber() + p.getProject().getId().toString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+        doc.add(new Field("publicationNumber", p.getPublicationNumber(), Field.Store.YES, Field.Index.ANALYZED));
+        doc.add(new Field("project", p.getProject().getId().toString(), Field.Store.YES, Field.Index.ANALYZED));
+        doc.add(new Field("titleSelect", p.getTitleSelect(), Field.Store.YES, Field.Index.ANALYZED));
+        if (p.getAbstractSelect() != null) {
+            doc.add(new Field("abstractSelect", p.getAbstractSelect(), Field.Store.YES, Field.Index.ANALYZED));
+        }
+
+        for (Applicant pa : p.getApplicants()) {
+            doc.add(new Field("applicant", pa.getName(), Field.Store.YES, Field.Index.ANALYZED));
+        }
+
+        for (Inventor pi : p.getInventors()) {
+            doc.add(new Field("inventor", pi.getName(), Field.Store.YES, Field.Index.ANALYZED));
+        }
+
+ 
+            Term key = new Term("id", doc.get("id"));
+        try {
+            //writer.updateDocument(key, doc);
+            writer.deleteDocuments(key);
+            writer.addDocument(doc);
+        } catch (IOException ex) {
+            Logger.getLogger(PatentIndexer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+ 
+    }
+
 }
