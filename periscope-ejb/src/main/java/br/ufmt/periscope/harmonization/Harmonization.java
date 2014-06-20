@@ -54,27 +54,24 @@ public class Harmonization {
         DBObject dbObjectCountry = mapper.toDBObject(rule.getCountry());
         DBObject dbObjectState = mapper.toDBObject(rule.getState());
         DBObject dbObjectNature = mapper.toDBObject(rule.getNature());
-        String applicants[] = new String[rule.getSubstitutions().size()];
-        applicants = rule.getSubstitutions().toArray(applicants);
-        for (int i = 0; i < applicants.length; i++) {
-            
-            DBObject query = BasicDBObjectBuilder
-                    .start("project.$id", projectId)
-                    .add("applicants.name", applicants[i])
-                    .get();
-            DBObject updateOp = BasicDBObjectBuilder
-                    .start("$set",
-                    BasicDBObjectBuilder
-                    .start("applicants.$.name", rule.getName())
-                    .add("applicants.$.country", dbObjectCountry)
-                    .add("applicants.$.state", dbObjectState)
-                    .add("applicants.$.nature", dbObjectNature)
-                    .add("applicants.$.acronym", rule.getAcronym())
-                    .get())
-                    .get();
+        DBObject query = BasicDBObjectBuilder
+                .start("project.$id", projectId)
+                .add("applicants.name", BasicDBObjectBuilder
+                        .start("$in", rule.getSubstitutions())
+                        .get())
+                .get();
+        DBObject updateOp = BasicDBObjectBuilder
+                .start("$set",
+                        BasicDBObjectBuilder
+                        .start("applicants.$.name", rule.getName())
+                        .add("applicants.$.country", dbObjectCountry)
+                        .add("applicants.$.state", dbObjectState)
+                        .add("applicants.$.nature", dbObjectNature)
+                        .add("applicants.$.acronym", rule.getAcronym())
+                        .get())
+                .get();
 
-            ds.getCollection(Patent.class).updateMulti(query, updateOp);
-        }
+        ds.getCollection(Patent.class).updateMulti(query, updateOp);
 
         List<Patent> patents = patentRepository.getAllPatents(rule.getProject());
         indexer.indexPatents(patents);
@@ -89,30 +86,24 @@ public class Harmonization {
         DBObject dbObjectCountry = mapper.toDBObject(rule.getCountry());
         DBObject dbObjectState = mapper.toDBObject(rule.getState());
         DBObject dbObjectNature = mapper.toDBObject(rule.getNature());
-        for (String string : rule.getSubstitutions()) {
-            System.out.println(string);
-        }
-        String inventors[] = new String[rule.getSubstitutions().size()];
-        inventors = rule.getSubstitutions().toArray(inventors);
-        for (int i = 0; i < inventors.length; i++) {
+        DBObject query = BasicDBObjectBuilder
+                .start("project.$id", projectId)
+                .add("inventors.name", BasicDBObjectBuilder
+                        .start("$in", rule.getSubstitutions())
+                        .get())
+                .get();
+        DBObject updateOp = BasicDBObjectBuilder
+                .start("$set",
+                        BasicDBObjectBuilder
+                        .start("inventors.$.name", rule.getName())
+                        .add("inventors.$.country", dbObjectCountry)
+                        .add("inventors.$.state", dbObjectState)
+                        .add("inventors.$.nature", dbObjectNature)
+                        .add("inventors.$.acronym", rule.getAcronym())
+                        .get())
+                .get();
 
-            DBObject query = BasicDBObjectBuilder
-                    .start("project.$id", projectId)
-                    .add("inventors.name", inventors[i])
-                    .get();
-            DBObject updateOp = BasicDBObjectBuilder
-                    .start("$set",
-                    BasicDBObjectBuilder
-                    .start("inventors.$.name", rule.getName())
-                    .add("inventors.$.country", dbObjectCountry)
-                    .add("inventors.$.state", dbObjectState)
-                    .add("inventors.$.nature", dbObjectNature)
-                    .add("inventors.$.acronym", rule.getAcronym())
-                    .get())
-                    .get();
-            ds.getCollection(Patent.class).updateMulti(query, updateOp);
-        }
-
+        ds.getCollection(Patent.class).updateMulti(query, updateOp);
 
         List<Patent> patents = patentRepository.getAllPatents(rule.getProject());
         indexer.indexPatents(patents);

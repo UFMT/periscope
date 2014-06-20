@@ -334,7 +334,7 @@ public class InventorRepository {
         }
 
         AggregationOutput output = ds.getCollection(Patent.class).aggregate(match, parameters);
-//        System.out.println(output.getCommand().toString());
+        System.out.println(output.getCommand().toString());
         BasicDBList outputList = (BasicDBList) output.getCommandResult().get("result");
 
 //        this.setCount(output.);

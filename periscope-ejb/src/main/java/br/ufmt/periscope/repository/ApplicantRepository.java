@@ -327,7 +327,8 @@ public class ApplicantRepository {
         match.put("$match", matchProj);
 
         AggregationOutput outputTotal = ds.getCollection(Patent.class).aggregate(match, unwind, matchEdit, matchSearch, group, groupTotal);
-        
+        System.out.println("CHEGOU AQUI");
+        System.out.println(outputTotal.getCommand().toString());
 
         BasicDBList outputListTotal = (BasicDBList) outputTotal.getCommandResult().get("result");
         for (Object patent : outputListTotal) {
@@ -337,7 +338,7 @@ public class ApplicantRepository {
         }
 
         AggregationOutput output = ds.getCollection(Patent.class).aggregate(match, parameters);
-//        System.out.println(output.getCommand().toString());
+        System.out.println(output.getCommand().toString());
         BasicDBList outputList = (BasicDBList) output.getCommandResult().get("result");
 
 //        this.setCount(output.);
