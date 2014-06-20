@@ -11,7 +11,7 @@
             <h:form>
 
                 <p:panelMenu style="width:95%">									
-                    <p:submenu label="#{msgs['reports']}" icon="ui-icon-clipboard" rendered="#{not empty currentProject.patents}"> 					
+                    <p:submenu label="#{msgs['reports']}" icon="ui-icon-clipboard" rendered="#{not sidebarController.emptyPatent}"> 					
 
                         <p:submenu label="#{msgs['overview']}" icon="ui-icon-clipboard" > 					
 
@@ -57,13 +57,13 @@
                     <p:submenu label="#{msgs['patents']}" icon="ui-icon-clipboard" > 					
 
                         <p:menuitem value="#{msgs['list']}" action="listPatent"  
-                                    icon="ui-icon-clock" ajax="false" rendered="#{not empty currentProject.patents}"/>
+                                    icon="ui-icon-clock" ajax="false" rendered="#{not sidebarController.emptyPatent}"/>
 
                         <p:menuitem value="Importar dados" action="importPatent"
                                     icon="ui-icon-refresh" ajax="false" rendered="#{currentProject.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or currentProject.observers.contains(currentUser)}" />
 
                         <p:menuitem value="Harmonizar dados" action="harmonizationHome"
-                                    icon="ui-icon-refresh" ajax="false" rendered="#{(currentProject.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or currentProject.observers.contains(currentUser)) and (not empty currentProject.patents)}"/>
+                                    icon="ui-icon-refresh" ajax="false" rendered="#{(currentProject.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or currentProject.observers.contains(currentUser)) and (not sidebarController.emptyPatent)}"/>
                     </p:submenu>				
                 </p:panelMenu>		
             </h:form>
