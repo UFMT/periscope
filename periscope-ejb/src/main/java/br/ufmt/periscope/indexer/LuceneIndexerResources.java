@@ -1,5 +1,6 @@
 package br.ufmt.periscope.indexer;
 
+import br.ufmt.periscope.indexer.resources.analysis.PatenteeAnalyzer;
 import br.ufmt.periscope.model.Project;
 import java.io.IOException;
 import javax.enterprise.inject.Disposes;
@@ -61,14 +62,14 @@ public class LuceneIndexerResources {
 
     @Produces
     private Analyzer getAnalyzer() {
-        //return new StandardAnalyzer(Version.LUCENE_36);
-        return new PatenteeAnalyzer(Version.LUCENE_36);
+        //return new StandardAnalyzer(Version.LUCENE_47);
+        return new PatenteeAnalyzer(Version.LUCENE_47);
     }
 
     @Produces
     private IndexWriterConfig getIndexConfig(Analyzer analyzer) {
-        //return new IndexWriterConfig(Version.LUCENE_36, analyzer);
-        IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_36, analyzer);
+        //return new IndexWriterConfig(Version.LUCENE_47, analyzer);
+        IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_47, analyzer);
         return config;
     }
 

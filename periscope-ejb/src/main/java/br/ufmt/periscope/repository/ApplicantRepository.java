@@ -1,5 +1,6 @@
 package br.ufmt.periscope.repository;
 
+import br.ufmt.periscope.indexer.resources.search.LengthQuery;
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.ApplicantType;
 import br.ufmt.periscope.model.Country;
@@ -47,8 +48,10 @@ import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.util.Version;
 
@@ -189,7 +192,6 @@ public class ApplicantRepository {
                 TokenStream stream = analyzer.tokenStream("applicant", new StringReader(name));
                 // Passa os atributos da stream para que seja possível recuperar seu valor puro de texto
                 CharTermAttribute attr = stream.getAttribute(CharTermAttribute.class);
-                // resetar a stream é necessário fazer, não sei o porque, mais se não o fizer da erro
                 stream.reset();
                 // Recuperando o valor de texto da stream
                 name = "";
@@ -201,13 +203,24 @@ public class ApplicantRepository {
 
                 TopScoreDocCollector collector = TopScoreDocCollector.create(1000, true);
                 BooleanQuery bq = new BooleanQuery();
-                //Query queryPa = new QueryParser(Version.LUCENE_47, "applicant", analyzer)
-                //       .parse(queryBuilder.toString());
-                //queryPa.setBoost(10f);
+                // Criando a query, dar o name.split é para saber a existência do acrônimo
+                String[] tokens = name.split(" ");
+                // Se for maior que 1, existe um acrônimo
+                if (tokens.length > 1) {
+                    bq.add(new PrefixQuery(new Term("applicant", tokens[0])), Occur.MUST);
+                    bq.add(new FuzzyQuery(new Term("applicant", tokens[1]), 1), Occur.MUST);
+                    //bq.add(new LengthQuery("applicant", name), Occur.MUST_NOT);
+                } else {
+                    if (name.length() > 3) {
+                        bq.add(new FuzzyQuery(new Term("applicant", name)),
+                                Occur.MUST);
+                    } else {
+                        bq.add(new PrefixQuery(new Term("applicant", name)),
+                                Occur.MUST);
+                    }
+                }
 
-                Query query = new FuzzyQuery(new Term("applicant", name));
 
-                bq.add(query, Occur.MUST);
                 bq.add(queryProject, Occur.MUST);
 //                System.out.println(bq);
 
@@ -229,7 +242,7 @@ public class ApplicantRepository {
             for (String name : names) {
                 results.remove(name);
             }
-           // searcher.close();
+            // searcher.close();
 
             return results;
 
@@ -266,10 +279,9 @@ public class ApplicantRepository {
         }
         DBObject matchSearch = new BasicDBObject("$match", matchFilterItem);
         parametros.add(matchSearch);
-        
-        
+
         DBObject matchFilter = new BasicDBObject();
-        if (list != null){
+        if (list != null) {
             BasicDBList lista = new BasicDBList();
             List<String> t = new ArrayList<String>();
             for (Applicant ap : list) {
@@ -280,8 +292,6 @@ public class ApplicantRepository {
         }
         DBObject matchEdit = new BasicDBObject("$match", matchFilter);
         parametros.add(matchEdit);
-        
-        
 
         DBObject idData = new BasicDBObject("name", "$applicants.name");
         idData.put("country", "$applicants.country");
@@ -357,7 +367,7 @@ public class ApplicantRepository {
             } else {
                 applicant.setType(null);
             }
-            
+
             DBObject country = (DBObject) result.get("country");
             if (country != null) {
 
@@ -386,13 +396,13 @@ public class ApplicantRepository {
 
         return datasource;
     }
-    
-    public List<Applicant> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters){
+
+    public List<Applicant> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters) {
         return load(first, pageSize, sortField, sortOrder, filters, null);
     }
-    
-    public boolean exists(Applicant applicant){
-        
+
+    public boolean exists(Applicant applicant) {
+
         System.out.println("entrou aqui");
         ArrayList<DBObject> parametros = new ArrayList<DBObject>();
 
@@ -403,26 +413,26 @@ public class ApplicantRepository {
 
         DBObject unwind = new BasicDBObject("$unwind", "$applicants");
         parametros.add(unwind);
-        
+
         DBObject fields = new BasicDBObject("applicants.country.acronym", applicant.getCountry().getAcronym());
         fields.put("applicants.name", applicant.getName());
-        DBObject match = new BasicDBObject ("$match", fields);
+        DBObject match = new BasicDBObject("$match", fields);
         parametros.add(match);
-        
+
         DBObject idData = new BasicDBObject("name", "$applicants.name");
         DBObject field = new BasicDBObject("_id", idData);
         DBObject group = new BasicDBObject("$group", field);
         parametros.add(group);
-        
+
         DBObject[] parameters = new DBObject[parametros.size()];
         parameters = parametros.toArray(parameters);
 
         System.out.println("foi antes");
         AggregationOutput output = ds.getCollection(Patent.class).aggregate(matchP, parameters);
-        
+
         BasicDBList outputList = (BasicDBList) output.getCommandResult().get("result");
         return outputList.size() == 0;
-        
+
     }
 
     public int getCount() {
@@ -448,5 +458,5 @@ public class ApplicantRepository {
     public void setList(List<Applicant> list) {
         this.list = list;
     }
-    
+
 }
