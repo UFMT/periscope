@@ -209,6 +209,7 @@ public class ApplicantRepository {
                 if (tokens.length > 1) {
                     bq.add(new PrefixQuery(new Term("applicant", tokens[0])), Occur.MUST);
                     bq.add(new FuzzyQuery(new Term("applicant", tokens[1]), 1), Occur.MUST);
+                    bq.add(new LengthQuery("applicant", name), Occur.MUST_NOT);
                     //bq.add(new LengthQuery("applicant", name), Occur.MUST_NOT);
                 } else {
                     if (name.length() > 3) {

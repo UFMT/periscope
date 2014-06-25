@@ -27,10 +27,6 @@ public class CommonDescriptorsSet {
     public CommonDescriptorsSet(String caminho) {
         try {
             File file = new File(caminho);
-            if(!file.exists()) {
-                file.mkdir();
-                System.out.println("Eu consegui criar o diretório");
-            }
             reader = new BufferedReader(new FileReader(caminho));
             this.readFile();
         } catch (FileNotFoundException e) {
