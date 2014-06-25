@@ -2,8 +2,7 @@ package br.ufmt.periscope.controller;
 
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.qualifier.CurrentProject;
-import com.github.jmkgreen.morphia.Datastore;
-import com.mongodb.BasicDBObject;
+import br.ufmt.periscope.repository.ProjectRepository;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 
@@ -12,11 +11,10 @@ public class SidebarController {
 
     private @Inject @CurrentProject
     Project currentProject;
-    
-    private @Inject Datastore ds;
+    private @Inject ProjectRepository projectRepository;
 
     public boolean isEmptyPatent() {
-        return ds.getCollection(Project.class).findOne(new BasicDBObject("_id", currentProject.getId()), new BasicDBObject("patents", new BasicDBObject("$slice", 1))).get("patents") == null;
+        return projectRepository.isEmptyPatent(currentProject);
     }
 
 }

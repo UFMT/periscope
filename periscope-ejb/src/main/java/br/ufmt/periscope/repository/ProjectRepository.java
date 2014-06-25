@@ -15,38 +15,45 @@ import br.ufmt.periscope.model.User;
 
 import com.github.jmkgreen.morphia.Datastore;
 import com.github.jmkgreen.morphia.query.Query;
+import com.mongodb.BasicDBObject;
 
 @Named
 public class ProjectRepository {
-	
-	private @Inject Datastore ds;	
-	private @Inject PatentIndexer patentIndexer;
-		
-	public List<Project> getProjectList(User user){
-		Query<Project> query = ds.createQuery(Project.class);
-                query.retrievedFields(false,"patents");
-                query.order("title");
-                if (user.getUserLevel().getAccessLevel() != 10) {
-                    
-                    query.or(
-                            query.criteria("owner").equal(user),
-                            query.criteria("observers").hasThisElement(user),
-                            query.criteria("isPublic").equal(true));
-                }
-                List<Project> projetos = query.asList();
-		return projetos;
-	}
-	
-	public void deleteProject(String id){
-		Project p = new Project();
-		p.setId(new ObjectId(id));
-		patentIndexer.deleteIndexesForProject(p);
-		deleteProject(p);		
-	}
-	
-	public void deleteProject(Project project){
-		ds.delete(ds.createQuery(Patent.class).field("project").equal(project));
-		ds.delete(ds.createQuery(Rule.class).field("project").equal(project));
-		ds.delete(project);
-	}
+
+    private @Inject
+    Datastore ds;
+    private @Inject
+    PatentIndexer patentIndexer;
+
+    public List<Project> getProjectList(User user) {
+        Query<Project> query = ds.createQuery(Project.class);
+        query.retrievedFields(false, "patents");
+        query.order("title");
+        if (user.getUserLevel().getAccessLevel() != 10) {
+
+            query.or(
+                    query.criteria("owner").equal(user),
+                    query.criteria("observers").hasThisElement(user),
+                    query.criteria("isPublic").equal(true));
+        }
+        List<Project> projetos = query.asList();
+        return projetos;
+    }
+
+    public void deleteProject(String id) {
+        Project p = new Project();
+        p.setId(new ObjectId(id));
+        patentIndexer.deleteIndexesForProject(p);
+        deleteProject(p);
+    }
+
+    public boolean isEmptyPatent(Project currentProject) {
+        return ds.getCollection(Project.class).findOne(new BasicDBObject("_id", currentProject.getId()), new BasicDBObject("patents", new BasicDBObject("$slice", 1))).get("patents") == null;
+    }
+
+    public void deleteProject(Project project) {
+        ds.delete(ds.createQuery(Patent.class).field("project").equal(project));
+        ds.delete(ds.createQuery(Rule.class).field("project").equal(project));
+        ds.delete(project);
+    }
 }
