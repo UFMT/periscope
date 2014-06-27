@@ -11,42 +11,42 @@
 	<ui:define name="content">
 		<center>
 			<h:panelGroup rendered="#{not projectController.editing}">
-				<h1>Novo Projeto</h1>
+                            <h1>#{msgs['new.project']}</h1>
 			</h:panelGroup>
 			<h:panelGroup rendered="#{projectController.editing}">
-				<h1>Editando Projeto</h1>
+                            <h1>#{msgs['editing.project']}</h1>
 			</h:panelGroup>
 			<br/>
 			<h:form>
 				<h:panelGrid columns="2">
 					<h:panelGrid columns="3" cellpadding="10">
-						<h:outputLabel id="lblTitle" for="txtTitle" value="Título *" style="font-weight:bold"/>				
+						<h:outputLabel id="lblTitle" for="txtTitle" value="#{msgs['title']} *" style="font-weight:bold"/>				
 						<p:inputText id="txtTitle" value="#{projectController.project.title}"
-							required="true" requiredMessage="Título é obrigatório" />				
+                                                             required="true" requiredMessage="#{msgs['obligatory.title']}" />				
 						<p:message for="txtTitle"/>	
 						
-						<h:outputLabel id="lblDescription" for="txtDescription" value="Descrição" style="font-weight:bold"/>				
+						<h:outputLabel id="lblDescription" for="txtDescription" value="#{msgs['description']}" style="font-weight:bold"/>				
 						<p:inputTextarea id="txtDescription" value="#{projectController.project.description}"/>				
 						<p:message for="txtDescription"/>
 						
-						<h:outputLabel id="lblPublic" value="Público" style="font-weight:bold"/>				
+						<h:outputLabel id="lblPublic" value="#{msgs['public']}" style="font-weight:bold"/>				
 						<p:selectOneButton id="cmbPublic" value="#{projectController.project.isPublic}">
-							<f:selectItem itemLabel="Sim" itemValue="true"/>
-							<f:selectItem itemLabel="Não" itemValue="false"/>					
+							<f:selectItem itemLabel="#{msgs['yes']}" itemValue="true"/>
+							<f:selectItem itemLabel="#{msgs['no']}" itemValue="false"/>					
 						</p:selectOneButton>
 						<p:messages for="cmbPublic"/>
 																														
 					</h:panelGrid>
 					<h:panelGroup  id="pnlObservers">
 						<p:dataTable value="#{projectController.project.observers}" id="observers" var="observer"
-							 emptyMessage="Não Existem observadores para este projeto."  rows="10"
+                                                             emptyMessage="#{msgs['no.observers']}"  rows="10"
 							 paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom"
 							 rowKey="#{observer.firstname}">
 
 							<p:columnGroup type="header">
 								<p:row>
-									<p:column rowspan="2" headerText="Nome" />
-									<p:column rowspan="2" headerText="Ações" />
+									<p:column rowspan="2" headerText="#{msgs['name']}" />
+									<p:column rowspan="2" headerText="#{msgs['actions']}" />
 								</p:row>
 							</p:columnGroup>
 							<p:column>
@@ -76,11 +76,11 @@
 				</h:panelGrid>			
 				<h:panelGrid columns="2" cellpadding="10">							
 					
-					<h:commandLink value="Salvar" action="#{projectController.create()}"
+					<h:commandLink value="#{msgs['save']}" action="#{projectController.create()}"
 									style="color:white"  class="btn btn-large btn-info" rendered="#{not projectController.editing}"/>
-					<h:commandLink value="Atualizar" action="#{projectController.save()}"
+					<h:commandLink value="#{msgs['update']}" action="#{projectController.save()}"
 									style="color:white"  class="btn btn-large btn-info" rendered="#{projectController.editing}"/>
-					<h:commandLink immediate="true" value="Cancelar" action="projectList" 
+					<h:commandLink immediate="true" value="#{msgs['cancel']}" action="projectList" 
 									style="color:white" class="btn btn-large btn-info" />
 									
 				</h:panelGrid>	

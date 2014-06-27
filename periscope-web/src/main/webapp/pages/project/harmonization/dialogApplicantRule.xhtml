@@ -8,44 +8,44 @@
 
     <f:view contentType="text/html">
         <p:dialog id="applicantSugestions" widgetVar="sugestionsDialog" modal="true"
-                  header="Criar regra" resizable="false">
+                  header="#{msgs['create.rule']}" resizable="false">
             
             <h:panelGrid columns="2" id="panelApplicantHarmonized">		
-                <h:outputLabel value="Nome harmonizado " style="font-weight:bold"/>				
+                <h:outputLabel value="#{msgs['harmonized.name']} " style="font-weight:bold"/>				
                 <p:inputText value="#{applicantHarmonizationController.rule.name}"/>
 
                 <h:outputLabel value="#{msgs['acronym']} " style="font-weight:bold" />				
                 <p:inputText value="#{applicantHarmonizationController.rule.acronym}"/>
 
-                <h:outputLabel value="País " style="font-weight:bold"/>				
+                <h:outputLabel value="#{msgs['country']} " style="font-weight:bold"/>				
                 <p:selectOneMenu value="#{applicantHarmonizationController.rule.country.acronym}" valueChangeListener="#{applicantHarmonizationController.selectListener}">
                     <f:selectItems value="#{applicantHarmonizationController.countries}" var="c" itemValue="#{c.acronym}" itemLabel="#{c.name}"/>
                     <p:ajax event="change" update="@this,state"/>
                 </p:selectOneMenu>
 
-                <h:outputLabel value="Estado" style="font-weight: bold"/>
+                <h:outputLabel value="#{msgs['state']}" style="font-weight: bold"/>
                 <p:selectOneMenu value="#{applicantHarmonizationController.rule.state.acronym}"  id="state">
                     <f:selectItem itemLabel="Nenhuma" itemValue=""/>
                     <f:selectItems  value="#{applicantHarmonizationController.states}" var="c" itemValue="#{c.acronym}" itemLabel="#{c.name}"/>
                 </p:selectOneMenu>
 
-                <h:outputLabel value="Natureza " style="font-weight:bold"/>
+                <h:outputLabel value="#{msgs['nature']} " style="font-weight:bold"/>
                 <p:selectOneMenu id="cmbNature" value="#{applicantHarmonizationController.rule.nature.name}">
-                    <f:selectItem itemLabel="Nenhuma" itemValue=""/>
+                    <f:selectItem itemLabel="#{msgs['none']}" itemValue=""/>
                     <f:selectItems value="#{applicantHarmonizationController.applicantTypes}" var="t" itemValue="#{t.name}" itemLabel="#{msgs[t.name]}" />	
                 </p:selectOneMenu>						
             </h:panelGrid>		
 
             <h:panelGrid id="panelSugestions" columns="3">
                 <h:column>
-                    <h4>Nomes selecionados</h4>				
+                    <h4>#{msgs['selected.names']}</h4>				
                     <p:separator/>
                 </h:column>
                 <h:column>
                     <p:spacer width="50"/>
                 </h:column>
                 <h:column>
-                    <h4>Sugestões</h4>				
+                    <h4>#{msgs['sugestions']}</h4>				
                     <p:separator/>
                 </h:column>
                 <h:column>				
@@ -72,16 +72,16 @@
                             </li>
                         </ui:repeat>				
                         <h:panelGrid rendered="#{applicantHarmonizationController.applicantSugestions.size() == 0}">
-                            <li>Não existem sugestões.</li>
+                            <li>#{msgs['no.sugestions']}</li>
                         </h:panelGrid>
                     </ul>
                 </h:column>
             </h:panelGrid>
             <p:spacer height="50"/>
             <center>
-                <p:commandButton value="Salvar" action="#{applicantHarmonizationController.createRule()}"/>
+                <p:commandButton value="#{msgs['save']}" action="#{applicantHarmonizationController.createRule()}"/>
 
-                <p:commandButton value="Cancelar" immediate="true"
+                <p:commandButton value="#{msgs['cancel']}" immediate="true"
                                  oncomplete="sugestionsDialog.hide()" />
             </center>
 

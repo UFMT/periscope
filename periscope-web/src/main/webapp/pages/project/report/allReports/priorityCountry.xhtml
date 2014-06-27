@@ -14,7 +14,7 @@
 
         <ui:define name="content">
 
-            <h1>Países de Prioridade</h1>
+            <h1>#{msgs['priority.country']}</h1>
 
             <h:form styleClass="container">
 
@@ -26,11 +26,11 @@
                     
                     <p:barChart id="horizontal" value="#{priorityCountryController.model}" rendered="#{priorityCountryController.model.series.get(0).getData().size()!=0}"
                             orientation="horizontal" legendPosition="se" datatipFormat="%s"
-                            title="Paises com Maior Prioridade" style="height:300px"
+                            title="#{msgs['higher.priority']}" style="height:300px"
                             />
 
                 <p:dataTable id="inventors"
-                             emptyMessage="Nenhum inventor cadastrado." var="pair"
+                             emptyMessage="#{msgs['no.inventor']}" var="pair"
                              value="#{priorityCountryController.pairs}" >
 
                     <p:column headerText="#{msgs['name']}">

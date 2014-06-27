@@ -11,10 +11,10 @@
         <ui:define name="content">
             <center>
                 <h:form enctype="multipart/form-data">
-                    <p:panel id="pnlImport" header="Importar dados">
+                    <p:panel id="pnlImport" header="#{msgs['import.data']}">
 
-                        <p:fileUpload id="fileUpload" label="Escolha o arquivo"
-                                      
+                        <p:fileUpload id="fileUpload" label="#{msgs['choose.files']}"
+                                      uploadLabel="#{msgs['upload.files']}" cancelLabel="#{msgs['cancel']}"
                                       fileUploadListener="#{importPatentController.handleFileUpload}"
                                       mode="advanced"
                                       allowTypes="/(.csv|.xls)$/"
@@ -26,12 +26,12 @@
 
                         <br/>
                         <h:panelGrid columns="3">
-                            <p:outputLabel>Origem do arquivo :</p:outputLabel>
+                            <p:outputLabel>#{msgs['file.origin']} :</p:outputLabel>
                             <p:selectOneMenu value="#{importPatentController.fileOrigin}">
                                 <f:selectItems value="#{importPatentController.origins}" />
                             </p:selectOneMenu>
                             <p:panel toggleOrientation="vertical">
-                                <p:outputLabel style="font-weight: bold">Arquivos suportados</p:outputLabel>
+                                <p:outputLabel style="font-weight: bold">#{msgs['supported.files']}</p:outputLabel>
                                 <p:outputLabel id="espacenetHelp"><h4><a href="http://worldwide.espacenet.com/" target="_blank "> ESPACENET</a></h4> .csv e .xls</p:outputLabel>
                                 <p:tooltip for="espacenetHelp">
                                     <p:outputLabel value="#{msgs['espacenet.help']}" escape="false"/>

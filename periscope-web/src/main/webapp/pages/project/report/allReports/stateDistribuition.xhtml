@@ -13,19 +13,19 @@
 
         <ui:define name="content">
 
-            <h1>Distribuição por Estado</h1>
+            <h1>#{msgs['state.distribuition']}</h1>
             <h:form styleClass="container">
                 
                 <h:panelGrid columns="1" id="tudo" styleClass="container" >
 
                     <p:barChart id="horizontal" value="#{stateDistribuitionController.model}" rendered="#{stateDistribuitionController.model.series.get(0).getData().size()!=0}"
                                 orientation="horizontal" legendPosition="se" datatipFormat="%s"
-                                title="Número Patentes por Estado" />
+                                title="#{msgs['patents.state']}" />
                     <p:dataTable id="states"
-                                 emptyMessage="Nenhuma patente com estado brasileiro" var="pair"
+                                 emptyMessage="#{msgs['no.brazilian']}" var="pair"
                                  value="#{stateDistribuitionController.pairs}">
 
-                        <p:column headerText="Estado">
+                        <p:column headerText="#{msgs['state']}">
                             <h:outputText value="#{pair.key}" />
                         </p:column>
 

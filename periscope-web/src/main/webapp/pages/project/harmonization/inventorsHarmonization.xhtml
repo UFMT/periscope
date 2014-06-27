@@ -9,7 +9,7 @@
 <f:view contentType="text/html">
 	<h:form id="formAl">
 		<p:dataTable id="applicants" var="pa" style="font-size:12px"
-					emptyMessage="Não existem inventores carregados"
+					emptyMessage="#{msgs['no.inventors']}"
 					value="#{inventorHarmonizationController.inventors}" paginator="true"
 					paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
 					rowKey="#{pa.name}" filterEvent="enter" lazy="true">
@@ -22,19 +22,19 @@
                                 <p:ajax event="change" update=":tabView:formAl:selectedInventors,@this,:#{p:component('panelSugestions')}" listener="#{inventorHarmonizationController.onSelectInventor(pa)}"/>
                             </p:selectBooleanCheckbox>	
                         </p:column>		
-			<p:column headerText="Nome" sortBy="#{pa.name}" filterBy="#{pa.name}">														
+			<p:column headerText="#{msgs['name']}" sortBy="#{pa.name}" filterBy="#{pa.name}">														
 					#{pa.name}					
 			</p:column>
-			<p:column headerText="Pais" sortBy="#{pa.country.name}">														
+			<p:column headerText="#{msgs['country']}" sortBy="#{pa.country.name}">														
 					#{pa.country == null ? '' : pa.country.name}					
 			</p:column>
 			<p:column headerText="Docs" sortBy="#{pa.documentCount}">														
 					#{pa.documentCount}					
 			</p:column>
-			<p:column headerText="Ações">
+			<p:column headerText="#{msgs['actions']}">
 				<center>
 					<h:form style="margin-bottom:0px">
-						<h:commandLink value="Editar"
+						<h:commandLink value="#{msgs['edit']}"
 							style="color:white;margin-right: 10px" class="btn btn-inverse">	
 						</h:commandLink>							
 					</h:form>
@@ -45,15 +45,15 @@
 		<p:separator/>
 		
 		<p:dataTable id="selectedInventors" var="pa" style="font-size:12px"
-					emptyMessage="Não existem depositantes selecionados" widgetVar="tblSelected"
+					emptyMessage="#{msgs['no.selectedinventors']}" widgetVar="tblSelected"
 					value="#{inventorHarmonizationController.selectedInventors}" paginator="true"
 					paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
 					rowKey="#{pa.name}" sortBy="#{pa.name}">
 	
 			<p:columnGroup type="header">
 				<p:row>					
-					<p:column rowspan="2" headerText="Nome" sortBy="#{pa.name}"/>
-					<p:column rowspan="2" headerText="Pais" />
+					<p:column rowspan="2" headerText="#{msgs['name']}" sortBy="#{pa.name}"/>
+					<p:column rowspan="2" headerText="#{msgs['country']}" />
 					<p:column rowspan="2" headerText="Docs" sortBy="#{pa.documentCount}"/>				
 				</p:row>
 			</p:columnGroup>		
@@ -68,7 +68,7 @@
 			</p:column>		
 		</p:dataTable>
 		
-		<p:commandLink value="Criar nova regra"  update="inventorSugestions" oncomplete="invSugestionsDialog.show()"
+		<p:commandLink value="#{msgs['new.rule']}"  update="inventorSugestions" oncomplete="invSugestionsDialog.show()"
 				action="#{inventorHarmonizationController.loadSugestions()}"
 				style="color:white;margin-right: 10px" styleClass="btn btn-inverse"/>			
 		<ui:include src="/pages/project/harmonization/dialogInventorRule.xhtml" />

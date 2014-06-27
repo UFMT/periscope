@@ -27,7 +27,7 @@
                             title="#{msgs.natureDepositor}" />
 
                 <p:dataTable id="inventors"
-                             emptyMessage="Nenhuma natureza cadastrado." var="pair"
+                             emptyMessage="#{msgs['no.nature']}" var="pair"
                              value="#{natureApplicantController.pairs}">
 
                     <p:column headerText="#{msgs.nature}">

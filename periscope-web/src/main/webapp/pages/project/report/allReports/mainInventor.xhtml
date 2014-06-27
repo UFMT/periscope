@@ -26,13 +26,13 @@
                     
                     <p:barChart id="horizontal" value="#{mainInventorController.model}" rendered="#{mainInventorController.model.series.get(0).getData().size()!=0}"
                             orientation="horizontal" legendPosition="se" datatipFormat="%s"
-                            title="Número de depositos por Inventores" />
+                            title="#{msgs['application.year']}" />
 
                 <p:dataTable id="inventors"
-                             emptyMessage="Nenhum inventor cadastrado." var="pair"
+                             emptyMessage="#{msgs['no.inventor']}" var="pair"
                              value="#{mainInventorController.pairs}">
 
-                    <p:column headerText="Nome">
+                    <p:column headerText="#{msgs['name']}">
                         <h:outputText value="#{pair.key}" />
                     </p:column>
 

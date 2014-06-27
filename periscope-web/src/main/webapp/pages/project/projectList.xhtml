@@ -62,12 +62,12 @@
 								style="color:white;margin-right: 10px" class="btn btn-inverse">
 								<f:param name="projectId" value="#{project.id.toString()}"/>	
 							</h:commandLink>
-                                                        <p:tooltip for="editProject" value="Sem Permissão!" rendered="#{!(project.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or project.observers.contains(currentUser))}"
+                                                        <p:tooltip for="editProject" value="#{msgs['no.permission']}" rendered="#{!(project.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or project.observers.contains(currentUser))}"
                                                                    style="color: red"/>
                                                         <h:commandLink id="deleteProject" value="#{msgs['delete']}" style="color:white" disabled="#{!(project.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or project.observers.contains(currentUser))}"
 								onclick="if(!confirm('#{msgs['delete.project']}')) { return false; }"
 								class="btn btn-inverse" action="#{projectController.delete(project.id.toString())}"/>
-                                                        <p:tooltip for="deleteProject" value="Sem Permissão!" rendered="#{!(project.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or project.observers.contains(currentUser))}"
+                                                        <p:tooltip for="deleteProject" value="#{msgs['no.permission']}" rendered="#{!(project.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or project.observers.contains(currentUser))}"
                                                                    style="color: red"/>
 						</h:form>
 					</center>

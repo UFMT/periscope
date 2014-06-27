@@ -26,7 +26,7 @@
                 </p:tab>
             </p:accordionPanel>-->
             <p:dataTable id="applicants" var="pa" style="font-size:12px"
-                         emptyMessage="Não existem depositantes carregados"
+                         emptyMessage="#{msgs['no.applicant']}"
                          value="#{applicantHarmonizationController.applicants}" paginator="true"
                          paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
                          rowKey="#{pa.name}" filterEvent="enter" lazy="true">
@@ -47,22 +47,22 @@
                         <p:ajax event="change" update=":tabView:formAll:selectedApplicants,@this,:#{p:component('panelSugestions')}" listener="#{applicantHarmonizationController.onSelectApplicant(pa)}"/>
                     </p:selectBooleanCheckbox>	
                 </p:column>			
-                <p:column headerText="Nome" sortBy="#{pa.name}" filterBy="#{pa.name}">														
+                <p:column headerText="#{msgs['name']}" sortBy="#{pa.name}" filterBy="#{pa.name}">														
                     #{pa.name}					
                 </p:column>
                 <p:column headerText="#{msgs['acronym']}">	
                     #{pa.acronym}					
                 </p:column>
-                <p:column headerText="Pais" sortBy="#{pa.country.name}">														
+                <p:column headerText="#{msgs['country']}" sortBy="#{pa.country.name}">														
                     #{pa.country == null ? '' : pa.country.name}					
                 </p:column >
                 <p:column headerText="Docs" sortBy="#{pa.documentCount}">														
                     #{pa.documentCount}					
                 </p:column>
-                <p:column headerText="Ações" >
+                <p:column headerText="#{msgs['actions']}" >
                     <center>
                         <h:form style="margin-bottom:0px">
-                            <h:commandLink value="Editar"
+                            <h:commandLink value="#{msgs['edit']}"
                                            style="color:white;margin-right: 10px" class="btn btn-inverse">	
                             </h:commandLink>							
                         </h:form>
@@ -73,16 +73,16 @@
             <p:separator/>
 
             <p:dataTable id="selectedApplicants" var="pa" style="font-size:12px"
-                         emptyMessage="Não existem depositantes selecionados" widgetVar="tblSelected"
+                         emptyMessage="#{msgs['no.selectedapplicant']}" widgetVar="tblSelected"
                          value="#{applicantHarmonizationController.selectedApplicants}" paginator="true"
                          paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
                          rowKey="#{pa.name}" sortBy="#{pa.name}">
 
                 <p:columnGroup type="header">
                     <p:row>					
-                        <p:column rowspan="2" headerText="Nome" sortBy="#{pa.name}"/>
+                        <p:column rowspan="2" headerText="#{msgs['name']}" sortBy="#{pa.name}"/>
                         <p:column rowspan="2" headerText="#{msgs['acronym']}" />
-                        <p:column rowspan="2" headerText="Pais" />
+                        <p:column rowspan="2" headerText="#{msgs['country']}" />
                         <p:column rowspan="2" headerText="Docs" sortBy="#{pa.documentCount}"/>				
                     </p:row>
                 </p:columnGroup>		
@@ -100,7 +100,7 @@
                 </p:column>		
             </p:dataTable>
 
-            <p:commandLink value="Criar nova regra"  update="applicantSugestions" oncomplete="sugestionsDialog.show()"
+            <p:commandLink value="#{msgs['new.rule']}"  update="applicantSugestions" oncomplete="sugestionsDialog.show()"
                            action="#{applicantHarmonizationController.loadSugestions()}"
                            style="color:white;margin-right: 10px" styleClass="btn btn-inverse"/>			
             <ui:include src="/pages/project/harmonization/dialogApplicantRule.xhtml" />					

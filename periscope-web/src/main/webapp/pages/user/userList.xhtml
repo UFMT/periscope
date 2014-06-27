@@ -20,7 +20,7 @@
 				<p:columnGroup type="header">
 					<p:row>
 						<p:column rowspan="2" headerText="#{msgs['name']}" />
-						<p:column rowspan="2" headerText="Email" />
+						<p:column rowspan="2" headerText="E-mail" />
 						<p:column rowspan="2" headerText="#{msgs['access.level']}" />
 						<p:column rowspan="2" headerText="#{msgs['actions']}" />
 					</p:row>
@@ -43,14 +43,14 @@
 						<h:form style="margin-bottom:0px">
                                                     <h:commandLink id="editUser" value="#{msgs['edit']}" action="editUser" disabled="#{!(currentUser.userLevel.accessLevel == 10) and !(currentUser.id.toString() == user.id.toString())}" 
                                                                    style="color:white;margin-right: 10px" class="btn btn-inverse">
-                                                        <p:tooltip for="editUser" value="Sem Permissão!" style="color: red" rendered="#{!(currentUser.userLevel.accessLevel == 10) and !(currentUser.id.toString() == user.id.toString())}"></p:tooltip>
+                                                        <p:tooltip for="editUser" value="#{msgs['no.permission']}" style="color: red" rendered="#{!(currentUser.userLevel.accessLevel == 10) and !(currentUser.id.toString() == user.id.toString())}"></p:tooltip>
                                                         
                                                         <f:param name="userId" value="#{user.id.toString()}"/>	
                                                     </h:commandLink>
                                                     <h:commandLink id="deleteUser" value="#{msgs['delete']}" style="color:white" disabled="#{!(currentUser.userLevel.accessLevel == 10 and currentUser.id.toString() != user.id.toString())}"
                                                                    onclick="if(!confirm('#{msgs['delete.user']}')) { return false; }"
                                                                    class="btn btn-inverse" action="#{userController.delete(user.id.toString())}"/>
-                                                    <p:tooltip for="deleteUser" value="Sem Permissão" rendered="#{!(currentUser.userLevel.accessLevel == 10 and currentUser.id.toString() != user.id.toString())}"
+                                                    <p:tooltip for="deleteUser" value="#{msgs['no.permission']}" rendered="#{!(currentUser.userLevel.accessLevel == 10 and currentUser.id.toString() != user.id.toString())}"
                                                                style="color: red"/>
                                                 </h:form>
 					</center>

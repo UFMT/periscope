@@ -14,11 +14,11 @@
 
         <ui:define name="content">
 
-            <h1>Principais Classificações</h1>
+            <h1>#{msgs['main.classifications']}</h1>
 
             <h:form id="chart" styleClass="container">
 
-                <center><h4>Número de classificações</h4></center>
+                <center><h4>#{msgs['classification.numbers']}</h4></center>
 
                 <i:filtro controller="#{mainIPCController}" filter="8"/>
 
@@ -62,7 +62,7 @@
 
                     <p:barChart id="horizontal" value="#{mainIPCController.model}" rendered="#{mainIPCController.model.series.get(0).getData().size()!=0}"
                                 orientation="horizontal" legendPosition="e" datatipFormat="%s"
-                                title="Principais classificações" style="width:600px ; height:300px" />
+                                title="#{msgs['main.classifications']}" style="width:600px ; height:300px" />
 
                     <h:column>
                         <p:graphicImage />
@@ -72,7 +72,7 @@
                     <h:column>
 
                         <p:dataTable id="datatable"
-                                     emptyMessage="Nenhuma classificacao cadastrada." var="ipc"
+                                     emptyMessage="#{msgs['no.classifications']}" var="ipc"
                                      value="#{mainIPCController.pairs}" >
 
                                                 <!-- 					<p:column headerText="#{msgs['position']}" > -->

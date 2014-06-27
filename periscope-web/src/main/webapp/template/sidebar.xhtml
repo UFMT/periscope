@@ -41,7 +41,7 @@
                                         icon="ui-icon-refresh" ajax="false" />
 
 
-                            <p:menuitem value="#{msgs['technologicalProfile']}" action="mainTechnologicalProfile" icon="ui-icon-refresh" ajax="false" />
+                            <p:menuitem value="#{msgs['technological.profile']}" action="mainTechnologicalProfile" icon="ui-icon-refresh" ajax="false" />
 
                             <p:menuitem value="#{msgs['natureDepositor']}" action="natureApplicant" icon="ui-icon-refresh" ajax="false" />
 
@@ -59,10 +59,10 @@
                         <p:menuitem value="#{msgs['list']}" action="listPatent"  
                                     icon="ui-icon-clock" ajax="false" rendered="#{not sidebarController.emptyPatent}"/>
 
-                        <p:menuitem value="Importar dados" action="importPatent"
+                        <p:menuitem value="#{msgs['import.data']}" action="importPatent"
                                     icon="ui-icon-refresh" ajax="false" rendered="#{currentProject.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or currentProject.observers.contains(currentUser)}" />
 
-                        <p:menuitem value="Harmonizar dados" action="harmonizationHome"
+                        <p:menuitem value="#{msgs['harmonize.data']}" action="harmonizationHome"
                                     icon="ui-icon-refresh" ajax="false" rendered="#{(currentProject.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or currentProject.observers.contains(currentUser)) and (not sidebarController.emptyPatent)}"/>
                     </p:submenu>				
                 </p:panelMenu>		

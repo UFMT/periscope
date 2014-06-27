@@ -16,7 +16,7 @@
 
             <h:form id="chart" styleClass="container">
 
-                <h1>Depositos / #{msgs['year']}</h1>
+                <h1>#{msgs['applications']} / #{msgs['year']}</h1>
                 <br/>
                 <p:selectBooleanCheckbox id="complete" itemLabel="#{msgs['completo']}"
                                          value="#{applicantDateReport.filtro.complete}">
@@ -28,7 +28,7 @@
 
                 <h:panelGrid columns="5" cellpadding="4">  
 
-                    <h:outputText value="Inicial:"/>
+                    <h:outputText value="#{msgs['initial']}:"/>
                     <p:calendar  value="#{applicantDateReport.filtro.inicio}" maxlength="10" mindate="#{applicantDateReport.minDate}" maxdate="#{applicantDateReport.maxDate}" locale="#{msgs['calendar']}" showButtonPanel="true" navigator="true" pattern="dd/MM/yyyy">
                     </p:calendar>
 
@@ -45,7 +45,7 @@
 
 
                     <p:lineChart id="line" value="#{applicantDateReport.model}" rendered="#{applicantDateReport.model.series.get(0).getData().size()!=0}"
-                                 legendPosition="e" title="Número de depositos por ano"/>
+                                 legendPosition="e" title="#{msgs['application.year']}"/>
 
                     <h:column>
                         <p:graphicImage />
@@ -53,7 +53,7 @@
                     </h:column>
 
                     <h:column>
-                        <p:dataTable emptyMessage="Nenhum depositante cadastrado." var="pair" value="#{applicantDateReport.pairs}"
+                        <p:dataTable emptyMessage="#{msgs['no.applicants']}" var="pair" value="#{applicantDateReport.pairs}"
                                      >
 
                             <p:column headerText="#{msgs['year']}">

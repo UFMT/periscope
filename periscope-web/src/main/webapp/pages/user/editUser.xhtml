@@ -11,43 +11,43 @@
 	<ui:define name="content">	
 		<center>
 			<h:panelGroup rendered="#{not userController.editing}">
-				<h1>Novo Usuário</h1>
+				<h1>#{msgs['new.user']}</h1>
 			</h:panelGroup>
 			<h:panelGroup rendered="#{userController.editing}">
-				<h1>Editando Usuário</h1>
+				<h1>#{msgs['editing.user']}</h1>
 			</h:panelGroup>
 			<br/>
 			<h:form>
 				<p:messages globalOnly="true" autoUpdate="true"/>
 				<h:panelGrid columns="6" cellpadding="10">
 				
-					<h:outputLabel id="lblFirstName" for="txtFirstName" value="Nome *" style="font-weight:bold"/>				
+					<h:outputLabel id="lblFirstName" for="txtFirstName" value="#{msgs['name']} *" style="font-weight:bold"/>				
 					<p:inputText id="txtFirstName" value="#{userController.user.firstname}" 
-								required="true" requiredMessage="Nome é obrigatório" />
+								required="true" requiredMessage="#{msgs['obligatory.name']}" />
 					<p:message for="txtFirstName"/>		
 					
-					<h:outputLabel id="lblLastname" for="txtLastname" value="Sobrenome *" style="font-weight:bold"/>				
+					<h:outputLabel id="lblLastname" for="txtLastname" value="#{msgs['surname']} *" style="font-weight:bold"/>				
 					<p:inputText id="txtLastname" value="#{userController.user.lastname}" 
-								required="true" requiredMessage="Sobrenome é obrigatório" />
+								required="true" requiredMessage="#{msgs['obligatory.surname']}" />
 					<p:message for="txtLastname"/>
 															
 					<h:outputLabel id="lblLogin" for="txtLogin" value="Login *" style="font-weight:bold"/>				
 					<p:inputText id="txtLogin" value="#{userController.user.username}" 
-							required="true" requiredMessage="Login é obrigatório" />
+							required="true" requiredMessage="#{msgs['obligatory.login']}" />
 					<p:message for="txtLogin"/>
 					
-					<h:outputLabel id="lblPassword" for="txtPassword" value="Senha *" style="font-weight:bold"/>				
+					<h:outputLabel id="lblPassword" for="txtPassword" value="#{msgs['password']} *" style="font-weight:bold"/>				
 					<p:password id="txtPassword" value="#{userController.user.password}"
-						required="true"	requiredMessage="Senha é obrigatória" redisplay="true">
-						<f:validateLength minimum="6">Tamanho mínimo de 6 carateres</f:validateLength>					
+						required="true"	requiredMessage="#{msgs['obligatory.password']}" redisplay="true">
+						<f:validateLength minimum="6">#{msgs['least.six']}</f:validateLength>					
 					</p:password>
 					<p:message for="txtPassword" />
 																							
-					<h:outputLabel id="lblEmail" for="txtEmail" value="Email" style="font-weight:bold"/>				
+					<h:outputLabel id="lblEmail" for="txtEmail" value="E-mail" style="font-weight:bold"/>				
 					<p:inputText id="txtEmail" value="#{userController.user.email}"/>
 					<p:message for="txtEmail"/>
 					
-					<h:outputLabel id="lblLevel" value="Nível de Usuário " style="font-weight:bold"/>				
+					<h:outputLabel id="lblLevel" value="#{msgs['user.level']} " style="font-weight:bold"/>				
 					<h:outputLabel value="#{userController.user.userLevel}" rendered="#{(userController.editing and currentUser.userLevel.accessLevel != 10) or userController.user.id.toString() == currentUser.id.toString()}"/>
 					<p:selectOneMenu id="cmbLevel" value="#{userController.user.userLevel}" rendered="#{(not userController.editing or currentUser.userLevel.accessLevel == 10) and userController.user.id.toString() != currentUser.id.toString()}">
 						<f:selectItems value="#{userController.levels}" />					
@@ -57,11 +57,11 @@
 				</h:panelGrid>							
 				<h:panelGrid columns="2" cellpadding="10">							
 					
-					<h:commandLink value="Salvar" action="#{userController.save()}"
+					<h:commandLink value="#{msgs['save']}" action="#{userController.save()}"
 									style="color:white"  class="btn btn-large btn-info" rendered="#{not userController.editing}"/>
-					<h:commandLink value="Atualizar" action="#{userController.save()}"
+					<h:commandLink value="#{msgs['update']}" action="#{userController.save()}"
 									style="color:white"  class="btn btn-large btn-info" rendered="#{userController.editing}"/>
-					<h:commandLink immediate="true" value="Cancelar" action="userList" 
+					<h:commandLink immediate="true" value="#{msgs['cancel']}" action="userList" 
 									style="color:white" class="btn btn-large btn-info" />
 									
 				</h:panelGrid>	

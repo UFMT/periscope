@@ -14,11 +14,11 @@
 
         <ui:define name="content">
 
-            <h1>Perfil Tecnológico</h1>
+            <h1>#{msgs['technological.profile']}</h1>
 
             <h:form id="chart" styleClass="container">
 
-                <center><h4>Número de classificações por depositante</h4></center>
+                <center><h4>#{msgs['classification.applicant']}</h4></center>
 
                 <i:filtro controller="#{mainIPCController}" filter="8"/>
 
@@ -72,7 +72,7 @@
 
                     <p:barChart id="horizontal" value="#{mainIPCController.model}" rendered="#{mainIPCController.model.series.get(0).getData().size()!=0}"
                                 orientation="horizontal" legendPosition="e" datatipFormat="%s"
-                                title="Perfil Tecnológico" style="width:600px ; height:300px" />
+                                title="#{msgs['technological.profile']}" style="width:600px ; height:300px" />
 
                     <h:column>
                         <p:graphicImage />
@@ -82,7 +82,7 @@
                     <h:column>
 
                         <p:dataTable id="datatable"
-                                     emptyMessage="Nenhuma classificacao cadastrada." var="ipc"
+                                     emptyMessage="#{msgs['no.classifications']}" var="ipc"
                                      value="#{mainIPCController.pairs}" >
 
                                                 <!-- 					<p:column headerText="#{msgs['position']}" > -->

@@ -10,24 +10,24 @@
 
         <ui:define name="content">
             <ui:include src="/template/flashmessages.xhtml" />
-            <h2>Regras de Harmonização</h2>
+            <h2>#{msgs['harmonization.rules']}</h2>
             <br/>
             <p:tabView id="tabView"> 
-                <p:tab id="tab1" title="Depositantes">				
+                <p:tab id="tab1" title="#{msgs['applicants']}">				
                     <p:dataTable id="ruleApplicants" var="rule" style="font-size:12px"
-                                 emptyMessage="Não existem regras de depositantes"
+                                 emptyMessage="#{msgs['no.rules']}"
                                  value="#{ruleController.applicantRules}" paginator="true"
                                  paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
                                  rowKey="#{rule.id.toString()}" sortBy="#{rule.name}">
 
                         <p:columnGroup type="header">
                             <p:row>						
-                                <p:column rowspan="2" headerText="Nome" sortBy="#{rule.name}"/>
+                                <p:column rowspan="2" headerText="#{msgs['name']}" sortBy="#{rule.name}"/>
                                 <p:column rowspan="2" headerText="#{msgs['acronym']}" sortBy="#{rule.acronym}"/>
-                                <p:column rowspan="2" headerText="Substituições" />
-                                <p:column rowspan="2" headerText="Pais" sortBy="#{rule.country.name}"/>
-                                <p:column rowspan="2" headerText="Natureza" sortBy="#{rule.nature.name}"/>
-                                <p:column rowspan="2" headerText="Ações" />
+                                <p:column rowspan="2" headerText="#{msgs['substitutions']}" />
+                                <p:column rowspan="2" headerText="#{msgs['country']}" sortBy="#{rule.country.name}"/>
+                                <p:column rowspan="2" headerText="#{msgs['nature']}" sortBy="#{rule.nature.name}"/>
+                                <p:column rowspan="2" headerText="#{msgs['actions']}" />
                             </p:row>
                         </p:columnGroup>		
                         <p:column>														
@@ -48,13 +48,13 @@
                         <p:column>
                             <center>
                                 <h:form style="margin-bottom:0px">
-                                    <h:commandLink value="Aplicar"
+                                    <h:commandLink value="#{msgs['apply']}"
                                                    style="color:white;margin-right: 10px" class="btn btn-inverse"
                                                    action="#{ruleController.apply(rule.id.toString())}">	
                                     </h:commandLink>
-                                    <h:commandLink value="Deletar"
+                                    <h:commandLink value="#{msgs['delete']}"
                                                    style="color:white;margin-right: 10px" class="btn btn-inverse"
-                                                   onclick="if (!confirm('Deseja excluir esta regra ?')) {
+                                                   onclick="if (!confirm('#{msgs['you.sure']}')) {
                                                                return false;
                                                            }" 
                                                    action="#{ruleController.delete(rule.id.toString())}">										
@@ -64,20 +64,20 @@
                         </p:column>
                     </p:dataTable>				
                 </p:tab>  			
-                <p:tab id="tab2" title="Inventores">					
+                <p:tab id="tab2" title="#{msgs['inventors']}">					
                     <p:dataTable id="ruleInventors" var="rule" style="font-size:12px"
-                                 emptyMessage="Não existem regras de inventores"
+                                 emptyMessage="#{msgs['no.rules']}"
                                  value="#{ruleController.inventorRules}" paginator="true"
                                  paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
                                  rowKey="#{rule.id.toString()}" sortBy="#{rule.name}">
 
                         <p:columnGroup type="header">
                             <p:row>						
-                                <p:column rowspan="2" headerText="Nome" sortBy="#{rule.name}"/>
+                                <p:column rowspan="2" headerText="#{msgs['name']}" sortBy="#{rule.name}"/>
                                 <p:column rowspan="2" headerText="#{msgs['acronym']}" sortBy="#{rule.acronym}"/>
-                                <p:column rowspan="2" headerText="Substituições" />
-                                <p:column rowspan="2" headerText="Pais" sortBy="#{rule.country.name}"/>
-                                <p:column rowspan="2" headerText="Ações" />
+                                <p:column rowspan="2" headerText="#{msgs['substitutions']}" />
+                                <p:column rowspan="2" headerText="#{msgs['country']}" sortBy="#{rule.country.name}"/>
+                                <p:column rowspan="2" headerText="#{msgs['actions']}" />
                             </p:row>
                         </p:columnGroup>		
                         <p:column>														
@@ -95,13 +95,13 @@
                         <p:column>
                             <center>
                                 <h:form style="margin-bottom:0px">
-                                    <h:commandLink value="Aplicar"
+                                    <h:commandLink value="#{msgs['apply']}"
                                                    style="color:white;margin-right: 10px" class="btn btn-inverse"
                                                    action="#{ruleController.apply(rule.id.toString())}">	
                                     </h:commandLink>
-                                    <h:commandLink value="Deletar"
+                                    <h:commandLink value="#{msgs['delete']}"
                                                    style="color:white;margin-right: 10px" class="btn btn-inverse"
-                                                   onclick="if (!confirm('Deseja excluir esta regra ?')) {
+                                                   onclick="if (!confirm('#{msgs['you.sure']}')) {
                                                                return false;
                                                            }" 
                                                    action="#{ruleController.delete(rule.id.toString())}">

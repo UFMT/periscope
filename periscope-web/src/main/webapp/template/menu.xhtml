@@ -16,10 +16,10 @@
 					<ul class="nav">
 						<li class="divider-vertical"></li>
       					<li class="#{fn:indexOf(view.viewId,'projectList') > 0 ? 'active' : ''}">
-      						<h:commandLink action="projectList" value="Projetos"/>
+      						<h:commandLink action="projectList" value="#{msgs['projects']}"/>
       					</li>
       					<li class="#{fn:indexOf(view.viewId,'userList') > 0 ? 'active' : ''}">
-      						<h:commandLink action="userList" value="Usuários"/>
+      						<h:commandLink action="userList" value="#{msgs['users']}"/>
       					</li>	      							      				
     				</ul>
     				<ul class="nav pull-right"> 
@@ -29,7 +29,7 @@
 							</h:panelGroup>    						
     					</li>
                                         <li class="#{fn:indexOf(view.viewId,'about') > 0 ? 'active' : ''}">
-                                                <h:commandLink action="about" value="Sobre"/>
+                                                <h:commandLink action="about" value="#{msgs['about']}"/>
                                         </li>
     					<li>
     						<p:commandLink action="#{sessionBean.logout()}" value="Log Out"/>
