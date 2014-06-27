@@ -67,6 +67,7 @@ public class ApplicantHarmonizationController implements Serializable {
     private Rule rule = new Rule();
     private String acronymDefault = "BR";
     private Applicant selectedRadio;
+    private Integer searchType;
 
     @PostConstruct
     public void init() {
@@ -80,6 +81,7 @@ public class ApplicantHarmonizationController implements Serializable {
         defaultCountry = countryRepository.getCountryByAcronym(acronymDefault);
         rule.setCountry(defaultCountry);
         states = defaultCountry.getStates();
+        setSearchType(1);
         Collections.sort(states);
 //		applicants = new ListDataModel<SelectObject<Applicant>>(SelectObject.convertToSelectObjects(pas));		
     }
@@ -258,6 +260,16 @@ public class ApplicantHarmonizationController implements Serializable {
     public void setStates(List<State> states) {
         this.states = states;
     }
+
+    public Integer getSearchType() {
+        return searchType;
+    }
+
+    public void setSearchType(Integer searchType) {
+        this.searchType = searchType;
+        applicants.setSearchType(searchType);
+    }
+    
 
     public Applicant getSelectedRadio() {
         return selectedRadio;

@@ -8,42 +8,58 @@
 
     <f:view contentType="text/html">
         <h:form id="formAll">
-<!--            <p:accordionPanel>
-                <p:tab title="#{msgs.adjustmentLot}">
-                    <h:panelGrid columns="2" cellpadding="10">  
-                        <p:outputLabel value="#{msgs['juridicalNature']}:"/>  
-                        <p:selectOneMenu id="cmbNature" value="#{applicantHarmonizationController.rule.nature.name}">
-                            <f:selectItem itemLabel="#{msgs.none}" itemValue=""/>
-                            <f:selectItems value="#{applicantHarmonizationController.applicantTypes}" var="t" itemValue="#{t.name}" itemLabel="#{msgs[t.name]}" />	
-                        </p:selectOneMenu>
-                        <p:outputLabel value="#{msgs['country']}:"/>  
-                        <p:selectOneMenu value="#{applicantHarmonizationController.rule.country.acronym}" >
-                            <f:selectItem itemLabel="#{msgs.none}" itemValue=""/>
-                            <f:selectItems value="#{applicantHarmonizationController.countries}" var="c" itemValue="#{c.acronym}" itemLabel="#{c.name}"/>					
-                        </p:selectOneMenu>
-                    </h:panelGrid> 
-                    <p:button value="#{msgs.apply}"/>
-                </p:tab>
-            </p:accordionPanel>-->
+            <!--            <p:accordionPanel>
+                            <p:tab title="#{msgs.adjustmentLot}">
+                                <h:panelGrid columns="2" cellpadding="10">  
+                                    <p:outputLabel value="#{msgs['juridicalNature']}:"/>  
+                                    <p:selectOneMenu id="cmbNature" value="#{applicantHarmonizationController.rule.nature.name}">
+                                        <f:selectItem itemLabel="#{msgs.none}" itemValue=""/>
+                                        <f:selectItems value="#{applicantHarmonizationController.applicantTypes}" var="t" itemValue="#{t.name}" itemLabel="#{msgs[t.name]}" />	
+                                    </p:selectOneMenu>
+                                    <p:outputLabel value="#{msgs['country']}:"/>  
+                                    <p:selectOneMenu value="#{applicantHarmonizationController.rule.country.acronym}" >
+                                        <f:selectItem itemLabel="#{msgs.none}" itemValue=""/>
+                                        <f:selectItems value="#{applicantHarmonizationController.countries}" var="c" itemValue="#{c.acronym}" itemLabel="#{c.name}"/>					
+                                    </p:selectOneMenu>
+                                </h:panelGrid> 
+                                <p:button value="#{msgs.apply}"/>
+                            </p:tab>
+                        </p:accordionPanel>-->
             <p:dataTable id="applicants" var="pa" style="font-size:12px"
                          emptyMessage="#{msgs['no.applicant']}"
                          value="#{applicantHarmonizationController.applicants}" paginator="true"
                          paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
                          rowKey="#{pa.name}" filterEvent="enter" lazy="true">
+                <f:facet name="header">
+                    <h:panelGrid columns="4" style="width: 20%" cellpadding="5">  
+                        <p:column>
+                            <p:outputLabel value="#{msgs['filter.type']}"/>  
+                        </p:column>
+                        <p:column>
+                            <p:selectOneMenu id="searchType" value="#{applicantHarmonizationController.searchType}">
+                                <f:selectItem itemLabel="#{msgs['start.with']}" itemValue="1"/>
+                                <f:selectItem itemLabel="#{msgs['contains']}" itemValue="2"/>  
+                                <p:ajax event="change" update="applicants"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                        <p:column/>
+                        <p:column/>
+                    </h:panelGrid> 
 
-<!--                <f:facet name="header">  
-                    <p:outputPanel>  
-                        <h:panelGrid columns="3">
-                            <p:outputLabel id="searchNameLabel" value="#{msgs['searchName']}:"/>
-                            <p:inputText id="searchNameText" style="width:600px" />
-                            <p:button id="btnSearch" value="#{msgs['search']}"/>
-                        </h:panelGrid>
-                    </p:outputPanel>  
-                </f:facet>-->
+                </f:facet>
+                <!--                <f:facet name="header">  
+                                    <p:outputPanel>  
+                                        <h:panelGrid columns="3">
+                                            <p:outputLabel id="searchNameLabel" value="#{msgs['searchName']}:"/>
+                                            <p:inputText id="searchNameText" style="width:600px" />
+                                            <p:button id="btnSearch" value="#{msgs['search']}"/>
+                                        </h:panelGrid>
+                                    </p:outputPanel>  
+                                </f:facet>-->
 
                 <p:column headerText="">					
                     <p:selectBooleanCheckbox id="campo" 
-                        value="#{pa.selected}" >
+                                             value="#{pa.selected}" >
                         <p:ajax event="change" update=":tabView:formAll:selectedApplicants,@this,:#{p:component('panelSugestions')}" listener="#{applicantHarmonizationController.onSelectApplicant(pa)}"/>
                     </p:selectBooleanCheckbox>	
                 </p:column>			

@@ -68,6 +68,7 @@ public class ApplicantRepository {
     Project currentProject;
     private int count;
     private List<Applicant> list;
+    private Integer searchType;
 
     public Applicant getApplicantByName(String name) {
 
@@ -275,7 +276,12 @@ public class ApplicantRepository {
         for (Map.Entry<String, String> entry : filters.entrySet()) {
             String column = entry.getKey();
             String value = entry.getValue();
-            DBObject regex = new BasicDBObject("$regex", value).append("$options", "i");
+            DBObject regex;
+            if (searchType.equals(1)) {
+                regex = new BasicDBObject("$regex", "^"+value).append("$options", "i");
+            } else {
+                regex = new BasicDBObject("$regex", value).append("$options", "i");
+            }
             matchFilterItem.put("applicants." + column, regex);
         }
         DBObject matchSearch = new BasicDBObject("$match", matchFilterItem);
@@ -460,4 +466,11 @@ public class ApplicantRepository {
         this.list = list;
     }
 
+    public Integer getSearchType() {
+        return searchType;
+    }
+
+    public void setSearchType(Integer searchType) {
+        this.searchType = searchType;
+    }
 }

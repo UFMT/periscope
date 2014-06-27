@@ -71,9 +71,11 @@ public class InventorHarmonizationController implements Serializable {
     private Country defaultCountry;
     private String acronymDefault = "BR";
     private Inventor selectedRadio;
+    private Integer searchType;
 
     @PostConstruct
     public void init() {
+        setSearchType(1);
         ArrayList<Inventor> pas = inventorRepository.getInventors(currentProject);
         countries = countryRepository.getAll();
         inventors.getInventorRepository().setCurrentProject(currentProject);
@@ -246,5 +248,15 @@ public class InventorHarmonizationController implements Serializable {
     public void setSelectedRadio(Inventor selectedRadio) {
         this.selectedRadio = selectedRadio;
     }
+
+    public Integer getSearchType() {
+        return searchType;
+    }
+
+    public void setSearchType(Integer searchType) {
+        this.searchType = searchType;
+        inventors.setSearchType(searchType);
+    }
+    
 
 }

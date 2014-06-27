@@ -60,6 +60,7 @@ public class InventorRepository {
     private @Inject
     Project currentProject;
     private int count;
+    private Integer searchType;
 
     public List<Pair> updateInventors(Project currentProject, int limit, Filters filtro) {
 
@@ -264,8 +265,14 @@ public class InventorRepository {
         for (Map.Entry<String, String> entry : filters.entrySet()) {
             String column = entry.getKey();
             String value = entry.getValue();
-            DBObject regex = new BasicDBObject("$regex", value).append("$options", "i");
+            DBObject regex;
+            if (searchType.equals(1)) {
+                regex = new BasicDBObject("$regex", "^"+value).append("$options", "i");
+            } else {
+                regex = new BasicDBObject("$regex", value).append("$options", "i");
+            }
             matchFilterItem.put("inventors." + column, regex);
+            System.out.println(matchFilterItem.toString());
         }
         DBObject matchSearch = new BasicDBObject("$match", matchFilterItem);
         parametros.add(matchSearch);
@@ -278,7 +285,7 @@ public class InventorRepository {
                 t.add(inv.getName());
             }
             lista.addAll(t);
-            matchFilterItem.put("inventors.name", new BasicDBObject("$nin", lista));
+            matchFilter.put("inventors.name", new BasicDBObject("$nin", lista));
         }
         DBObject matchEdit = new BasicDBObject("$match", matchFilter);
         parametros.add(matchEdit);
@@ -420,6 +427,14 @@ public class InventorRepository {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public Integer getSearchType() {
+        return searchType;
+    }
+
+    public void setSearchType(Integer searchType) {
+        this.searchType = searchType;
     }
 
     public Project getCurrentProject() {
