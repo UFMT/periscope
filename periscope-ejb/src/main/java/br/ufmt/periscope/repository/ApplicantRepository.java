@@ -197,21 +197,24 @@ public class ApplicantRepository {
                 // Recuperando o valor de texto da stream
                 name = "";
                 while (stream.incrementToken()) {
-                    name = name + attr.toString();
+                    name = name + attr.toString() + " ";
                 }
+                name = name.trim();
                 stream.end();
                 stream.close();
 
                 TopScoreDocCollector collector = TopScoreDocCollector.create(1000, true);
                 BooleanQuery bq = new BooleanQuery();
+                System.out.println(name);
                 // Criando a query, dar o name.split é para saber a existência do acrônimo
                 String[] tokens = name.split(" ");
                 // Se for maior que 1, existe um acrônimo
                 if (tokens.length > 1) {
+                    System.out.println(tokens[0]);
                     bq.add(new PrefixQuery(new Term("applicant", tokens[0])), Occur.MUST);
+                    System.out.println(tokens[1]);
                     bq.add(new FuzzyQuery(new Term("applicant", tokens[1]), 1), Occur.MUST);
-                    bq.add(new LengthQuery("applicant", name), Occur.MUST_NOT);
-                    //bq.add(new LengthQuery("applicant", name), Occur.MUST_NOT);
+                    bq.add(new LengthQuery("applicant", name), Occur.MUST_NOT);                   
                 } else {
                     if (name.length() > 3) {
                         bq.add(new FuzzyQuery(new Term("applicant", name)),
@@ -226,14 +229,14 @@ public class ApplicantRepository {
                 bq.add(queryProject, Occur.MUST);
 //                System.out.println(bq);
 
-                searcher.search(bq, collector);
+                ScoreDoc[] hits = searcher.search(bq, 1000).scoreDocs;
 
-                ScoreDoc[] hits = collector.topDocs().scoreDocs;
-//                System.out.println("Found " + hits.length + " hits.");
+                //ScoreDoc[] hits = collector.topDocs().scoreDocs;
+                //System.out.println("Found " + hits.length + " hits.");
                 for (int i = 0; i < hits.length; ++i) {
                     int docId = hits[i].doc;
                     Document d = searcher.doc(docId);
-//                    System.out.println((i + 1) + ". " + d.get("applicant") + "\t" + hits[i].score);
+//                  System.out.println((i + 1) + ". " + d.get("applicant") + "\t" + hits[i].score);
                     results.add(d.get("applicant"));
 
                     if (results.size() == top) {
