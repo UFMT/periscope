@@ -17,6 +17,7 @@ public class LazyInventorDataModel extends LazyDataModel<Inventor> {
     private List<Inventor> datasource;
     private List<Inventor> selectedInventors;
     private Integer searchType;
+    private Boolean harmonization = false;
 
     @Override
     public int getRowCount() {
@@ -41,7 +42,15 @@ public class LazyInventorDataModel extends LazyDataModel<Inventor> {
     @Override
     public List<Inventor> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
         inventorRepository.setSearchType(searchType);
-        datasource = inventorRepository.load(first, pageSize, sortField, sortOrder.ordinal(), filters, this.selectedInventors);
+        if (harmonization) {
+            
+            datasource = inventorRepository.load(first, pageSize, sortField, sortOrder.ordinal(), filters);
+
+        } else {
+            
+            datasource = inventorRepository.load(first, pageSize, sortField, sortOrder.ordinal(), filters, this.selectedInventors);
+
+        }
         setRowCount(inventorRepository.getCount());
         for (Inventor inventor : datasource) {
             if (this.selectedInventors.contains(inventor)) {
@@ -74,7 +83,15 @@ public class LazyInventorDataModel extends LazyDataModel<Inventor> {
     public void setSearchType(Integer searchType) {
         this.searchType = searchType;
     }
-    
+
+    public Boolean getHarmonization() {
+        return harmonization;
+    }
+
+    public void setHarmonization(Boolean harmonization) {
+        this.harmonization = harmonization;
+    }
+
     public boolean verify(Inventor newInventor) {
         return inventorRepository.exists(newInventor);
     }

@@ -17,6 +17,7 @@ public class LazyApplicantDataModel extends LazyDataModel<Applicant> {
     private List<Applicant> datasource;
     private List<Applicant> selectedApplicants;
     private Integer searchType;
+    private Boolean harmonization = false;
 
     @Override
     public int getRowCount() {
@@ -41,11 +42,19 @@ public class LazyApplicantDataModel extends LazyDataModel<Applicant> {
     @Override
     public List<Applicant> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
         applicantRepository.setSearchType(searchType);
-        datasource = applicantRepository.load(first, pageSize, sortField, sortOrder.ordinal(), filters, this.selectedApplicants);
+        if (harmonization) {
+            
+            datasource = applicantRepository.load(first, pageSize, sortField, sortOrder.ordinal(), filters);
+
+        } else {
+            
+            datasource = applicantRepository.load(first, pageSize, sortField, sortOrder.ordinal(), filters, this.selectedApplicants);
+
+        }
         setRowCount(applicantRepository.getCount());
         for (Applicant applicant : datasource) {
             if (this.selectedApplicants.contains(applicant)) {
-                
+
                 applicant.setSelected(true);
             }
         }
@@ -75,7 +84,15 @@ public class LazyApplicantDataModel extends LazyDataModel<Applicant> {
     public void setSearchType(Integer searchType) {
         this.searchType = searchType;
     }
-    
+
+    public Boolean getHarmonization() {
+        return harmonization;
+    }
+
+    public void setHarmonization(Boolean harmonization) {
+        this.harmonization = harmonization;
+    }
+
     public boolean verify(Applicant newApplicant) {
         return applicantRepository.exists(newApplicant);
     }

@@ -79,6 +79,7 @@ public class InventorHarmonizationController implements Serializable {
         ArrayList<Inventor> pas = inventorRepository.getInventors(currentProject);
         countries = countryRepository.getAll();
         inventors.getInventorRepository().setCurrentProject(currentProject);
+        inventors.setHarmonization(true);
         selectedInventors.clear();
         inventors.setSelectedInventors(selectedInventors);
 

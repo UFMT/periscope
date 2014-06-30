@@ -77,6 +77,7 @@ public class ApplicantHarmonizationController implements Serializable {
         applicants.getApplicantRepository().setCurrentProject(currentProject);
         selectedApplicants.clear();
         applicants.setSelectedApplicants(selectedApplicants);
+        applicants.setHarmonization(true);
 
         defaultCountry = countryRepository.getCountryByAcronym(acronymDefault);
         rule.setCountry(defaultCountry);
