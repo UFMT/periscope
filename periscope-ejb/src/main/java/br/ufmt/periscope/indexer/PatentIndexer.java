@@ -69,7 +69,8 @@ public class PatentIndexer {
                 doc.add(new TextField("id", p.getTitleSelect() + p.getPublicationNumber() + p.getProject().getId().toString() + String.valueOf(a.getName().hashCode()), Field.Store.YES));
                 doc.add(new TextField("applicant", a.getName(), Field.Store.YES));
                 doc.add(new TextField("project", p.getProject().getId().toString(), Field.Store.YES));
-                writer.updateDocument(new Term(doc.get("id")), doc);
+                writer.deleteDocuments(new Term("id", doc.get("id")));
+                writer.addDocument(doc);
             }
 
             for (Inventor a : p.getInventors()) {
@@ -77,13 +78,12 @@ public class PatentIndexer {
                 doc.add(new TextField("id", p.getTitleSelect() + p.getPublicationNumber() + p.getProject().getId().toString() + String.valueOf(a.getName().hashCode()), Field.Store.YES));
                 doc.add(new TextField("inventor", a.getName(), Field.Store.YES));
                 doc.add(new TextField("project", p.getProject().getId().toString(), Field.Store.YES));
-                writer.updateDocument(new Term(doc.get("id")), doc);
-
+                writer.deleteDocuments(new Term("id", doc.get("id")));
+                writer.addDocument(doc);
             }
         } catch (IOException ex) {
             Logger.getLogger(PatentIndexer.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
-
 }

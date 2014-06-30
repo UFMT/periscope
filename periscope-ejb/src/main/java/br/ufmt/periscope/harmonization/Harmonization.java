@@ -8,12 +8,14 @@ import javax.inject.Named;
 import org.bson.types.ObjectId;
 
 import br.ufmt.periscope.indexer.PatentIndexer;
+import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Rule;
 import br.ufmt.periscope.repository.PatentRepository;
 
 import com.github.jmkgreen.morphia.Datastore;
 import com.github.jmkgreen.morphia.mapping.Mapper;
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DBObject;
 
@@ -48,7 +50,6 @@ public class Harmonization {
 
     private void applyApplicantRule(Rule rule) {
         ObjectId projectId = rule.getProject().getId();
-        System.out.println(projectId);
         Mapper mapper = ds.getMapper();
         rule.getCountry().setStates(null);
         DBObject dbObjectCountry = mapper.toDBObject(rule.getCountry());
@@ -57,7 +58,7 @@ public class Harmonization {
         String applicants[] = new String[rule.getSubstitutions().size()];
         applicants = rule.getSubstitutions().toArray(applicants);
         for (int i = 0; i < applicants.length; i++) {
-            
+
             DBObject query = BasicDBObjectBuilder
                     .start("project.$id", projectId)
                     .add("applicants.name", applicants[i])
@@ -76,14 +77,21 @@ public class Harmonization {
             ds.getCollection(Patent.class).updateMulti(query, updateOp);
         }
 
-        List<Patent> patents = patentRepository.getAllPatents(rule.getProject());
+        DBObject query = BasicDBObjectBuilder
+                .start("project.$id", projectId)
+                .add("applicants.name", BasicDBObjectBuilder.start("$in", applicants))
+                .get();
+
+        List<Patent> patents = ds.find(Patent.class).field("project").equal(rule.getProject()).field("applicants.name").in(rule.getSubstitutions()).asList();
+
+
+//        List<Patent> patents = patentRepository.getAllPatents(rule.getProject());
         indexer.indexPatents(patents);
 
     }
 
     private void applyInventorRule(Rule rule) {
         ObjectId projectId = rule.getProject().getId();
-        System.out.println(projectId);
         Mapper mapper = ds.getMapper();
         rule.getCountry().setStates(null);
         DBObject dbObjectCountry = mapper.toDBObject(rule.getCountry());
@@ -110,7 +118,10 @@ public class Harmonization {
             ds.getCollection(Patent.class).updateMulti(query, updateOp);
         }
 
-        List<Patent> patents = patentRepository.getAllPatents(rule.getProject());
+        List<Patent> patents = ds.find(Patent.class).field("project").equal(rule.getProject()).field("inventors.name").in(rule.getSubstitutions()).asList();
+
+
+//        List<Patent> patents = patentRepository.getAllPatents(rule.getProject());
         indexer.indexPatents(patents);
 
     }
