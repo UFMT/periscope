@@ -19,10 +19,8 @@ import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
-import java.io.StringReader;
 import java.util.logging.Level;
 import javax.enterprise.context.RequestScoped;
-import org.apache.lucene.document.FieldType;
 import org.apache.lucene.document.TextField;
 
 @Named
@@ -63,37 +61,7 @@ public class PatentIndexer {
         log.info("Ocorreu algum erro deletando os indices.");
     }
 
-//	public void updateIndexPatent(Patent p){
-//		indexPatent(p);
-//	}
     private void indexPatent(Patent p) {
-//        Document doc = new Document();
-//
-//        doc.add(new Field("id", p.getPublicationNumber() + p.getProject().getId().toString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
-//        doc.add(new Field("publicationNumber", p.getPublicationNumber(), Field.Store.YES, Field.Index.ANALYZED));
-//        doc.add(new Field("project", p.getProject().getId().toString(), Field.Store.YES, Field.Index.ANALYZED));
-//        doc.add(new Field("titleSelect", p.getTitleSelect(), Field.Store.YES, Field.Index.ANALYZED));
-//        if (p.getAbstractSelect() != null) {
-//            doc.add(new Field("abstractSelect", p.getAbstractSelect(), Field.Store.YES, Field.Index.ANALYZED));
-//        }
-//
-//        for (Applicant pa : p.getApplicants()) {
-//            doc.add(new Field("applicant", pa.getName(), Field.Store.YES, Field.Index.ANALYZED));
-//        }
-//
-//        for (Inventor pi : p.getInventors()) {
-//            doc.add(new Field("inventor", pi.getName(), Field.Store.YES, Field.Index.ANALYZED));
-//        }
-//
-// 
-//            Term key = new Term("id", doc.get("id"));
-//        try {
-//            //writer.updateDocument(key, doc);
-//            writer.deleteDocuments(key);
-//            writer.addDocument(doc);
-//        } catch (IOException ex) {
-//            Logger.getLogger(PatentIndexer.class.getName()).log(Level.SEVERE, null, ex);
-//        }
 
         try {
             for (Applicant a : p.getApplicants()) {
@@ -101,17 +69,16 @@ public class PatentIndexer {
                 doc.add(new TextField("id", p.getTitleSelect() + p.getPublicationNumber() + p.getProject().getId().toString() + String.valueOf(a.getName().hashCode()), Field.Store.YES));
                 doc.add(new TextField("applicant", a.getName(), Field.Store.YES));
                 doc.add(new TextField("project", p.getProject().getId().toString(), Field.Store.YES));
-                writer.deleteDocuments(new Term("id", doc.get("id")));
-                writer.addDocument(doc);
+                writer.updateDocument(new Term(doc.get("id")), doc);
             }
-            
+
             for (Inventor a : p.getInventors()) {
                 Document doc = new Document();
                 doc.add(new TextField("id", p.getTitleSelect() + p.getPublicationNumber() + p.getProject().getId().toString() + String.valueOf(a.getName().hashCode()), Field.Store.YES));
                 doc.add(new TextField("inventor", a.getName(), Field.Store.YES));
                 doc.add(new TextField("project", p.getProject().getId().toString(), Field.Store.YES));
-                writer.deleteDocuments(new Term("id", doc.get("id")));
-                writer.addDocument(doc);
+                writer.updateDocument(new Term(doc.get("id")), doc);
+
             }
         } catch (IOException ex) {
             Logger.getLogger(PatentIndexer.class.getName()).log(Level.SEVERE, null, ex);
