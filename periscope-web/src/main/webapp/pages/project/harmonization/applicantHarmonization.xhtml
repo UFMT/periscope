@@ -99,8 +99,7 @@
                         <p:column rowspan="2" headerText="#{msgs['name']}" sortBy="#{pa.name}"/>
                         <p:column rowspan="2" headerText="#{msgs['acronym']}" />
                         <p:column rowspan="2" headerText="#{msgs['country']}" />
-                        <p:column rowspan="2" headerText="Docs" sortBy="#{pa.documentCount}"/>
-                        <p:column style="width: 5px"/>
+                        <p:column rowspan="2" headerText="Docs" sortBy="#{pa.documentCount}"/>				
                     </p:row>
                 </p:columnGroup>		
                 <p:column>														
@@ -115,13 +114,6 @@
                 <p:column>														
                     #{pa.documentCount}					
                 </p:column>		
-                <p:column>
-                    <p:commandButton icon="ui-icon-closethick" action="#{applicantHarmonizationController.unselect(pa)}"
-                                     update = ":tabView:formAll:applicants,:tabView:formAll:selectedApplicants,:#{p:component('panelSugestions')}"
-                                     ajax="true"
-                                     
-                                     />
-                </p:column> 
             </p:dataTable>
 
             <p:commandLink value="#{msgs['new.rule']}"  update="applicantSugestions" oncomplete="sugestionsDialog.show()"

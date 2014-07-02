@@ -97,13 +97,6 @@ public class ApplicantHarmonizationController implements Serializable {
 
     }
 
-    public String unselect(Applicant pa) {
-        pa.setSelected(false);
-        selectedApplicants.remove(pa);
-        return "";
-        
-    }
-    
     public void selectListener(ValueChangeEvent event) {
         String acronym = (String) event.getNewValue();
         searchState(acronym);

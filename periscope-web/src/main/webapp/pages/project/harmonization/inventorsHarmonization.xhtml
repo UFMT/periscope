@@ -6,15 +6,15 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 
-    <f:view contentType="text/html">
-        <h:form id="formAl">
-            <p:dataTable id="inventors" var="pa" style="font-size:12px"
-                         emptyMessage="#{msgs['no.inventors']}"
-                         value="#{inventorHarmonizationController.inventors}" paginator="true"
-                         paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
-                         rowKey="#{pa.name}" filterEvent="enter" lazy="true">
-
-                <f:facet name="header">
+<f:view contentType="text/html">
+	<h:form id="formAl">
+		<p:dataTable id="inventors" var="pa" style="font-size:12px"
+					emptyMessage="#{msgs['no.inventors']}"
+					value="#{inventorHarmonizationController.inventors}" paginator="true"
+					paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+					rowKey="#{pa.name}" filterEvent="enter" lazy="true">
+               
+               <f:facet name="header">
                     <h:panelGrid columns="4" style="width: 20%" cellpadding="5">  
                         <p:column>
                             <p:outputLabel value="#{msgs['filter.type']}"/>  
@@ -29,75 +29,68 @@
                         <p:column/>
                         <p:column/>
                     </h:panelGrid>
-                </f:facet>
+               </f:facet>
+                    
 
-
-
-                <p:column headerText="">					
-                    <p:selectBooleanCheckbox id="campo" 
-                                             value="#{pa.selected}" >
-                        <p:ajax event="change" update=":tabView:formAl:selectedInventors,@this,:#{p:component('panelSugestions')}" listener="#{inventorHarmonizationController.onSelectInventor(pa)}"/>
-                    </p:selectBooleanCheckbox>	
-                </p:column>		
-                <p:column headerText="#{msgs['name']}" sortBy="#{pa.name}" filterBy="#{pa.name}">														
-                    #{pa.name}					
-                </p:column>
-                <p:column headerText="#{msgs['country']}" sortBy="#{pa.country.name}">														
-                    #{pa.country == null ? '' : pa.country.name}					
-                </p:column>
-                <p:column headerText="Docs" sortBy="#{pa.documentCount}">														
-                    #{pa.documentCount}					
-                </p:column>
-                <p:column headerText="#{msgs['actions']}">
-                    <center>
-                        <h:form style="margin-bottom:0px">
-                            <h:commandLink value="#{msgs['edit']}"
-                                           style="color:white;margin-right: 10px" class="btn btn-inverse">	
-                            </h:commandLink>							
-                        </h:form>
-                    </center>
-                </p:column>
-            </p:dataTable>
-
-            <p:separator/>
-
-            <p:dataTable id="selectedInventors" var="pa" style="font-size:12px"
-                         emptyMessage="#{msgs['no.selectedinventors']}" widgetVar="tblSelected"
-                         value="#{inventorHarmonizationController.selectedInventors}" paginator="true"
-                         paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
-                         rowKey="#{pa.name}" sortBy="#{pa.name}">
-
-                <p:columnGroup type="header">
-                    <p:row>					
-                        <p:column rowspan="2" headerText="#{msgs['name']}" sortBy="#{pa.name}"/>
-                        <p:column rowspan="2" headerText="#{msgs['country']}" />
-                        <p:column rowspan="2" headerText="Docs" sortBy="#{pa.documentCount}"/>	
-                        <p:column style="width: 10px"/>
-                    </p:row>
-                </p:columnGroup>		
-                <p:column>														
-                    #{pa.name}					
-                </p:column>
-                <p:column>														
-                    #{pa.country == null ? '' : pa.country.name}					
-                </p:column>
-                <p:column>														
-                    #{pa.documentCount}					
-                </p:column>
-                <p:column>
-                    <p:commandButton icon="ui-icon-closethick" action="#{inventorHarmonizationController.unselect(pa)}"
-                                     update = ":tabView:formAl:inventors,:tabView:formAl:selectedInventors,:#{p:component('panelSugestions')}"
-                                     ajax="true"
-                                     />
-                </p:column> 
-            </p:dataTable>
-
-            <p:commandLink value="#{msgs['new.rule']}"  update="inventorSugestions" oncomplete="invSugestionsDialog.show()"
-                           action="#{inventorHarmonizationController.loadSugestions()}"
-                           style="color:white;margin-right: 10px" styleClass="btn btn-inverse"/>			
-            <ui:include src="/pages/project/harmonization/dialogInventorRule.xhtml" />
-
-        </h:form>				
-
-    </f:view>
+	
+                    <p:column headerText="">					
+                        <p:selectBooleanCheckbox id="campo" 
+                                value="#{pa.selected}" >
+                                <p:ajax event="change" update=":tabView:formAl:selectedInventors,@this,:#{p:component('panelSugestions')}" listener="#{inventorHarmonizationController.onSelectInventor(pa)}"/>
+                            </p:selectBooleanCheckbox>	
+                        </p:column>		
+			<p:column headerText="#{msgs['name']}" sortBy="#{pa.name}" filterBy="#{pa.name}">														
+					#{pa.name}					
+			</p:column>
+			<p:column headerText="#{msgs['country']}" sortBy="#{pa.country.name}">														
+					#{pa.country == null ? '' : pa.country.name}					
+			</p:column>
+			<p:column headerText="Docs" sortBy="#{pa.documentCount}">														
+					#{pa.documentCount}					
+			</p:column>
+			<p:column headerText="#{msgs['actions']}">
+				<center>
+					<h:form style="margin-bottom:0px">
+						<h:commandLink value="#{msgs['edit']}"
+							style="color:white;margin-right: 10px" class="btn btn-inverse">	
+						</h:commandLink>							
+					</h:form>
+				</center>
+			</p:column>
+		</p:dataTable>
+		
+		<p:separator/>
+		
+		<p:dataTable id="selectedInventors" var="pa" style="font-size:12px"
+					emptyMessage="#{msgs['no.selectedinventors']}" widgetVar="tblSelected"
+					value="#{inventorHarmonizationController.selectedInventors}" paginator="true"
+					paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+					rowKey="#{pa.name}" sortBy="#{pa.name}">
+	
+			<p:columnGroup type="header">
+				<p:row>					
+					<p:column rowspan="2" headerText="#{msgs['name']}" sortBy="#{pa.name}"/>
+					<p:column rowspan="2" headerText="#{msgs['country']}" />
+					<p:column rowspan="2" headerText="Docs" sortBy="#{pa.documentCount}"/>				
+				</p:row>
+			</p:columnGroup>		
+			<p:column>														
+					#{pa.name}					
+			</p:column>
+			<p:column>														
+					#{pa.country == null ? '' : pa.country.name}					
+			</p:column>
+			<p:column>														
+					#{pa.documentCount}					
+			</p:column>		
+		</p:dataTable>
+		
+		<p:commandLink value="#{msgs['new.rule']}"  update="inventorSugestions" oncomplete="invSugestionsDialog.show()"
+				action="#{inventorHarmonizationController.loadSugestions()}"
+				style="color:white;margin-right: 10px" styleClass="btn btn-inverse"/>			
+		<ui:include src="/pages/project/harmonization/dialogInventorRule.xhtml" />
+                
+	</h:form>				
+	
+</f:view>
 </html>

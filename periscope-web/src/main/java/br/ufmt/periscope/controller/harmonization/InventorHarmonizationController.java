@@ -42,6 +42,7 @@ import javax.inject.Inject;
 public class InventorHarmonizationController implements Serializable {
 
     private static final long serialVersionUID = 7744517674295407077L;
+
     private @Inject
     Logger log;
     private @Inject
@@ -51,6 +52,7 @@ public class InventorHarmonizationController implements Serializable {
     Project currentProject;
     private @Inject
     ApplicantRepository applicantRepository;
+
     private @Inject
     InventorRepository inventorRepository;
     private @Inject
@@ -58,6 +60,7 @@ public class InventorHarmonizationController implements Serializable {
     private List<Inventor> selectedInventors = new ArrayList<Inventor>();
     private List<SelectObject<Inventor>> inventorSugestions = null;
     private List<Inventor> selectedInventorSugestions = new ArrayList<Inventor>();
+
     private @Inject
     RuleRepository ruleRepository;
     private @Inject
@@ -104,13 +107,6 @@ public class InventorHarmonizationController implements Serializable {
         } else {
             selectedInventors.remove(pa);
         }
-
-    }
-
-    public String unselect(Inventor pa) {
-        pa.setSelected(false);
-        selectedInventors.remove(pa);
-        return "";
 
     }
 
@@ -262,4 +258,6 @@ public class InventorHarmonizationController implements Serializable {
         this.searchType = searchType;
         inventors.setSearchType(searchType);
     }
+    
+
 }
