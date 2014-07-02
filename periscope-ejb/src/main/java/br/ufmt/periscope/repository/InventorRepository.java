@@ -1,5 +1,6 @@
 package br.ufmt.periscope.repository;
 
+import br.ufmt.periscope.indexer.resources.search.LengthQuery;
 import br.ufmt.periscope.model.Country;
 import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.model.Patent;
@@ -43,6 +44,7 @@ import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopScoreDocCollector;
@@ -182,7 +184,7 @@ public class InventorRepository {
 //                queryBuilder.append("\"" + name + "\"~10 ");
 //            }
 
-            Query queryProject = new QueryParser(Version.LUCENE_36, "project", analyzer)
+            Query queryProject = new QueryParser(Version.LUCENE_47, "project", analyzer)
                     .parse(project.getId().toString());
             queryProject.setBoost(0.1f);
 
@@ -193,36 +195,50 @@ public class InventorRepository {
                 TokenStream stream = analyzer.tokenStream("inventor", new StringReader(name));
                 // Passa os atributos da stream para que seja possível recuperar seu valor puro de texto
                 CharTermAttribute attr = stream.getAttribute(CharTermAttribute.class);
-                // resetar a stream é necessário fazer, não sei o porque, mais se não o fizer da erro
                 stream.reset();
                 // Recuperando o valor de texto da stream
                 name = "";
                 while (stream.incrementToken()) {
-                    name = name + attr.toString();
+                    name = name + attr.toString() + " ";
                 }
+                name = name.trim();
                 stream.end();
                 stream.close();
 
                 TopScoreDocCollector collector = TopScoreDocCollector.create(1000, true);
                 BooleanQuery bq = new BooleanQuery();
-                //Query queryPa = new QueryParser(Version.LUCENE_36, "inventor", analyzer)
-                //       .parse(queryBuilder.toString());
-                //queryPa.setBoost(10f);
+                System.out.println(name);
+                // Criando a query, dar o name.split é para saber a existência do acrônimo
+                String[] tokens = name.split(" ");
+                // Se for maior que 1, existe um acrônimo
+                if (tokens.length > 1) {
+                    System.out.println(tokens[0]);
+                    bq.add(new PrefixQuery(new Term("inventor", tokens[0])), BooleanClause.Occur.MUST);
+                    System.out.println(tokens[1]);
+                    bq.add(new FuzzyQuery(new Term("inventor", tokens[1]), 1), BooleanClause.Occur.MUST);
+                    bq.add(new LengthQuery("inventor", name), BooleanClause.Occur.MUST_NOT);                   
+                } else {
+                    if (name.length() > 3) {
+                        bq.add(new FuzzyQuery(new Term("inventor", name)),
+                                BooleanClause.Occur.MUST);
+                    } else {
+                        bq.add(new PrefixQuery(new Term("inventor", name)),
+                                BooleanClause.Occur.MUST);
+                    }
+                }
 
-                Query query = new FuzzyQuery(new Term("inventor", name));
 
-                bq.add(query, BooleanClause.Occur.MUST);
                 bq.add(queryProject, BooleanClause.Occur.MUST);
 //                System.out.println(bq);
 
-                searcher.search(bq, collector);
+                ScoreDoc[] hits = searcher.search(bq, 1000).scoreDocs;
 
-                ScoreDoc[] hits = collector.topDocs().scoreDocs;
-//                System.out.println("Found " + hits.length + " hits.");
+                //ScoreDoc[] hits = collector.topDocs().scoreDocs;
+                //System.out.println("Found " + hits.length + " hits.");
                 for (int i = 0; i < hits.length; ++i) {
                     int docId = hits[i].doc;
                     Document d = searcher.doc(docId);
-//                    System.out.println((i + 1) + ". " + d.get("inventor") + "\t" + hits[i].score);
+//                  System.out.println((i + 1) + ". " + d.get("applicant") + "\t" + hits[i].score);
                     results.add(d.get("inventor"));
 
                     if (results.size() == top) {
