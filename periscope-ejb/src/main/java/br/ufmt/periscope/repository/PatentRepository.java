@@ -16,6 +16,7 @@ import com.github.jmkgreen.morphia.query.Query;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.gridfs.GridFS;
 import java.net.UnknownHostException;
@@ -79,8 +80,9 @@ public class PatentRepository {
     }
 
     public void sendPatentToBlacklist(Patent patent) {
-        patent.setBlacklisted(!patent.getBlacklisted());
-        ds.save(patent);
+        DBObject criteria = new BasicDBObject("_id", patent.getId());
+        DBObject update = new BasicDBObject("$set", new BasicDBObject("blacklisted", !patent.getBlacklisted()));
+        ds.getCollection(Patent.class).update(criteria, update);
     }
 
     public void savePatent(Patent patent) {
@@ -173,8 +175,7 @@ public class PatentRepository {
         }
         setRowCount((int) query.countAll());
         query.offset(first).limit(pageSize);
-//        query.retrievedFields(true, "titleSelect","mainClassification","publicationDate","applicationNumber","applicants","inventors");
-        System.out.println(query.toString());
+        query.retrievedFields(true, "_id","titleSelect","mainClassification","publicationDate","applicationNumber","applicants","inventors","blacklisted");
         return query.asList();
     }
 
@@ -195,7 +196,7 @@ public class PatentRepository {
         setRowCount((int) query.countAll());
 
         query.offset(first).limit(pageSize);
-//        query.retrievedFields(true, "titleSelect","mainClassification","publicationDate","applicationNumber","applicants","inventors");
+        query.retrievedFields(true, "_id","titleSelect","mainClassification","publicationDate","applicationNumber","applicants","inventors","blacklisted");
         return query.asList();
     }
 
