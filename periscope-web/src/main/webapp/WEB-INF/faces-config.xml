@@ -26,6 +26,10 @@
             <to-view-id>/pages/project/about.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
+            <from-outcome>addPatent</from-outcome>
+            <to-view-id>/pages/project/patent/patentAdd.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
             <from-outcome>importPatent</from-outcome>
             <to-view-id>/pages/project/patent/patentImport.xhtml</to-view-id>
         </navigation-case>

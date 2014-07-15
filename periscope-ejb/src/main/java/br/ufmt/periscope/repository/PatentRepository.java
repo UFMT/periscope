@@ -72,6 +72,16 @@ public class PatentRepository {
 
     }
 
+    public void savePatentToDatabase(Patent p, Project project) {
+        p.setProject(project);
+        if (!patentExistsForProject(p, project)) {
+            project.getPatents().add(p);
+            ds.save(p);
+            ds.save(project);
+            patentIndexer.indexPatent(p);
+        }
+    }
+
     public boolean patentExistsForProject(Patent patent, Project project) {
         return ds.find(Patent.class)
                 .field("publicationNumber").equal(patent.getPublicationNumber())
@@ -132,7 +142,7 @@ public class PatentRepository {
             date = "applicationDate";
         }
         System.out.println("Date:" + date);
-        BasicDBObject filters =  new BasicDBObject("project.$id", currentProject.getId());
+        BasicDBObject filters = new BasicDBObject("project.$id", currentProject.getId());
         filters.put("blacklisted", false);
         DBCursor dbc = ds.getCollection(Patent.class).find(filters).sort(new BasicDBObject(date, 1)).limit(1);
         Date data = (Date) dbc.next().get(date);
@@ -145,7 +155,7 @@ public class PatentRepository {
         if (selectedDate == 2) {
             date = "applicationDate";
         }
-        BasicDBObject filters =  new BasicDBObject("project.$id", currentProject.getId());
+        BasicDBObject filters = new BasicDBObject("project.$id", currentProject.getId());
         filters.put("blacklisted", false);
         DBCursor dbc = ds.getCollection(Patent.class).find(filters).sort(new BasicDBObject(date, -1)).limit(1);
         Date data = (Date) dbc.next().get(date);
@@ -175,7 +185,7 @@ public class PatentRepository {
         }
         setRowCount((int) query.countAll());
         query.offset(first).limit(pageSize);
-        query.retrievedFields(true, "_id","titleSelect","mainClassification","publicationDate","applicationNumber","applicants","inventors","blacklisted");
+        query.retrievedFields(true, "_id", "titleSelect", "mainClassification", "publicationDate", "applicationNumber", "applicants", "inventors", "blacklisted");
         return query.asList();
     }
 
@@ -196,7 +206,7 @@ public class PatentRepository {
         setRowCount((int) query.countAll());
 
         query.offset(first).limit(pageSize);
-        query.retrievedFields(true, "_id","titleSelect","mainClassification","publicationDate","applicationNumber","applicants","inventors","blacklisted");
+        query.retrievedFields(true, "_id", "titleSelect", "mainClassification", "publicationDate", "applicationNumber", "applicants", "inventors", "blacklisted");
         return query.asList();
     }
 

@@ -61,7 +61,7 @@ public class PatentIndexer {
         log.info("Ocorreu algum erro deletando os indices.");
     }
 
-    private void indexPatent(Patent p) {
+    public void indexPatent(Patent p) {
 
         try {
             for (Applicant a : p.getApplicants()) {

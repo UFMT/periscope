@@ -4,6 +4,7 @@ import br.ufmt.periscope.lazy.LazyApplicantDataModel;
 import br.ufmt.periscope.lazy.LazyInventorDataModel;
 import br.ufmt.periscope.lazy.LazyPatentDataModel;
 import br.ufmt.periscope.model.Applicant;
+import br.ufmt.periscope.model.Classification;
 import br.ufmt.periscope.model.Country;
 import br.ufmt.periscope.model.Files;
 import br.ufmt.periscope.model.Inventor;
@@ -128,9 +129,16 @@ public class PatentController {
         System.out.println("edit");
         if (req.getParameter("patentId") != null) {
             selectedPatent = patentRepository.getPatentWithId(currentProject, new ObjectId(req.getParameter("patentId"))).get(0);
-            System.out.println("selecpatent");
             updateApplicants();
             updateInventors();
+        }
+        if (req.getParameter("patentAdd") != null){
+            selectedPatent = new Patent();
+            selectedPatent.setMainClassification(new Classification());
+            selectedPatent.setProject(currentProject);
+            updateApplicants();
+            updateInventors();
+            System.out.println("funfou");
         }
 
         updateList();
@@ -153,6 +161,18 @@ public class PatentController {
         selectedPatent.setApplicants(applicants.getSelectedApplicants());
         selectedPatent.setInventors(inventors.getSelectedInventors());
         patentRepository.savePatent(selectedPatent);
+        return "listPatent";
+    }
+    
+    /**
+     * Adds new patent to the current project
+     * 
+     * @return
+     */
+    public String add(){
+        selectedPatent.setApplicants(applicants.getSelectedApplicants());
+        selectedPatent.setInventors(inventors.getSelectedInventors());
+        patentRepository.savePatentToDatabase(selectedPatent, currentProject);
         return "listPatent";
     }
 
