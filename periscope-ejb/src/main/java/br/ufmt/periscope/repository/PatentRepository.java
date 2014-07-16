@@ -98,6 +98,7 @@ public class PatentRepository {
     }
 
     public void savePatent(Patent patent) {
+        validator.validate(patent);
         ds.save(patent);
     }
 
