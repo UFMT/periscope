@@ -376,7 +376,7 @@ public class PatentController {
             patents.getRepo().setCompleted(false);
         } else if (type.contentEquals("darklist")) {
             patents.getRepo().setBlacklisted(true);
-            patents.getRepo().setCompleted(true);
+            patents.getRepo().setCompleted(null);
         } else {
             patents.getRepo().setBlacklisted(false);
             patents.getRepo().setCompleted(true);

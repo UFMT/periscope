@@ -47,9 +47,9 @@ public class LazyApplicantDataModel extends LazyDataModel<Applicant> {
             datasource = applicantRepository.load(first, pageSize, sortField, sortOrder.ordinal(), filters);
 
         } else {
-            
+            System.out.println("Lazy:"+this.selectedApplicants.size());
             datasource = applicantRepository.load(first, pageSize, sortField, sortOrder.ordinal(), filters, this.selectedApplicants);
-
+            System.out.println("Datasource: "+datasource.size());
         }
         setRowCount(applicantRepository.getCount());
         for (Applicant applicant : datasource) {

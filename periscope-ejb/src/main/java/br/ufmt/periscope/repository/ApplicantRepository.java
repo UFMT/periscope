@@ -214,7 +214,7 @@ public class ApplicantRepository {
                     bq.add(new PrefixQuery(new Term("applicant", tokens[0])), Occur.MUST);
                     System.out.println(tokens[1]);
                     bq.add(new FuzzyQuery(new Term("applicant", tokens[1]), 1), Occur.MUST);
-                    bq.add(new LengthQuery("applicant", name), Occur.MUST_NOT);                   
+                    bq.add(new LengthQuery("applicant", name), Occur.MUST_NOT);
                 } else {
                     if (name.length() > 3) {
                         bq.add(new FuzzyQuery(new Term("applicant", name)),
@@ -224,7 +224,6 @@ public class ApplicantRepository {
                                 Occur.MUST);
                     }
                 }
-
 
                 bq.add(queryProject, Occur.MUST);
 //                System.out.println(bq);
@@ -265,6 +264,7 @@ public class ApplicantRepository {
     public List<Applicant> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters, List<Applicant> list) {
 
         ArrayList<DBObject> parametros = new ArrayList<DBObject>();
+        ArrayList<DBObject> parametrosGroup = new ArrayList<DBObject>();
 
         DBObject match = new BasicDBObject();
 
@@ -274,24 +274,29 @@ public class ApplicantRepository {
 
         DBObject unwind = new BasicDBObject("$unwind", "$applicants");
         parametros.add(unwind);
+        parametrosGroup.add(unwind);
 
-        DBObject matchFilterItem = new BasicDBObject();
-        for (Map.Entry<String, String> entry : filters.entrySet()) {
-            String column = entry.getKey();
-            String value = entry.getValue();
-            DBObject regex;
-            if (searchType.equals(1)) {
-                regex = new BasicDBObject("$regex", "^"+value).append("$options", "i");
-            } else {
-                regex = new BasicDBObject("$regex", value).append("$options", "i");
+        if (!filters.entrySet().isEmpty()) {
+            DBObject matchFilterItem = new BasicDBObject();
+            for (Map.Entry<String, String> entry : filters.entrySet()) {
+                String column = entry.getKey();
+                String value = entry.getValue();
+                DBObject regex;
+                if (searchType.equals(1)) {
+                    regex = new BasicDBObject("$regex", "^" + value).append("$options", "i");
+                } else {
+                    regex = new BasicDBObject("$regex", value).append("$options", "i");
+                }
+                matchFilterItem.put("applicants." + column, regex);
             }
-            matchFilterItem.put("applicants." + column, regex);
+            DBObject matchSearch = new BasicDBObject("$match", matchFilterItem);
+            parametros.add(matchSearch);
+            parametrosGroup.add(matchSearch);
         }
-        DBObject matchSearch = new BasicDBObject("$match", matchFilterItem);
-        parametros.add(matchSearch);
 
-        DBObject matchFilter = new BasicDBObject();
-        if (list != null) {
+        DBObject matchFilter = null;
+        if (list != null && !list.isEmpty()) {
+            matchFilter = new BasicDBObject();
             BasicDBList lista = new BasicDBList();
             List<String> t = new ArrayList<String>();
             for (Applicant ap : list) {
@@ -299,9 +304,11 @@ public class ApplicantRepository {
             }
             lista.addAll(t);
             matchFilter.put("applicants.name", new BasicDBObject("$nin", lista));
+
+            DBObject matchEdit = new BasicDBObject("$match", matchFilter);
+            parametros.add(matchEdit);
+            parametrosGroup.add(matchEdit);
         }
-        DBObject matchEdit = new BasicDBObject("$match", matchFilter);
-        parametros.add(matchEdit);
 
         DBObject idData = new BasicDBObject("name", "$applicants.name");
         idData.put("country", "$applicants.country");
@@ -314,11 +321,13 @@ public class ApplicantRepository {
         DBObject group = new BasicDBObject();
         group.put("$group", fields);
         parametros.add(group);
+        parametrosGroup.add(group);
 
         fields = new BasicDBObject("_id", "nome");
         fields.put("documentCount", new BasicDBObject("$sum", 1));
         DBObject groupTotal = new BasicDBObject();
         groupTotal.put("$group", fields);
+        parametrosGroup.add(groupTotal);
 
         if (sortField != null) {
             if ("documentCount".equals(sortField)) {
@@ -342,12 +351,17 @@ public class ApplicantRepository {
         DBObject[] parameters = new DBObject[parametros.size()];
         parameters = parametros.toArray(parameters);
 
+        DBObject[] parametersGroup = new DBObject[parametrosGroup.size()];
+        parametersGroup = parametrosGroup.toArray(parametersGroup);
+
         match.put("$match", matchProj);
 
-        AggregationOutput outputTotal = ds.getCollection(Patent.class).aggregate(match, unwind, matchEdit, matchSearch, group, groupTotal);
+        AggregationOutput outputTotal = null;
+
+        outputTotal = ds.getCollection(Patent.class).aggregate(match, parametersGroup);
+
 //        System.out.println("CHEGOU AQUI");
 //        System.out.println(outputTotal.getCommand().toString());
-
         BasicDBList outputListTotal = (BasicDBList) outputTotal.getCommandResult().get("result");
         for (Object patent : outputListTotal) {
             DBObject result = (DBObject) patent;
@@ -356,7 +370,7 @@ public class ApplicantRepository {
         }
 
         AggregationOutput output = ds.getCollection(Patent.class).aggregate(match, parameters);
-//        System.out.println(output.getCommand().toString());
+        System.out.println(output.getCommand().toString());
         BasicDBList outputList = (BasicDBList) output.getCommandResult().get("result");
 
 //        this.setCount(output.);

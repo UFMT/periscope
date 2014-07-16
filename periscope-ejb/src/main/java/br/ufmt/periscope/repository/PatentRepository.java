@@ -1,16 +1,10 @@
 package br.ufmt.periscope.repository;
 
 import br.ufmt.periscope.importer.PatentImporter;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
+import br.ufmt.periscope.importer.decorator.PatentValidator;
 import br.ufmt.periscope.indexer.PatentIndexer;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
-
 import com.github.jmkgreen.morphia.Datastore;
 import com.github.jmkgreen.morphia.query.Query;
 import com.mongodb.BasicDBObject;
@@ -20,8 +14,12 @@ import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.gridfs.GridFS;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import javax.inject.Inject;
+import javax.inject.Named;
 import org.bson.types.ObjectId;
 
 @Named
@@ -33,6 +31,8 @@ public class PatentRepository {
     PatentIndexer patentIndexer;
     private @Inject
     Project currentProject;
+    private @Inject
+    PatentValidator validator;
     private Boolean completed;
     private Boolean blacklisted;
     private Integer rowCount = null;
@@ -75,6 +75,8 @@ public class PatentRepository {
     public void savePatentToDatabase(Patent p, Project project) {
         p.setProject(project);
         if (!patentExistsForProject(p, project)) {
+            validator.validate(p);
+            System.out.println(p.getCompleted());
             project.getPatents().add(p);
             ds.save(p);
             ds.save(project);
@@ -172,8 +174,10 @@ public class PatentRepository {
     public List<Patent> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters) {
         Query query = ds.find(Patent.class)
                 .field("project").equal(this.currentProject)
-                .field("completed").equal(this.completed)
                 .field("blacklisted").equal(this.blacklisted);
+        if(this.completed != null){
+            query.field("completed").equal(this.completed);
+        }
 
         if (sortField != null) {
             query = query.order((sortOrder == 1 ? "-" : "") + sortField);
