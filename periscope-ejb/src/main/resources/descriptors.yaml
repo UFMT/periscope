@@ -13,7 +13,7 @@
   expansion:
   count: 0
   variations:
-      
+
  # Abreviação de Corporação / Sociedade de resposabilidade limitada, em Sueco aktiebolag, aktiebolaget
 - word: ab
   followedBy:
@@ -21,7 +21,7 @@
   expansion: aktiebolag; aktiebolaget
   count: 0
   variations:
-      
+
 # Abreviação de Academia, em inglês academy
 - word: acad
   followedBy:
@@ -29,7 +29,7 @@
   expansion: academy
   count: 0
   variations:
-      
+
 # Academia em inglês
 - word: academy
   followedBy:
@@ -37,7 +37,7 @@
   expansion:
   count: 0
   variations:
-      
+
 # Parceria en italiano
 - word: accomandita
   followedBy: semplice
@@ -45,7 +45,7 @@
   expansion:
   count: 0
   variations:
-      
+
 # Algo relacionado a empresa/organização, em alemão
 - word: actiengesellschaft
   followedBy:
@@ -53,7 +53,7 @@
   expansion:
   count: 0
   variations: 
-      
+
 # Abreviação de Andorra, um pequeno país europeu
 - word: ad
   followedBy:
@@ -61,7 +61,7 @@
   expansion: andorra
   count: 0
   variations:
-      
+
 # Abreviação de administrador, administrator, etc..
 - word: admin
   followedBy:
@@ -69,7 +69,7 @@
   expansion: administration; administrator; administrative; administer; administrate
   count: 0
   variations:
-      
+
 # Administração em inglês
 - word: administration
   followedBy:
@@ -77,7 +77,7 @@
   expansion:
   count: 0
   variations:
-      
+
 # Administrador em inglês
 - word: administrator
   followedBy:
@@ -85,7 +85,7 @@
   expansion:
   count: 0
   variations:
-      
+
 # Administradores em inglês
 - word: administrators
   followedBy:
@@ -93,7 +93,7 @@
   expansion:
   count: 0
   variations:
-      
+
 # Avanço em inglês
 - word: advance
   followedBy:
@@ -101,7 +101,7 @@
   expansion:
   count: 0
   variations:
-      
+
 #Avançado em inglês
 - word: advanced
   followedBy:
@@ -109,7 +109,7 @@
   expansion:
   count: 0
   variations:
-      
+
 # Abreviação de united arab emirates
 - word: ae
   followedBy:
@@ -117,7 +117,7 @@
   expansion: united,arab,emirates
   count: 0
   variations:
-      
+
 # Abreviação de Afriva ou de Afeganistão
 - word: af
   followedBy:
@@ -125,7 +125,7 @@
   expansion: africa; african; afghanistan
   count: 0
   variations:
-      
+
 # Afeganistãp
 - word: afghanistan
   followedBy:
@@ -133,7 +133,7 @@
   expansion:
   count: 0
   variations:
-      
+
 # Africa (Tsamina mina eh eh, Waka Waka eh eh)
 - word: africa
   followedBy:
@@ -141,7 +141,7 @@
   expansion:
   count: 0
   variations:
-      
+
 # Africano
 - word: african
   followedBy:
@@ -149,7 +149,7 @@
   expansion:
   count: 0
   variations:
-      
+
 # Abreviação de antigua & barbuda e anguilla
 - word: ag
   followedBy:
@@ -157,7 +157,7 @@
   expansion: antigua,barbuda;anguilla
   count: 0
   variations:
-      
+
 
 - word: agactien
   followedBy: gesellschaft
@@ -173,7 +173,7 @@
   expansion:
   count: 0
   variations:
-      
+
 # Agência em inglês
 - word: agency
   followedBy:
@@ -181,7 +181,7 @@
   expansion:
   count: 0
   variations:
-      
+
 # Abreviação de qualquer variação da palavra agricultura
 - word: agric
   followedBy:
@@ -189,7 +189,7 @@
   expansion: agricola; agricolas; agricole; agricoles; agricoli; agricolture; agricultura; agricultural; agriculture
   count: 0
   variations:
-      
+
 
 - word: agricola
   followedBy:
@@ -197,7 +197,7 @@
   expansion:
   count: 0
   variations:
-      
+
 
 - word: agricolas
   followedBy:
@@ -205,15 +205,15 @@
   expansion:
   count: 0
   variations:
-      
-      
+
+
 - word: agricole
   followedBy:
   precededBy:
   expansion:
   count: 0
   variations:
-      
+
 
 - word: agricoles
   followedBy:
@@ -221,7 +221,7 @@
   expansion:
   count: 0
   variations:
-      
+
 
 - word: agricoli
   followedBy:
@@ -229,7 +229,7 @@
   expansion:
   count: 0
   variations:
-      
+
 
 - word: agricolture
   followedBy:
@@ -237,7 +237,7 @@
   expansion:
   count: 0
   variations:
-      
+
 
 - word: agricultura
   followedBy:
@@ -245,7 +245,7 @@
   expansion:
   count: 0
   variations:
-      
+
 
 - word: agricultural
   followedBy:
@@ -253,7 +253,7 @@
   expansion:
   count: 0
   variations:
-      
+
 
 - word: agriculture
   followedBy:
@@ -269,7 +269,7 @@
   expansion: akademia; akademi; akademie; akademiei; akademii; akademija; akademiya; akademiyakh; akademiyam; akademiyami; akademiyu
   count: 0
   variations:
-      
+
 
 - word: akademi
   followedBy:
@@ -277,7 +277,7 @@
   expansion:
   count: 0
   variations:
-      
+
 
 - word: akademia
   followedBy:
@@ -292,7 +292,7 @@
   expansion:
   count: 0
   variations:
-      
+
 
 - word: akademiei
   followedBy:
@@ -300,7 +300,7 @@
   expansion:
   count: 0
   variations:
-      
+
 
 - word: akademii
   followedBy:
@@ -308,7 +308,7 @@
   expansion:
   count: 0
   variations:
-      
+
 
 - word: akademija
   followedBy:
@@ -316,7 +316,7 @@
   expansion:
   count: 0
   variations:
-      
+
 
 - word: akademiya
   followedBy:
@@ -324,7 +324,7 @@
   expansion:
   count: 0
   variations:
-      
+
 
 - word: akademiyakh
   followedBy:
@@ -332,7 +332,7 @@
   expansion:
   count: 0
   variations:
-      
+
 
 - word: akademiyam
   followedBy:
@@ -340,7 +340,7 @@
   expansion:
   count: 0
   variations:
-      
+
 
 - word: akademiyami
   followedBy:
@@ -348,15 +348,15 @@
   expansion:
   count: 0
   variations:
-      
-      
+
+
 - word: akademiyu
   followedBy:
   precededBy:
   expansion:
   count: 0
   variations:
-      
+
 # sociedade de responsabilidade limitada em sueco
 - word: aktiebolag
   followedBy:
@@ -364,7 +364,7 @@
   expansion:
   count: 0
   variations:
-      
+
 # sociedade de responsabilidade limitada em sueco
 - word: aktiebolaget
   followedBy:
@@ -372,7 +372,7 @@
   expansion:
   count: 0
   variations:
-      
+
 # Ações em alemão
 - word: aktien
   followedBy:
@@ -380,7 +380,7 @@
   expansion:
   count: 0
   variations:
-      
+
 # sociedade anônima em alemão
 - word: aktiengesellschaft
   followedBy:
@@ -388,7 +388,7 @@
   expansion:
   count: 0
   variations:
-      
+
 # Empresas públicas em dinamarquês
 - word: aktieselskab
   followedBy:
@@ -396,7 +396,7 @@
   expansion:
   count: 0
   variations:
-      
+
 # sociedade de responsabilidade limitada em dinamarquês
 - word: aktieselskabet
   followedBy:
@@ -404,7 +404,7 @@
   expansion:
   count: 0
   variations:
-      
+
 # Abreviação de albania
 - word: al
   followedBy:
@@ -412,7 +412,7 @@
   expansion: albania
   count: 0
   variations:
-      
+
 
 - word: albania
   followedBy:
@@ -420,7 +420,7 @@
   expansion:
   count: 0
   variations:
-      
+
 # unânime em africâner
 - word: algemeene
   followedBy:
@@ -428,7 +428,7 @@
   expansion:
   count: 0
   variations:
-      
+
 
 - word: algeria
   followedBy:
@@ -436,7 +436,7 @@
   expansion:
   count: 0
   variations:
-      
+
 
 - word: allg
   followedBy:
@@ -444,7 +444,7 @@
   expansion: allgemeine; allgemeiner
   count: 0
   variations:
-      
+
 # Geral em alemão
 - word: allgemeine
   followedBy:
@@ -452,8 +452,8 @@
   expansion:
   count: 0
   variations:
-      
-# Geral em alemão      
+
+# Geral em alemão
 - word: allgemeiner
   followedBy:
   precededBy:
@@ -468,7 +468,7 @@
   expansion:
   count: 0
   variations:
-      
+
 # Nascido em alsac
 - word: alsacienne
   followedBy:
@@ -476,7 +476,7 @@
   expansion:
   count: 0
   variations:
-      
+
 # Abreviação de americano e armenia
 - word: am
   followedBy:
@@ -484,15 +484,15 @@
   expansion: armenia;america;american
   count: 0
   variations:
-      
-      
+
+
 - word: america
   followedBy:
   precededBy:
   expansion:
   count: 0
   variations:
-      
+
 
 - word: american
   followedBy:
@@ -500,23 +500,23 @@
   expansion:
   count: 0
   variations:
-      
+
 # Abreviação de anglo
 - word: an
   followedBy:
   precededBy:
-  expansion:
+  expansion: anglo
   count: 0
   variations:
-      
+
 # Antigo em francês
 - word: ancien
   followedBy:
   precededBy:
-  expansion:
+  expansion: 
   count: 0
   variations:
-      
+
 # Antigos em francês
 - word: anciens
   followedBy:
@@ -524,7 +524,7 @@
   expansion:
   count: 0
   variations:
-      
+
 
 - word: andorra
   followedBy:
@@ -540,7 +540,7 @@
   expansion:
   count: 0
   variations:
-      
+
 
 - word: angola
   followedBy:
@@ -548,7 +548,7 @@
   expansion:
   count: 0
   variations:
-      
+
 
 - word: anguilla
   followedBy:
@@ -556,7 +556,7 @@
   expansion:
   count: 0
   variations:
-      
+
 
 - word: anonima
   followedBy:
@@ -564,11397 +564,10251 @@
   expansion:
   count: 0
   variations:
-      
-      
+
+
 - word: anonyme
   followedBy:
   precededBy:
   expansion:
   count: 0
   variations:
-      
-      
+
+
 - word: anpartsselskab
   followedBy:
   precededBy:
   expansion:
   count: 0
   variations:
-      
-      
+
+
 - word: anpartsselskabet
   followedBy:
   precededBy:
   expansion:
   count: 0
   variations:
-      
 
+# Instituição em alemão
 - word: anstalt
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: antarctica
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+#País antigua
 - word: antigua
-  followedBy:
+  followedBy: barbuda
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# netherlands antilles
 - word: antilles
   followedBy:
-  precededBy:
+  precededBy: netherlands
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Abreviação de antrepriza, uma industria de fornecimento, em romeno
 - word: antr
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# uma industria de fornecimento, em romeno
 - word: antrepriza
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: ao
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: angola
+  count: 0
   variations:
+
+# Abreviação de apararii, aparate, aparatelor
 - word: apar
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: apararii; aparate; aparatelor
+  count: 0
   variations:
+
+# Defesa em romeno
 - word: apararii
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Aparelho em romeno
 - word: aparate
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Equipamentos em romeno
 - word: aparatelor
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Abreviação de apparate, apparatebau, apparatus, apparechhi, appareil, appareillage(s), appareils
 - word: app
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: apparate; apparatebau; apparatus; appareil; appareillage; appareillages; appareils; application
+  count: 0
   variations:
+
+# Aparelho em francês
 - word: apparate
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Aparelho em alemão
 - word: apparatebau
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Aparelho em inglês
 - word: apparatus
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Equipamento em italiano
 - word: apparecchi
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
-- word: apparechhi
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
-  variations:
+
+# Dispositivo em francês
 - word: appareil
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
-- word: appareilage
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
-  variations:
-- word: appareilages
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
-  variations:
+ 
+# Equipamento em francês
 - word: appareillage
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: appareillages
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: appareils
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+#  Abreviação de application; applications; applicazione; applicazioni
 - word: appl
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: application; applications; applicazione; applicazioni
+  count: 0
   variations:
+
+# Aplicação em inglês
 - word: application
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: applications
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Aplicação em italiano
 - word: applicazione
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Aplicações em italiano
 - word: applicazioni
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Aplicado em inglês
 - word: applied
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Abreviação de anpartsselskab(et)
 - word: aps
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: anpartsselskab;anpartsselskabet
+  count: 0
   variations:
+
+# Abreviação de antarctica
 - word: aq
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: antarctica
+  count: 0
   variations:
+
+# Abreviação de angentina
 - word: ar
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: argentina; argentinian
+  count: 0
   variations:
+
+# Faz parte de libyan arab jamahiriya
 - word: arab
-  followedBy:
-  precededBy:
+  followedBy: jamahiriya
+  precededBy: libyan
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Arabia saudita
 - word: arabia
-  followedBy:
-  precededBy:
+  followedBy: 
+  precededBy: saudi
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Argentina
 - word: argentina
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: argentinian
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: armenia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+#  é um território autônomo neerlandês do Caribe
 - word: aruba
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Abreviação de asia(n), asiatic, american samoa
 - word: as
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: asia; asian; asiatic; american,samoa
+  count: 0
   variations:
+
+
 - word: asia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: asian
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: asiatic
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Abreviação de associacao, associate, associated, associates, association
 - word: assoc
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: associacao, associate, associated, associates, association
+  count: 0
   variations:
+
+
 - word: associacao
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: associate
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: associated
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: associates
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Abreviação de austria
 - word: association
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: 
+  count: 0
   variations:
+
+
 - word: at
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: austria
+  count: 0
   variations:
+
+
 - word: atelier
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: ateliers
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: au
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: australia; australian; australasia; australasian; austria; austrian; autriche; australia
+  count: 0
   variations:
+
+
 - word: auf
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: kommandit,gesellschaft; kommanditgesellschaft
+  count: 0
   variations:
+
+
 - word: australasia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: australasian
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: australia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: australian
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: austria
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: austrian
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: authority
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: autriche
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: aux
   followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  precededBy: soc
+  expansion: auxiliaire
+  count: 0
   variations:
+
+
 - word: auxiliaire
   followedBy:
-  precededBy:
+  precededBy: societe
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: aw
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: aruba
+  count: 0
   variations:
+
+# Abreviação de azerbaijan
 - word: az
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: azerbaijan
+  count: 0
   variations:
+
+
 - word: azerbaijan
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: azion
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: azioni
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# abreviação de bosnia and herzegovina
 - word: ba
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: bosnia,herzegovina
+  count: 0
   variations:
+
+
 - word: bahama
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: bahrain
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: bangladesh
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: barbados
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: barbuda
   followedBy:
-  precededBy:
+  precededBy: antigua
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: bb
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: barbados
+  count: 0
   variations:
+
+
 - word: bd
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: bangladesh
+  count: 0
   variations:
+
+
 - word: be
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: belge; belgia; belgian; belgique; belgium
+  count: 0
   variations:
+
+
 - word: belarus
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: belge
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: belgia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: belgian
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: belgique
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: belgium
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: belize
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: benin
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: beperkte
-  followedBy:
+  followedBy: aansprakelijkheid
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: bermuda
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Limitado em alemão
 - word: beschrankter
-  followedBy:
-  precededBy:
+  followedBy: haftung
+  precededBy: mit
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Privado em holandês
 - word: besloten
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
-- word: bet
+
+
+- word: bet-ges
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: beteiligungsgesellschaft
+  count: 0
   variations:
+
+- word: bet-gmbh
+  followedBy:
+  precededBy:
+  expansion: beteiligungsgesellschaft,mbh; beteiligungs,gesellschaft,mit; beschrankter,haftung
+  count: 0
+  variations:
+
+
 - word: beteiligungs
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: gesellschaft,mit
+  count: 0
   variations:
+
+
 - word: beteiligungsgesellschaft
-  followedBy:
+  followedBy: mbh
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Operação em alemão
 - word: betrieb
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Plantas em alemão
 - word: betriebe
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Pesquisa operacional em alemão    
 - word: betriebsforschung
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Intituto de pesquisa operacional em alemão
 - word: betriebsforschungsinstitut
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: betriebung
   followedBy:
-  precededBy:
+  precededBy: vereinigung,volkseigener
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+ # Abreviação de burkina faso     
 - word: bf
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: burkina,faso
+  count: 0
   variations:
+
+# Abreviação de bulgaria
 - word: bg
   followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  precededBy: 
+  expansion: bulgaria
+  count: 0
   variations:
+
+# Abreviação de bahrain
 - word: bh
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: bahrain
+  count: 0
   variations:
+
+     
 - word: bhutan
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Abreviação de burundi
 - word: bi
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: burundi
+  count: 0
   variations:
-- word: bissau
+
+
+- word: guinea-bissau
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Escritório em polonês
 - word: biuro
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Abreviação de benin
 - word: bj
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: benin
+  count: 0
   variations:
+
+# Abreviação de bermuda   
 - word: bm
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: bermuda
+  count: 0
   variations:
+
+# Abreviação de brunei darussalam
 - word: bn
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: brunei,darussalam
+  count: 0
   variations:
+
+# Abreviação de bolivia
 - word: bo
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: bolivia
+  count: 0
   variations:
+
+# Sociedade limitada em sueco
 - word: bolag
   followedBy:
-  precededBy:
+  precededBy: kommandit
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: bolaget
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: handels; kommandit
+  count: 0
   variations:
+
+
 - word: bolivia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: bosnia
-  followedBy:
+  followedBy: herzegovina
   precededBy:
   expansion:
-  
-  count:
-  variations:
+  count: 0
+  variations: 
+
+
 - word: botswana
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: bouvet
-  followedBy:
+  followedBy: island
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Abreviação de 
 - word: br
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: brasil; brasilian; brazil; brazilian; brasileira; britain; british 
+  count: 0
   variations:
+
+
 - word: brasil
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: brasileira
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: brasilian
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: brazil
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: brazilian
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+ 
+ # Abreviação para variação nórdica de irmão
 - word: brdr
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: broderna; brodrene; broederna; broedrene
+  count: 0
   variations:
+
 - word: britain
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: british
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: broderna
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: brodrene
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: broederna
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: broedrena
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: broedrene
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Abreviação de brothers
 - word: bros
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: brothers
+  count: 0
   variations:
+
 - word: brother
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: brothers
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+
 - word: brunei
-  followedBy:
+  followedBy: darussalam
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Abreviação de bahama
 - word: bs
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: bahama
+  count: 0
   variations:
+
+
 - word: bt
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: bhutan
+  count: 0
   variations:
+
+
 - word: bu
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: burma
+  count: 0
   variations:
+
 - word: buc
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: bucuresti; bucurest; bucharest
+  count: 0
   variations:
+
+
 - word: bucharest
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: bucurest
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: bucuresti
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: bud
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: budapest
+  count: 0
   variations:
+
 - word: budapest
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: bulgaria
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: bureau
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: bureaux
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: burkina
-  followedBy:
+  followedBy: faso
   precededBy:
-  expansion:
-  
-  count:
+  expansion: 
+  count: 0
   variations:
+
 - word: burma
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: buro
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: burundi
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: bv
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: bouvet, island
+  count: 0
   variations:
+
 - word: bw
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: botswana
+  count: 0
   variations:
-- word: by
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
-  variations:
+
 - word: bz
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: belize
+  count: 0
   variations:
+
+
 - word: ca
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: canada; canadian; canadien; canadienne
+  count: 0
   variations:
+
 - word: caicos
-  followedBy:
-  precededBy:
+  followedBy: islands
+  precededBy: turks
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: cal
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: california; californian
+  count: 0
   variations:
+
 - word: caledonia
-  followedBy:
-  precededBy:
+  followedBy: 
+  precededBy: new
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: california
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: californian
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: cambodia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: cameroon
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: canada
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: canadian
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: canadien
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: canadienne
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: cape
-  followedBy:
+  followedBy: verde
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: cayman
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: cc
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: close,corporation; cocos,keeling,islands; cocos,keeling,islands
+  count: 0
   variations:
+
+
 - word: ce
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: ceskoslovenska
+  count: 0
   variations:
+
 - word: cent
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: center; centraal; central; centrala; centrale; centrales; centraux; centre; centro; centrul; centrum
+  count: 0
   variations:
+
 - word: center
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: centraal
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: central
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: centrala
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: centrale
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: centrales
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: centralne
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: centraux
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: centre
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: centro
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: centrul
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: centrum
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: cerc
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: cercetare; cercetari
+  count: 0
   variations:
+
 - word: cercetare
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: cercetari
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: ceskoslovenska
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: cf
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: central,african,republic
+  count: 0
   variations:
+
 - word: cg
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: congo
+  count: 0
   variations:
+
 - word: ch
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: switzerland; china; chine; chinese
+  count: 0
   variations:
+
 - word: chad
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chem
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: chemical; chemicals; chemicke; chemickej; chemicky; chemickych; chemiczne; chemiczny; chemie; chemii; chemisch; chemische; chemiskej; chemistry
+  count: 0
   variations:
+
 - word: chemical
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chemicals
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chemicke
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chemickej
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chemicky
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chemickych
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chemiczne
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chemiczny
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chemie
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chemii
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chemisch
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chemische
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chemiskej
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chemistry
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chile
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chim
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: chimic; chimica; chimice; chimici; chimico; chimie; chimiei; chimieskoj; chimii; chimiko; chimique; chimiques; chimiya; chimiyakh; chimiyam; chimiyami; chimiyu
+  count: 0
   variations:
+
 - word: chimic
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chimica
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chimice
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chimici
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chimico
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chimie
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chimiei
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chimieskoj
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chimii
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chimiko
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chimique
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chimiques
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chimiya
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chimiyakh
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chimiyam
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chimiyami
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chimiyu
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: china
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chine
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: chinese
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
-- word: christmas
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
-  variations:
+
 - word: ci
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: cote,divoire; ivory,coast
+  count: 0
   variations:
+
 - word: cia
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: compagnia; companhia
+  count: 0
   variations:
+
+
 - word: cie
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: compagnie
+  count: 0
   variations:
+
 - word: city
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: civ
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: civil; civile
+  count: 0
   variations:
+
 - word: civil
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: civile
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: ck
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: cook,islands
+  count: 0
   variations:
+
 - word: cl
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: chile
+  count: 0
   variations:
+
 - word: close
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: cm
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: cameroon
+  count: 0
   variations:
+
 - word: cn
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: china
+  count: 0
   variations:
+
 - word: co
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: colombia
+  count: 0
   variations:
+
 - word: coast
   followedBy:
-  precededBy:
+  precededBy: ivory
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: cocompanies
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: company
+  count: 0
   variations:
+
 - word: cocos
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: islands; keeling,islands
+  count: 0
   variations:
+
+# Coletivo em francês
 - word: collectif
-  followedBy:
-  precededBy:
+  followedBy: 
+  precededBy: societe,en,nom
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: collectivo
-  followedBy:
-  precededBy:
+  followedBy: 
+  precededBy: societa,in,nome
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: colombia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: comb
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: combinatul
+  count: 0
   variations:
+
 - word: combinatul
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: comercial
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: comercio
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: commerce
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: commercial
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: commerciale
   followedBy:
-  precededBy:
+  precededBy: societe
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: commerciales
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: commissariat
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: commission
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: comml
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: commercial;commerciale
+  count: 0
   variations:
+
 - word: comoros
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: compagnia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: compagnie
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: companhia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: companies
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: company
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: comptoir
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: congo
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: consiglio
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: consiliul
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: consol
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: consolidated
+  count: 0
   variations:
+
 - word: consolidated
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: constr
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: construccion;construccione;construcciones;constructie;constructii;constructiilor;construction;constructions;constructor;constructortul;constructorul
+  count: 0
   variations:
+
 - word: construccion
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: construccione
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: construcciones
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: construccions
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: constructie
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: constructii
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: constructiilor
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: construction
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: constructions
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: constructor
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: constructortul
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: constructorul
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: consultant
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: consultants
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: continental
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: continentale
-  followedBy:
+  followedBy: 
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: cook
-  followedBy:
+  followedBy: islands
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: coop
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: co-operative;co-operatives;cooperatieve;cooperativa;cooperative;cooperatives
+  count: 0
   variations:
+
+- word:  co-operative
+  followedBy:
+  precededBy:
+  expansion:
+  count: 0
+  variations:
+
+- word: co-operatives
+  followedBy:
+  precededBy:
+  expansion:
+  count: 0
+  variations:
+
 - word: cooperatieve
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: cooperativa
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: cooperative
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: cooperatives
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: corp
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: corporate;corporation
+  count: 0
   variations:
+
 - word: corporate
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: corporation
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: costa
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: costr
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: costruzioni
+  count: 0
   variations:
+
 - word: costruzioni
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: country
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: cr
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: costa,rica
+  count: 0
   variations:
+
 - word: croatia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: cs
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: czechoslovakia
+  count: 0
   variations:
+
 - word: cu
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: cuba
+  count: 0
   variations:
+
 - word: cuba
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: cv
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: cape,verde
+  count: 0
   variations:
-- word: cx
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
-  variations:
+
 - word: cy
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: cyprus
+  count: 0
   variations:
+
 - word: cypriot
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: cyprus
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: cz
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: czech,republic
+  count: 0
   variations:
+
 - word: czech
-  followedBy:
+  followedBy: republic
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: czechoslovakia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
-- word: côte
+
+- word: cote
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: da
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: danmark;dansk
+  count: 0
   variations:
+
 - word: danmark
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: dansk
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: darussalam
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: dd
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: german,democratic,republic;deutsche,demokratische,republik
+  count: 0
   variations:
+
 - word: ddr
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: deutsche,demokratische,republik;deutsche;deutschen;demokratische,republik;demokratischen,republik
+  count: 0
   variations:
+
 - word: de
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: germany;denmark;deutsch;deutsche;deutschen;deutsches;deutscher;deutschland
+  count: 0
   variations:
+
 - word: degli
-  followedBy:
+  followedBy: studi
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: delegation
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: delegue
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: democratic
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: demokratische
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: demokratischen
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: denmark
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: departement
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: department
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: dept
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: departement;department
+  count: 0
   variations:
+
 - word: deut
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: deutsch;deutsche;deutsches;deutschen;deutscher;deutschland
+  count: 0
   variations:
+
 - word: deutsch
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: deutsche
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: deutschen
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: deutscher
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: deutsches
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: deutschland
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: dev
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: develop;development;developments;developpement;developpements
+  count: 0
   variations:
+
 - word: develop
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: developement
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: developements
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: development
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: developments
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: developpement
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: developpements
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: director
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: directors
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: dite
   followedBy:
-  precededBy:
+  precededBy: societe,anonyme
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: div
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: division;divisione
+  count: 0
   variations:
+
 - word: division
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: divisione
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: divoire
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: dj
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: djibouti
+  count: 0
   variations:
+
 - word: djibouti
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: dk
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: denmark
+  count: 0
   variations:
+
 - word: dm
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: dominica
+  count: 0
   variations:
+
 - word: do
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: dominican,republic
+  count: 0
   variations:
+
 - word: dominica
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: dominican
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: du
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: dutch
+  count: 0
   variations:
+
 - word: dutch
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: dz
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: algeria
+  count: 0
   variations:
+
 - word: ea
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: eurasian,patent,organization
+  count: 0
   variations:
+
 - word: east
-  followedBy:
+  followedBy: timor
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: eastern
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: ec
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: ecuador
+  count: 0
   variations:
+
 - word: ecuador
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: ee
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: estonia
+  count: 0
   variations:
+
 - word: eg
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: egypt
+  count: 0
   variations:
+
 - word: egypt
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: eh
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: western;sahara
+  count: 0
   variations:
+
 - word: ei
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: eire; eireann
+  count: 0
   variations:
+
 - word: eingetragener
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: eire
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: eireann
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: el
-  followedBy:
+  followedBy: salvador
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: electric
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: electrica
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: electrical
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: electrice
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: electrics
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: electrique
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: electriques
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: electronic
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: electronica
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: electronicky
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: electronics
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: electroniczry
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: elektricky
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: elektrik
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: elektrische
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: elektrisk
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: elektriska
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: elektritskikh
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: elektroniczry
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: elektronik
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: elektronique
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: elektroniques
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: elektronisch
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: elektronische
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: elektryczry
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: elettrica
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: elettrici
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: elettrico
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: elettronica
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: elettroniche
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: elettronico
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: emirates
   followedBy:
-  precededBy:
+  precededBy: united,arab
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: en
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: england;english 
+  count: 0
   variations:
+
 - word: eng
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: engineering
+  count: 0
   variations:
+
 - word: engineering
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: england
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: english
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: enterprise
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: enterprises
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: entreprise
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: entreprises
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: ep
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: european,patent,office
+  count: 0
   variations:
+
 - word: equatorial
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: equip
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: equipement;equipment;equipements;equipments
+  count: 0
   variations:
+
 - word: equipement
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: equipements
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: equipment
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: equipments
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: er
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: eritrea
+  count: 0
   variations:
+
 - word: eritrea
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: es
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: spain;espana;espanol;espanola
+  count: 0
   variations:
+
 - word: espan
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: espanola
+  count: 0
   variations:
+
 - word: espana
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: espanol
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: espanola
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: est
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: estab
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: establishment;establissement;establishments;establissements
+  count: 0
   variations:
+
 - word: establishment
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: establishments
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: establissement
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: establissements
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: estonia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: et
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: ethiopia
+  count: 0
   variations:
+
 - word: etab
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: etablissement;etablissements;etabs;ets
+  count: 0
   variations:
+
 - word: etablissement
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: etablissements
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: etabs
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: ethiopia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: ets
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: etud
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: etude;etudes
+  count: 0
   variations:
+
 - word: etude
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: etudes
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: eu
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: europe;europea;european;europeen;europeenne;europaische;europaisches
+  count: 0
   variations:
+
 - word: eurasian
-  followedBy:
+  followedBy: patent,organization
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: euro
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: europaeischen;europaeische;europaeisches;europaischen;europaische;europaisches;europe;europea;european;europeen;europeenne
+  count: 0
   variations:
+
 - word: europaeische
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: europaeischen
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: europaeisches
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: europaische
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: europaischen
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: europaisches
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: europe
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: europea
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: european
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: europeen
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: europeenne
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: ev
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: eingetragener,verein
+  count: 0
   variations:
+
 - word: expl
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: exploatering;exploaterings;exploitatie;exploitation;exploitations
+  count: 0
   variations:
+
 - word: exploatering
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: exploaterings
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: exploitatie
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: exploitation
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: exploitations
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: fa
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: firma
+  count: 0
   variations:
+
 - word: fab
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: fabbrica;fabbricazioni;fabbriche;fabrica;fabrication;fabrications;fabriek;fabrieken;fabrik;fabriker;fabrique;fabriques;fabrizio;fabryka
+  count: 0
   variations:
+
 - word: fabbrica
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: fabbricazioni
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: fabbriche
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: fabrica
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: fabrication
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: fabrications
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: fabriek
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: fabrieken
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: fabrik
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: fabriker
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: fabrique
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: fabriques
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: fabrizio
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: fabryka
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: falkland
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: farm
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: farmaceutica;farmaceutice;farmaceutiche;farmaceutici;farmaceutico;farmaceuticos;farmaceutisk;farmacevtskih;farmacie
+  count: 0
   variations:
+
 - word: farmaceutica
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: farmaceutice
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: farmaceutiche
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: farmaceutici
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: farmaceutico
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: farmaceuticos
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: farmaceutisk
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: farmacevtskih
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: farmacie
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: faroe
-  followedBy:
+  followedBy: islands
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: faso
   followedBy:
-  precededBy:
+  precededBy: burkina
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: federal
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: federation
   followedBy:
-  precededBy:
+  precededBy: russian
   expansion:
-  
-  count:
+  count: 0
   variations:
-- word: fellows
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
-  variations:
+
 - word: fi
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: finland;finland;finnish
+  count: 0
   variations:
+
+# Criança em italiano
 - word: figli
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: 
+  count: 0
   variations:
+
 - word: fiji
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: filho
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: finland
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: finnish
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: firma
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: fj
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: fiji
+  count: 0
   variations:
+
 - word: fk
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: falkland,islands
+  count: 0
   variations:
+
 - word: flli
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: fm
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: micronesia
+  count: 0
   variations:
+
 - word: fo
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: faroe,islands
+  count: 0
   variations:
+
 - word: fond
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: fondation;fondazione
+  count: 0
   variations:
+
 - word: fondation
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: fondazione
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: fondazione256
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: fonderie
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: fonderies
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
-- word: for
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
-  variations:
+
+# Pesquisa em alemão
 - word: forschung
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+    
+#Comunidade de pesquisa em alemão
 - word: forschungsgemeinschaft
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Empresa de pesquisa em alemão
 - word: forschungsgesellschaft
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Instituto de pesquisa em alemão
 - word: forschungsinstitut
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
+# Centro de pesquisa em alemão
 - word: forschungszentrum
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: found
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: foundation; foundations
+  count: 0
   variations:
+
 - word: foundation
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: foundations
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: foundry
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+
 - word: fr
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: francais; francaise
+  count: 0
   variations:
+      
 - word: francais
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+      
 - word: francaise
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+      
 - word: france
   followedBy:
-  precededBy:
+  precededBy: metropolitan
   expansion:
-  
-  count:
+  count: 0
   variations:
+      
 - word: frat
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: f,lli;flli;fratelli
+  count: 0
   variations:
+      
 - word: fratelli
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+      
 - word: french
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+   
+#Irmão em francês
 - word: frere
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+      
 - word: freres
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
+      
 - word: fundacao
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: fundacion
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: futuna
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  followedBy: islands
+  precededBy: wallis
+  expansion: 
+  count: 0
   variations:
 - word: fx
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: metropolitan,france
+  count: 0
   variations:
 - word: ga
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: gabon
+  count: 0
   variations:
 - word: gabon
   followedBy:
   precededBy:
   expansion:
-  
-  count:
-  variations:
-- word: gaisha
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
-  variations:
-- word: gakko
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  count: 0
   variations:
 - word: gambia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: gb
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: united,kingdom;great,britain  
+  count: 0
   variations:
 - word: gd
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: grenada
+  count: 0
   variations:
 - word: ge
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: georgia;german;germany
+  count: 0
   variations:
+#Dar em alemão
 - word: geb
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: gebr
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: geb;gebroder;gebroders;gebroeder;gebroeders;gebruder;gebruders; gebrueder;gebrueders
+  count: 0
   variations:
 - word: gebroder
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: gebroders
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: gebroeder
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: gebroeders
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: gebruder
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: gebruders
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: gebrueder
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: gebrueders
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: gen
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: general;generala;generale;generales;generaux
+  count: 0
   variations:
 - word: general
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: generala
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: generale
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: generales
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: generaux
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: georgia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: german
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: germany
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ges
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: gesellschaft
+  count: 0
   variations:
+# Sociedade em alemão
 - word: gesellschaft
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: gew
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: gewerkschaft
+  count: 0
   variations:
 - word: gewerkschaft
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: gf
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: french,guiana
+  count: 0
   variations:
 - word: gh
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: ghana
+  count: 0
   variations:
 - word: ghana
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ghh
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: gutehoffnungschuette;gutehoffnungschutte
+  count: 0
   variations:
 - word: gi
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: gibraltar
+  count: 0
   variations:
 - word: gibraltar
   followedBy:
   precededBy:
   expansion:
-  
-  count:
-  variations:
-- word: gk
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  count: 0
   variations:
 - word: gl
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: greenland
+  count: 0
   variations:
 - word: gm
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: gambia
+  count: 0
   variations:
 - word: gmbh
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: gesellschaft,mbh;gesellschaft,mit;beschrankter,haftung
+  count: 0
   variations:
 - word: gn
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
-  variations:
-- word: gomei
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
-  variations:
-- word: goshi
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
-  variations:
-- word: goushi
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  expansion: guinea
+  count: 0
   variations:
 - word: government
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: gp
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: guadeloupe
+  count: 0
   variations:
 - word: gq
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: equatorial guinea
+  count: 0
   variations:
 - word: gr
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: greece;greek
+  count: 0
   variations:
 - word: great
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: greece
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: greek
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: greenland
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: grenada
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: grenadines
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: group
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: groupement
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: groupment
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: grp
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: groupement;groupment
+  count: 0
   variations:
 - word: gruppo
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: grupul
   followedBy:
   precededBy:
   expansion:
-  
-  count:
-  variations:
-- word: gs
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  count: 0
   variations:
 - word: gt
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: guatemala
+  count: 0
   variations:
 - word: gu
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: guam
+  count: 0
   variations:
 - word: guadeloupe
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: guam
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: guatemala
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: guiana
   followedBy:
-  precededBy:
+  precededBy: french
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: guinea
   followedBy:
+  precededBy: equatorial;papua,new
+  expansion:
+  count: 0
+  variations:
+- word: guinea-bissau
+  followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: gutehoffnungschuette
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: gutehoffnungschutte
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: guyana
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: gw
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: guinea-bissau
+  count: 0
   variations:
 - word: gy
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: guyana
+  count: 0
   variations:
 - word: gyar
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: haftung
   followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  precededBy: mit,beschrankter;beschrankter
+  expansion: 
+  count: 0
   variations:
 - word: haiti
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: handels
-  followedBy:
+  followedBy: bolaget
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: handelsbolaget
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: handelsgesellschaft
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: handelsmaatschappij
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: handelsmij
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: handl
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: handelsmaatschappij;handelsmij
+  count: 0
   variations:
 - word: hb
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: handels,bolaget;handelsbolaget
+  count: 0
   variations:
 - word: heard
   followedBy:
-  precededBy:
+  precededBy: mcdonald,islands
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: helena
   followedBy:
-  precededBy:
+  precededBy: st
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: hermanos
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: herzegovina
   followedBy:
-  precededBy:
+  precededBy: bosnia
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: hijos
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: hk
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: hong,kong
+  count: 0
   variations:
 - word: hm
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: heard,mcdonald,islands
+  count: 0
   variations:
 - word: hn
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: honduras
+  count: 0
   variations:
 - word: ho
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: holland
+  count: 0
   variations:
 - word: hojin
   followedBy:
-  precededBy:
+  precededBy: zaidan
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: holland
   followedBy:
   precededBy:
   expansion:
-  
-  count:
-  variations:
-- word: holy
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  count: 0
   variations:
 - word: honduras
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: hong
-  followedBy:
+  followedBy: kong
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: houjin
   followedBy:
-  precededBy:
+  precededBy: zaidan
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: hr
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: croatia
+  count: 0
   variations:
 - word: ht
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: haiti;
+  count: 0
   variations:
 - word: hu
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: hungarian;hungary
+  count: 0
   variations:
 - word: hungarian
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: hungary
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: iceland
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: id
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: indonesia
+  count: 0
   variations:
 - word: ie
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: ireland
+  count: 0
   variations:
 - word: iislands
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: il
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: israel
+  count: 0
   variations:
 - word: imperial
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: in
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: india;indian
+  count: 0
   variations:
 - word: inc
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: incorporated;incorporation
+  count: 0
   variations:
 - word: incorporated
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: incorporation
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ind
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: industri;industria;industrias;industrial;industrials;industriala;industriale;industriali;industrializare;industrializarea;industrie;industrieele;industriei;industriel;industriels;industriell; industrielle;industrielles;industrier;industries;industrii;industrij;industriya;industriyakh;industriyam;industriyami;industriyu;industry
+  count: 0
   variations:
 - word: india
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: indian
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: indonesia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industri
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industria
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industrial
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industriala
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industriale
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industriali
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industrializare
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industrializarea
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industrials
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industrias
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industrie
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industrieele
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industriei
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industriel
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industriell
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industrielle
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industrielles
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industriels
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industrier
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industries
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industrii
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industrij
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industriya
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industriyakh
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industriyam
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industriyami
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industriyu
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: industry
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ing
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: ingenier;ingenieria;ingenieur;ingenieurs;ingenieurbuero;ingenieurbureau;ingenieurburo;ingenieurgesellschaft;ingenieursbureau;ingenieurtechnische;ingenieurtechnisches;ingenioerfirmaet;ingeniorsfirma;ingeniorsfirman;ingenjorsfirma;inginerie
+  count: 0
   variations:
 - word: ingenier
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ingenieria
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ingenieur
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ingenieurbuero
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ingenieurbureau
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ingenieurburo
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ingenieurgesellschaft
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ingenieurs
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ingenieursbureau
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ingenieurtechnische
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ingenieurtechnisches
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ingenioerfirmaet
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ingeniorsfirma
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ingeniorsfirman
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ingenjorsfirma
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: inginerie
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: insinoeoeritomisto
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: insinooritomisto
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: inst
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: institut;instituta;institutam;institutami;institutamkh;institute;institutes;institutet;instituto;institutom;institutov;institutt;institutu;institutul;instituty;instituut;institzht;instytut
+  count: 0
   variations:
 - word: institut
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: instituta
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: institutam
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: institutami
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: institutamkh
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: institute
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: institutes
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: institutet
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: instituto
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: institutom
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: institutov
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: institutt
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: institutu
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: institutul
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: instituty
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: instituut
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: institzht
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: instmsto
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: instr
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: instrument;instruments;instrumentation;instrumente
+  count: 0
   variations:
 - word: instrument
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: instrumentation
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: instrumente
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: instruments
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: instytut
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: int
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: internacional;international;internationale;internationalen;internationaux;internationella;internazionale
+  count: 0
   variations:
 - word: internacional
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: international
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: internationale
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: internationalen
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: internationaux
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: internationella
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: internazionale
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: intezet
   followedBy:
-  precededBy:
+  precededBy: kutato
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: intezete
   followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  precededBy: kutato
+  expansion: 
+  count: 0
   variations:
 - word: intr
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: intreprinderea
+  count: 0
   variations:
 - word: intreprinderea
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: io
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: british,indian,ocean,territory
+  count: 0
   variations:
 - word: iq
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: iraq
+  count: 0
   variations:
 - word: ir
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: ireland;irish
+  count: 0
   variations:
 - word: iran
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: islamic,republic
+  count: 0
   variations:
 - word: iraq
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ireland
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: irish
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: irmanos
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: is
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: iceland
+  count: 0
   variations:
 - word: islamic
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: island
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: islands
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: israel
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: israeli
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ist
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: istituto
+  count: 0
   variations:
 - word: istituto
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: it
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: itali;italia;italian;italiana;italiane;italiano;italien;italienne;ital;italo;italy
+  count: 0
   variations:
 - word: ital
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: itali;italia;italian;italiana;italiane;italiani;italiano;italien;italienne;italo;italy
+  count: 0
   variations:
 - word: itali
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: italia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: italian
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: italiana
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: italiane
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: italiani
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: italiano
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: italien
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: italienne
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: italo
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: italy
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ivory
-  followedBy:
+  followedBy: coast
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: jamahiriya
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: jamaica
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: jan
-  followedBy:
-  precededBy:
+  followedBy: mayen,islands
+  precededBy: svalbard
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: japan
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: japanese
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: jm
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: jamaica
+  count: 0
   variations:
 - word: jo
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: jordan
+  count: 0
   variations:
 - word: jordan
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: jp
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: japan
+  count: 0
   variations:
 - word: kabushiki
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kabushikikaisha
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kabushikikaisya
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kaisha
   followedBy:
-  precededBy:
+  precededBy: yugen
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kaisya
   followedBy:
-  precededBy:
+  precededBy: kabushiki
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kazakhstan
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kb
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: kommandit,bolag;kommandit,bolaget;kommanditbolag;kommanditbolaget
+  count: 0
   variations:
 - word: ke
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: kenya
+  count: 0
   variations:
 - word: keeling
-  followedBy:
-  precededBy:
+  followedBy: islands
+  precededBy: cocos
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kenya
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: keszitesi
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: keszitmeny
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: keszitmenyi
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kg
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: kyrgyzstan
+  count: 0
   variations:
 - word: kgaa
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: kommandit,gesellschaft,auf;kommanditgesellschaft,auf;aktien
+  count: 0
   variations:
 - word: kh
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: cambodia
+  count: 0
   variations:
 - word: ki
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: kiribati
+  count: 0
   variations:
 - word: kigyo
-  followedBy:
+  followedBy: kumai
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kingdom
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kiribati
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kitts
-  followedBy:
-  precededBy:
+  followedBy: nevis
+  precededBy: st
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kk
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: kabushiki,gaisha;kabushiki,kaisha;kabushiki,kaisya;kabushikikaisha;kabushikikaisya
+  count: 0
   variations:
 - word: km
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: comoros
+  count: 0
   variations:
 - word: kn
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: st,kitts,nevis
+  count: 0
   variations:
 - word: ko
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: korea;korean
+  count: 0
   variations:
 - word: koezponti
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: komb
   followedBy:
-  precededBy:
+  precededBy: veb;werkz,masch
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kombinat
   followedBy:
-  precededBy:
+  precededBy: veb
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kombinate
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kombinatu
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kombinaty
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kommandit
-  followedBy:
+  followedBy: gesellschaft;bolag
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kommanditbolag
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kommanditbolaget
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kommanditgesellschaft
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: koncernovy
-  followedBy:
+  followedBy: podnik
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kong
   followedBy:
-  precededBy:
+  precededBy: hong
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: konink
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: koninklijke
+  count: 0
   variations:
 - word: koninklijke
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: korea
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: korean
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kosha
   followedBy:
-  precededBy:
+  precededBy: kotsu
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kotsu
-  followedBy:
+  followedBy: kosha
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kozponti
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kp
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: koncernovy,podnik
+  count: 0
   variations:
 - word: kr
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: republic,korea
+  count: 0
   variations:
 - word: kumai
   followedBy:
-  precededBy:
+  precededBy: kigyo
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kumiai
   followedBy:
-  precededBy:
+  precededBy: kyodo;kyogyo
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kunst
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: kunststoff;kunststofftechnik
+  count: 0
   variations:
 - word: kunststoff
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kunststofftechnik
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kutato
-  followedBy:
+  followedBy: intezet;intezete
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kutatointezet
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kutatointezete
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kuwait
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kw
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: kuwait
+  count: 0
   variations:
 - word: ky
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: cayman,islands
+  count: 0
   variations:
 - word: kyodo
-  followedBy:
+  followedBy: kumiai
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kyogyo
-  followedBy:
+  followedBy: kumiai
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kyrgyzstan
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: kz
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: kazakhstan
+  count: 0
   variations:
 - word: la
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: lao,peoples,democratic,republic
+  count: 0
   variations:
 - word: lab
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: laboratoir;laboratoire;laboratoires;laboratori;laboratoriei;laboratories;laboratorii;laboratorij;laboratorio;laboratorios;laboratorium;laboratory;labortori
+  count: 0
   variations:
 - word: laboratoir
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: laboratoire
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: laboratoires
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: laboratori
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: laboratoriei
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: laboratories
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: laboratorii
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: laboratorij
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: laboratorio
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: laboratorios
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: laboratorium
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: laboratory
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: labortori
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: lanka
   followedBy:
-  precededBy:
+  precededBy: sri
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: lao
-  followedBy:
+  followedBy: peoples,democratic,republic
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: latvia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: lavoraz
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: lavoraza;lavorazi;lavorazio;lavorazione;lavorazioni
+  count: 0
   variations:
 - word: lavoraza
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: lavorazi
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: lavorazio
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: lavorazione
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: lavorazioni
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: lb
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: lebanon
+  count: 0
   variations:
 - word: lc
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: saint,lucia
+  count: 0
   variations:
 - word: lebanon
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: leone
   followedBy:
-  precededBy:
+  precededBy: sierra
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: lesotho
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: li
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: liechtenstein
+  count: 0
   variations:
 - word: liberia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: libyan
-  followedBy:
+  followedBy: arab,jamahiriya
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: liechtenstein
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: limitada
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: limited
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: limitee
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: societe,responsabilite
+  count: 0
   variations:
 - word: lithuania
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: lk
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: sri,lanka
+  count: 0
   variations:
 - word: lon
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: london
+  count: 0
   variations:
 - word: london
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: lp
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: limited,partnership
+  count: 0
   variations:
 - word: lr
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: liberia
+  count: 0
   variations:
 - word: ls
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: lesotho
+  count: 0
   variations:
 - word: lt
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: lithuania
+  count: 0
   variations:
 - word: ltd
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: limited
+  count: 0
   variations:
 - word: ltda
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: limitada
+  count: 0
   variations:
 - word: lu
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: luxembourg;luxembourgeoise
+  count: 0
   variations:
 - word: lucia
   followedBy:
-  precededBy:
+  precededBy: saint
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: luxembourg
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: luxembourgeoise
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: lv
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: latvia
+  count: 0
   variations:
 - word: ly
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: libyan,arab,jamahiriya
+  count: 0
   variations:
 - word: ma
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: morocco;magyar;malaysia;malaysian
+  count: 0
   variations:
 - word: maatschappij
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: macau
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: machinenfabriek
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: machinenfabrik
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: madagascar
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: magyar
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: malawi
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: malaysia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: malaysian
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: maldives
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: mali
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: malta
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: malvinas
   followedBy:
-  precededBy:
+  precededBy: falkland,islands
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: manifattura
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: manifatturas
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: manifatture
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: manufactura
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: manufacturas
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: manufacture
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: manufacturer
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: manufacturers
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: manufactures
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: manufacturing
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: manufacturings
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: manufatura
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: mariana
-  followedBy:
-  precededBy:
+  followedBy: islands
+  precededBy: northern
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: marino
   followedBy:
-  precededBy:
+  precededBy: san
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: marshall
-  followedBy:
+  followedBy: islands
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: martinique
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: masch
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: maschin;maschinen;maschinenvertrieb
+  count: 0
   variations:
 - word: maschbau
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: maschinenbau;maschinenbauanstalt
+  count: 0
   variations:
 - word: maschfab
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: maschinenfab;maschinenfabriek;maschinenfabrik;maschinenfabriken
+  count: 0
   variations:
 - word: maschin
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: maschinen
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: maschinenbau
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: maschinenbauanstalt
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: maschinenbaugesellschaft
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: maschinenfab
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: maschinenfabriek
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: maschinenfabrik
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: maschinenfabriken
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: maschinenvertrieb
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: maschinenwerk
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: maschinenwerke
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: maskinfabrik
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: maskinfabriken
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: maskinfabrikken
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: mauritania
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: mauritius
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: mayen
-  followedBy:
-  precededBy:
+  followedBy: jan,islands
+  precededBy: svalbard
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: mayotte
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: mbh
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: mit,beschrankter,haftung
+  count: 0
   variations:
 - word: mc
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: monaco
+  count: 0
   variations:
 - word: mcdonald
-  followedBy:
-  precededBy:
+  followedBy: islands
+  precededBy: heard
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: md
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: republic,moldova
+  count: 0
   variations:
 - word: mec
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: mecanique;mecaniques
+  count: 0
   variations:
 - word: mecanique
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: mecaniques
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: meccanica
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: meccaniche
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: met
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: metropolitan
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: mexico
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: mfg
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: manufacturing;manufacturings
+  count: 0
   variations:
 - word: mfr
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: manifattura;manifatturas;manifatture;manufacturas;manufacture;manufacturer;manufacturers;manufactures;manufatura
+  count: 0
   variations:
 - word: mg
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: madagascar
+  count: 0
   variations:
 - word: mh
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: marshall,islands
+  count: 0
   variations:
 - word: micronesia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: mij
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: maatschappij
+  count: 0
   variations:
 - word: min
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: minister;ministere;ministerium;ministero;ministerstv;ministerstva;ministerstvakh;ministerstvam;ministerstvami;ministerstve;ministerstvo;ministerstvom;ministerstvu;ministerstwo;ministerul;ministre;ministry
+  count: 0
   variations:
 - word: minister
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ministere
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ministerium
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ministero
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ministerstv
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ministerstva
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ministerstvakh
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ministerstvam
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ministerstvami
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ministerstve
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ministerstvo
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ministerstvom
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ministerstvu
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ministerstwo
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ministerul
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ministre
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ministry
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: miniszterium
   followedBy:
   precededBy:
   expansion:
-  
-  count:
-  variations:
-- word: minor
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  count: 0
   variations:
 - word: miquelon
   followedBy:
-  precededBy:
+  precededBy: st,pierre
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: mit
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ml
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: mali
+  count: 0
   variations:
 - word: mm
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: myanmar
+  count: 0
   variations:
 - word: mn
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: mongolia
+  count: 0
   variations:
 - word: mo
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: macau
+  count: 0
   variations:
 - word: moldova
   followedBy:
-  precededBy:
+  precededBy: republic
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: monaco
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: mongolia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: monserrat
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: morocco
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: mozambique
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: mp
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: northern,mariana,islands
+  count: 0
   variations:
 - word: mq
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: martinique
+  count: 0
   variations:
 - word: mr
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: mauritania
+  count: 0
   variations:
 - word: ms
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: monserrat
+  count: 0
   variations:
 - word: mt
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: malta
+  count: 0
   variations:
 - word: mta
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: magyar,tudomanyos;akademia
+  count: 0
   variations:
 - word: mu
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: mauritius
+  count: 0
   variations:
 - word: mv
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: maldives
+  count: 0
   variations:
 - word: mw
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: malawi
+  count: 0
   variations:
 - word: mx
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: mexico
+  count: 0
   variations:
 - word: my
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: malaysia
+  count: 0
   variations:
 - word: myanmar
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: mz
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: mozambique
+  count: 0
   variations:
 - word: na
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: namibia;north america;north american
+  count: 0
   variations:
 - word: naamloose
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: naamloze
-  followedBy:
+  followedBy: vennootschap
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: nacional
   followedBy:
   precededBy:
   expansion:
-  
-  count:
-  variations:
-- word: nam
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  count: 0
   variations:
 - word: namibia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: narodni
-  followedBy:
+  followedBy: podnik
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: narodnij
-  followedBy:
+  followedBy: podnik
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: narodny
-  followedBy:
+  followedBy: podnik
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: nasional
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: nat
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: nationaal;national;nationale;nationaux
+  count: 0
   variations:
 - word: nationaal
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: national
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: nationale
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: nationaux
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: nauru
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: naz
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: nazionale;nazionali
+  count: 0
   variations:
 - word: nazionale
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: nazionali
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: nc
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: new,caledonia
+  count: 0
   variations:
 - word: ne
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: niger
+  count: 0
   variations:
 - word: nederland
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: nederlandaise
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: nederlanden
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: nederlandsche
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: nederlandse
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: nepal
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: netherlands
   followedBy:
   precededBy:
   expansion:
-  
-  count:
-  variations:
-- word: neutral
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  count: 0
   variations:
 - word: nevis
   followedBy:
-  precededBy:
+  precededBy: st,kitts
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: new
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: nf
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: norfolk,island
+  count: 0
   variations:
 - word: ng
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: nigeria
+  count: 0
   variations:
 - word: ni
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: nicaragua
+  count: 0
   variations:
 - word: nicaragua
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: niger
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: nigeria
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: nihon
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: nippon
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: niue
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: nl
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: netherlands
+  count: 0
   variations:
 - word: no
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
-  variations:
-- word: nom
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
-  variations:
-- word: nome
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  expansion: norway;norwegian
+  count: 0
   variations:
 - word: nord
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: norddeut
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: norddeutsch;norddeutsche;norddeutscher;norddeutsches
+  count: 0
   variations:
 - word: norddeutsch
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: norddeutsche
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: norddeutscher
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: norddeutsches
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: nordest
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: nordouest
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: norfolk
-  followedBy:
+  followedBy: island
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: north
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: northeast
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: northeastern
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: northern
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: northwest
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: northwestern
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: norway
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: norwegian
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: nouv
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: nouvelle
+  count: 0
   variations:
 - word: nouvelle
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: np
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: narodni,podnik;narodnij,podnik;narodny,podnik;nepal
+  count: 0
   variations:
 - word: nr
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
-  variations:
-- word: nt
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  expansion: nauru
+  count: 0
   variations:
 - word: nu
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: niue
+  count: 0
   variations:
 - word: nv
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: naamloose,venootschap;naamloze,vennootschap
+  count: 0
   variations:
 - word: nw
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: northwest;northwestern;nordouest
+  count: 0
   variations:
 - word: ny
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: new,york
+  count: 0
   variations:
 - word: nz
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: new,zealand
+  count: 0
   variations:
 - word: oborovy
-  followedBy:
+  followedBy: podnik
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ocean
-  followedBy:
-  precededBy:
+  followedBy: territory
+  precededBy: british,indian
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: oe
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: osterreich;osterreichisch;osterreichische
+  count: 0
   variations:
 - word: oesterr
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: oesterreich;oesterreichisch;oesterreichische;oesterreichisches;osterreich;osterreichisch;osterreichische;osterreichisches
+  count: 0
   variations:
 - word: oesterreich
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: oesterreichisch
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: oesterreichische
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: oesterreichisches
   followedBy:
   precededBy:
   expansion:
-  
-  count:
-  variations:
-- word: of
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  count: 0
   variations:
 - word: off
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: officine
+  count: 0
   variations:
 - word: offene
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: office
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: officine
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: oficiul
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ohg
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: offene,handelsgesellschaft
+  count: 0
   variations:
 - word: om
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: oman
+  count: 0
   variations:
 - word: oman
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ontwik
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: ontwikkelings;ontwikkelingsbureau
+  count: 0
   variations:
 - word: ontwikkelings
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ontwikkelingsbureau
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: op
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: oborovy,podnik
+  count: 0
   variations:
 - word: operative
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: operatives
   followedBy:
   precededBy:
   expansion:
-  
-  count:
-  variations:
-- word: or
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  count: 0
   variations:
 - word: org
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: organisatie;organisation;organisations;organization;organizations;organizzazione
+  count: 0
   variations:
 - word: organisatie
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: organisation
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: organisations
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: organization
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: organizations
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: organizzazione
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: osa
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: osaka
+  count: 0
   variations:
 - word: osaka
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: osakeyhtio
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: osrodek
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ost
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: osterreich
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: osterreichisch
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: osterreichische
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: osterreichisches
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ouest
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: outlying
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: oy
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: osakeyhtio
+  count: 0
   variations:
 - word: pa
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: panama
+  count: 0
   variations:
 - word: pakistan
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: palau
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: panama
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: papua
-  followedBy:
+  followedBy: new,guinea
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: par
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: paris;parisien;parisienne
+  count: 0
   variations:
 - word: paraguay
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: paris
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: parisien
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: parisienn
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: parisienne
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: partnership
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: patent
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: pe
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: peru
+  count: 0
   variations:
 - word: pentru
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: peoples
   followedBy:
   precededBy:
   expansion:
-  
-  count:
-  variations:
-- word: per
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  count: 0
   variations:
 - word: personenvennootschap
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: personenvenootschap
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: peru
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: pf
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: french,polynesia
+  count: 0
   variations:
 - word: pg
   followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  precededBy: 
+  expansion: papua,new,guinea
+  count: 0
   variations:
 - word: ph
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: philippines
+  count: 0
   variations:
 - word: pharm
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: pharmaceutica;pharmaceutical;pharmaceuticals;pharmaceutique;pharmaceutiques;pharmazeutika;pharmazeutisch;pharmazeutische;pharmazeutischen;pharmazie
+  count: 0
   variations:
 - word: pharmaceutica
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: pharmaceutical
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: pharmaceuticals
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: pharmaceutique
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: pharmaceutiques
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: pharmazeutika
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: pharmazeutisch
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: pharmazeutische
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: pharmazeutischen
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: pharmazie
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: philippines
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: pierre
-  followedBy:
-  precededBy:
+  followedBy: miquelon
+  precededBy: st
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: pitcairn
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: pk
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: pakistan
+  count: 0
   variations:
 - word: pl
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: poland
+  count: 0
   variations:
 - word: plc
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: public,limited,company
+  count: 0
   variations:
 - word: pm
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: st,pierre,miquelon
+  count: 0
   variations:
 - word: pn
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: pitcairn
+  count: 0
   variations:
 - word: po
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: poland;polish;portugal;portuguese
+  count: 0
   variations:
 - word: podnik
   followedBy:
-  precededBy:
+  precededBy: narodni;narodnij;narodny;oborovy;sdruzeni;koncernovy
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: podniku
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: poland
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: polish
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: polynesia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: portugal
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: portuguese
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: pr
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: puerto,rico
+  count: 0
   variations:
 - word: pra
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: prague;praha
+  count: 0
   variations:
 - word: pracy
   followedBy:
-  precededBy:
+  precededBy: spoldzielnia
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: prague
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: praha
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: preluc
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: prelucrare;prelucrarea
+  count: 0
   variations:
 - word: prelucrare
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: prelucrarea
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: president
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: principe
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: privee
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: prod
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: prodotti;produce;product;products;producta;productas;productie;producto;productos;productores;produit;produits;produkcji;produkt;produkte;produkter;produse;produtos
+  count: 0
   variations:
 - word: prodn
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: production;productions;produktion;produktions;produzioni
+  count: 0
   variations:
 - word: prodotti
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: produce
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: product
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: producta
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: productas
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: productie
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: production
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: productions
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: productive
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: producto
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: productores
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: productos
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: products
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: produit
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: produits
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: produkcji
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: produkt
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: produkte
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: produkter
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: produktion
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: produktions
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: produse
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: produto
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: produtos
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: produzioni
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: proi
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: proiectare;proiectari
+  count: 0
   variations:
 - word: proiectare
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: proiectari
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: proprietary
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: province
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: przedsieb
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: przedsiebiostwo
+  count: 0
   variations:
 - word: przedsiebiorstwo
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: przedsiebiostwo
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: przemyslu
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: przeym
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: przemyslu
+  count: 0
   variations:
 - word: pt
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: portugal
+  count: 0
   variations:
 - word: pty
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: proprietary
+  count: 0
   variations:
 - word: public
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: puerto
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: pvba
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: personenvennootschap,met,beperkte,aansprakelijkheid
+  count: 0
   variations:
 - word: pw
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: palau
+  count: 0
   variations:
 - word: py
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: paraguay
+  count: 0
   variations:
 - word: qa
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: qatar
+  count: 0
   variations:
 - word: qatar
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: re
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: reunion
+  count: 0
   variations:
 - word: real
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: realisation;realisations
+  count: 0
   variations:
 - word: realisation
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: realisations
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: rech
-  followedBy:
+  followedBy: dev
   precededBy:
-  expansion:
-  
-  count:
+  expansion: recherche;recherches
+  count: 0
   variations:
 - word: recherche
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: recherches
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: regent
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: regents
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: represented
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: republic
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: republics
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: republik
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: res
-  followedBy:
+  followedBy: dev
   precededBy:
-  expansion:
-  
-  count:
+  expansion: research
+  count: 0
   variations:
 - word: research
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: responsabilidad
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: responsabilite
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: responsibilite
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: reunion
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: rica
   followedBy:
-  precededBy:
+  precededBy: costa
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: rico
   followedBy:
-  precededBy:
+  precededBy: puerto
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: rijksuniv
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: rijksuniversiteit
+  count: 0
   variations:
 - word: rijksuniversiteit
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: riunite
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ro
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: romania
+  count: 0
   variations:
 - word: romania
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: rozvoj
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: rozwojowy
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ru
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: russian,federation
+  count: 0
   variations:
 - word: russian
-  followedBy:
+  followedBy: federation
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: rw
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: rwanda
+  count: 0
   variations:
 - word: rwanda
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: s
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: south;southern;sud
+  count: 0
   variations:
 - word: sa
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: south africa;south african;south america;south,american;sa,dite;sociedad,anonima;societe,anonyme;societe,anonyme,dite
+  count: 0
   variations:
 - word: sahara
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: saint
-  followedBy:
+  followedBy: lucia
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: salvador
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: samoa
   followedBy:
-  precededBy:
+  precededBy: american
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: san
-  followedBy:
+  followedBy: marino
   precededBy:
   expansion:
-  
-  count:
-  variations:
-- word: sandwich
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  count: 0
   variations:
 - word: sao
-  followedBy:
+  followedBy: tome & principe
   precededBy:
-  expansion:
-  
-  count:
+  expansion: 
+  count: 0
   variations:
 - word: sarl
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: societe,responsabilite,limitee;societe,,responsibilite,limitee
+  count: 0
   variations:
 - word: sas
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: societa,accomandita,semplice
+  count: 0
   variations:
 - word: saudi
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: sb
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: solomon,islands
+  count: 0
   variations:
 - word: sc
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: scandinavia;scandinavian;schweiz;schweizer;schweizerisch;schweizerische;schweizerisches;scotland;scottish;seychelles
+  count: 0
   variations:
 - word: scandinavia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: scandinavian
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: schweiz
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: schweizer
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: schweizerisch
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: schweizerische
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: schweizerischer
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: schweizerisches
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: sci
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: science;sciences;scientific;scientifica;scientifique;scientifiques
+  count: 0
   variations:
 - word: science
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: sciences
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: scientific
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: scientifica
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: scientifique
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: scientifiques
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: scotland
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: scottish
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: sd
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: sudan
+  count: 0
   variations:
 - word: sdruzeni
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: se
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: southeast;southeastern;sudest;sweden
+  count: 0
   variations:
 - word: sec
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: secretary;
+  count: 0
   variations:
 - word: secretary
   followedBy:
   precededBy:
   expansion:
-  
-  count:
-  variations:
-- word: see
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  count: 0
   variations:
 - word: semplice
   followedBy:
-  precededBy:
+  precededBy: societa,accomandita
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: senbai
-  followedBy:
+  followedBy: kosha
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: senegal
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: seychelles
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: sg
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: singapore
+  count: 0
   variations:
 - word: sh
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: st,helena
+  count: 0
   variations:
 - word: shadan
   followedBy:
-  precededBy:
+  precededBy: hojin;houjin
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: si
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: slovenia;singapore
+  count: 0
   variations:
 - word: sider
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: siderurgic;siderurgica;siderurgicas;siderurgie;siderurgique
+  count: 0
   variations:
 - word: siderurgic
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: siderurgica
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: siderurgicas
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: siderurgie
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: siderurgique
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: sierra
-  followedBy:
+  followedBy: leone
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: singapore
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: sj
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: svalbard,jan,mayen,islands
+  count: 0
   variations:
 - word: sk
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: slovakia;skandinivisk;skandiniviska
+  count: 0
   variations:
 - word: skandinivisk
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: skandiniviska
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: sl
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: sierra,leone
+  count: 0
   variations:
 - word: slovakia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: slovenia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: sm
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: san,marino
+  count: 0
   variations:
 - word: sn
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: senegal
+  count: 0
   variations:
 - word: snc
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: societa,nome,collectivo;societe,nom,collectif
+  count: 0
   variations:
 - word: so
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: somalia
+  count: 0
   variations:
 - word: soc
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: sociedad;sociedade;societa;societe;society
+  count: 0
   variations:
 - word: socialist
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: sociedad
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: sociedade
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: societa
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: societe
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: society
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: solomon
-  followedBy:
+  followedBy: islands
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: somalia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: south
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: southeast
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: southeastern
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: southern
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: southwest
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: southwestern
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: soviet
-  followedBy:
-  precededBy:
+  followedBy: socialist,republics
+  precededBy: union
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: sp
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: spain;spanish
+  count: 0
   variations:
 - word: spa
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: societa,per,azion
+  count: 0
   variations:
 - word: spain
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: spanish
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: spital
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: spitalul
+  count: 0
   variations:
 - word: spitalul
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: spoldzielnia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: sprl
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: societe,privee,responsabilite,limitee
+  count: 0
   variations:
 - word: sr
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: suriname
+  count: 0
   variations:
 - word: sri
-  followedBy:
+  followedBy: lanka
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: srl
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: sociedad,responsabilidad,limitada
+  count: 0
   variations:
 - word: st
-  followedBy:
+  followedBy: helena;kitts,nevis;pierre,miquelon;vincent,grenadines
   precededBy:
-  expansion:
-  
-  count:
+  expansion: sao,tome,principe
+  count: 0
   variations:
 - word: staatlicher
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: standard
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: state
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: states
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: statiunea
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: statni
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: stichting
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: stiftelsen
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: stiftung
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: stiint
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: stiintifica
+  count: 0
   variations:
 - word: stiintifica
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: studi
   followedBy:
-  precededBy:
+  precededBy: universita,degli
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: su
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: suisse;suomi
+  count: 0
   variations:
 - word: sud
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: sudan
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: suddeut
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: suddeutsch
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: suddeutsche
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: suddeutscher
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: suddeutsches
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: sudest
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: sudouest
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: suisse
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: suomi
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: suriname
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: sv
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: sveits;svizzera;svensk;svenska
+  count: 0
   variations:
 - word: svalbard
-  followedBy:
+  followedBy: jan,mayen,islands
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: sveits
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: svensk
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: svenska
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: svizzera
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: sw
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: sweden;swedish;swiss;switzerland
+  count: 0
   variations:
 - word: swaziland
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: sweden
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: swedish
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: swiss
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: switzerland
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: sy
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: syrian,arab,republic
+  count: 0
   variations:
 - word: syrian
-  followedBy:
+  followedBy: arab,republic
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: sz
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: swaziland
+  count: 0
   variations:
 - word: ta
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: taiwan;taiwanese
+  count: 0
   variations:
 - word: taiwan
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: taiwanese
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: tajikistan
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: tanzania
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: tc
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: turks,caicos,islands
+  count: 0
   variations:
 - word: td
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: chad
+  count: 0
   variations:
 - word: tech
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: technical;technico;techniczny;technik;technikai;techniki;technique;techniques;technisch;technische;technisches
+  count: 0
   variations:
 - word: technical
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: technico
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: techniczny
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: technik
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: technikai
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: techniki
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: technique
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: techniques
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: technisch
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: technische
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: technisches
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: tecnica
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: tehnice
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: teknisch
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: teknische
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: teknisches
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: teknisk
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: tekniska
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: tekniske
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: telecom
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: telecommunicacion;telecommunication;telecommunications;telecommunicazioni;telecomunicazioni
+  count: 0
   variations:
 - word: telecommunicacion
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: telecommunication
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: telecommunications
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: telecommunicazioni
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: telecomunicazioni
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: territories
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: territory
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: tf
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: french,southern,territories
+  count: 0
   variations:
 - word: tg
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: togo
+  count: 0
   variations:
 - word: th
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: thailand
+  count: 0
   variations:
 - word: thailand
   followedBy:
   precededBy:
   expansion:
-  
-  count:
-  variations:
-- word: the
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  count: 0
   variations:
 - word: timor
   followedBy:
-  precededBy:
+  precededBy: east
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: tj
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: tajikistan
+  count: 0
   variations:
 - word: tk
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: tokelau
+  count: 0
   variations:
 - word: tm
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: turkmenistan
+  count: 0
   variations:
 - word: tn
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: tunisia
+  count: 0
   variations:
 - word: to
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: tonga
+  count: 0
   variations:
 - word: tobago
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: togo
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: toho
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: tok
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: tokyo
+  count: 0
   variations:
 - word: tokelau
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: tokyo
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: tome
-  followedBy:
-  precededBy:
+  followedBy: principe
+  precededBy: sao
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: tonga
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: tovarna
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: toyo
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: tp
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: east,timor
+  count: 0
   variations:
 - word: tr
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: turkey
+  count: 0
   variations:
 - word: trinidad
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: trust
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: trustul
+  count: 0
   variations:
 - word: trustul
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: tt
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: trinidad,tobago
+  count: 0
   variations:
 - word: tu
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: turkey;turkish
+  count: 0
   variations:
 - word: tudomanyos
-  followedBy:
-  precededBy:
+  followedBy: akademia
+  precededBy: magyar
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: tunisia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: turkey
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: turkish
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: turkmenistan
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: turks
-  followedBy:
+  followedBy: caicos,islands
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: tuvalu
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: tv
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: tuvalu
+  count: 0
   variations:
 - word: tw
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: province,china,taiwan
+  count: 0
   variations:
 - word: tz
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: united,republic,tanzania
+  count: 0
   variations:
 - word: ua
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: ukraine
+  count: 0
   variations:
 - word: ug
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: uganda
+  count: 0
   variations:
 - word: uganda
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: uk
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: united,kingdom
+  count: 0
   variations:
 - word: ukraine
   followedBy:
   precededBy:
   expansion:
-  
-  count:
-  variations:
-- word: um
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  count: 0
   variations:
 - word: und
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: union
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: united
-  followedBy:
+  followedBy: kingdom
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: univ
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: universidad;universidade;universita;universita,degli,studi;universitaet;universitair;universitaire;universitat;universitatea;universite;universiteit;universitet;universiteta;universitetam;universitetami;universitete;universitetom;universitetov;universitetu;universitety;university;uniwersytet
+  count: 0
   variations:
 - word: universal
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: universale
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: universidad
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: universidade
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: universita
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: universitaet
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: universitair
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: universitaire
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: universitat
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: universitatea
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: universite
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: universiteit
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: universitet
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: universiteta
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: universitetam
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: universitetami
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: universitete
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: universitetom
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: universitetov
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: universitetu
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: universitety
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: university
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: uniwersytet
   followedBy:
   precededBy:
   expansion:
-  
-  count:
-  variations:
-- word: unknown
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
-  variations:
-- word: unspecified
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  count: 0
   variations:
 - word: uruguay
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: us
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: united,states;united,states,america
+  count: 0
   variations:
 - word: usina
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: usine
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: usines
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ustav
   followedBy:
-  precededBy:
+  precededBy: vyzk;vyzkumny;vyzk,vyvojovy;vyzkumny,vyvojovy
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: util
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: utilaj;utilaje;utilisation;utilisations
+  count: 0
   variations:
 - word: utilaj
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: utilaje
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: utilisation
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: utilisations
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: uy
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: uruguay
+  count: 0
   variations:
 - word: uz
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: uzbekistan
+  count: 0
   variations:
 - word: uzbekistan
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: uzina
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: va
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: vatican,city,state
+  count: 0
   variations:
 - word: vallalat
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: vanuatu
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: vatican
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: vc
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: st,vincent,grenadines
+  count: 0
   variations:
 - word: ve
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: venezuela
+  count: 0
   variations:
 - word: veb
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: volkseigener,betriebe
+  count: 0
   variations:
 - word: venezuela
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: vennootschap
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: vennootschapij
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: venootschap
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: venootschapij
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ver
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: vereenigde;verein;vereinigte;vereinigtes;vereinigung;vereniging
+  count: 0
   variations:
 - word: verde
   followedBy:
-  precededBy:
+  precededBy: cape
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: vereenigde
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: verein
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: vereinigte
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: vereinigtes
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: vereinigung
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: vereniging
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: vertrieb
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: vertriebs
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: verw
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: verwaltungen;verwaltungs;verwertungs
+  count: 0
   variations:
 - word: verwaltungen
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: verwaltungs
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: verwaltungsgesellschaft
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: verwertungs
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: vg
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: british,virgin,islands
+  count: 0
   variations:
 - word: vi
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: united,states,virgin,islands
+  count: 0
   variations:
 - word: viet
-  followedBy:
+  followedBy: nam
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: vincent
-  followedBy:
-  precededBy:
+  followedBy: grenadines
+  precededBy: st
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: virgin
-  followedBy:
-  precededBy:
+  followedBy: islands
+  precededBy: british;united states
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: vn
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: viet,nam
+  count: 0
   variations:
 - word: volkseigener
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: vu
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: vanuatu
+  count: 0
   variations:
 - word: vvb
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: vereinigung,volkseigener,betriebung
+  count: 0
   variations:
 - word: vvu
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: vyzk,vyvojovy,ustav;vyzkumny,vyvojovy,ustav
+  count: 0
   variations:
 - word: vyroba
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: vyvojovy
-  followedBy:
-  precededBy:
+  followedBy: ustav
+  precededBy: vyzkumny
   expansion:
-  
-  count:
-  variations:
-- word: vyvojovy
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  count: 0
   variations:
 - word: vyzk
-  followedBy:
+  followedBy: ustav;vyvojovy,ustav
   precededBy:
   expansion:
-  
-  count:
-  variations:
-- word: vyzk
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  count: 0
   variations:
 - word: vyzkumny
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
-  variations:
-- word: vyzkumny
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  expansion: ustav;vyvojovy,ustav
+  count: 0
   variations:
 - word: vyzkumnyustav
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: wa
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: wales
+  count: 0
   variations:
 - word: wales
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: wallis
-  followedBy:
+  followedBy: futuna,islands
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: we
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: welsh
+  count: 0
   variations:
 - word: welsh
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: werk
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: werke
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: werkz
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: werkzeug
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: werkzeugbau
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: werkzeugfabrik
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: werkzeugkombinat
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: werkzeugmaschinenfabrik
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: werkzeugmaschinenkombinat
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: west
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: westdeut
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: westdeutsch;westdeutsche;westdeutsches;westdeutscher
+  count: 0
   variations:
 - word: westdeutsch
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: westdeutsche
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: westdeutscher
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: westdeutsches
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: western
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: wf
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: wallis,futuna,islands
+  count: 0
   variations:
 - word: wiss
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: wissenschaftliche;wissenschaftliches
+  count: 0
   variations:
 - word: wissenschaftliche
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: wissenschaftliches
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: wo
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: worldwide
+  count: 0
   variations:
 - word: worldwide
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: ws
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: samoa
+  count: 0
   variations:
 - word: wtz
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: wissenschaftliches,technisches,zentrum
+  count: 0
   variations:
 - word: yd
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: democratic,yemen
+  count: 0
   variations:
 - word: ye
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: yemen
+  count: 0
   variations:
 - word: yemen
   followedBy:
   precededBy:
   expansion:
-  
-  count:
-  variations:
-- word: yg
-  followedBy:
-  precededBy:
-  expansion:
-  
-  count:
+  count: 0
   variations:
 - word: york
   followedBy:
-  precededBy:
+  precededBy: new, nova
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: yt
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: mayotte
+  count: 0
   variations:
 - word: yu
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: yugoslavia
+  count: 0
   variations:
 - word: yugen
-  followedBy:
+  followedBy: gaisha;kaisha
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: yugoslavia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: yuugen
-  followedBy:
+  followedBy: gaisha;kaisha;kaisya
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: za
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: south,africa
+  count: 0
   variations:
 - word: zaidan
-  followedBy:
+  followedBy: hojin
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: zaire
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: zaklady
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: zambia
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: zavod
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: zavodu
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: zavodu;zavody
+  count: 0
   variations:
 - word: zavody
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: zealand
   followedBy:
-  precededBy:
+  precededBy: new
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: zent
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: zentrale;zentrales;zentralen;zentralna;zentrum
+  count: 0
   variations:
 - word: zentrale
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: zentralen
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: zentrales
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: zentralinstitut
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: zentrallaboratorium
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: zentralna
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: zentrum
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: zh
   followedBy:
   precededBy:
-  expansion:
-  
-  count:
+  expansion: zaidan,hojin;zaidan,houjin
+  count: 0
   variations:
 - word: zimbabwe
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: zm
   followedBy:
-  precededBy:
+  precededBy: zambia
   expansion:
-  
-  count:
+  count: 0
   variations:
 - word: zone
   followedBy:
   precededBy:
   expansion:
-  
-  count:
+  count: 0
   variations:
