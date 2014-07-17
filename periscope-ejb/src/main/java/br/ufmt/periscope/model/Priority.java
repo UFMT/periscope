@@ -17,10 +17,16 @@ public class Priority {
     }
 
     public String getValue() {
+        if (value != null) {
+            value = value.toUpperCase();
+        }
         return value;
     }
 
     public void setValue(String value) {
+        if (value != null) {
+            value = value.toUpperCase();
+        }
         this.value = value;
     }
 

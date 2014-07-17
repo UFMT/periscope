@@ -30,6 +30,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.model.DataModel;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +43,7 @@ import org.primefaces.model.UploadedFile;
 @ManagedBean
 @ViewScoped
 public class PatentController {
-
+    
     private @Inject
     @CurrentProject
     Project currentProject;
@@ -71,46 +72,6 @@ public class PatentController {
     private StreamedContent download;
 
     /**
-     * Pre-loads the patent's presentation file before user can download it
-     *
-     * @param patent
-     * @throws UnknownHostException
-     * @throws IOException
-     */
-    public void preDownloadPresentation(Patent patent) throws UnknownHostException, IOException {
-        GridFS fs = patentRepository.getFs();
-        GridFSDBFile gfile = fs.findOne(patent.getPresentationFile().getId());
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        long writeTo = gfile.writeTo(out);
-        byte[] data = out.toByteArray();
-        ByteArrayInputStream istream = new ByteArrayInputStream(data);
-        InputStream arquivo = istream;
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        setDownload(new DefaultStreamedContent(arquivo, externalContext.getMimeType(gfile.getFilename()), gfile.getFilename()));
-
-    }
-
-    /**
-     * Pre-loads the patent's info file before user can download it
-     *
-     * @param patent
-     * @throws UnknownHostException
-     * @throws IOException
-     */
-    public void preDownloadPatent(Patent patent) throws UnknownHostException, IOException {
-        GridFS fs = patentRepository.getFs();
-        GridFSDBFile gfile = fs.findOne(patent.getPatentInfo().getId());
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        long writeTo = gfile.writeTo(out);
-        byte[] data = out.toByteArray();
-        ByteArrayInputStream istream = new ByteArrayInputStream(data);
-        InputStream arquivo = istream;
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        setDownload(new DefaultStreamedContent(arquivo, externalContext.getMimeType(gfile.getFilename()), gfile.getFilename()));
-
-    }
-
-    /**
      * Controller constructor<BR/>
      * Loads project's patents, countries, applicants and inventors
      *
@@ -132,7 +93,7 @@ public class PatentController {
             updateApplicants();
             updateInventors();
         }
-        if (req.getParameter("patentAdd") != null){
+        if (req.getParameter("patentAdd") != null) {
             selectedPatent = new Patent();
             selectedPatent.setMainClassification(new Classification());
             selectedPatent.setProject(currentProject);
@@ -140,14 +101,20 @@ public class PatentController {
             updateInventors();
             System.out.println("funfou");
         }
-
+        
         updateList();
     }
-
+    
+    /**
+     * Updates the selected patent's applicants list
+     */
     public void updateApplicants() {
         applicants.setSelectedApplicants(selectedPatent.getApplicants());
     }
-
+    
+    /**
+     * Updates the selected patent's inventors list
+     */
     public void updateInventors() {
         inventors.setSelectedInventors(selectedPatent.getInventors());
     }
@@ -163,13 +130,13 @@ public class PatentController {
         patentRepository.savePatent(selectedPatent);
         return "listPatent";
     }
-    
+
     /**
      * Adds new patent to the current project
-     * 
+     *
      * @return
      */
-    public String add(){
+    public String add() {
         selectedPatent.setApplicants(applicants.getSelectedApplicants());
         selectedPatent.setInventors(inventors.getSelectedInventors());
         patentRepository.savePatentToDatabase(selectedPatent, currentProject);
@@ -298,6 +265,26 @@ public class PatentController {
     }
 
     /**
+     * Pre-loads the patent's presentation file before user can download it
+     *
+     * @param patent
+     * @throws UnknownHostException
+     * @throws IOException
+     */
+    public void preDownloadPresentation(Patent patent) throws UnknownHostException, IOException {
+        GridFS fs = patentRepository.getFs();
+        GridFSDBFile gfile = fs.findOne(patent.getPresentationFile().getId());
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        long writeTo = gfile.writeTo(out);
+        byte[] data = out.toByteArray();
+        ByteArrayInputStream istream = new ByteArrayInputStream(data);
+        InputStream arquivo = istream;
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        setDownload(new DefaultStreamedContent(arquivo, externalContext.getMimeType(gfile.getFilename()), gfile.getFilename()));
+        
+    }
+
+    /**
      * Handles the uploading of the presentation file to the patent If the
      * pantet alredy has a presentation file the method will delete the file
      * from database before uploading a new one
@@ -322,10 +309,46 @@ public class PatentController {
             selectedPatent.setPresentationFile(novo);
         }
         save();
-
+        
         FacesMessage msg = new FacesMessage("Sucesso", event.getFile().getFileName() + " foi enviado.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
+        
+    }
+    
+    /**
+     * Deletes the selected patent's current Presentation file
+     * 
+     * @return
+     */
+    public String deletePresentationFile() throws UnknownHostException {
+        GridFS fs = patentRepository.getFs();
+        fs.remove(selectedPatent.getPresentationFile().getId());
+        selectedPatent.setPresentationFile(null);
+        save();
+        Flash flash = FacesContext.getCurrentInstance().
+                getExternalContext().getFlash();
+        flash.put("info", "Deletado com Sucesso");
+        return "";
+    }
 
+    /**
+     * Pre-loads the patent's info file before user can download it
+     *
+     * @param patent
+     * @throws UnknownHostException
+     * @throws IOException
+     */
+    public void preDownloadPatent(Patent patent) throws UnknownHostException, IOException {
+        GridFS fs = patentRepository.getFs();
+        GridFSDBFile gfile = fs.findOne(patent.getPatentInfo().getId());
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        long writeTo = gfile.writeTo(out);
+        byte[] data = out.toByteArray();
+        ByteArrayInputStream istream = new ByteArrayInputStream(data);
+        InputStream arquivo = istream;
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        setDownload(new DefaultStreamedContent(arquivo, externalContext.getMimeType(gfile.getFilename()), gfile.getFilename()));
+        
     }
 
     /**
@@ -352,11 +375,27 @@ public class PatentController {
             Files novo = new Files((ObjectId) gfsFiles.getId());
             selectedPatent.setPatentInfo(novo);
         }
-
+        
         FacesMessage msg = new FacesMessage("Sucesso", event.getFile().getFileName() + " foi enviado.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
+    /**
+     * Deletes the selected patent's current Presentation file
+     * 
+     * @return
+     */
+    public String deletePatentInfo() throws UnknownHostException {
+        GridFS fs = patentRepository.getFs();
+        fs.remove(selectedPatent.getPatentInfo().getId());
+        selectedPatent.setPatentInfo(null);
+        save();
+        Flash flash = FacesContext.getCurrentInstance().
+                getExternalContext().getFlash();
+        flash.put("info", "Deletado com Sucesso");
+        return "";
+    }
+    
     /**
      * Updates the project's patents list
      */

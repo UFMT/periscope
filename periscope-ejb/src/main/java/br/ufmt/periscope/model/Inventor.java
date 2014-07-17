@@ -43,6 +43,9 @@ public class Inventor implements Serializable, Comparable<Inventor> {
     }
 
     public void setName(String name) {
+        if (name != null) {
+            name = name.toUpperCase();
+        }
         this.name = name;
     }
 

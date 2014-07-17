@@ -52,6 +52,9 @@ public class Classification {
     }
 
     public void setValue(String value) {
+        if (value != null) {
+            value = value.toUpperCase();
+        }
         this.value = value;
         updateClassGroupSubGroup(value);
     }
