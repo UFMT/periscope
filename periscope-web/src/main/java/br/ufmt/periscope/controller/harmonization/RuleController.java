@@ -17,11 +17,9 @@ import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.model.Rule;
 import br.ufmt.periscope.qualifier.CurrentProject;
 import br.ufmt.periscope.repository.RuleRepository;
-import javax.inject.Named;
 
 @ManagedBean
 @ViewScoped
-@Named
 public class RuleController implements Serializable{
 	
 	private static final long serialVersionUID = 7744517674295407077L;
