@@ -28,7 +28,7 @@ public class Project implements Serializable{
 	@Reference private List<User> observers = new ArrayList<User>();
 	@Reference private List<Rule> rules = new ArrayList<Rule>();
 	@Reference private List<Patent> patents = new ArrayList<Patent>();
-
+        
 	public ObjectId getId() {
 		return id;
 	}
@@ -98,7 +98,7 @@ public class Project implements Serializable{
 	}
 
 	public void setPatents(List<Patent> patents) {
-		this.patents = patents;
+		this.patents = patents;                
 	}
 
 	public List<Rule> getRules() {

@@ -1,5 +1,6 @@
 package br.ufmt.periscope.bean;
 
+import br.ufmt.periscope.indexer.resources.analysis.CommonDescriptor;
 import br.ufmt.periscope.model.ApplicantType;
 import java.io.InputStream;
 import java.util.Iterator;
@@ -25,6 +26,12 @@ import com.github.jmkgreen.morphia.Datastore;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
+import java.io.IOException;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.document.TextField;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.Term;
 
 @ApplicationScoped
 @Singleton
@@ -33,6 +40,7 @@ public class SeedBean {
 
 	private @Inject Datastore ds;
 	private @Inject Logger log;	
+        private @Inject IndexWriter writer;
 
 	@PostConstruct
 	public void atStartup() {
@@ -40,6 +48,7 @@ public class SeedBean {
 		initUsers();
 		initCountries();
 		initApplicantTypes();
+                initCommonsDescriptors();
 		insertAlgorithFromFile("lcs","js/longestCommonSubstring.js");
 		insertAlgorithFromFile("levenshtein","js/levenshtein.js");
 		insertAlgorithFromFile("LiquidMetal","js/liquidmetal.js");
@@ -111,4 +120,26 @@ public class SeedBean {
 			log.info("Cadastrado " + users.size() + " usuários.");
 		}
 	}
+      
+        private void initCommonsDescriptors() {
+            if(ds.getCount(CommonDescriptor.class) == 0l) {
+                log.info("Nenhum descritor comum encontrado.");
+                List<CommonDescriptor> descriptors = Fixjure.listOf(CommonDescriptor.class)
+                        .from(YamlSource.newYamlResource("descriptors.yaml")).create();
+                Iterator<CommonDescriptor> it = descriptors.iterator();
+                while (it.hasNext()) {
+                    CommonDescriptor desc = it.next();
+                    ds.save(desc);
+                    Document doc = new Document();
+                    doc.add(new TextField("id", desc.getWord(), Field.Store.YES));
+                    try {
+                        writer.deleteDocuments(new Term("id", doc.get("id")));
+                        writer.addDocument(doc);
+                    } catch (IOException ex) {
+                        Logger.getLogger(SeedBean.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                log.info("Cadastrado " + descriptors.size() + " usuários.");
+            }
+        }
 }
