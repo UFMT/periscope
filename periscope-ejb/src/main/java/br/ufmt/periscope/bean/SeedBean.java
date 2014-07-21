@@ -27,13 +27,14 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import java.io.IOException;
+import javax.faces.bean.RequestScoped;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
 
-@ApplicationScoped
+@RequestScoped
 @Singleton
 @Startup
 public class SeedBean {
