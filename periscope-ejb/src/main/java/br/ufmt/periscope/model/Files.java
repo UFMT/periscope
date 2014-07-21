@@ -90,4 +90,14 @@ public class Files {
         this.aliases = aliases;
     }
     
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Files) {
+            Files files = (Files) o;
+            if (files.getId().equals(this.getId())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

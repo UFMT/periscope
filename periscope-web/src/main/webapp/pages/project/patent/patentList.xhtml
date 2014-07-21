@@ -83,13 +83,13 @@
                                 <p:commandButton title="#{msgs['download.file']}" ajax="false" 
                                                  icon="ui-icon-arrowthick-1-s"
                                                  rendered="#{item.presentationFile != null}"
-                                                 actionListener="#{patentController.preDownloadPresentation(patent)}">  
+                                                 actionListener="#{patentController.downloadFile(item.presentationFile)}">  
                                     <p:fileDownload  value="#{patentController.download}" />  
                                 </p:commandButton>
                                 <p:commandButton title="#{msgs['download.patent']}" ajax="false" 
                                                  icon="ui-icon-arrowthick-1-s" 
                                                  rendered="#{item.patentInfo != null}"
-                                                 actionListener="#{patentController.preDownloadPatent(patent)}">  
+                                                 actionListener="#{patentController.downloadFile(item.patentInfo)}">  
                                     <p:fileDownload  value="#{patentController.download}" />  
                                 </p:commandButton>
                                 <p:commandButton title="#{msgs['darklist']}" ajax="false" action="#{patentController.updateBlackListPatent()}" 

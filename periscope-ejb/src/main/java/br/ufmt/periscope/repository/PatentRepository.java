@@ -190,7 +190,7 @@ public class PatentRepository {
         }
         setRowCount((int) query.countAll());
         query.offset(first).limit(pageSize);
-        query.retrievedFields(true, "_id", "titleSelect", "mainClassification", "publicationDate", "applicationNumber", "applicants", "inventors", "blacklisted");
+        query.retrievedFields(true, "_id", "titleSelect", "mainClassification", "publicationDate", "applicationNumber", "applicants", "inventors", "blacklisted", "presentationFile", "patentInfo");
         return query.asList();
     }
 

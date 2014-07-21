@@ -56,6 +56,9 @@ public class PatentController {
     private int totalCount = 0;
     private Patent selectedPatent;
     private UploadedFile file;
+    private Files temporaryPresentationFile;
+    private Files temporaryPatentInfo;
+    private GridFS fs;
     private @Inject
     CountryRepository countryRepository;
     private List<Country> countries = new ArrayList<Country>();
@@ -87,9 +90,10 @@ public class PatentController {
         inventors.getInventorRepository().setCurrentProject(currentProject);
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest req = (HttpServletRequest) context.getExternalContext().getRequest();
-        System.out.println("edit");
         if (req.getParameter("patentId") != null) {
             selectedPatent = patentRepository.getPatentWithId(currentProject, new ObjectId(req.getParameter("patentId"))).get(0);
+            temporaryPatentInfo = selectedPatent.getPatentInfo();
+            temporaryPresentationFile = selectedPatent.getPresentationFile();
             updateApplicants();
             updateInventors();
         }
@@ -99,19 +103,18 @@ public class PatentController {
             selectedPatent.setProject(currentProject);
             updateApplicants();
             updateInventors();
-            System.out.println("funfou");
         }
         
         updateList();
     }
-    
+
     /**
      * Updates the selected patent's applicants list
      */
     public void updateApplicants() {
         applicants.setSelectedApplicants(selectedPatent.getApplicants());
     }
-    
+
     /**
      * Updates the selected patent's inventors list
      */
@@ -123,10 +126,20 @@ public class PatentController {
      * Save the edited patent
      *
      * @return
+     * @throws java.net.UnknownHostException
      */
-    public String save() {
+    public String save() throws UnknownHostException {
         selectedPatent.setApplicants(applicants.getSelectedApplicants());
         selectedPatent.setInventors(inventors.getSelectedInventors());
+        openFs();
+        if (selectedPatent.getPatentInfo() != null && !temporaryPatentInfo.equals(selectedPatent.getPatentInfo())) {
+            fs.remove(selectedPatent.getPatentInfo().getId());
+        }
+        if (selectedPatent.getPresentationFile() != null && !temporaryPresentationFile.equals(selectedPatent.getPresentationFile())) {
+            fs.remove(selectedPatent.getPresentationFile().getId());
+        }
+        selectedPatent.setPatentInfo(temporaryPatentInfo);
+        selectedPatent.setPresentationFile(temporaryPatentInfo);
         patentRepository.savePatent(selectedPatent);
         return "listPatent";
     }
@@ -135,12 +148,45 @@ public class PatentController {
      * Adds new patent to the current project
      *
      * @return
+     * @throws java.net.UnknownHostException
      */
-    public String add() {
+    public String add() throws UnknownHostException {
         selectedPatent.setApplicants(applicants.getSelectedApplicants());
         selectedPatent.setInventors(inventors.getSelectedInventors());
+        selectedPatent.setPatentInfo(temporaryPatentInfo);
+        selectedPatent.setPresentationFile(temporaryPatentInfo);
         patentRepository.savePatentToDatabase(selectedPatent, currentProject);
         return "listPatent";
+    }
+    
+    /**
+     * When adding or editing a patent if the user leaves the patent's file unchanged it will be deleted
+     * 
+     * @param page
+     * @return
+     * @throws UnknownHostException
+     */
+    public String cancelChange(String page) throws UnknownHostException {
+        if (temporaryPatentInfo != null) {
+            if (!temporaryPatentInfo.equals(selectedPatent.getPatentInfo())) {
+                openFs();
+                fs.remove(temporaryPatentInfo.getId());
+            }
+        }
+        if (temporaryPresentationFile != null) {
+            if (!temporaryPresentationFile.equals(selectedPatent.getPresentationFile())) {
+                openFs();
+                fs.remove(temporaryPresentationFile.getId());
+            }
+        }
+        if(page.equals("edit")){
+            return "listPatent";
+        }
+        if(page.equals("add")){
+            return "projectHome";
+        }
+        System.out.println("WAT");
+        return "";
     }
 
     /**
@@ -265,15 +311,15 @@ public class PatentController {
     }
 
     /**
-     * Pre-loads the patent's presentation file before user can download it
+     * Pre-loads the patent's presentation file or the presentation file before user can download it
      *
-     * @param patent
+     * @param file
      * @throws UnknownHostException
      * @throws IOException
      */
-    public void preDownloadPresentation(Patent patent) throws UnknownHostException, IOException {
-        GridFS fs = patentRepository.getFs();
-        GridFSDBFile gfile = fs.findOne(patent.getPresentationFile().getId());
+    public void downloadFile(Files file) throws UnknownHostException, IOException {
+        openFs();
+        GridFSDBFile gfile = fs.findOne(file.getId());
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         long writeTo = gfile.writeTo(out);
         byte[] data = out.toByteArray();
@@ -294,61 +340,35 @@ public class PatentController {
      * @throws IOException
      */
     public void uploadPresentationFile(FileUploadEvent event) throws UnknownHostException, IOException {
+        openFs();
         file = event.getFile();
-        GridFS fs = patentRepository.getFs();
-        System.out.println(file.getFileName());
         GridFSInputFile gfsFiles = fs.createFile(file.getInputstream());
         gfsFiles.setFilename(file.getFileName());
         gfsFiles.save();
-        if (selectedPatent.getPresentationFile() == null) {
-            Files novo = new Files((ObjectId) gfsFiles.getId());
-            selectedPatent.setPresentationFile(novo);
-        } else {
-            fs.remove(selectedPatent.getPresentationFile().getId());
-            Files novo = new Files((ObjectId) gfsFiles.getId());
-            selectedPatent.setPresentationFile(novo);
+        if (temporaryPresentationFile == null) {
+            temporaryPresentationFile = new Files((ObjectId) gfsFiles.getId());
         }
-        save();
-        
         FacesMessage msg = new FacesMessage("Sucesso", event.getFile().getFileName() + " foi enviado.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         
     }
-    
+
     /**
      * Deletes the selected patent's current Presentation file
-     * 
+     *
      * @return
+     * @throws java.net.UnknownHostException
      */
     public String deletePresentationFile() throws UnknownHostException {
-        GridFS fs = patentRepository.getFs();
-        fs.remove(selectedPatent.getPresentationFile().getId());
-        selectedPatent.setPresentationFile(null);
-        save();
+        if(!temporaryPresentationFile.equals(selectedPatent.getPresentationFile())){
+            openFs();
+            fs.remove(temporaryPresentationFile.getId());
+        }
+        temporaryPresentationFile = null;
         Flash flash = FacesContext.getCurrentInstance().
                 getExternalContext().getFlash();
         flash.put("info", "Deletado com Sucesso");
         return "";
-    }
-
-    /**
-     * Pre-loads the patent's info file before user can download it
-     *
-     * @param patent
-     * @throws UnknownHostException
-     * @throws IOException
-     */
-    public void preDownloadPatent(Patent patent) throws UnknownHostException, IOException {
-        GridFS fs = patentRepository.getFs();
-        GridFSDBFile gfile = fs.findOne(patent.getPatentInfo().getId());
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        long writeTo = gfile.writeTo(out);
-        byte[] data = out.toByteArray();
-        ByteArrayInputStream istream = new ByteArrayInputStream(data);
-        InputStream arquivo = istream;
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        setDownload(new DefaultStreamedContent(arquivo, externalContext.getMimeType(gfile.getFilename()), gfile.getFilename()));
-        
     }
 
     /**
@@ -361,19 +381,13 @@ public class PatentController {
      * @throws IOException
      */
     public void uploadPatentInfo(FileUploadEvent event) throws UnknownHostException, IOException {
+        openFs();
         file = event.getFile();
-        GridFS fs = patentRepository.getFs();
-        System.out.println(file.getFileName());
         GridFSInputFile gfsFiles = fs.createFile(file.getInputstream());
         gfsFiles.setFilename(file.getFileName());
         gfsFiles.save();
-        if (selectedPatent.getPatentInfo() == null) {
-            Files novo = new Files((ObjectId) gfsFiles.getId());
-            selectedPatent.setPatentInfo(novo);
-        } else {
-            fs.remove(selectedPatent.getPatentInfo().getId());
-            Files novo = new Files((ObjectId) gfsFiles.getId());
-            selectedPatent.setPatentInfo(novo);
+        if (temporaryPatentInfo == null) {
+            temporaryPatentInfo = new Files((ObjectId) gfsFiles.getId());
         }
         
         FacesMessage msg = new FacesMessage("Sucesso", event.getFile().getFileName() + " foi enviado.");
@@ -382,20 +396,31 @@ public class PatentController {
 
     /**
      * Deletes the selected patent's current Presentation file
-     * 
+     *
      * @return
+     * @throws java.net.UnknownHostException
      */
     public String deletePatentInfo() throws UnknownHostException {
-        GridFS fs = patentRepository.getFs();
-        fs.remove(selectedPatent.getPatentInfo().getId());
-        selectedPatent.setPatentInfo(null);
-        save();
+        if(!temporaryPatentInfo.equals(selectedPatent.getPatentInfo())){
+            openFs();
+            fs.remove(temporaryPatentInfo.getId());
+        }
+        temporaryPatentInfo = null;
         Flash flash = FacesContext.getCurrentInstance().
                 getExternalContext().getFlash();
         flash.put("info", "Deletado com Sucesso");
         return "";
     }
-    
+
+    /**
+     * Opens a conection with the database to acess the patent's files
+     */
+    private void openFs() throws UnknownHostException {
+        if (fs == null) {
+            fs = patentRepository.getFs();
+        }
+    }
+
     /**
      * Updates the project's patents list
      */
@@ -621,4 +646,37 @@ public class PatentController {
     public void setFile(UploadedFile file) {
         this.file = file;
     }
+    
+    /**
+     *
+     * @return
+     */
+    public Files getTemporaryPresentationFile() {
+        return temporaryPresentationFile;
+    }
+    
+    /**
+     *
+     * @param temporaryPresentationFile
+     */
+    public void setTemporaryPresentationFile(Files temporaryPresentationFile) {
+        this.temporaryPresentationFile = temporaryPresentationFile;
+    }
+    
+    /**
+     *
+     * @return
+     */
+    public Files getTemporaryPatentInfo() {
+        return temporaryPatentInfo;
+    }
+    
+    /**
+     *
+     * @param temporaryPatentInfo
+     */
+    public void setTemporaryPatentInfo(Files temporaryPatentInfo) {
+        this.temporaryPatentInfo = temporaryPatentInfo;
+    }
+   
 }
