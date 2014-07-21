@@ -79,7 +79,8 @@
             </h:panelGrid>
             <p:spacer height="50"/>
             <center>
-                <p:commandButton value="#{msgs['save']}" action="#{applicantHarmonizationController.createRule()}"/>
+                <p:commandButton value="#{msgs['save.apply']}" action="#{applicantHarmonizationController.createRule()}" oncomplete="sugestionsDialog.hide()"
+                                 update=":#{p:component('formAll')}"/>
 
                 <p:commandButton value="#{msgs['cancel']}" immediate="true"
                                  oncomplete="sugestionsDialog.hide()" />

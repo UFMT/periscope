@@ -68,6 +68,7 @@ public class ApplicantHarmonizationController implements Serializable {
     private String acronymDefault = "BR";
     private Applicant selectedRadio;
     private Integer searchType;
+    private @Inject RuleController ruleController;
 
     @PostConstruct
     public void init() {
@@ -157,7 +158,7 @@ public class ApplicantHarmonizationController implements Serializable {
 
     public String createRule() {
 
-//        System.out.println("criando rule");
+        System.out.println("criando rule");
         rule.setType(RuleType.APPLICANT);
         rule.setProject(currentProject);
         if (selectedApplicantSugestions != null) {
@@ -178,10 +179,16 @@ public class ApplicantHarmonizationController implements Serializable {
         }
 
         rule.setSubstitutions(new HashSet<String>(substitutions));
+        System.out.println("salvando");
         ruleRepository.save(rule);
+        System.out.println("salvo:"+rule.getId());
+
+        ruleController.apply(rule.getId().toString());
+        selectedApplicants.clear();
+        
         Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
-        flash.put("success", "Regra criada com sucesso");
-        return "listRule";
+        flash.put("success", "Regra criada e aplicada com sucesso");
+        return "";
     }
 
     public void loadSugestions() {

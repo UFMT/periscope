@@ -12,6 +12,7 @@ import br.ufmt.periscope.model.Rule;
 import br.ufmt.periscope.model.RuleType;
 
 import com.github.jmkgreen.morphia.Datastore;
+import com.github.jmkgreen.morphia.Key;
 
 @Named
 public class RuleRepository {
@@ -41,13 +42,12 @@ public class RuleRepository {
 	
 	public void save(Rule rule){
 		Rule r = findByName(rule.getName());
-		if(r == null){
-			ds.save(rule);
-		}else{
+		if(r != null){
 			delete(r.getId().toString());
 			rule.getSubstitutions().addAll(r.getSubstitutions());
-			ds.save(rule);			
+			
 		}
+                Key k = ds.save(rule);
 	}
 	
 	public Rule findByName(String name){
