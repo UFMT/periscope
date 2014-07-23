@@ -139,7 +139,7 @@ public class PatentController {
             fs.remove(selectedPatent.getPresentationFile().getId());
         }
         selectedPatent.setPatentInfo(temporaryPatentInfo);
-        selectedPatent.setPresentationFile(temporaryPatentInfo);
+        selectedPatent.setPresentationFile(temporaryPresentationFile);
         patentRepository.savePatent(selectedPatent);
         return "listPatent";
     }

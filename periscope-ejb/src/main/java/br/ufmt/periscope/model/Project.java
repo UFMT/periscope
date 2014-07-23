@@ -109,6 +109,12 @@ public class Project implements Serializable{
 		this.rules = rules;
 	}
 
+    @Override
+    public String toString() {
+        return "Project{" + "id=" + id + ", title=" + title + ", description=" + description + ", isPublic=" + isPublic + ", createdAt=" + createdAt + ", updateAt=" + updateAt + ", owner=" + owner + '}';
+    }
+
+        
 
 	
 }

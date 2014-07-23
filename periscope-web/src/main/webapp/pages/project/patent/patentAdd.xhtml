@@ -270,12 +270,12 @@
                             <h:panelGrid columns="2">
                                 <h:column>
                                     <p:fileUpload fileUploadListener="#{patentController.uploadPresentationFile}" 
-                                                  mode="advanced" dragDropSupport="false"  
+                                                  mode="advanced" dragDropSupport="false" auto="true"
                                                   sizeLimit="100000" multiple="false" label="#{msgs['choose.file']}"
                                                   update=":#{p:component('fileDialog')},messages"
                                                   process=":#{p:component('fileDialog')}" 
                                                   rendered="#{patentController.temporaryPresentationFile == null}"
-                                                  showButtons="false" 
+                                                  showButtons="false"  
                                                   allowTypes="/(\.|\/)(gif|jpeg|png|pdf)$/" />  
 
                                     <p:growl id="messages" showDetail="true"/>

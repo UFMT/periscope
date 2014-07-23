@@ -48,7 +48,7 @@ public class PatentIndexer {
     }
 
     public void deleteIndexesForProject(Project project) {
-        log.info("Deletando indices para o projeto " + project.getTitle());
+//        log.info("Deletando indices para o projeto " + project.getTitle());
         try {
             writer.deleteDocuments(new Term("project", project.getId().toString()));
             log.info("Indices deletados com sucesso");

@@ -22,6 +22,7 @@ import br.ufmt.periscope.qualifier.LoggedUser;
 import br.ufmt.periscope.repository.ProjectRepository;
 
 import com.github.jmkgreen.morphia.Datastore;
+import java.net.UnknownHostException;
 
 @ManagedBean
 @ViewScoped
@@ -95,7 +96,7 @@ public class ProjectController {
 		return "projectList";
 	}
 
-	public String delete(String id){			
+	public String delete(String id) throws UnknownHostException{			
 		projectRepository.deleteProject(id);		
 		Flash flash = FacesContext.getCurrentInstance().  
                 getExternalContext().getFlash();
