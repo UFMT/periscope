@@ -240,90 +240,7 @@
                     <p:commandButton value="#{msgs['options.patent']}"
                                      onclick="patentDownloadDialog.show();"/>
 
-                    <p:dialog id="fileDialog" widgetVar="fileDownloadDialog" modal="true" closable="false"
-                              header="#{msgs['options.file']}" resizable="false">
-                        <h:form id="fileOptions">
-                            <p:panelGrid columns="2">
-                                <p:column>
-                                    <p:fileUpload fileUploadListener="#{patentController.uploadPresentationFile}" 
-                                                  mode="advanced" dragDropSupport="false"
-                                                  sizeLimit="100000" multiple="false" label="#{msgs['choose.file']}"
-                                                  update=":#{p:component('fileDialog')},messages"
-                                                  process=":#{p:component('fileDialog')}" 
-                                                  rendered="#{patentController.temporaryPresentationFile == null}"
-                                                  showButtons="false" 
-                                                  allowTypes="/(\.|\/)(gif|jpeg|png|pdf)$/" />  
 
-                                    <p:growl id="messages" showDetail="true"/>
-                                </p:column>
-                                <p:column>
-                                    <h:outputLabel rendered="#{patentController.temporaryPresentationFile != null}" value="#{msgs['help.delete']}"/>
-                                </p:column>
-                            </p:panelGrid>
-                            <br/>
-
-                        </h:form>
-                        <center>
-                            <p:commandButton value="Download" ajax="false" 
-                                             icon="ui-icon-arrowthick-1-s" 
-                                             rendered="#{patentController.temporaryPresentationFile != null}"
-                                             actionListener="#{patentController.downloadFile(patentController.temporaryPresentationFile)}">  
-                                <p:fileDownload  value="#{patentController.download}" />  
-                            </p:commandButton>
-                            <p:commandButton value="#{msgs['delete.file']}" 
-                                             update=":#{p:component('fileDialog')}"
-                                             process=":#{p:component('fileDialog')}" 
-                                             action="#{patentController.deletePresentationFile()}" 
-                                             disabled="#{patentController.temporaryPresentationFile == null}"
-                                             onclick="if (!confirm('#{msgs['delete.file']}')) {
-                                                         return false;
-                                                     }"/>
-                            <p:commandButton value="#{msgs['close']}" immediate="true"
-                                             onclick="fileDownloadDialog.hide();"  />
-                        </center>
-                    </p:dialog>
-
-                    <p:dialog id="patentDialog" widgetVar="patentDownloadDialog" modal="true" closable="false"
-                              header="#{msgs['options.patent']}" resizable="false">
-                        <h:form>
-                            <p:panelGrid columns="2">
-                                <p:column>
-                                    <p:fileUpload fileUploadListener="#{patentController.uploadPatentInfo}" 
-                                                  mode="advanced" dragDropSupport="false" 
-                                                  update=":#{p:component('patentDialog')},messages"
-                                                  process=":#{p:component('patentDialog')}" 
-                                                  rendered="#{patentController.temporaryPatentInfo == null}"
-                                                  sizeLimit="5000000" showButtons="false" label="#{msgs['choose.file']}"
-                                                  allowTypes="/(\.|\/)(doc|docx|odt|pdf|txt)$/" />  
-
-                                    <p:growl id="messages" showDetail="true"/>
-                                </p:column>
-                                <p:column>
-                                    <h:outputLabel rendered="#{patentController.temporaryPatentInfo != null}" value="#{msgs['help.delete']}"/>
-                                </p:column>
-                            </p:panelGrid>
-                            <br/>
-
-                        </h:form>
-                        <center>
-                            <p:commandButton title="#{msgs['download.patent']}" ajax="false" 
-                                             icon="ui-icon-arrowthick-1-s" 
-                                             rendered="#{patentController.temporaryPatentInfo != null}"
-                                             actionListener="#{patentController.downloadFile(patentController.temporaryPatentInfo)}">  
-                                <p:fileDownload  value="#{patentController.download}" />  
-                            </p:commandButton>
-                            <p:commandButton value="#{msgs['delete.file']}"
-                                             update=":#{p:component('patentDialog')}"
-                                             process=":#{p:component('patentDialog')}" 
-                                             action="#{patentController.deletePatentInfo()}" 
-                                             disabled="#{patentController.temporaryPatentInfo == null}"
-                                             onclick="if (!confirm('#{msgs['delete.file']}')) {
-                                                         return false;
-                                                     }"/>
-                            <p:commandButton value="#{msgs['close']}" immediate="true"
-                                             onclick="patentDownloadDialog.hide();" />
-                        </center>
-                    </p:dialog>
 
                 </h:panelGrid>
 
@@ -334,6 +251,97 @@
                                    style="color:white"  class="btn btn-large btn-info" />
                 </h:panelGrid>
             </h:form>
+
+            <p:dialog id="fileDialog" widgetVar="fileDownloadDialog" modal="true" closable="false"
+                      header="#{msgs['options.file']}" resizable="false">
+                <h:form id="fileOptions" >
+                    <h:panelGrid columns="2">
+                        <h:column>
+                            <p:fileUpload fileUploadListener="#{patentController.uploadPresentationFile}" 
+                                          mode="advanced" dragDropSupport="false" auto="true"
+                                          sizeLimit="100000" multiple="false" label="#{msgs['choose.file']}"
+                                          update=":#{p:component('fileOptions')},messages"
+                                          process=":#{p:component('fileOptions')}" 
+                                          rendered="#{patentController.temporaryPresentationFile == null}"
+                                          showButtons="false" 
+                                          allowTypes="/(\.|\/)(gif|jpeg|png|pdf)$/" />  
+
+                            <p:growl id="messages" showDetail="true"/>
+                        </h:column>
+                        <h:column>
+                            <h:outputLabel rendered="#{patentController.temporaryPresentationFile != null}" 
+                                           value="#{msgs['help.delete']}"/>
+                        </h:column>
+                    </h:panelGrid>
+                    <br/>
+
+                    <center>
+                        <p:commandButton value="Download" ajax="false" 
+                                         icon="ui-icon-arrowthick-1-s" 
+                                         rendered="#{patentController.temporaryPresentationFile != null}"
+                                         actionListener="#{patentController.downloadFile(patentController.temporaryPresentationFile)}">  
+                            <p:fileDownload  value="#{patentController.download}" />  
+                        </p:commandButton>
+                        <p:commandButton value="#{msgs['delete.file']}" 
+                                         update=":#{p:component('fileOptions')}"
+                                         process=":#{p:component('fileOptions')}" 
+                                         action="#{patentController.deletePresentationFile()}" 
+                                         disabled="#{patentController.temporaryPresentationFile == null}"
+                                         onclick="if (!confirm('#{msgs['delete.file']}')) {
+                                                     return false;
+                                                 }"/>
+                        <p:commandButton value="#{msgs['close']}" immediate="true"
+                                         update=":#{p:component('fileOptions')}"
+                                         process=":#{p:component('fileOptions')}"
+                                         onclick="fileDownloadDialog.hide();"  />
+                    </center>
+                </h:form>
+            </p:dialog>
+
+            <p:dialog id="patentDialog" widgetVar="patentDownloadDialog" modal="true" closable="false"
+                      header="#{msgs['options.patent']}" resizable="false">
+                <h:form id="fileOptions2">
+                    <h:panelGrid columns="2">
+                        <h:column>
+                            <p:fileUpload fileUploadListener="#{patentController.uploadPatentInfo}" 
+                                          mode="advanced" dragDropSupport="false" auto="true"
+                                          update=":#{p:component('fileOptions2')},messages"
+                                          process=":#{p:component('fileOptions2')}" 
+                                          rendered="#{patentController.temporaryPatentInfo == null}"
+                                          sizeLimit="5000000" showButtons="false" label="#{msgs['choose.file']}"
+                                          allowTypes="/(\.|\/)(doc|docx|odt|pdf|txt)$/" />  
+
+                            <p:growl id="messages" showDetail="true"/>
+                        </h:column>
+                        <h:column>
+                            <h:outputLabel rendered="#{patentController.temporaryPatentInfo != null}" 
+                                           value="#{msgs['help.delete']}"/>
+                        </h:column>
+                    </h:panelGrid>
+                    <br/>
+
+                    <center>
+                        <p:commandButton title="#{msgs['download.patent']}" ajax="false" 
+                                         icon="ui-icon-arrowthick-1-s" 
+                                         rendered="#{patentController.temporaryPatentInfo != null}"
+                                         actionListener="#{patentController.downloadFile(patentController.temporaryPatentInfo)}">  
+                            <p:fileDownload  value="#{patentController.download}" />  
+                        </p:commandButton>
+                        <p:commandButton value="#{msgs['delete.file']}"
+                                         update=":#{p:component('fileOptions2')}"
+                                         process=":#{p:component('fileOptions2')}" 
+                                         action="#{patentController.deletePatentInfo()}" 
+                                         disabled="#{patentController.temporaryPatentInfo == null}"
+                                         onclick="if (!confirm('#{msgs['delete.file']}')) {
+                                                     return false;
+                                                 }"/>
+                        <p:commandButton value="#{msgs['close']}" immediate="true"
+                                         update=":#{p:component('fileOptions2')}"
+                                         process=":#{p:component('fileOptions2')}"
+                                         onclick="patentDownloadDialog.hide();" />
+                    </center>
+                </h:form>
+            </p:dialog>
         </ui:define>
     </ui:composition>
 </html>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+pro<?xml version="1.0" encoding="UTF-8"?>
 <!-- This file is not required if you don't need any extra configuration. -->
 <faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
               xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -13,14 +13,14 @@
             <from-outcome>editProject</from-outcome>
             <to-view-id>/pages/project/editProject.xhtml</to-view-id>
         </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/pages/project/*</from-view-id>
         <navigation-case>
             <from-outcome>projectHome</from-outcome>
             <to-view-id>/pages/project/projectHome.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <from-view-id>/pages/project/*</from-view-id>
         <navigation-case>
             <from-outcome>about</from-outcome>
             <to-view-id>/pages/project/about.xhtml</to-view-id>
