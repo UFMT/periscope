@@ -86,6 +86,7 @@ public class InventorRepository {
         }
 
         DBObject matchDate = new BasicDBObject();
+        System.out.println(filtro.getSelecionaData());
         if (filtro.getSelecionaData() == 1) {
             matchDate.put("$match", new BasicDBObject("publicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim())));
         } else {
@@ -118,6 +119,7 @@ public class InventorRepository {
         parameters = parametros.toArray(parameters);
 
         AggregationOutput output = ds.getCollection(Patent.class).aggregate(matchProj, parameters);
+        System.out.println("query "+output.getCommand());
 
         BasicDBList outputResult = (BasicDBList) output.getCommandResult().get(
                 "result");
@@ -130,6 +132,7 @@ public class InventorRepository {
             Integer count = (Integer) aux.get("applicationPerInventor");
 
             pairs.add(new Pair(inventor, count));
+            System.out.println(inventor+" "+count);
         }
         return pairs;
     }

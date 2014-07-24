@@ -30,12 +30,12 @@ public abstract class GenericController {
 
     @PostConstruct
     public void init() {
-        setMinDate(getPatentRepository().getMinDate(getCurrentProject(), 0));
-        setMaxDate(getPatentRepository().getMaxDate(getCurrentProject(), 0));
+        setMinDate(getPatentRepository().getMinDate(getCurrentProject(), 1));
+        setMaxDate(getPatentRepository().getMaxDate(getCurrentProject(), 1));
         getFiltro().setComplete(false);
-        getFiltro().setSelecionaData(0);
-        getFiltro().setInicio(getPatentRepository().getMinDate(getCurrentProject(), 0));
-        getFiltro().setFim(getPatentRepository().getMaxDate(getCurrentProject(), 0));
+        getFiltro().setSelecionaData(1);
+        getFiltro().setInicio(getMinDate());
+        getFiltro().setFim(getMaxDate());
 
         refreshChart();
     }
@@ -108,10 +108,10 @@ public abstract class GenericController {
 
     public void selectListener(ValueChangeEvent event) {
         int sel = getFiltro().getSelecionaData();
+        int newSel=  (Integer)event.getNewValue();
         System.out.println("trocando data:" + event.getNewValue() + " sel:" + sel);
-        getFiltro().setInicio(getPatentRepository().getMinDate(getCurrentProject(), sel));
-        getFiltro().setFim(getPatentRepository().getMaxDate(getCurrentProject(), sel));
+        getFiltro().setInicio(getPatentRepository().getMinDate(getCurrentProject(), newSel));
+        getFiltro().setFim(getPatentRepository().getMaxDate(getCurrentProject(), newSel));
 
     }
-
 }

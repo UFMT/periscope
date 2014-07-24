@@ -69,6 +69,7 @@ public class InventorHarmonizationController implements Serializable {
     private String acronymDefault = "BR";
     private Inventor selectedRadio;
     private Integer searchType;
+    @Inject RuleController ruleController;
 
     @PostConstruct
     public void init() {
@@ -166,6 +167,9 @@ public class InventorHarmonizationController implements Serializable {
         }
         rule.setSubstitutions(new HashSet<String>(substitutions));
         ruleRepository.save(rule);
+
+        ruleController.apply(rule.getId().toString());
+        selectedInventors.clear();
         Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
         flash.put("success", "Regra criada com sucesso");
         return "listRule";

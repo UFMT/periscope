@@ -28,12 +28,12 @@
 
         <h:outputScript library="js" name="locales.js"></h:outputScript>
 
-        <h:panelGrid columns="2" cellpadding="5">  
+        <h:panelGrid columns="2" cellpadding="5" id="filtroId">  
             <h:outputText value="#{msgs['period.interest']}:"/> 
             <p:selectOneMenu value="#{controller.filtro.selecionaData}" id="selDate"  valueChangeListener="#{controller.selectListener}">
                 <f:selectItem itemLabel="#{msgs['publication.date']}" itemValue="1" /> 
                 <f:selectItem itemLabel="#{msgs['application.date']}" itemValue="2" />  
-                <p:ajax event="change" update="tudo"/>
+                <p:ajax event="change" update=":#{p:component('filtroId')}"/>
             </p:selectOneMenu>
 
             <h:outputText value="#{msgs['from']}:" />

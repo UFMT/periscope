@@ -73,7 +73,7 @@
             </h:panelGrid>
             <p:spacer height="50"/>
             <center>
-                <p:commandButton value="#{msgs['save']}" action="#{inventorHarmonizationController.createRule()}"/>
+                <p:commandButton value="#{msgs['save.apply']}" action="#{inventorHarmonizationController.createRule()}" oncomplete="invSugestionsDialog.hide()"/>
 
                 <p:commandButton value="#{msgs['cancel']}" immediate="true"
                                  oncomplete="invSugestionsDialog.hide()" />

@@ -179,9 +179,7 @@ public class ApplicantHarmonizationController implements Serializable {
         }
 
         rule.setSubstitutions(new HashSet<String>(substitutions));
-        System.out.println("salvando");
         ruleRepository.save(rule);
-        System.out.println("salvo:"+rule.getId());
 
         ruleController.apply(rule.getId().toString());
         selectedApplicants.clear();
