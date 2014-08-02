@@ -1,5 +1,6 @@
 package br.ufmt.periscope.indexer;
 
+import br.ufmt.periscope.indexer.resources.analysis.CommonDescriptorsSet;
 import br.ufmt.periscope.indexer.resources.analysis.PatenteeAnalyzer;
 import br.ufmt.periscope.model.Project;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
@@ -29,11 +31,14 @@ public class LuceneIndexerResources {
     Datastore ds;
     
     private @Inject Project currentProject; 
+    
+    @Produces
+    public Version version = Version.LUCENE_47;
  
     @Produces
     public IndexReader getReader(Directory dir) {
         try {
-            return IndexReader.open(dir);
+            return DirectoryReader.open(dir);
         } catch (CorruptIndexException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -59,12 +64,20 @@ public class LuceneIndexerResources {
         return iw;
         
     }
-
-    @Produces
-    private Analyzer getAnalyzer() {
-        //return new StandardAnalyzer(Version.LUCENE_47);
-        return new PatenteeAnalyzer(Version.LUCENE_47);
-    }
+    
+//    @Produces
+//    private CommonDescriptorsSet getCommonDescriptorSet(){
+//        System.out.println("Produzindo CommonDescriptorSet");
+//        return new CommonDescriptorsSet("");
+//    }
+    
+//
+//    @Produces
+//    private Analyzer getAnalyzer() {
+////        //return new StandardAnalyzer(Version.LUCENE_47);
+//        System.out.println("Produzindo Analyzer");
+//        return new PatenteeAnalyzer(Version.LUCENE_47);
+//    }
 
     @Produces
     private IndexWriterConfig getIndexConfig(Analyzer analyzer) {

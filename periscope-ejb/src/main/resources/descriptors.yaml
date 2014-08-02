@@ -7699,11 +7699,14 @@
 - count: 0
   expansion:
     -
-      - south africa
+      - south 
+      - africa
     -
-      - south african
+      - south
+      - african
     -
-      - south america
+      - south 
+      - america
     -
       - south
       - american

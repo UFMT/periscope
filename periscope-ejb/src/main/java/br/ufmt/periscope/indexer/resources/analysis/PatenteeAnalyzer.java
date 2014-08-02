@@ -1,6 +1,10 @@
 package br.ufmt.periscope.indexer.resources.analysis;
 
 import java.io.Reader;
+import javax.annotation.PostConstruct;
+import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -21,13 +25,16 @@ import org.apache.lucene.util.Version;
  *
  * @author mattyws
  */
+@Named
 public class PatenteeAnalyzer extends Analyzer {
 
+    private @Inject
+    CommonDescriptorsSet descriptorSet;
     public Version matchVersion;
-    String[] stopWords = {""};
-
-    public PatenteeAnalyzer(Version matchVersion) {
-        this.matchVersion = matchVersion;
+    
+    @Inject
+    public PatenteeAnalyzer(Version version) {
+        this.matchVersion = version;
     }
 
     @Override
@@ -49,7 +56,7 @@ public class PatenteeAnalyzer extends Analyzer {
                                         // Pass the chars to their ASCII aquivalent
                                         new ASCIIFoldingFilter(
                                                 // Normalize the string
-                                                new LowerCaseFilter(matchVersion, source)), StandardAnalyzer.STOP_WORDS_SET))));
+                                                new LowerCaseFilter(matchVersion, source)), StandardAnalyzer.STOP_WORDS_SET), descriptorSet)));
 
         return new TokenStreamComponents(source, sink);
     }

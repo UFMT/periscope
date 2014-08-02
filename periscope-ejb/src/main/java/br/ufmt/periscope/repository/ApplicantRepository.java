@@ -7,7 +7,6 @@ import br.ufmt.periscope.model.Country;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.model.State;
-import br.ufmt.periscope.report.Pair;
 import br.ufmt.periscope.util.Filters;
 import com.github.jmkgreen.morphia.Datastore;
 import com.github.jmkgreen.morphia.mapping.Mapper;
@@ -31,8 +30,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.apache.lucene.analysis.Analyzer;
@@ -51,7 +48,6 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.util.Version;
 
@@ -165,7 +161,6 @@ public class ApplicantRepository {
     }
 
     public Set<String> getApplicantSugestions(Project project, int top, String... names) {
-
         Set<String> results = new HashSet<String>();
         try {
 //            StringBuilder queryBuilder = new StringBuilder();

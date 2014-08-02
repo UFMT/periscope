@@ -62,7 +62,6 @@ public class PatentIndexer {
     }
 
     public void indexPatent(Patent p) {
-
         try {
             for (Applicant a : p.getApplicants()) {
                 Document doc = new Document();

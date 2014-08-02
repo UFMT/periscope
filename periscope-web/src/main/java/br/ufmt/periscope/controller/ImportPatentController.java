@@ -54,6 +54,7 @@ public class ImportPatentController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, msg);
         } else {
             try {
+                //long tempoInicio = System.currentTimeMillis();
                 boolean imported = true;
                 List<String> errors = new ArrayList<String>();
                 for (UploadedFile file : uploadAttachment) {

@@ -7,8 +7,6 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
 
-// CondenseFilter code was not analyzed yet, i take from a stack overflow answer
-//Link : http://stackoverflow.com/questions/7384016/whats-wrong-with-this-lucene-tokenfilter
 /**
  * CondenseFilter will put all tokens together and will create a acronym if :
  * The token has a lenght more then 1; The acronym has a lenght more then 2
