@@ -56,6 +56,11 @@ public class SeedBean {
         insertAlgorithFromFile("lcs", "js/longestCommonSubstring.js");
         insertAlgorithFromFile("levenshtein", "js/levenshtein.js");
         insertAlgorithFromFile("LiquidMetal", "js/liquidmetal.js");
+        try {
+            writer.close();
+        } catch (IOException ex) {
+            Logger.getLogger(SeedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void insertAlgorithFromFile(String name, String path) {

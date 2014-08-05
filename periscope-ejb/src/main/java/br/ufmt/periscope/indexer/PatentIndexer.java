@@ -1,5 +1,6 @@
 package br.ufmt.periscope.indexer;
 
+import br.ufmt.periscope.indexer.resources.analysis.PatenteeAnalyzer;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.logging.Logger;
@@ -32,7 +33,7 @@ public class PatentIndexer {
     private @Inject
     IndexReader reader;
     private @Inject
-    Analyzer analyzer;
+    PatenteeAnalyzer analyzer;
     private @Inject
     Logger log;
 
