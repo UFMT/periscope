@@ -26,7 +26,10 @@ import com.github.jmkgreen.morphia.Datastore;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import javax.faces.bean.RequestScoped;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -45,10 +48,13 @@ public class SeedBean {
     Logger log;
     private @Inject
     IndexWriter writer;
+    
+    public static final String PERISCOPE_DIR = "/opt/periscope";
 
     @PostConstruct
     public void atStartup() {
         log.info("Inicializando seeder");
+        createLuceneDirectory();
         initUsers();
         initCountries();
         initApplicantTypes();
@@ -56,11 +62,7 @@ public class SeedBean {
         insertAlgorithFromFile("lcs", "js/longestCommonSubstring.js");
         insertAlgorithFromFile("levenshtein", "js/levenshtein.js");
         insertAlgorithFromFile("LiquidMetal", "js/liquidmetal.js");
-        try {
-            writer.close();
-        } catch (IOException ex) {
-            Logger.getLogger(SeedBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }
 
     private void insertAlgorithFromFile(String name, String path) {
@@ -149,6 +151,18 @@ public class SeedBean {
                 }
             }
             log.info("Cadastrado " + descriptors.size() + " descritores comuns.");
+        }
+        try {
+            writer.close();
+        } catch (IOException ex) {
+            Logger.getLogger(SeedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void createLuceneDirectory() {
+        File f = new File(PERISCOPE_DIR);
+        if(!f.exists()) {
+            f.mkdir();
         }
     }
 }

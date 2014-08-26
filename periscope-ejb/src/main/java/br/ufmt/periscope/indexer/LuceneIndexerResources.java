@@ -1,5 +1,6 @@
 package br.ufmt.periscope.indexer;
 
+import br.ufmt.periscope.bean.SeedBean;
 import br.ufmt.periscope.indexer.resources.analysis.CommonDescriptorsSet;
 import br.ufmt.periscope.indexer.resources.analysis.PatenteeAnalyzer;
 import br.ufmt.periscope.model.Project;
@@ -16,7 +17,9 @@ import org.apache.lucene.store.LockObtainFailedException;
 import org.apache.lucene.store.SimpleFSLockFactory;
 import org.apache.lucene.util.Version;
 import com.github.jmkgreen.morphia.Datastore;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.lucene.analysis.Analyzer;
@@ -29,12 +32,13 @@ public class LuceneIndexerResources {
 
     private @Inject
     Datastore ds;
-    
-    private @Inject Project currentProject; 
-    
+
+    private @Inject
+    Project currentProject;
+
     @Produces
     public Version version = Version.LUCENE_47;
- 
+
     @Produces
     public IndexReader getReader(Directory dir) {
         try {
@@ -62,15 +66,14 @@ public class LuceneIndexerResources {
             Logger.getLogger(LuceneIndexerResources.class.getName()).log(Level.SEVERE, null, ex);
         }
         return iw;
-        
+
     }
-    
+
 //    @Produces
 //    private CommonDescriptorsSet getCommonDescriptorSet(){
 //        System.out.println("Produzindo CommonDescriptorSet");
 //        return new CommonDescriptorsSet("");
 //    }
-    
 //
 //    @Produces
 //    private Analyzer getAnalyzer() {
@@ -78,7 +81,6 @@ public class LuceneIndexerResources {
 //        System.out.println("Produzindo Analyzer");
 //        return new PatenteeAnalyzer(Version.LUCENE_47);
 //    }
-
     @Produces
     private IndexWriterConfig getIndexConfig(Analyzer analyzer) {
         //return new IndexWriterConfig(Version.LUCENE_47, analyzer);
@@ -106,13 +108,13 @@ public class LuceneIndexerResources {
 //        return dir;
 //
 //    }
-
     @Produces
     public Directory getLocalLuceneDirectory() {
         Directory dir = null;
+        System.out.println(SeedBean.PERISCOPE_DIR);
+        System.out.println("Titulo do projeto: " + currentProject.getTitle());
         try {
-            System.out.println("Titulo do projeto: "+currentProject.getTitle());
-            dir = FSDirectory.open(new File(System.getProperty("user.home")+"/periscope"), new SimpleFSLockFactory());
+            dir = FSDirectory.open(new File(SeedBean.PERISCOPE_DIR), new SimpleFSLockFactory());
         } catch (IOException ex) {
             Logger.getLogger(LuceneIndexerResources.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -121,22 +123,26 @@ public class LuceneIndexerResources {
     }
 
     public void disposesWriter(@Disposes IndexWriter writer) {
-        
+
         try {
             writer.deleteUnusedFiles();
             writer.commit();
             writer.close();
+
         } catch (IOException ex) {
-            Logger.getLogger(LuceneIndexerResources.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LuceneIndexerResources.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     public void disposesReader(@Disposes IndexReader reader) {
         try {
             reader.close();
+
         } catch (IOException ex) {
-            Logger.getLogger(LuceneIndexerResources.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LuceneIndexerResources.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -148,7 +154,6 @@ public class LuceneIndexerResources {
 //            e.printStackTrace();
 //        }
 //    }
-
 //	public void disposesSearcher(@Disposes IndexSearcher searcher){
 //		try {
 //			System.out.println("Disposing searcher");
