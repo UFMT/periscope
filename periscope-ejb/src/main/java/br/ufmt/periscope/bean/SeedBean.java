@@ -48,13 +48,27 @@ public class SeedBean {
     Logger log;
     private @Inject
     IndexWriter writer;
-    
-    public static final String PERISCOPE_DIR = "/opt/periscope";
+    public static String PERISCOPE_DIR;
+
+    static {
+        PERISCOPE_DIR = System.getenv("PERISCOPE_DIR");
+        if (PERISCOPE_DIR == null) {
+            if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+                PERISCOPE_DIR = "";
+            } else {
+                PERISCOPE_DIR = "/opt/periscope";
+            }
+            File dir = new File(PERISCOPE_DIR);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+        }
+
+    }
 
     @PostConstruct
     public void atStartup() {
         log.info("Inicializando seeder");
-        createLuceneDirectory();
         initUsers();
         initCountries();
         initApplicantTypes();
@@ -62,7 +76,7 @@ public class SeedBean {
         insertAlgorithFromFile("lcs", "js/longestCommonSubstring.js");
         insertAlgorithFromFile("levenshtein", "js/levenshtein.js");
         insertAlgorithFromFile("LiquidMetal", "js/liquidmetal.js");
-        
+
     }
 
     private void insertAlgorithFromFile(String name, String path) {
@@ -91,7 +105,7 @@ public class SeedBean {
             List<ApplicantType> applicantTypes = Fixjure
                     .listOf(ApplicantType.class)
                     .from(YamlSource
-                            .newYamlResource("applicantType-inicial.yaml"))
+                    .newYamlResource("applicantType-inicial.yaml"))
                     .create();
             Iterator<ApplicantType> it = applicantTypes.iterator();
             while (it.hasNext()) {
@@ -108,7 +122,7 @@ public class SeedBean {
             List<Country> countries = Fixjure
                     .listOf(Country.class)
                     .from(YamlSource
-                            .newYamlResource("country-inicial-data.yaml"))
+                    .newYamlResource("country-inicial-data.yaml"))
                     .create();
             Iterator<Country> it = countries.iterator();
             while (it.hasNext()) {
@@ -150,19 +164,13 @@ public class SeedBean {
                     Logger.getLogger(SeedBean.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+
             log.info("Cadastrado " + descriptors.size() + " descritores comuns.");
         }
         try {
             writer.close();
         } catch (IOException ex) {
             Logger.getLogger(SeedBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private void createLuceneDirectory() {
-        File f = new File(PERISCOPE_DIR);
-        if(!f.exists()) {
-            f.mkdir();
         }
     }
 }
