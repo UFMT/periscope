@@ -12,9 +12,7 @@
             <h3>#{msgs['create.patent']}</h3>
             <h:form>
 
-                <p:tabView id="tabView" dynamic="true">  
-
-                    <p:tab id="tab1" title="#{msgs['header']}">
+                <p:fieldset  toggleable="true" toggleSpeed="500" legend="#{msgs['header']}">
                         <h:panelGrid border="0" columns="2"  >
                             <h:outputLabel value="#{msgs['language']}: " style="font-weight: bold"/>
                             <p:inputText value="#{patentController.selectedPatent.language}"/>
@@ -34,9 +32,9 @@
                             <p:inputText value="#{patentController.selectedPatent.mainClassification.value}"/>
 
                         </h:panelGrid>
-                    </p:tab>
-
-                    <p:tab id="tab2" title="#{msgs['priorities']}">
+                </p:fieldset>
+                <p:fieldset  toggleable="true" toggleSpeed="500" legend="#{msgs['priorities']}">
+                
                         <h:panelGrid border="0" columns="4"  >
                             <p:dataTable id="prioridades" var="prioridade" style="font-size:10px"
                                          emptyMessage="#{msgs['no.priorities']}"
@@ -91,11 +89,10 @@
                             </center>
 
                         </p:dialog>
-                    </p:tab>
+                        </p:fieldset>
+                <p:fieldset  toggleable="true" toggleSpeed="500" legend="#{msgs['applicants']}">
 
-                    <p:tab id="tab3" title="#{msgs['applicants']}">
-
-                        <h:panelGrid id="applicants" columns="3" columnClasses="alignTop,alignTop,alignTop">
+                        <h:panelGrid id="applicants" columns="3" border="0" columnClasses="alignTop,alignTop,alignTop">
                             <h:column >
                                 <p:outputLabel value="#{msgs['patent.applicants']}"/>
                                 <p:dataTable id="currentApplicants" var="applicant" style="font-size:10px"
@@ -125,11 +122,11 @@
                             <h:column>
                                 <p:outputLabel value="#{msgs['applicants.available']}"/>
                                 <p:dataTable id="addApplicants" var="ap" style="font-size:10px"
-                                             emptyMessage="#{msgs['no.applicant']}" lazy="true"
+                                             emptyMessage="#{msgs['no.applicant']}" lazy="true" filterEvent="enter"
                                              value="#{patentController.applicants}" paginator="true"
                                              paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
                                              >
-                                    <p:column headerText="#{msgs['name']}" sortBy="#{ap.name}" >														
+                                    <p:column headerText="#{msgs['name']}" sortBy="#{ap.name}" filterBy="#{ap.name}">														
                                         #{ap.name}
                                     </p:column>
                                     <p:column headerText="#{msgs['country']}" sortBy="#{ap.country.acronym}" >														
@@ -146,7 +143,7 @@
                         </h:panelGrid>
                         <br/>
 
-                        <p:commandButton value="#{msgs['new']}" action="#{patentController.doApplicant()}" 
+                        <p:commandButton value="#{msgs['add.applicant']}" action="#{patentController.doApplicant()}" 
                                          oncomplete="applicantAddDialog.show();"/>
 
                         <p:dialog id="addNewApplicant" widgetVar="applicantAddDialog" modal="true" closable="false"
@@ -172,10 +169,9 @@
                             </center>
 
                         </p:dialog>
-                    </p:tab>
-
-                    <p:tab id="tab4" title="#{msgs['inventors']}">
-
+                        </p:fieldset>
+                <p:fieldset  toggleable="true" toggleSpeed="500" legend="#{msgs['inventors']}">
+                        
                         <h:panelGrid id="inventors" border="0" columns="3"  columnClasses="alignTop,alignTop,alignTop">
                             <h:column>
                                 <p:outputLabel value="#{msgs['patent.inventors']}" />
@@ -183,7 +179,7 @@
                                              emptyMessage="#{msgs['no.inventor']}"
                                              value="#{patentController.selectedPatent.inventors}" 
                                              paginator="true" paginatorAlwaysVisible="false" 
-                                             paginatorPosition="bottom" rows="10"
+                                             paginatorPosition="bottom" rows="10" 
                                              >
                                     <p:column headerText="#{msgs['name']}" sortBy="#{inventor.name}">														
                                         #{inventor.name}
@@ -207,11 +203,11 @@
                             <h:column>
                                 <p:outputLabel value="#{msgs['inventors.available']}"/>
                                 <p:dataTable id="addInventors" var="inv" style="font-size:10px"
-                                             emptyMessage="#{msgs['no.inventor']}" lazy="true"
+                                             emptyMessage="#{msgs['no.inventor']}" lazy="true" filterEvent="enter"
                                              value="#{patentController.inventors}" paginator="true"
                                              paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
                                              >
-                                    <p:column headerText="#{msgs['name']}" sortBy="#{inv.name}">														
+                                    <p:column headerText="#{msgs['name']}" sortBy="#{inv.name}" filterBy="#{inv.name}">														
                                         #{inv.name}
                                     </p:column>
                                     <p:column headerText="#{msgs['country']}" sortBy="#{inv.country.acronym}" >
@@ -228,7 +224,7 @@
                         </h:panelGrid>
                         <br/>
 
-                        <p:commandButton value="#{msgs['new']}" action="#{patentController.doInventor()}"
+                        <p:commandButton value="#{msgs['add.inventor']}" action="#{patentController.doInventor()}"
                                          oncomplete="inventorAddDialog.show();"/>
 
                         <p:dialog id="addInventor" widgetVar="inventorAddDialog" modal="true" closable="false"
@@ -255,8 +251,7 @@
                             </center>
 
                         </p:dialog>
-                    </p:tab>
-                </p:tabView>
+                        </p:fieldset>
 
                 <h:panelGrid columns="2" cellpadding="10">
                     <p:commandButton value="#{msgs['options.file']}"
