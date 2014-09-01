@@ -30,7 +30,7 @@ public class ReportController extends GenericController {
 
         setPairs(new ArrayList<Pair>());
         for (Object key : series.getData().keySet()) {
-            Number value = series.getData().get(key);
+            Integer value = (Integer)series.getData().get(key);
             getPairs().add(new Pair(key, value));
         }
 
