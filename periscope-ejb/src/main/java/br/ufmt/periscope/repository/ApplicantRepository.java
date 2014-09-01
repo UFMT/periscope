@@ -176,7 +176,6 @@ public class ApplicantRepository {
 //                //queryBuilder.append("NOT \""+name+"\" ");	
 //                queryBuilder.append("\"" + name + "\"~10 ");
 //            }
-
             Query queryProject = new QueryParser(Version.LUCENE_47, "project", analyzer)
                     .parse(project.getId().toString());
             queryProject.setBoost(0.1f);
@@ -197,7 +196,6 @@ public class ApplicantRepository {
                 name = name.trim();
                 stream.end();
                 stream.close();
-
                 TopScoreDocCollector collector = TopScoreDocCollector.create(1000, true);
                 BooleanQuery bq = new BooleanQuery();
                 System.out.println(name);
@@ -219,7 +217,6 @@ public class ApplicantRepository {
                                 Occur.MUST);
                     }
                 }
-
                 bq.add(queryProject, Occur.MUST);
 //                System.out.println(bq);
 
@@ -252,6 +249,7 @@ public class ApplicantRepository {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        System.out.println("saiu");
         return results;
 
     }
@@ -277,7 +275,7 @@ public class ApplicantRepository {
                 String column = entry.getKey();
                 String value = entry.getValue();
                 DBObject regex;
-                if (searchType.equals(1)) {
+                if (searchType != null && searchType.equals(1)) {
                     regex = new BasicDBObject("$regex", "^" + value).append("$options", "i");
                 } else {
                     regex = new BasicDBObject("$regex", value).append("$options", "i");

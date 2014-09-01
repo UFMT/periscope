@@ -47,7 +47,6 @@ public class LazyInventorDataModel extends LazyDataModel<Inventor> {
             datasource = inventorRepository.load(first, pageSize, sortField, sortOrder.ordinal(), filters);
 
         } else {
-            
             datasource = inventorRepository.load(first, pageSize, sortField, sortOrder.ordinal(), filters, this.selectedInventors);
 
         }
