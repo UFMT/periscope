@@ -36,7 +36,8 @@ public class MainApplicantReport {
 		for(DBObject obj : it){
 			String name = (String) obj.get("_id");
 			Double count = (Double) obj.get("value");
-			series.set(name,count);					
+//                        System.out.println("COut: "+count);
+			series.set(name,count.intValue());					
 		}				
 		
 		return series;
