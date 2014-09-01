@@ -5,8 +5,4 @@
 - name: private.research
 - name: public.company
 - name: public.university
-- name: foreign.university
-- name: local.fostering
-- name: federal.fostering
-- name: private.fostering 
 ---

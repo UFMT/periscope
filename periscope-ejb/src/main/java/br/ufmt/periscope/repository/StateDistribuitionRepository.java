@@ -68,7 +68,7 @@ public class StateDistribuitionRepository {
         List<Pair> pairs = new ArrayList<Pair>();
         for (Object object : outputResult) {
             DBObject aux = (DBObject) object;
-            if (aux.get("_id") != null && aux.get("_id") != "") {
+            if (aux.get("_id") != null) {
                 String state = aux.get("_id").toString();
                 Integer count = (Integer) aux.get("count");
 

@@ -57,7 +57,7 @@
                 <br/>
                 <h:panelGrid columns="2"  style="margin-top: 20px;margin-bottom: 20px">
                     <p:outputLabel value="#{msgs['applicants']}:"/>  
-                    <p:selectOneMenu id="cmbNature" value="#{mainIPCController.filtro.applicantName}" style="width: 500px">
+                    <p:selectOneMenu id="cmbNature" value="#{mainIPCController.filtro.applicantName}">
                         <f:selectItem itemLabel="#{msgs.none}" itemValue=""/>
                         <f:selectItems value="#{applicantRepository.getApplicants(currentProject)}" var="t" itemValue="#{t.name}" itemLabel="#{t.name}" />	
                         

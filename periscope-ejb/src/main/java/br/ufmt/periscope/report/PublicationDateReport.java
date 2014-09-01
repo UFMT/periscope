@@ -18,7 +18,7 @@ public class PublicationDateReport {
 	private @Inject	PublicationDateRepository repo;
 
 	public ChartSeries publicationDateSeries(Project currentProject, Filters filtro) {
-		ChartSeries series = new ChartSeries("Publicações por ano");
+		ChartSeries series = new ChartSeries("Depositos por ano");
                 
 		List<Pair> i = repo.getPublicationsByDate(currentProject, filtro);
                 
