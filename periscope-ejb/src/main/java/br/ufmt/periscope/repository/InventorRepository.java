@@ -86,7 +86,7 @@ public class InventorRepository {
         }
 
         DBObject matchDate = new BasicDBObject();
-        System.out.println(filtro.getSelecionaData());
+//        System.out.println(filtro.getSelecionaData());
         if (filtro.getSelecionaData() == 1) {
             matchDate.put("$match", new BasicDBObject("publicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim())));
         } else {
@@ -111,7 +111,7 @@ public class InventorRepository {
                 "applicationPerInventor", -1));
         parametros.add(sort);
 
-        System.out.println(limit);
+//        System.out.println(limit);
         DBObject pipeLimit = new BasicDBObject("$limit", limit);
         parametros.add(pipeLimit);
 
@@ -119,7 +119,7 @@ public class InventorRepository {
         parameters = parametros.toArray(parameters);
 
         AggregationOutput output = ds.getCollection(Patent.class).aggregate(matchProj, parameters);
-        System.out.println("query " + output.getCommand());
+//        System.out.println("query " + output.getCommand());
 
         BasicDBList outputResult = (BasicDBList) output.getCommandResult().get(
                 "result");
@@ -132,7 +132,7 @@ public class InventorRepository {
             Integer count = (Integer) aux.get("applicationPerInventor");
 
             pairs.add(new Pair(inventor, count));
-            System.out.println(inventor + " " + count);
+//            System.out.println(inventor + " " + count);
         }
         return pairs;
     }
@@ -183,7 +183,7 @@ public class InventorRepository {
         DBObject parameters[] = new DBObject[parametros.size()];
         parameters = parametros.toArray(parameters);
         AggregationOutput output = ds.getCollection(Patent.class).aggregate(matchProject, parameters);
-        System.out.println(output.getCommand());
+//        System.out.println(output.getCommand());
         BasicDBList outputList = (BasicDBList) output.getCommandResult().get("result");
         List<String> lista = new ArrayList<String>();
         for (Object inventor : outputList) {
@@ -236,14 +236,14 @@ public class InventorRepository {
 
                 TopScoreDocCollector collector = TopScoreDocCollector.create(1000, true);
                 BooleanQuery bq = new BooleanQuery();
-                System.out.println(name);
+//                System.out.println(name);
                 // Criando a query, dar o name.split é para saber a existência do acrônimo
                 String[] tokens = name.split(" ");
                 // Se for maior que 1, existe um acrônimo
                 if (tokens.length > 1) {
-                    System.out.println(tokens[0]);
+//                    System.out.println(tokens[0]);
                     bq.add(new PrefixQuery(new Term("inventor", tokens[0])), BooleanClause.Occur.MUST);
-                    System.out.println(tokens[1]);
+//                    System.out.println(tokens[1]);
                     bq.add(new FuzzyQuery(new Term("inventor", tokens[1]), 1), BooleanClause.Occur.MUST);
                     bq.add(new LengthQuery("inventor", name), BooleanClause.Occur.MUST_NOT);
                 } else {
@@ -385,7 +385,7 @@ public class InventorRepository {
         }
 
         AggregationOutput output = ds.getCollection(Patent.class).aggregate(match, parameters);
-        System.out.println(output.getCommand().toString());
+//        System.out.println(output.getCommand().toString());
         BasicDBList outputList = (BasicDBList) output.getCommandResult().get("result");
 
 //        this.setCount(output.);
@@ -430,7 +430,7 @@ public class InventorRepository {
 
     public boolean exists(Inventor inventor) {
 
-        System.out.println("entrou aqui");
+//        System.out.println("entrou aqui");
         ArrayList<DBObject> parametros = new ArrayList<DBObject>();
 
         DBObject matchProj = new BasicDBObject();
@@ -454,7 +454,7 @@ public class InventorRepository {
         DBObject[] parameters = new DBObject[parametros.size()];
         parameters = parametros.toArray(parameters);
 
-        System.out.println("foi antes");
+//        System.out.println("foi antes");
         AggregationOutput output = ds.getCollection(Patent.class).aggregate(matchP, parameters);
 
         BasicDBList outputList = (BasicDBList) output.getCommandResult().get("result");

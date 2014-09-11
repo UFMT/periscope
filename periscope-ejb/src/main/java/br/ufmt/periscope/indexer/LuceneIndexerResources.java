@@ -111,8 +111,8 @@ public class LuceneIndexerResources {
     @Produces
     public Directory getLocalLuceneDirectory() {
         Directory dir = null;
-        System.out.println(SeedBean.PERISCOPE_DIR);
-        System.out.println("Titulo do projeto: " + currentProject.getTitle());
+//        System.out.println(SeedBean.PERISCOPE_DIR);
+//        System.out.println("Titulo do projeto: " + currentProject.getTitle());
         try {
             dir = FSDirectory.open(new File(SeedBean.PERISCOPE_DIR), new SimpleFSLockFactory());
         } catch (IOException ex) {

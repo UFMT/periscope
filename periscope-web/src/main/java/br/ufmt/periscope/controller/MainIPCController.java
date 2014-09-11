@@ -43,7 +43,7 @@ public class MainIPCController extends GenericController {
     }
 
     public void update() {
-        System.out.println(getFiltro().getApplicantName());
+//        System.out.println(getFiltro().getApplicantName());
         if (!klass) {
             // classe nao esta selecionada
             // buscar secao

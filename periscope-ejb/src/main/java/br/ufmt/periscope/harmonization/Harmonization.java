@@ -35,11 +35,11 @@ public class Harmonization {
         }
         switch (rule.getType()) {
             case APPLICANT:
-                System.out.println("applicant");
+//                System.out.println("applicant");
                 applyApplicantRule(rule);
                 break;
             case INVENTOR:
-                System.out.println("inventor");
+//                System.out.println("inventor");
                 applyInventorRule(rule);
                 break;
             default:

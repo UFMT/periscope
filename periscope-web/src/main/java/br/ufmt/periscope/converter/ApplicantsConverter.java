@@ -21,9 +21,9 @@ public class ApplicantsConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String name) {
         Applicant applicant;
-        System.out.println("dentro:"+name);
+//        System.out.println("dentro:"+name);
         applicant = applicantRepository.getApplicantByName(name);
-        System.out.println("dentro2:"+applicant.getName());
+//        System.out.println("dentro2:"+applicant.getName());
         return applicant;
 
     }

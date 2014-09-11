@@ -72,7 +72,7 @@ public class ApplicationDateRepository {
         AggregationOutput output = ds.getCollection(Patent.class).aggregate(
                 matchProj, parameters);
 
-        System.out.println("APLICACAO:"+output.getCommand().toString());
+//        System.out.println("APLICACAO:"+output.getCommand().toString());
 
         BasicDBList outputResult = (BasicDBList) output.getCommandResult().get("result");
 

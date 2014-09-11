@@ -83,10 +83,10 @@ public class ApplicantRepository {
             if (itList.hasNext()) {
                 ret = (Applicant) mapper.fromDBObject(Applicant.class, (DBObject) itList.next(), ec);
             }
-            System.out.println("fim");
+//            System.out.println("fim");
             return ret;
         }
-        System.out.println("NULO");
+//        System.out.println("NULO");
         return null;
 
     }
@@ -137,7 +137,7 @@ public class ApplicantRepository {
         DBObject parameters[] = new DBObject[parametros.size()];
         parameters = parametros.toArray(parameters);
         AggregationOutput output = ds.getCollection(Patent.class).aggregate(matchProject, parameters);
-        System.out.println(output.getCommand());
+//        System.out.println(output.getCommand());
         BasicDBList outputList = (BasicDBList) output.getCommandResult().get("result");
         List<String> lista = new ArrayList<String>();
         for (Object applicant : outputList) {
@@ -230,14 +230,14 @@ public class ApplicantRepository {
                 stream.close();
                 TopScoreDocCollector collector = TopScoreDocCollector.create(1000, true);
                 BooleanQuery bq = new BooleanQuery();
-                System.out.println(name);
+//                System.out.println(name);
                 // Criando a query, dar o name.split é para saber a existência do acrônimo
                 String[] tokens = name.split(" ");
                 // Se for maior que 1, existe um acrônimo
                 if (tokens.length > 1) {
-                    System.out.println(tokens[0]);
+//                    System.out.println(tokens[0]);
                     bq.add(new PrefixQuery(new Term("applicant", tokens[0])), Occur.MUST);
-                    System.out.println(tokens[1]);
+//                    System.out.println(tokens[1]);
                     bq.add(new FuzzyQuery(new Term("applicant", tokens[1]), 1), Occur.MUST);
                     bq.add(new LengthQuery("applicant", name), Occur.MUST_NOT);
                 } else {
@@ -281,7 +281,7 @@ public class ApplicantRepository {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        System.out.println("saiu");
+//        System.out.println("saiu");
         return results;
 
     }
@@ -395,7 +395,7 @@ public class ApplicantRepository {
         }
 
         AggregationOutput output = ds.getCollection(Patent.class).aggregate(match, parameters);
-        System.out.println(output.getCommand().toString());
+//        System.out.println(output.getCommand().toString());
         BasicDBList outputList = (BasicDBList) output.getCommandResult().get("result");
 
 //        this.setCount(output.);
@@ -452,7 +452,7 @@ public class ApplicantRepository {
 
     public boolean exists(Applicant applicant) {
 
-        System.out.println("entrou aqui");
+//        System.out.println("entrou aqui");
         ArrayList<DBObject> parametros = new ArrayList<DBObject>();
 
         DBObject matchProj = new BasicDBObject();

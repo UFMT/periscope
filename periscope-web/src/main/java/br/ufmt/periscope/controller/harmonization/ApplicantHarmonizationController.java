@@ -158,7 +158,7 @@ public class ApplicantHarmonizationController implements Serializable {
 
     public String createRule() {
 
-        System.out.println("criando rule");
+//        System.out.println("criando rule");
         rule.setType(RuleType.APPLICANT);
         rule.setProject(currentProject);
         if (selectedApplicantSugestions != null) {

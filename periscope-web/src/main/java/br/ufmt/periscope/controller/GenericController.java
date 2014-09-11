@@ -109,7 +109,7 @@ public abstract class GenericController {
     public void selectListener(ValueChangeEvent event) {
         int sel = getFiltro().getSelecionaData();
         int newSel=  (Integer)event.getNewValue();
-        System.out.println("trocando data:" + event.getNewValue() + " sel:" + sel);
+//        System.out.println("trocando data:" + event.getNewValue() + " sel:" + sel);
         getFiltro().setInicio(getPatentRepository().getMinDate(getCurrentProject(), newSel));
         getFiltro().setFim(getPatentRepository().getMaxDate(getCurrentProject(), newSel));
 

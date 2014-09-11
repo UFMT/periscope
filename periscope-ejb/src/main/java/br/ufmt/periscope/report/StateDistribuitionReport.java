@@ -16,9 +16,9 @@ public class StateDistribuitionReport {
 
 	public ChartSeries StateDistribuitionSeries(Project currentProject) {
 		ChartSeries series = new ChartSeries("Distribuição por Estados");
-                System.out.println("entrou report");
+//                System.out.println("entrou report");
 		List<Pair> i = repo.getStateDistribuitions(currentProject);
-                System.out.println("saiu report");
+//                System.out.println("saiu report");
                 Collections.reverse(i);
 		
 		for (Pair pair : i) {

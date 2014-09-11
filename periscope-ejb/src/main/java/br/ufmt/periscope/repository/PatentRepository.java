@@ -76,7 +76,7 @@ public class PatentRepository {
         p.setProject(project);
         if (!patentExistsForProject(p, project)) {
             validator.validate(p);
-            System.out.println(p.getCompleted());
+//            System.out.println(p.getCompleted());
             project.getPatents().add(p);
             ds.save(p);
             ds.save(project);
@@ -144,12 +144,12 @@ public class PatentRepository {
         if (selectedDate == 2) {
             date = "applicationDate";
         }
-        System.out.println("Date:" + date);
+//        System.out.println("Date:" + date);
         BasicDBObject filters = new BasicDBObject("project.$id", currentProject.getId());
         filters.put("blacklisted", false);
         DBCursor dbc = ds.getCollection(Patent.class).find(filters).sort(new BasicDBObject(date, 1)).limit(1);
         Date data = (Date) dbc.next().get(date);
-        System.out.println(data);
+//        System.out.println(data);
         return data;
     }
 

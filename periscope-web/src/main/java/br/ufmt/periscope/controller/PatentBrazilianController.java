@@ -132,10 +132,10 @@ public class PatentBrazilianController {
         inventors = inventorRepository.getInventors(currentProject);
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest req = (HttpServletRequest) context.getExternalContext().getRequest();
-        System.out.println("edit");
+//        System.out.println("edit");
         if (req.getParameter("patentId") != null) {
             selectedPatent = patentRepository.getPatentWithId(currentProject, new ObjectId(req.getParameter("patentId"))).get(0);
-            System.out.println("selecpatent");
+//            System.out.println("selecpatent");
             updateApplicants();
             updateInventors();
         }
@@ -313,7 +313,7 @@ public class PatentBrazilianController {
     public void uploadPresentationFile(FileUploadEvent event) throws UnknownHostException, IOException {
         file = event.getFile();
         GridFS fs = patentRepository.getFs();
-        System.out.println(file.getFileName());
+//        System.out.println(file.getFileName());
         GridFSInputFile gfsFiles = fs.createFile(file.getInputstream());
         gfsFiles.setFilename(file.getFileName());
         gfsFiles.save();
@@ -344,7 +344,7 @@ public class PatentBrazilianController {
     public void uploadPatentInfo(FileUploadEvent event) throws UnknownHostException, IOException {
         file = event.getFile();
         GridFS fs = patentRepository.getFs();
-        System.out.println(file.getFileName());
+//        System.out.println(file.getFileName());
         GridFSInputFile gfsFiles = fs.createFile(file.getInputstream());
         gfsFiles.setFilename(file.getFileName());
         gfsFiles.save();

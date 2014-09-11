@@ -22,9 +22,9 @@ public class RegionDistribuitionReport {
 
     public ChartSeries RegionDistribuitionSeries(Project currentProject) {
         ChartSeries series = new ChartSeries("Distribuição por Regiões");
-        System.out.println("entrou report");
+//        System.out.println("entrou report");
         List<Pair> i = repo.getRegionDistribuitions(currentProject);
-        System.out.println("saiu report");
+//        System.out.println("saiu report");
         Collections.reverse(i);
 
         for (Pair pair : i) {

@@ -185,7 +185,7 @@ public class PatentController {
         if(page.equals("add")){
             return "projectHome";
         }
-        System.out.println("WAT");
+//        System.out.println("WAT");
         return "";
     }
 

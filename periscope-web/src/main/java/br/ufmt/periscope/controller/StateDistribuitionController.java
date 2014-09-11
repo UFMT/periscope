@@ -25,9 +25,9 @@ public class StateDistribuitionController extends GenericController {
     public void refreshChart() {
         
         setModel(new CartesianChartModel());
-        System.out.println("entrou controller");
+//        System.out.println("entrou controller");
         ChartSeries series = report.StateDistribuitionSeries(getCurrentProject());
-        System.out.println("saiu controller");
+//        System.out.println("saiu controller");
         getModel().addSeries(series);
 
         setPairs(new ArrayList<Pair>());

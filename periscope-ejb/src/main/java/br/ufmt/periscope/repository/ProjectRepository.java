@@ -57,23 +57,23 @@ public class ProjectRepository {
         
         while (c.hasNext()) {
             DBObject novo = c.next();
-            System.out.println("Começo: " + c.toString());
+//            System.out.println("Começo: " + c.toString());
             DBRef preFile = (DBRef) novo.get("presentationFile");
             DBRef pInfo = (DBRef) novo.get("patentInfo");
             if (preFile == null) {
-                System.out.println("nulo s");
+//                System.out.println("nulo s");
             } else {
                 lista.add(preFile.getId().toString());
-                System.out.println("preFile: " + preFile.getId().toString());
+//                System.out.println("preFile: " + preFile.getId().toString());
             }
             if (pInfo == null) {
-                System.out.println("nulo i");
+//                System.out.println("nulo i");
             } else {
                 lista.add(pInfo.getId().toString());
-                System.out.println("pInfo: " + pInfo.getId().toString());
+//                System.out.println("pInfo: " + pInfo.getId().toString());
             }
         }
-        System.out.println("Arquivos: "+lista.size());
+//        System.out.println("Arquivos: "+lista.size());
         if (lista.size() > 0) {
             return lista;
         }
@@ -87,11 +87,11 @@ public class ProjectRepository {
         List<String> files = getProjectFiles(p);
         
         if (files != null) {
-            System.out.println("Arquivos deletados:");
+//            System.out.println("Arquivos deletados:");
             GridFS fs = getFs();
             ObjectId _id;
             for (String file : files) {
-                System.out.println("FILE: "+file);
+//                System.out.println("FILE: "+file);
                 _id = new ObjectId(file);
                 fs.remove(_id);
                 _id = null;

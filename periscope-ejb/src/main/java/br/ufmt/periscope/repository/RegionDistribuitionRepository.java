@@ -25,7 +25,7 @@ public class RegionDistribuitionRepository {
 //        {$project:{applicants:1}},
 //        {$match:{"applicants.country.acronym":"BR"}}, {$project:{"applicants.state":1}}
 //        ,{$group:{_id:{_id:"$_id",state:"$applicants.state"}}},{$group:{_id:"$_id.state.region",count:{$sum:1}}},{$sort : {count: -1}})
-        System.out.println("entrou repositorio");
+//        System.out.println("entrou repositorio");
         ArrayList<DBObject> parametros = new ArrayList<DBObject>();
         DBObject matchProj = new BasicDBObject("$match", new BasicDBObject("project.$id", currentProject.getId()));
 
@@ -76,7 +76,7 @@ public class RegionDistribuitionRepository {
             }
 
         }
-        System.out.println("saiu repositorio");
+//        System.out.println("saiu repositorio");
         return pairs;
 
     }
