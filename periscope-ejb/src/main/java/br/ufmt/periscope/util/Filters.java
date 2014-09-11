@@ -8,6 +8,8 @@ public class Filters {
     private int selecionaData;
     private Date inicio, fim;
     private String applicantName;
+    private String inventorName;
+    private String applicantType;
 
     public Filters() {
     }
@@ -52,4 +54,20 @@ public class Filters {
         this.applicantName = applicantName;
     }
 
+    public String getInventorName() {
+        return inventorName;
+    }
+
+    public void setInventorName(String inventorName) {
+        this.inventorName = inventorName;
+    }
+
+    public String getApplicantType() {
+        return applicantType;
+    }
+
+    public void setApplicantType(String applicantType) {
+        this.applicantType = applicantType;
+    }
+    
 }

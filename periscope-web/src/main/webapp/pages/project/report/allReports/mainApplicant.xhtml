@@ -13,14 +13,25 @@
         <ui:define name="growl"></ui:define>
 
         <ui:define name="content">
-            
+
 
             <h1>#{msgs['main.applicant']}</h1>
             <br></br>
             <h:form id="chart" styleClass="container">
-                
-                <i:filtro controller="#{report}" />
 
+                <i:filtro controller="#{report}" />
+                
+                <h:panelGrid columns="2"  style="margin-top: 20px;margin-bottom: 20px">
+                    <p:outputLabel value="#{msgs['applicant.type']}:"/>  
+                    <p:selectOneMenu id="cmbAppType" value="#{report.filtro.applicantType}" style="width: 500px">
+                        <f:selectItem itemLabel="#{msgs['none']}" itemValue=""/>
+                        <f:selectItems value="#{applicantTypeRepository.all}" var="t" itemValue="#{t.name}" itemLabel="#{t.name}" />	
+
+                        <p:ajax update="tudo,@this"
+                                listener="#{report.refreshChart()}" />
+                    </p:selectOneMenu>
+                </h:panelGrid>
+                
                 <h:panelGrid columns="1" id="tudo" styleClass="container" >
 
                     <p:outputLabel value="#{msgs['empty']}" rendered="#{report.model.series.get(0).getData().size()==0}" />

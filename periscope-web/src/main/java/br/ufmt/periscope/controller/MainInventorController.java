@@ -10,6 +10,7 @@ import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import br.ufmt.periscope.report.MainInventorReport;
 import br.ufmt.periscope.report.Pair;
+import java.util.List;
 
 @ManagedBean
 @ViewScoped
@@ -34,5 +35,11 @@ public class MainInventorController extends GenericController{
 		
 		Collections.reverse(getPairs());
 	}
+        public List<String> getInventors(String query) {
+        List<String> teste = report.getRepo().getInventors(getCurrentProject(), query);
+//        System.out.println(teste.size());
+        return teste;
+
+    }
 
 }

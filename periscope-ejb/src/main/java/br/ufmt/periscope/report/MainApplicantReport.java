@@ -43,5 +43,10 @@ public class MainApplicantReport {
 		return series;
 	}
 
+    public ApplicantRepository getRepo() {
+        return repo;
+    }
+        
+
 }
 

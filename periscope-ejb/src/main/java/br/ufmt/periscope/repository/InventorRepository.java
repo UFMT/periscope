@@ -119,7 +119,7 @@ public class InventorRepository {
         parameters = parametros.toArray(parameters);
 
         AggregationOutput output = ds.getCollection(Patent.class).aggregate(matchProj, parameters);
-        System.out.println("query "+output.getCommand());
+        System.out.println("query " + output.getCommand());
 
         BasicDBList outputResult = (BasicDBList) output.getCommandResult().get(
                 "result");
@@ -132,7 +132,7 @@ public class InventorRepository {
             Integer count = (Integer) aux.get("applicationPerInventor");
 
             pairs.add(new Pair(inventor, count));
-            System.out.println(inventor+" "+count);
+            System.out.println(inventor + " " + count);
         }
         return pairs;
     }
@@ -167,6 +167,32 @@ public class InventorRepository {
         ArrayList<Inventor> inventors = new ArrayList<Inventor>(map.values());
         Collections.sort(inventors);
         return inventors;
+    }
+
+    public List<String> getInventors(Project project, String begins) {
+        ArrayList<DBObject> parametros = new ArrayList<DBObject>();
+        DBObject matchProject = new BasicDBObject("$match", new BasicDBObject("project.$id", project.getId()).append("blacklisted", false));
+        DBObject unwind = new BasicDBObject("$unwind", "$inventors");
+        parametros.add(unwind);
+        DBObject matchName = new BasicDBObject("$match", new BasicDBObject("inventors.name", new BasicDBObject("$regex", "^" + begins).append("$options", "i")));
+        parametros.add(matchName);
+        DBObject projection = new BasicDBObject("$project", new BasicDBObject("inventors", 1));
+        parametros.add(projection);
+        DBObject group = new BasicDBObject("$group", new BasicDBObject("_id", "$inventors.name"));
+        parametros.add(group);
+        DBObject parameters[] = new DBObject[parametros.size()];
+        parameters = parametros.toArray(parameters);
+        AggregationOutput output = ds.getCollection(Patent.class).aggregate(matchProject, parameters);
+        System.out.println(output.getCommand());
+        BasicDBList outputList = (BasicDBList) output.getCommandResult().get("result");
+        List<String> lista = new ArrayList<String>();
+        for (Object inventor : outputList) {
+            DBObject aux = (DBObject) inventor;
+            String nome = aux.get("_id").toString();
+            lista.add(nome);
+        }
+        return lista;
+
     }
 
     public Set<String> getInventorSugestions(Project project, int top, String... names) {
@@ -219,7 +245,7 @@ public class InventorRepository {
                     bq.add(new PrefixQuery(new Term("inventor", tokens[0])), BooleanClause.Occur.MUST);
                     System.out.println(tokens[1]);
                     bq.add(new FuzzyQuery(new Term("inventor", tokens[1]), 1), BooleanClause.Occur.MUST);
-                    bq.add(new LengthQuery("inventor", name), BooleanClause.Occur.MUST_NOT);                   
+                    bq.add(new LengthQuery("inventor", name), BooleanClause.Occur.MUST_NOT);
                 } else {
                     if (name.length() > 3) {
                         bq.add(new FuzzyQuery(new Term("inventor", name)),
@@ -286,7 +312,7 @@ public class InventorRepository {
             String value = entry.getValue();
             DBObject regex;
             if (searchType != null && searchType.equals(1)) {
-                regex = new BasicDBObject("$regex", "^"+value).append("$options", "i");
+                regex = new BasicDBObject("$regex", "^" + value).append("$options", "i");
             } else {
                 regex = new BasicDBObject("$regex", value).append("$options", "i");
             }
@@ -401,9 +427,9 @@ public class InventorRepository {
 
         return datasource;
     }
-    
-    public boolean exists(Inventor inventor){
-        
+
+    public boolean exists(Inventor inventor) {
+
         System.out.println("entrou aqui");
         ArrayList<DBObject> parametros = new ArrayList<DBObject>();
 
@@ -414,29 +440,29 @@ public class InventorRepository {
 
         DBObject unwind = new BasicDBObject("$unwind", "$inventors");
         parametros.add(unwind);
-        
+
         DBObject fields = new BasicDBObject("inventors.country.acronym", inventor.getCountry().getAcronym());
         fields.put("inventors.name", inventor.getName());
-        DBObject match = new BasicDBObject ("$match", fields);
+        DBObject match = new BasicDBObject("$match", fields);
         parametros.add(match);
-        
+
         DBObject idData = new BasicDBObject("name", "$inventors.name");
         DBObject field = new BasicDBObject("_id", idData);
         DBObject group = new BasicDBObject("$group", field);
         parametros.add(group);
-        
+
         DBObject[] parameters = new DBObject[parametros.size()];
         parameters = parametros.toArray(parameters);
 
         System.out.println("foi antes");
         AggregationOutput output = ds.getCollection(Patent.class).aggregate(matchP, parameters);
-        
+
         BasicDBList outputList = (BasicDBList) output.getCommandResult().get("result");
         return outputList.size() == 0;
-        
+
     }
-    
-    public List<Inventor> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters){
+
+    public List<Inventor> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters) {
         return load(first, pageSize, sortField, sortOrder, filters, null);
     }
 

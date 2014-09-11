@@ -28,8 +28,7 @@ public class ClassificationRepository {
             boolean subKlass, boolean group, boolean subGroup, int limit, Filters filtro) {
 
         /**
-         * EXEMPLO DA CONSULTA
-         * db.Patent.aggregate({ "$match" : {
+         * EXEMPLO DA CONSULTA db.Patent.aggregate({ "$match" : {
          * "project.$id":ObjectId("537e0955e4b0cfbec0f0dc96") ,
          * "applicants.name" : "SAUDI ARABIAN OIL CO" , "blacklisted" : false ,
          * "mainClassification" : { "$exists" : true}}} , { "$project" : {
@@ -49,8 +48,12 @@ public class ClassificationRepository {
 
         matchParameters.put("project.$id", currentProject.getId());
 
-        if (filtro.getApplicantName() != null) {
+        if (filtro.getApplicantName() != null && !filtro.getApplicantName().isEmpty()) {
             matchParameters.put("applicants.name", filtro.getApplicantName());
+        }
+
+        if (filtro.getInventorName() != null && !filtro.getInventorName().isEmpty()) {
+            matchParameters.put("inventors.name", filtro.getInventorName());
         }
 
         if (filtro.isComplete()) {
@@ -165,7 +168,6 @@ public class ClassificationRepository {
          * {$group:{_id:"$section",applicationPerSector:{$sum:1}}},
          * {$sort:{applicationPerSector:-1}} );
          */
-
         Object[] list = new Object[]{"$mainClassification.klass", 0, 3};
         DBObject section = new BasicDBObject("section", new BasicDBObject(
                 "$substr", list));
@@ -188,7 +190,6 @@ public class ClassificationRepository {
          * ,applicationPerSector:{$sum:1}}}, {$sort:{applicationPerSector:-1}}
          * );
          */
-
         DBObject fields = new BasicDBObject("_id", "$mainClassification.klass");
         fields.put("applicationPerSector", new BasicDBObject("$sum", 1));
 
@@ -207,7 +208,6 @@ public class ClassificationRepository {
          * {$group:{_id:"$group",applicationPerSector:{$sum:1}}},
          * {$sort:{applicationPerSector:-1}} );
          */
-
         Object[] list = {"$mainClassification.klass",
             "$mainClassification.group"};
         DBObject section = new BasicDBObject("group", new BasicDBObject(

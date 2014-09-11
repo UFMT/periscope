@@ -97,6 +97,10 @@
             <from-outcome>regionDistribuition</from-outcome>
             <to-view-id>/pages/project/report/allReports/regionalDistribuition.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>technologicalProfileByInventor</from-outcome>
+            <to-view-id>/pages/project/report/allReports/technologicalProfileByInventor</to-view-id>
+        </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>*</from-view-id>

@@ -197,7 +197,7 @@ a:hover {
 .container,
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container {
-  width: 940px;
+  width: 100%;
 }
 
 .span12 {
@@ -723,7 +723,7 @@ pre code {
 }
 
 form {
-  margin: 0 0 18px;
+  margin: 0 0 0px;
 }
 
 fieldset {

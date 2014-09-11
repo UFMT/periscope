@@ -14,11 +14,11 @@
 
         <ui:define name="content">
 
-            <h1>#{msgs['technological.profile.applicant']}</h1>
+            <h1>#{msgs['technological.profile.inventor']}</h1>
 
             <h:form id="chart" styleClass="container">
 
-                <center><h4>#{msgs['classification.applicant']}</h4></center>
+                <center><h4>#{msgs['classification.inventor']}</h4></center>
 
                 <i:filtro controller="#{mainIPCController}" filter="8"/>
 
@@ -57,29 +57,30 @@
                 <br/>
 <!--                <h:panelGrid columns="2"  style="margin-top: 20px;margin-bottom: 20px">
                     <p:outputLabel value="#{msgs['applicants']}:"/>  
-                    <p:selectOneMenu id="cmbNature" value="#{mainIPCController.filtro.applicantName}" style="width: 500px">
+                    <p:selectOneMenu id="cmbNature" value="#{mainIPCController.filtro.inventorName}" style="width: 500px">
                         <f:selectItem itemLabel="#{msgs.none}" itemValue=""/>
-                        <f:selectItems value="#{applicantRepository.getApplicants(currentProject)}" var="t" itemValue="#{t.name}" itemLabel="#{t.name}" />	
+                        <f:selectItems value="#{inventorRepository.getInventors(currentProject)}" var="t" itemValue="#{t.name}" itemLabel="#{t.name}" />	
                         
                         <p:ajax update="tudo,@this"
                                 listener="#{mainIPCController.update()}" />
                     </p:selectOneMenu>
                 </h:panelGrid>-->
-                <h:panelGrid columns="2"  style="margin-top: 20px;margin-bottom: 20px">
-                    <p:outputLabel value="#{msgs['applicants']}:"/> 
-                    <p:autoComplete minQueryLength="3" value="#{mainIPCController.filtro.applicantName}" completeMethod="#{report.getApplicants}" effect="fade">
+
+                 <h:panelGrid columns="2"  style="margin-top: 20px;margin-bottom: 20px">
+                    <p:outputLabel value="#{msgs['inventors']}:"/> 
+                    <p:autoComplete minQueryLength="3" value="#{mainIPCController.filtro.inventorName}" completeMethod="#{mainInventorController.getInventors}" effect="fade">
                         <p:ajax update=":#{p:component('tudo')},@this" event="itemSelect"
                                 listener="#{mainIPCController.update()}" />
                     </p:autoComplete>
                 </h:panelGrid>
-
+                
                 <h:panelGrid id="tudo" columns="2" styleClass="container">
 
 
 
                     <p:barChart id="horizontal" value="#{mainIPCController.model}" rendered="#{mainIPCController.model.series.get(0).getData().size()!=0}"
                                 orientation="horizontal" legendPosition="e" datatipFormat="%s"
-                                title="#{msgs['technological.profile.applicant']}" style="width:600px ; height:300px" />
+                                title="#{msgs['technological.profile.inventor']}" style="width:600px ; height:300px" />
 
                     <h:column>
                         <p:graphicImage />

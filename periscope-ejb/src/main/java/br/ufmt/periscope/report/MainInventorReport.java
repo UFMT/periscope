@@ -14,24 +14,28 @@ import br.ufmt.periscope.util.Filters;
 
 @Named
 public class MainInventorReport {
-	
-	private @Inject InventorRepository repo;
-	
-	public ChartSeries InventorDateSeries(Project currentProject, int limit, Filters filtro) {
-		ChartSeries series = new ChartSeries("Depositos por inventores");
 
-		List<Pair> i = repo.updateInventors(currentProject,limit, filtro);
-		
-		Collections.reverse(i);
-		
-		for (Pair pair : i) {
-			String inventor = (String)pair.getKey();
-			//System.out.println(aux.get("applicationPerYear"));
-			Integer count = (Integer)pair.getValue();
-			series.set(inventor, count);
-		}		
+    private @Inject
+    InventorRepository repo;
 
-		return series;
-	}
+    public ChartSeries InventorDateSeries(Project currentProject, int limit, Filters filtro) {
+        ChartSeries series = new ChartSeries("Depositos por inventores");
 
+        List<Pair> i = repo.updateInventors(currentProject, limit, filtro);
+
+        Collections.reverse(i);
+
+        for (Pair pair : i) {
+            String inventor = (String) pair.getKey();
+            //System.out.println(aux.get("applicationPerYear"));
+            Integer count = (Integer) pair.getValue();
+            series.set(inventor, count);
+        }
+
+        return series;
+    }
+
+    public InventorRepository getRepo() {
+        return repo;
+    }
 }

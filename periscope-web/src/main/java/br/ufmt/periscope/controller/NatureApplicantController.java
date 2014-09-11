@@ -20,7 +20,7 @@ public class NatureApplicantController extends GenericController{
 	
         @Override
 	public void refreshChart(){
-		
+            System.out.println("chegou");		
 		setModel(new CartesianChartModel());
 		ChartSeries series = report.NatureApplicantSeries(getCurrentProject(), getFiltro());
 		

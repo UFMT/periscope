@@ -123,6 +123,32 @@ public class ApplicantRepository {
         return ret;
     }
 
+    public List<String> getApplicants(Project project,String begins) {
+        ArrayList<DBObject> parametros = new ArrayList<DBObject>();
+        DBObject matchProject = new BasicDBObject("$match",new BasicDBObject("project.$id",project.getId()).append("blacklisted", false));
+        DBObject unwind = new BasicDBObject("$unwind","$applicants");
+        parametros.add(unwind);
+        DBObject matchName = new BasicDBObject("$match", new BasicDBObject("applicants.name", new BasicDBObject("$regex", "^"+begins).append("$options", "i")));
+        parametros.add(matchName);
+        DBObject projection = new BasicDBObject("$project", new BasicDBObject("applicants", 1));
+        parametros.add(projection);
+        DBObject group = new BasicDBObject("$group", new BasicDBObject("_id", "$applicants.name"));
+        parametros.add(group);
+        DBObject parameters[] = new DBObject[parametros.size()];
+        parameters = parametros.toArray(parameters);
+        AggregationOutput output = ds.getCollection(Patent.class).aggregate(matchProject, parameters);
+        System.out.println(output.getCommand());
+        BasicDBList outputList = (BasicDBList) output.getCommandResult().get("result");
+        List<String> lista = new ArrayList<String>();
+        for (Object applicant : outputList) {
+            DBObject aux = (DBObject) applicant;
+            String nome = aux.get("_id").toString();
+            lista.add(nome);
+        }
+        return lista;
+        
+    }
+    
     public void updateMainApplicants(Project currentProject, Filters filtro) {
 
         String map = "function() { "
@@ -148,6 +174,10 @@ public class ApplicantRepository {
         } else {
             where.put("applicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim()));
         }
+        if (filtro.getApplicantType()!=null && !filtro.getApplicantType().isEmpty()) {
+            where.put("applicants.nature.name", filtro.getApplicantType());
+            
+        }
 
         DBCollection coll = ds.getCollection(Patent.class);
         MapReduceCommand cmd = new MapReduceCommand(coll,
@@ -157,6 +187,8 @@ public class ApplicantRepository {
                 OutputType.REPLACE,
                 where);
         coll.mapReduce(cmd);
+//        System.out.println("tipos de applicants: "+cmd.toString());
+//        filtro.setApplicantType(null);
 
     }
 

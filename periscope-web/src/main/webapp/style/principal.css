@@ -43,3 +43,7 @@ body {
 	top: 50px;
 	z-index: 9999;
 }
+
+.ui-autocomplete-input{
+    width: 500px;
+}
