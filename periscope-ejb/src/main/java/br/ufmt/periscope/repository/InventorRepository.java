@@ -317,7 +317,7 @@ public class InventorRepository {
                 regex = new BasicDBObject("$regex", value).append("$options", "i");
             }
             matchFilterItem.put("inventors." + column, regex);
-            System.out.println(matchFilterItem.toString());
+//            System.out.println(matchFilterItem.toString());
         }
         DBObject matchSearch = new BasicDBObject("$match", matchFilterItem);
         parametros.add(matchSearch);
