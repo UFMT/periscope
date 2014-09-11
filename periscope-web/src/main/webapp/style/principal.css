@@ -11,6 +11,10 @@ body {
    position:relative;   
 }
 
+#body{
+    padding-bottom: 50px;
+}
+
 /*#body {
     
   padding-top: 20px;   
