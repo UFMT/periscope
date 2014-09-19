@@ -7,47 +7,109 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
     <ui:composition>
+        <p:accordionPanel>
+            <p:tab title="#{msgs['filters']}" titleStyle="font-size:initial; color:initial">
 
-        <c:if test='#{empty rendSpinner}' ><c:set var="rendSpinner" value="true"/> </c:if>
+                <c:if test='#{empty rendSpinner}' ><c:set var="rendSpinner" value="true"/> </c:if>
+                <c:if test='#{empty applicantNature}' ><c:set var="applicantNature" value="false"/> </c:if>
+                <c:if test='#{empty ipcBooleanCheckBox}' ><c:set var="ipcBooleanCheckBox" value="false"/> </c:if>
+                <c:if test='#{empty applicantAutoComplete}' ><c:set var="applicantAutoComplete" value="false"/> </c:if>
+                <c:if test='#{empty inventorAutoComplete}' ><c:set var="inventorAutoComplete" value="false"/> </c:if>
 
-      
 
 
 
 
 
-        <h:outputScript library="js" name="locales.js"></h:outputScript>
 
-        <h:panelGrid columns="2" cellpadding="5" id="filtroId">
-            <label>#{msgs['item.number']}:</label>
-            <p:spinner value="#{controller.limit}" maxlength="3" min="5" max="20"
-                       style="padding:0 20px 0 0" rendered="#{rendSpinner}">
-                <p:ajax listener="#{controller.refreshChart()}" update="@form"  />
-            </p:spinner>
-            <h:outputText value="#{msgs['period.interest']}:"/> 
-            <p:selectOneMenu value="#{controller.filtro.selecionaData}" id="selDate"  valueChangeListener="#{controller.selectListener}">
-                <f:selectItem itemLabel="#{msgs['publication.date']}" itemValue="1" /> 
-                <f:selectItem itemLabel="#{msgs['application.date']}" itemValue="2" />  
-                <p:ajax event="change" update=":#{p:component('filtroId')}"/>
-            </p:selectOneMenu>
+                <h:outputScript library="js" name="locales.js"></h:outputScript>
 
-            <h:outputText value="#{msgs['from']}:" />
-            <p:calendar  value="#{controller.filtro.inicio}" id="from" maxlength="10" mindate="#{controller.minDate}" maxdate="#{controller.maxDate}" locale="#{msgs['calendar']}" showButtonPanel="true" navigator="true" pattern="#{msgs['date.pattern']}">
-            </p:calendar>
+                <h:panelGrid columns="2" cellpadding="5" id="filtroId">
+                    <label>#{msgs['item.number']}:</label>
+                    <p:spinner value="#{controller.limit}" maxlength="3" min="5" max="20"
+                               style="padding:0 20px 0 0" rendered="#{rendSpinner}">
+                        <p:ajax listener="#{controller.refreshChart()}" update="@form"  />
+                    </p:spinner>
+                    <h:outputText value="#{msgs['period.interest']}:"/> 
+                    <p:selectOneMenu value="#{controller.filtro.selecionaData}" id="selDate"  valueChangeListener="#{controller.selectListener}">
+                        <f:selectItem itemLabel="#{msgs['publication.date']}" itemValue="1" /> 
+                        <f:selectItem itemLabel="#{msgs['application.date']}" itemValue="2" />  
+                        <p:ajax event="change" update=":#{p:component('filtroId')}"/>
+                    </p:selectOneMenu>
 
-            <h:outputText value="#{msgs['to']}:" />
-            <p:calendar value="#{controller.filtro.fim}" id="to" maxlength="10" mindate="#{controller.minDate}" maxdate="#{controller.maxDate}" locale="#{msgs['calendar']}" showButtonPanel="true" navigator="true" pattern="#{msgs['date.pattern']}">
-            </p:calendar>
-            <p:selectBooleanCheckbox id="complete" itemLabel="#{msgs['completo']}"
-                                     value="#{controller.filtro.complete}">
-                <p:ajax update=":#{p:component('tudo')}" 
-                        listener="#{controller.refreshChart()}" />
-            </p:selectBooleanCheckbox>
-            <br/>
+                    <h:outputText value="#{msgs['from']}:" />
+                    <p:calendar  value="#{controller.filtro.inicio}" id="from" maxlength="10" mindate="#{controller.minDate}" maxdate="#{controller.maxDate}" locale="#{msgs['calendar']}" showButtonPanel="true" navigator="true" pattern="#{msgs['date.pattern']}">
+                    </p:calendar>
 
-            <p:commandButton action="#{controller.refreshChart()}" update=":#{p:component('tudo')}" value="#{msgs['update']}"></p:commandButton>
-            <br/>
-        </h:panelGrid>
+                    <h:outputText value="#{msgs['to']}:" />
+                    <p:calendar value="#{controller.filtro.fim}" id="to" maxlength="10" mindate="#{controller.minDate}" maxdate="#{controller.maxDate}" locale="#{msgs['calendar']}" showButtonPanel="true" navigator="true" pattern="#{msgs['date.pattern']}">
+                    </p:calendar>
+
+                    <p:outputLabel value="#{msgs['inventors']}:" rendered="#{inventorAutoComplete}"/> 
+                    <p:autoComplete rendered="#{inventorAutoComplete}" minQueryLength="3" value="#{mainIPCController.filtro.inventorName}" completeMethod="#{mainInventorController.getInventors}" effect="fade">
+                        <p:ajax update=":#{p:component('tudo')},@this" event="itemSelect"
+                                listener="#{mainIPCController.update()}" />
+                    </p:autoComplete>
+
+                    <p:outputLabel value="#{msgs['applicants']}:" rendered="#{applicantAutoComplete}"/> 
+                    <p:autoComplete rendered="#{applicantAutoComplete}" minQueryLength="3" value="#{mainIPCController.filtro.applicantName}" completeMethod="#{report.getApplicants}" effect="fade">
+                        <p:ajax update=":#{p:component('tudo')},@this" event="itemSelect"
+                                listener="#{mainIPCController.update()}" />
+                    </p:autoComplete>
+
+                    <p:outputLabel value="#{msgs['applicant.type']}:" rendered="#{applicantNature}"/>  
+                    <p:selectOneMenu id="cmbAppType" value="#{report.filtro.applicantType}" style="width: 500px" rendered="#{applicantNature}">
+                        <f:selectItem itemLabel="#{msgs['none']}" itemValue=""/>
+                        <f:selectItems value="#{applicantTypeRepository.all}" var="t" itemValue="#{t.name}" itemLabel="#{t.name}" />	
+
+                        <p:ajax update=":#{p:component('tudo')},@this"
+                                listener="#{report.refreshChart()}" />
+                    </p:selectOneMenu>
+                </h:panelGrid>
+
+                <h:panelGrid rendered="#{ipcBooleanCheckBox}" columns="4" style="margin: 20px" >
+                    <p:selectBooleanCheckbox id="klass" itemLabel="#{msgs['class']}"
+                                             value="#{mainIPCController.klass}">
+                        <p:ajax update="subKlass,group,subGroup,:#{p:component('tudo')}"
+                                listener="#{mainIPCController.update()}" />
+                    </p:selectBooleanCheckbox>
+
+                    <p:selectBooleanCheckbox id="subKlass"
+                                             disabled="#{!mainIPCController.klass}"
+                                             itemLabel="#{msgs['subclass']}"
+                                             value="#{mainIPCController.subKlass}">
+                        <p:ajax update="group,subGroup,:#{p:component('tudo')}"
+                                listener="#{mainIPCController.update()}" />
+                    </p:selectBooleanCheckbox>
+
+                    <p:selectBooleanCheckbox id="group"
+                                             disabled="#{!mainIPCController.klass or !mainIPCController.subKlass}"
+                                             itemLabel="#{msgs['group']}" value="#{mainIPCController.group}">
+                        <p:ajax update="subGroup,:#{p:component('tudo')}"
+                                listener="#{mainIPCController.update()}" />
+                    </p:selectBooleanCheckbox>
+
+                    <p:selectBooleanCheckbox id="subGroup"
+                                             disabled="#{!mainIPCController.klass or !mainIPCController.subKlass or !mainIPCController.group}"
+                                             itemLabel="#{msgs['subgroup']}"
+                                             value="#{mainIPCController.subGroup}">
+                        <p:ajax update=":#{p:component('tudo')}"
+                                listener="#{mainIPCController.update()}" />
+                    </p:selectBooleanCheckbox>
+                </h:panelGrid>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <p:selectBooleanCheckbox id="complete" itemLabel="#{msgs['completo']}"
+                                             value="#{controller.filtro.complete}">
+                        <p:ajax update=":#{p:component('tudo')}" 
+                                listener="#{controller.refreshChart()}" />
+                    </p:selectBooleanCheckbox>
+                    <br />
+
+                    <p:commandButton action="#{controller.refreshChart()}" update=":#{p:component('tudo')}" value="#{msgs['update']}"></p:commandButton>
+                    <br/>
+                </h:panelGrid>
+            </p:tab>
+        </p:accordionPanel>
 
     </ui:composition>
 </html>

@@ -17,44 +17,8 @@
             <center><h1>#{msgs['main.classifications']}</h1></center>
 
             <h:form id="chart" styleClass="container">
-                <p:accordionPanel>
-                    <p:tab title="#{msgs['filters']}" titleStyle="font-size:initial; color:initial">
-                        <i:filtro controller="#{mainIPCController}" filter="8"/>
 
-                        <h:panelGrid columns="4">
-
-                            <p:selectBooleanCheckbox id="klass" itemLabel="#{msgs['class']}"
-                                                     value="#{mainIPCController.klass}">
-                                <p:ajax update="subKlass,group,subGroup,:#{p:component('tudo')}"
-                                        listener="#{mainIPCController.update()}" />
-                            </p:selectBooleanCheckbox>
-
-                            <p:selectBooleanCheckbox id="subKlass"
-                                                     disabled="#{!mainIPCController.klass}"
-                                                     itemLabel="#{msgs['subclass']}"
-                                                     value="#{mainIPCController.subKlass}">
-                                <p:ajax update="group,subGroup,:#{p:component('tudo')}"
-                                        listener="#{mainIPCController.update()}" />
-                            </p:selectBooleanCheckbox>
-
-                            <p:selectBooleanCheckbox id="group"
-                                                     disabled="#{!mainIPCController.klass or !mainIPCController.subKlass}"
-                                                     itemLabel="#{msgs['group']}" value="#{mainIPCController.group}">
-                                <p:ajax update="subGroup,:#{p:component('tudo')}"
-                                        listener="#{mainIPCController.update()}" />
-                            </p:selectBooleanCheckbox>
-
-                            <p:selectBooleanCheckbox id="subGroup"
-                                                     disabled="#{!mainIPCController.klass or !mainIPCController.subKlass or !mainIPCController.group}"
-                                                     itemLabel="#{msgs['subgroup']}"
-                                                     value="#{mainIPCController.subGroup}">
-                                <p:ajax update=":#{p:component('tudo')}"
-                                        listener="#{mainIPCController.update()}" />
-                            </p:selectBooleanCheckbox>
-
-                        </h:panelGrid>
-                    </p:tab>
-                </p:accordionPanel>
+                <i:filtro controller="#{mainIPCController}" ipcBooleanCheckBox="true" filter="8"/>
 
                 <h:panelGrid id="tudo" columns="2" styleClass="container">
 
