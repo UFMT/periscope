@@ -11,7 +11,8 @@
         <ui:define name="content">
             <center>
                 <h:form enctype="multipart/form-data">
-                    <p:panel id="pnlImport" header="#{msgs['import.data']}">
+                    <center><h1>#{msgs['import.data']}</h1></center>
+                    <p:panel id="pnlImport" style="font">
 
                         <p:fileUpload id="fileUpload" label="#{msgs['choose.files']}"
                                       uploadLabel="#{msgs['upload.files']}" cancelLabel="#{msgs['cancel']}"
@@ -43,6 +44,11 @@
                                     <p:outputLabel value="#{msgs['dpma.help']}" escape="false"/>
                                     <p:graphicImage value="/imgs/dpmaHelp.png"/>
                                 </p:tooltip>
+                                    <p:outputLabel id="patentscopeHelp"><h4><a  target="_blank "> PATENTSCOPE</a></h4> .xls</p:outputLabel>
+<!--                                    <p:tooltip for="dpmaHelp">
+                                    <p:outputLabel value="#{msgs['dpma.help']}" escape="false"/>
+                                    <p:graphicImage value="/imgs/dpmaHelp.png"/>
+                                </p:tooltip>-->
                             </p:panel>
                         </h:panelGrid>
                         <br/>					

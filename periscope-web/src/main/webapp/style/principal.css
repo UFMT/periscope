@@ -47,6 +47,12 @@ body {
 	top: 50px;
 	z-index: 9999;
 }
+/*.ui-accordion .ui-accordion-header .ui-icon { display: block; }*/
+
+#myFieldSet ui-fieldset-legend ui-corner-all ui-state-default ui-state-active {
+    width: 95%;
+    
+}
 
 .ui-autocomplete-input{
     width: 500px;

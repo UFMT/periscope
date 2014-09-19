@@ -9,7 +9,7 @@
     <ui:composition template="/template/template.xhtml">
 
         <ui:define name="content">
-            <h3>#{msgs['create.patent']}</h3>
+            <center><h1>#{msgs['create.patent']}</h1></center>
             <h:form>
 
                 <p:fieldset  toggleable="true" toggleSpeed="500" legend="#{msgs['header']}">
@@ -133,17 +133,20 @@
                                         #{ap.country.acronym}
                                     </p:column>
                                     <p:column>														
-                                        <p:commandButton value="#{msgs['link']}" 
+                                        <p:commandButton id="linkApplicant" value="#{msgs['link']}" 
                                                          update=":#{p:component('applicants')}" partialSubmit="true" 
                                                          process=":#{p:component('applicants')}"
                                                          action="#{patentController.addApplicant(ap)}"/>
+                                        <p:tooltip for="linkApplicant">
+                                            <p:outputLabel value="Clique para vincular esse depositante à nova patente." escape="false"/>
+                                        </p:tooltip>
                                     </p:column>
                                 </p:dataTable>
                             </h:column>
                         </h:panelGrid>
                         <br/>
 
-                        <p:commandButton value="#{msgs['add.applicant']}" action="#{patentController.doApplicant()}" 
+                        <p:commandButton value="#{msgs['new']}" action="#{patentController.doApplicant()}" 
                                          oncomplete="applicantAddDialog.show();"/>
 
                         <p:dialog id="addNewApplicant" widgetVar="applicantAddDialog" modal="true" closable="false"
@@ -214,17 +217,20 @@
                                         #{inv.country.acronym}
                                     </p:column>
                                     <p:column>														
-                                        <p:commandButton value="#{msgs['link']}"
+                                        <p:commandButton id="linkInventor" value="#{msgs['link']}"
                                                          update=":#{p:component('inventors')},addInventors" 
                                                          partialSubmit="true" process=":#{p:component('inventors')}" 
                                                          action="#{patentController.addInventor(inv)}"/>
+                                        <p:tooltip for="linkInventor">
+                                            <p:outputLabel value="Clique para vincular esse inventor à nova patente." escape="false"/>
+                                        </p:tooltip>
                                     </p:column>
                                 </p:dataTable>
                             </h:column>
                         </h:panelGrid>
                         <br/>
 
-                        <p:commandButton value="#{msgs['add.inventor']}" action="#{patentController.doInventor()}"
+                        <p:commandButton value="#{msgs['new']}" action="#{patentController.doInventor()}"
                                          oncomplete="inventorAddDialog.show();"/>
 
                         <p:dialog id="addInventor" widgetVar="inventorAddDialog" modal="true" closable="false"

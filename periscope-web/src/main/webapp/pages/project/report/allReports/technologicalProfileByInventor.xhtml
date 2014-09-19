@@ -14,66 +14,67 @@
 
         <ui:define name="content">
 
-            <h1>#{msgs['technological.profile.inventor']}</h1>
+            <center><h1>#{msgs['technological.profile.inventor']}</h1></center>
 
             <h:form id="chart" styleClass="container">
+                <p:accordionPanel>
+                    <p:tab title="#{msgs['filters']}" titleStyle="font-size:initial; color:initial">
+                        <i:filtro controller="#{mainIPCController}" filter="8"/>
 
-                <center><h4>#{msgs['classification.inventor']}</h4></center>
+                        <h:panelGrid columns="4" style="margin-top: 20px">
 
-                <i:filtro controller="#{mainIPCController}" filter="8"/>
+                            <p:selectBooleanCheckbox id="klass" itemLabel="#{msgs['class']}"
+                                                     value="#{mainIPCController.klass}">
+                                <p:ajax update="subKlass,group,subGroup,:#{p:component('tudo')}"
+                                        listener="#{mainIPCController.update()}" />
+                            </p:selectBooleanCheckbox>
 
-                <h:panelGrid columns="4" style="margin-top: 20px">
+                            <p:selectBooleanCheckbox id="subKlass"
+                                                     disabled="#{!mainIPCController.klass}"
+                                                     itemLabel="#{msgs['subclass']}"
+                                                     value="#{mainIPCController.subKlass}">
+                                <p:ajax update="group,subGroup,:#{p:component('tudo')}"
+                                        listener="#{mainIPCController.update()}" />
+                            </p:selectBooleanCheckbox>
 
-                    <p:selectBooleanCheckbox id="klass" itemLabel="#{msgs['class']}"
-                                             value="#{mainIPCController.klass}">
-                        <p:ajax update="subKlass,group,subGroup,tudo"
-                                listener="#{mainIPCController.update()}" />
-                    </p:selectBooleanCheckbox>
+                            <p:selectBooleanCheckbox id="group"
+                                                     disabled="#{!mainIPCController.klass or !mainIPCController.subKlass}"
+                                                     itemLabel="#{msgs['group']}" value="#{mainIPCController.group}">
+                                <p:ajax update="subGroup,:#{p:component('tudo')}"
+                                        listener="#{mainIPCController.update()}" />
+                            </p:selectBooleanCheckbox>
 
-                    <p:selectBooleanCheckbox id="subKlass"
-                                             disabled="#{!mainIPCController.klass}"
-                                             itemLabel="#{msgs['subclass']}"
-                                             value="#{mainIPCController.subKlass}">
-                        <p:ajax update="group,subGroup,tudo"
-                                listener="#{mainIPCController.update()}" />
-                    </p:selectBooleanCheckbox>
+                            <p:selectBooleanCheckbox id="subGroup"
+                                                     disabled="#{!mainIPCController.klass or !mainIPCController.subKlass or !mainIPCController.group}"
+                                                     itemLabel="#{msgs['subgroup']}"
+                                                     value="#{mainIPCController.subGroup}">
+                                <p:ajax update="tudo"
+                                        listener="#{mainIPCController.update()}" />
+                            </p:selectBooleanCheckbox>
+                        </h:panelGrid>
 
-                    <p:selectBooleanCheckbox id="group"
-                                             disabled="#{!mainIPCController.klass or !mainIPCController.subKlass}"
-                                             itemLabel="#{msgs['group']}" value="#{mainIPCController.group}">
-                        <p:ajax update="subGroup,tudo"
-                                listener="#{mainIPCController.update()}" />
-                    </p:selectBooleanCheckbox>
+                        <br/>
+                        <!--                <h:panelGrid columns="2"  style="margin-top: 20px;margin-bottom: 20px">
+                                            <p:outputLabel value="#{msgs['applicants']}:"/>  
+                                            <p:selectOneMenu id="cmbNature" value="#{mainIPCController.filtro.inventorName}" style="width: 500px">
+                                                <f:selectItem itemLabel="#{msgs.none}" itemValue=""/>
+                                                <f:selectItems value="#{inventorRepository.getInventors(currentProject)}" var="t" itemValue="#{t.name}" itemLabel="#{t.name}" />	
+                                                
+                                                <p:ajax update="tudo,@this"
+                                                        listener="#{mainIPCController.update()}" />
+                                            </p:selectOneMenu>
+                                        </h:panelGrid>-->
 
-                    <p:selectBooleanCheckbox id="subGroup"
-                                             disabled="#{!mainIPCController.klass or !mainIPCController.subKlass or !mainIPCController.group}"
-                                             itemLabel="#{msgs['subgroup']}"
-                                             value="#{mainIPCController.subGroup}">
-                        <p:ajax update="tudo"
-                                listener="#{mainIPCController.update()}" />
-                    </p:selectBooleanCheckbox>
-                </h:panelGrid>
+                        <h:panelGrid columns="2"  style="margin-top: 20px;margin-bottom: 20px">
+                            <p:outputLabel value="#{msgs['inventors']}:"/> 
+                            <p:autoComplete minQueryLength="3" value="#{mainIPCController.filtro.inventorName}" completeMethod="#{mainInventorController.getInventors}" effect="fade">
+                                <p:ajax update=":#{p:component('tudo')},@this" event="itemSelect"
+                                        listener="#{mainIPCController.update()}" />
+                            </p:autoComplete>
+                        </h:panelGrid>
+                    </p:tab>
+                </p:accordionPanel>
 
-                <br/>
-<!--                <h:panelGrid columns="2"  style="margin-top: 20px;margin-bottom: 20px">
-                    <p:outputLabel value="#{msgs['applicants']}:"/>  
-                    <p:selectOneMenu id="cmbNature" value="#{mainIPCController.filtro.inventorName}" style="width: 500px">
-                        <f:selectItem itemLabel="#{msgs.none}" itemValue=""/>
-                        <f:selectItems value="#{inventorRepository.getInventors(currentProject)}" var="t" itemValue="#{t.name}" itemLabel="#{t.name}" />	
-                        
-                        <p:ajax update="tudo,@this"
-                                listener="#{mainIPCController.update()}" />
-                    </p:selectOneMenu>
-                </h:panelGrid>-->
-
-                 <h:panelGrid columns="2"  style="margin-top: 20px;margin-bottom: 20px">
-                    <p:outputLabel value="#{msgs['inventors']}:"/> 
-                    <p:autoComplete minQueryLength="3" value="#{mainIPCController.filtro.inventorName}" completeMethod="#{mainInventorController.getInventors}" effect="fade">
-                        <p:ajax update=":#{p:component('tudo')},@this" event="itemSelect"
-                                listener="#{mainIPCController.update()}" />
-                    </p:autoComplete>
-                </h:panelGrid>
-                
                 <h:panelGrid id="tudo" columns="2" styleClass="container">
 
 

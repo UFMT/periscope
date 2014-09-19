@@ -32,10 +32,10 @@
                 <h:outputLabel value="#{msgs['nature']} " style="font-weight:bold"/>
                 <p:selectOneMenu id="cmbNature" value="#{applicantHarmonizationController.rule.nature.name}">
                     <f:selectItem itemLabel="#{msgs['none']}" itemValue=""/>
-                    <f:selectItems value="#{applicantHarmonizationController.applicantTypes}" var="t" itemValue="#{t.name}" itemLabel="#{msgs[t.name]}" />	
+                    <f:selectItems value="#{applicantHarmonizationController.applicantTypes}" var="t" itemValue="#{t.name}" itemLabel="#{t.name}" />	
                 </p:selectOneMenu>						
             </h:panelGrid>		
-
+            <p:separator/>
             <h:panelGrid id="panelSugestions" columns="3">
                 <h:column>
                     <h4>#{msgs['selected.names']}</h4>				

@@ -10,6 +10,7 @@
         <ui:define name="content">
             <ui:include src="/template/flashmessages.xhtml" />
             <center>
+                <center><h1>#{msgs['patent.list']}</h1></center>
                 <h:form id="formType">			
                     <ul class="nav nav-pills pull-left">
                         <ui:repeat var="type" value="#{patentController.filters}">

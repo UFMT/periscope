@@ -14,34 +14,37 @@
 
         <ui:define name="content">
 
-            <h1>#{msgs['main.inventor']}</h1>
+            <center><h1>#{msgs['main.inventor']}</h1></center>
 
             <h:form styleClass="container">
 
                 <br />
-
-                <i:filtro controller="#{mainInventorController}" />
+                <p:accordionPanel >
+                    <p:tab title="#{msgs['filters']}" titleStyle="font-size:initial; color:initial">
+                        <i:filtro controller="#{mainInventorController}" />
+                    </p:tab>
+                </p:accordionPanel>
 
                 <h:panelGrid columns="1" id="tudo" styleClass="container" >
-                    
+
                     <p:barChart id="horizontal" value="#{mainInventorController.model}" rendered="#{mainInventorController.model.series.get(0).getData().size()!=0}"
-                            orientation="horizontal" legendPosition="se" datatipFormat="%s"
-                            title="#{msgs['application.year']}" />
+                                orientation="horizontal" legendPosition="se" datatipFormat="%s"
+                                title="#{msgs['application.year']}" />
 
-                <p:dataTable id="inventors"
-                             emptyMessage="#{msgs['no.inventor']}" var="pair"
-                             value="#{mainInventorController.pairs}">
+                    <p:dataTable id="inventors"
+                                 emptyMessage="#{msgs['no.inventor']}" var="pair"
+                                 value="#{mainInventorController.pairs}">
 
-                    <p:column headerText="#{msgs['name']}">
-                        <h:outputText value="#{pair.key}" />
-                    </p:column>
+                        <p:column headerText="#{msgs['name']}">
+                            <h:outputText value="#{pair.key}" />
+                        </p:column>
 
-                    <p:column headerText="#{msgs['documents.number']}">
-                        <h:outputText value="#{pair.value}" />
-                    </p:column>
+                        <p:column headerText="#{msgs['documents.number']}">
+                            <h:outputText value="#{pair.value}" />
+                        </p:column>
 
-                </p:dataTable>
-                
+                    </p:dataTable>
+
                 </h:panelGrid>
 
 

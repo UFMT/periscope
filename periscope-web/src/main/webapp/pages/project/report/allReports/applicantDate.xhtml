@@ -16,7 +16,7 @@
 
             <h:form id="chart" styleClass="container">
 
-                <h1>#{msgs['applications']} / #{msgs['year']}</h1>
+                <center><h1>#{msgs['applications']} / #{msgs['year']}</h1></center>
                 <br/>
                 <p:selectBooleanCheckbox id="complete" itemLabel="#{msgs['completo']}"
                                          value="#{applicantDateReport.filtro.complete}">
@@ -36,7 +36,7 @@
                     <p:calendar value="#{applicantDateReport.filtro.fim}" maxlength="10" mindate="#{applicantDateReport.minDate}" maxdate="#{applicantDateReport.maxDate}" locale="#{msgs['calendar']}" showButtonPanel="false" navigator="true" pattern="dd/MM/yyyy">
                     </p:calendar>
 
-                    <p:commandButton action="#{applicantDateReport.refreshChart()}" update="tudo" value="Pesquisar"></p:commandButton>
+                    <p:commandButton action="#{applicantDateReport.refreshChart()}" update="tudo" value="#{msgs['update']}"></p:commandButton>
                 </h:panelGrid>
 
 
