@@ -45,12 +45,8 @@ public class InventorHarmonizationController implements Serializable {
     private @Inject
     Logger log;
     private @Inject
-    Datastore ds;
-    private @Inject
     @CurrentProject
     Project currentProject;
-    private @Inject
-    ApplicantRepository applicantRepository;
     private @Inject
     InventorRepository inventorRepository;
     private @Inject
@@ -74,7 +70,6 @@ public class InventorHarmonizationController implements Serializable {
     @PostConstruct
     public void init() {
         setSearchType(1);
-        ArrayList<Inventor> pas = inventorRepository.getInventors(currentProject);
         countries = countryRepository.getAll();
         inventors.getInventorRepository().setCurrentProject(currentProject);
         inventors.setHarmonization(true);

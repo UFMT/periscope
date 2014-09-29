@@ -43,7 +43,7 @@ public class LazyApplicantDataModel extends LazyDataModel<Applicant> {
     public List<Applicant> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
         applicantRepository.setSearchType(searchType);
         if (harmonization) {
-            
+
             datasource = applicantRepository.load(first, pageSize, sortField, sortOrder.ordinal(), filters);
 
         } else {

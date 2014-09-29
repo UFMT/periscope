@@ -8,23 +8,7 @@
 
     <f:view contentType="text/html">
         <h:form id="formAll">
-            <!--            <p:accordionPanel>
-                            <p:tab title="#{msgs.adjustmentLot}">
-                                <h:panelGrid columns="2" cellpadding="10">  
-                                    <p:outputLabel value="#{msgs['juridicalNature']}:"/>  
-                                    <p:selectOneMenu id="cmbNature" value="#{applicantHarmonizationController.rule.nature.name}">
-                                        <f:selectItem itemLabel="#{msgs.none}" itemValue=""/>
-                                        <f:selectItems value="#{applicantHarmonizationController.applicantTypes}" var="t" itemValue="#{t.name}" itemLabel="#{msgs[t.name]}" />	
-                                    </p:selectOneMenu>
-                                    <p:outputLabel value="#{msgs['country']}:"/>  
-                                    <p:selectOneMenu value="#{applicantHarmonizationController.rule.country.acronym}" >
-                                        <f:selectItem itemLabel="#{msgs.none}" itemValue=""/>
-                                        <f:selectItems value="#{applicantHarmonizationController.countries}" var="c" itemValue="#{c.acronym}" itemLabel="#{c.name}"/>					
-                                    </p:selectOneMenu>
-                                </h:panelGrid> 
-                                <p:button value="#{msgs.apply}"/>
-                            </p:tab>
-                        </p:accordionPanel>-->
+            
             <p:dataTable id="applicants" var="pa" style="font-size:12px"
                          emptyMessage="#{msgs['no.applicant']}"
                          value="#{applicantHarmonizationController.applicants}" paginator="true"
@@ -47,15 +31,7 @@
                     </h:panelGrid> 
 
                 </f:facet>
-                <!--                <f:facet name="header">  
-                                    <p:outputPanel>  
-                                        <h:panelGrid columns="3">
-                                            <p:outputLabel id="searchNameLabel" value="#{msgs['searchName']}:"/>
-                                            <p:inputText id="searchNameText" style="width:600px" />
-                                            <p:button id="btnSearch" value="#{msgs['search']}"/>
-                                        </h:panelGrid>
-                                    </p:outputPanel>  
-                                </f:facet>-->
+               
 
                 <p:column headerText="">					
                     <p:selectBooleanCheckbox id="campo" 
