@@ -386,7 +386,7 @@ public class ApplicantRepository {
         outputTotal = ds.getCollection(Patent.class).aggregate(match, parametersGroup);
 
 //        System.out.println("CHEGOU AQUI");
-//        System.out.println(outputTotal.getCommand().toString());
+//        System.out.println("1ª consulta de applicants "+outputTotal.getCommand().toString());
         BasicDBList outputListTotal = (BasicDBList) outputTotal.getCommandResult().get("result");
         for (Object patent : outputListTotal) {
             DBObject result = (DBObject) patent;
@@ -395,7 +395,7 @@ public class ApplicantRepository {
         }
 
         AggregationOutput output = ds.getCollection(Patent.class).aggregate(match, parameters);
-//        System.out.println(output.getCommand().toString());
+//        System.out.println("2ª consulta de applicants "+output.getCommand().toString());
         BasicDBList outputList = (BasicDBList) output.getCommandResult().get("result");
 
 //        this.setCount(output.);

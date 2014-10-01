@@ -296,6 +296,7 @@ public class InventorRepository {
     public List<Inventor> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters, List<Inventor> list) {
 
         ArrayList<DBObject> parametros = new ArrayList<DBObject>();
+        ArrayList<DBObject> parametrosGroup = new ArrayList<DBObject>();
 
         DBObject match = new BasicDBObject();
 
@@ -305,6 +306,7 @@ public class InventorRepository {
 
         DBObject unwind = new BasicDBObject("$unwind", "$inventors");
         parametros.add(unwind);
+        parametrosGroup.add(unwind);
 
         DBObject matchFilterItem = new BasicDBObject();
         for (Map.Entry<String, String> entry : filters.entrySet()) {
@@ -319,10 +321,11 @@ public class InventorRepository {
             matchFilterItem.put("inventors." + column, regex);
 //            System.out.println(matchFilterItem.toString());
         }
-        DBObject matchSearch = new BasicDBObject("$match", matchFilterItem);
-        parametros.add(matchSearch);
 
-        DBObject matchFilter = new BasicDBObject();
+//        DBObject matchSearch = new BasicDBObject("$match", matchFilterItem);
+//        parametros.add(matchSearch);
+
+//        DBObject matchFilter = new BasicDBObject();
         if (list != null) {
             BasicDBList lista = new BasicDBList();
             List<String> t = new ArrayList<String>();
@@ -330,10 +333,14 @@ public class InventorRepository {
                 t.add(inv.getName());
             }
             lista.addAll(t);
-            matchFilter.put("inventors.name", new BasicDBObject("$nin", lista));
+            matchFilterItem.put("inventors.name", new BasicDBObject("$nin", lista));
         }
-        DBObject matchEdit = new BasicDBObject("$match", matchFilter);
-        parametros.add(matchEdit);
+
+        if (matchFilterItem.keySet().size() > 0) {
+            DBObject matchEdit = new BasicDBObject("$match", matchFilterItem);
+            parametros.add(matchEdit);
+            parametrosGroup.add(matchEdit);
+        }
 
         DBObject idData = new BasicDBObject("name", "$inventors.name");
         idData.put("country", "$inventors.country");
@@ -345,11 +352,13 @@ public class InventorRepository {
         DBObject group = new BasicDBObject();
         group.put("$group", fields);
         parametros.add(group);
+        parametrosGroup.add(group);
 
         fields = new BasicDBObject("_id", "nome");
         fields.put("documentCount", new BasicDBObject("$sum", 1));
         DBObject groupTotal = new BasicDBObject();
         groupTotal.put("$group", fields);
+        parametrosGroup.add(groupTotal);
 
         if (sortField != null) {
             if ("documentCount".equals(sortField)) {
@@ -373,19 +382,25 @@ public class InventorRepository {
         DBObject[] parameters = new DBObject[parametros.size()];
         parameters = parametros.toArray(parameters);
 
+        DBObject[] parametersGroup = new DBObject[parametrosGroup.size()];
+        parametersGroup = parametrosGroup.toArray(parametersGroup);
+
         match.put("$match", matchProj);
-
-        AggregationOutput outputTotal = ds.getCollection(Patent.class).aggregate(match, unwind, matchEdit, matchSearch, group, groupTotal);
-
+        long out1 = System.currentTimeMillis();
+        AggregationOutput outputTotal = ds.getCollection(Patent.class).aggregate(match, parametersGroup);
+//        System.out.println("1ª Consulta Inventores: " + outputTotal.getCommand());
+//        System.out.println("Tempo 1º output: " + (System.currentTimeMillis() - out1));
         BasicDBList outputListTotal = (BasicDBList) outputTotal.getCommandResult().get("result");
         for (Object patent : outputListTotal) {
             DBObject result = (DBObject) patent;
             this.setCount(Integer.parseInt(result.get("documentCount").toString()));
             break;
         }
-
+        long out2 = System.currentTimeMillis();
         AggregationOutput output = ds.getCollection(Patent.class).aggregate(match, parameters);
-//        System.out.println(output.getCommand().toString());
+//        System.out.println("2ª Consulta Inventores: " + output.getCommand().toString());
+//        System.out.println("Tempo 2º output: " + (System.currentTimeMillis() - out2));
+
         BasicDBList outputList = (BasicDBList) output.getCommandResult().get("result");
 
 //        this.setCount(output.);

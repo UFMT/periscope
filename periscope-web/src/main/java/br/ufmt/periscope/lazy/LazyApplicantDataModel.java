@@ -41,6 +41,7 @@ public class LazyApplicantDataModel extends LazyDataModel<Applicant> {
 
     @Override
     public List<Applicant> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
+        long inicio = System.currentTimeMillis();
         applicantRepository.setSearchType(searchType);
         if (harmonization) {
 
@@ -58,7 +59,11 @@ public class LazyApplicantDataModel extends LazyDataModel<Applicant> {
                 applicant.setSelected(true);
             }
         }
-        return datasource;
+        try {
+            return datasource;
+        } finally {
+//            System.out.println("Tempo de Load Applicant: " + (System.currentTimeMillis() - inicio) + " millis");
+        }
     }
 
     public ApplicantRepository getApplicantRepository() {

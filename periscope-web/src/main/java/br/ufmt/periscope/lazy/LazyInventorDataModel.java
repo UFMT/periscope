@@ -41,9 +41,10 @@ public class LazyInventorDataModel extends LazyDataModel<Inventor> {
 
     @Override
     public List<Inventor> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
+        long inicio = System.currentTimeMillis();
         inventorRepository.setSearchType(searchType);
         if (harmonization) {
-            
+
             datasource = inventorRepository.load(first, pageSize, sortField, sortOrder.ordinal(), filters);
 
         } else {
@@ -56,7 +57,11 @@ public class LazyInventorDataModel extends LazyDataModel<Inventor> {
                 inventor.setSelected(true);
             }
         }
-        return datasource;
+        try {
+            return datasource;
+        } finally {
+//            System.out.println("Tempo de Load Inventor: " + (System.currentTimeMillis() - inicio) + " millis");
+        }
     }
 
     public InventorRepository getInventorRepository() {
