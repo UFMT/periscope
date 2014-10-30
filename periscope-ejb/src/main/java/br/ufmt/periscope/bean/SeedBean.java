@@ -54,7 +54,7 @@ public class SeedBean {
         PERISCOPE_DIR = System.getenv("PERISCOPE_DIR");
         if (PERISCOPE_DIR == null) {
             if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-                PERISCOPE_DIR = "";
+                PERISCOPE_DIR = "C:\\ProgramData\\Periscope";
             } else {
                 PERISCOPE_DIR = "/opt/periscope";
             }
