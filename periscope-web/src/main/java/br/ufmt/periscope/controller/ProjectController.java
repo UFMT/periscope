@@ -1,5 +1,7 @@
 package br.ufmt.periscope.controller;
 
+import br.ufmt.periscope.indexer.PatentIndexer;
+import br.ufmt.periscope.model.Patent;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +20,9 @@ import org.bson.types.ObjectId;
 
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.model.User;
+import br.ufmt.periscope.qualifier.CurrentProject;
 import br.ufmt.periscope.qualifier.LoggedUser;
+import br.ufmt.periscope.repository.PatentRepository;
 import br.ufmt.periscope.repository.ProjectRepository;
 
 import com.github.jmkgreen.morphia.Datastore;
@@ -30,8 +34,10 @@ public class ProjectController {
 
 	private @Inject Datastore ds; 
 	private @Inject ProjectRepository projectRepository;
+        private @Inject PatentRepository patentRepository;
 	private @Inject @LoggedUser User currentUser;
-	private DataModel<Project> projects = null;
+        private @Inject PatentIndexer indexer;
+	private DataModel<Project> projects = null;        
 	private Project project = new Project();
 	private List<User> freeUsers = null;
 	private String selectedUser = null;
@@ -94,7 +100,7 @@ public class ProjectController {
                 getExternalContext().getFlash();
 		flash.put("info", "Atualizado com Sucesso");
 		return "projectList";
-	}
+	}                
 
 	public String delete(String id) throws UnknownHostException{			
 		projectRepository.deleteProject(id);		
@@ -104,6 +110,14 @@ public class ProjectController {
 		return "projectList";		
 	}
 	
+        
+        public String reindexAll(Project project) {            
+            System.out.println("Project : " + project.getId());
+            List<Patent> patents = patentRepository.getAllPatents(project);
+            indexer.indexPatents(patents);
+            return "";
+        }
+        
 	public DataModel<Project> getProjects() {
 		if(projects == null){
 			projects = new ListDataModel<Project>(projectRepository.getProjectList(currentUser));
@@ -133,7 +147,7 @@ public class ProjectController {
 			freeUsers = ds.createQuery(User.class).field("id").notIn(keys).asList();					
 		}
 		return freeUsers;
-	}
+	}                
 
 	public void setFreeUsers(List<User> freeUsers) {
 		this.freeUsers = freeUsers;
