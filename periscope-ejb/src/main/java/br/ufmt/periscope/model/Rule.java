@@ -5,6 +5,7 @@ import com.github.jmkgreen.morphia.annotations.Entity;
 import com.github.jmkgreen.morphia.annotations.Id;
 import com.github.jmkgreen.morphia.annotations.Reference;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import org.bson.types.ObjectId;
@@ -122,5 +123,5 @@ public class Rule implements Serializable {
 
     public void setProject(Project project) {
         this.project = project;
-    }
+    }  
 }

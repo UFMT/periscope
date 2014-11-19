@@ -73,6 +73,7 @@ public class ApplicantHarmonizationController implements Serializable {
     @PostConstruct
     public void init() {
 //		List<Applicant> pas = applicantRepository.getApplicants(currentProject);
+        System.out.println("APP HARM");
         applicantTypes = typeRepository.getAll();
         countries = countryRepository.getAll();
         applicants.getApplicantRepository().setCurrentProject(currentProject);
@@ -198,6 +199,7 @@ public class ApplicantHarmonizationController implements Serializable {
         int i = 0;
         for (Applicant pa : selectedApplicants) {
             names[i] = pa.getName();
+//            System.out.println(i+" : "+names[i]);
             i++;
         }
         Set<String> sugestions = applicantRepository.getApplicantSugestions(currentProject, 100, names);

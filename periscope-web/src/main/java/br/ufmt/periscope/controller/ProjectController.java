@@ -45,6 +45,7 @@ public class ProjectController {
 	
 	@PostConstruct
 	public void init(){
+            System.out.println("Project");
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest req = (HttpServletRequest) context.getExternalContext().getRequest();		
 		if(req.getParameter("projectId") != null){

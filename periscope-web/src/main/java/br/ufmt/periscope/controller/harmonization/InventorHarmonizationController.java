@@ -65,10 +65,11 @@ public class InventorHarmonizationController implements Serializable {
     private String acronymDefault = "BR";
     private Inventor selectedRadio;
     private Integer searchType;
-    @Inject RuleController ruleController;
+    private @Inject RuleController ruleController;
 
     @PostConstruct
     public void init() {
+        System.out.println("INV HARM");
         setSearchType(1);
         countries = countryRepository.getAll();
         inventors.getInventorRepository().setCurrentProject(currentProject);

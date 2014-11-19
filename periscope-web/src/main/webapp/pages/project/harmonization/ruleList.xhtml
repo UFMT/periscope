@@ -16,7 +16,7 @@
                 <p:tab id="tab1" title="#{msgs['applicants']}">				
                     <p:dataTable id="ruleApplicants" var="rule" style="font-size:12px"
                                  emptyMessage="#{msgs['no.rules']}"
-                                 value="#{ruleController.applicantRules}" paginator="true"
+                                 value="#{ruleController.lazyApplicants}" paginator="true" lazy="true"
                                  paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
                                  rowKey="#{rule.id.toString()}" sortBy="#{rule.name}">
 
@@ -67,7 +67,7 @@
                 <p:tab id="tab2" title="#{msgs['inventors']}">					
                     <p:dataTable id="ruleInventors" var="rule" style="font-size:12px"
                                  emptyMessage="#{msgs['no.rules']}"
-                                 value="#{ruleController.inventorRules}" paginator="true"
+                                 value="#{ruleController.lazyInventors}" paginator="true" lazy="true"
                                  paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
                                  rowKey="#{rule.id.toString()}" sortBy="#{rule.name}">
 

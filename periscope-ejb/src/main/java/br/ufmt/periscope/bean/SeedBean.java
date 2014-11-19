@@ -76,7 +76,6 @@ public class SeedBean {
         insertAlgorithFromFile("lcs", "js/longestCommonSubstring.js");
         insertAlgorithFromFile("levenshtein", "js/levenshtein.js");
         insertAlgorithFromFile("LiquidMetal", "js/liquidmetal.js");
-
     }
 
     private void insertAlgorithFromFile(String name, String path) {
@@ -166,6 +165,11 @@ public class SeedBean {
             }
 
             log.info("Cadastrado " + descriptors.size() + " descritores comuns.");
+            try {
+                writer.close();
+            } catch (IOException ex) {
+                Logger.getLogger(SeedBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         try {
             writer.close();

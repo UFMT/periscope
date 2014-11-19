@@ -81,6 +81,7 @@ public class PatentController {
      */
     @PostConstruct
     public void init() {
+        System.out.println("Patent");
         patents.getRepo().setBlacklisted(false);
         patents.getRepo().setCompleted(false);
         patents.getRepo().setCurrentProject(currentProject);
