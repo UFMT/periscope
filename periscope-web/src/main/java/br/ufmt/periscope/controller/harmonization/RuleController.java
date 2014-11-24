@@ -42,6 +42,8 @@ public class RuleController implements Serializable {
     LazyRuleDataModel lazyApplicants;
     private @Inject
     LazyRuleDataModel lazyInventors;
+    private List<Applicant> appSugestions = null;
+    private Rule selectedRule = null;
     private List<Rule> applicantRules = new ArrayList<Rule>();
     private List<Rule> inventorRules = new ArrayList<Rule>();
     private @Inject
@@ -55,7 +57,6 @@ public class RuleController implements Serializable {
         lazyInventors.setSearchType(2);
         lazyInventors.getRuleRepository().setCurrentProject(currentProject);
         System.out.println("Novo");
-        inventorRules = ruleRepository.getInventorRule(currentProject);
     }
 
     public String apply(String id) {
@@ -94,7 +95,7 @@ public class RuleController implements Serializable {
     }
 
     
-    public ArrayList<Applicant> loadApplicantSugestions(Rule rule) {
+    public void loadApplicantSugestions(Rule rule) {
 //        System.out.println("Load");
         String[] names = new String[rule.getSubstitutions().size()];
 //        System.out.println("Tamanho: "+rule.getSubstitutions().size());
@@ -111,7 +112,8 @@ public class RuleController implements Serializable {
         for (String sugestion : sugestions) {
             aplicants.add(new Applicant(sugestion));
         }
-        return aplicants;
+        setSelectedRule(rule);
+        setAppSugestions(aplicants);
 
     }
 
@@ -150,6 +152,22 @@ public class RuleController implements Serializable {
 
     public void setLazyInventors(LazyRuleDataModel lazyInventors) {
         this.lazyInventors = lazyInventors;
+    }
+
+    public List<Applicant> getAppSugestions() {
+        return appSugestions;
+    }
+
+    public void setAppSugestions(List<Applicant> appSugestions) {
+        this.appSugestions = appSugestions;
+    }
+
+    public Rule getSelectedRule() {
+        return selectedRule;
+    }
+
+    public void setSelectedRule(Rule selectedRule) {
+        this.selectedRule = selectedRule;
     }
     
     
