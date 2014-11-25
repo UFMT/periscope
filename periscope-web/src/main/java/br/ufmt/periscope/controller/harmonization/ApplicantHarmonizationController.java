@@ -118,6 +118,7 @@ public class ApplicantHarmonizationController implements Serializable {
     }
 
     public void onSelectApplicantSugestion() {
+        System.out.println("ES");
         Iterator<SelectObject<Applicant>> it = applicantSugestions.iterator();
         selectedApplicantSugestions.clear();
         while (it.hasNext()) {

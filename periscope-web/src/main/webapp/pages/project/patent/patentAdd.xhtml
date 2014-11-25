@@ -61,7 +61,7 @@
                         </h:panelGrid>
                         <br/>
 
-                        <p:commandButton value="#{msgs['new']}" action="#{patentController.doPriority()}" 
+                        <p:commandButton value="#{msgs['new.priority']}" action="#{patentController.doPriority()}" 
                                          oncomplete="priorityAddDialog.show();" />
 
                         <p:dialog id="addPriority" widgetVar="priorityAddDialog" modal="true" closable="false"
@@ -146,7 +146,7 @@
                         </h:panelGrid>
                         <br/>
 
-                        <p:commandButton value="#{msgs['new']}" action="#{patentController.doApplicant()}" 
+                        <p:commandButton value="#{msgs['new.applicant']}" action="#{patentController.doApplicant()}" 
                                          oncomplete="applicantAddDialog.show();"/>
 
                         <p:dialog id="addNewApplicant" widgetVar="applicantAddDialog" modal="true" closable="false"
@@ -230,7 +230,7 @@
                         </h:panelGrid>
                         <br/>
 
-                        <p:commandButton value="#{msgs['new']}" action="#{patentController.doInventor()}"
+                        <p:commandButton value="#{msgs['new.inventor']}" action="#{patentController.doInventor()}"
                                          oncomplete="inventorAddDialog.show();"/>
 
                         <p:dialog id="addInventor" widgetVar="inventorAddDialog" modal="true" closable="false"

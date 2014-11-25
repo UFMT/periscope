@@ -3,6 +3,7 @@ package br.ufmt.periscope.controller.harmonization;
 import br.ufmt.periscope.harmonization.Harmonization;
 import br.ufmt.periscope.lazy.LazyRuleDataModel;
 import br.ufmt.periscope.model.Applicant;
+import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.model.Rule;
 import br.ufmt.periscope.qualifier.CurrentProject;
@@ -11,6 +12,7 @@ import br.ufmt.periscope.repository.RuleRepository;
 import br.ufmt.periscope.util.SelectObject;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -42,12 +44,6 @@ public class RuleController implements Serializable {
     LazyRuleDataModel lazyApplicants;
     private @Inject
     LazyRuleDataModel lazyInventors;
-    private List<Applicant> appSugestions = null;
-    private Rule selectedRule = null;
-    private List<Rule> applicantRules = new ArrayList<Rule>();
-    private List<Rule> inventorRules = new ArrayList<Rule>();
-    private @Inject
-    ApplicantRepository applicantRepository;
 
     @PostConstruct
     public void init() {
@@ -56,9 +52,52 @@ public class RuleController implements Serializable {
         lazyApplicants.getRuleRepository().setCurrentProject(currentProject);
         lazyInventors.setSearchType(2);
         lazyInventors.getRuleRepository().setCurrentProject(currentProject);
-        System.out.println("Novo");
+    }
+    
+    public String applyAll(){
+        List<Rule> rules = ruleRepository.getAllRule(currentProject);
+        System.out.println("Apply");
+        for (Rule rule : rules) {
+            harmonization.applyRule(rule);
+        }
+        Flash flash = FacesContext.getCurrentInstance().
+                getExternalContext().getFlash();
+        flash.put("success", "Regra aplicada com sucesso");
+        return "listRule";
     }
 
+    public String applyApplicant(Rule rule){
+        if (rule.getAppSugestions() != null) {
+            List<String> subs = new ArrayList<String>();
+            for (Applicant applicant : rule.getAppSugestions()) {
+                if (applicant.getSelected()) {
+                    subs.add(applicant.getName());
+                }
+            }
+            if (!subs.isEmpty()) {
+                rule.setSubstitutions(new HashSet<String>(subs));
+                ruleRepository.save(rule);
+            }
+        }
+        return apply(rule.getId().toString());
+    }
+    
+    public String applyInventor(Rule rule){
+        if (rule.getInvSugestions() != null) {
+            List<String> subs = new ArrayList<String>();
+            for (Inventor inventor : rule.getInvSugestions()) {
+                if (inventor.getSelected()) {
+                    subs.add(inventor.getName());
+                }
+            }
+            if (!subs.isEmpty()) {
+                rule.setSubstitutions(new HashSet<String>(subs));
+                ruleRepository.save(rule);
+            }
+        }
+        return apply(rule.getId().toString());
+    }
+    
     public String apply(String id) {
         
         Rule rule = ruleRepository.findById(id);
@@ -68,22 +107,6 @@ public class RuleController implements Serializable {
         flash.put("success", "Regra aplicada com sucesso");
         return "listRule";
     }
-    
-    /*
-    public String apply(Rule rule){
-        System.out.println("G: "+rule.getApplicantSugestions().size());
-        for (Applicant pa : rule.getApplicantSugestions()) {
-            if (pa.getSelected()) {
-                System.out.println("teste: "+pa.toString());
-            }else{
-                System.out.println("NO!");
-            }
-        }
-        Flash flash = FacesContext.getCurrentInstance().
-                getExternalContext().getFlash();
-        flash.put("success", "Regra aplicada com sucesso");
-        return "listRule";
-    }*/
 
     public String delete(String id) {
         System.out.println("Oi");
@@ -92,50 +115,6 @@ public class RuleController implements Serializable {
                 getExternalContext().getFlash();
         flash.put("info", "Deletado com sucesso");
         return "listRule";
-    }
-
-    
-    public void loadApplicantSugestions(Rule rule) {
-//        System.out.println("Load");
-        String[] names = new String[rule.getSubstitutions().size()];
-//        System.out.println("Tamanho: "+rule.getSubstitutions().size());
-        int i = 0;
-        for (Iterator<String> it = rule.getSubstitutions().iterator(); it.hasNext();) {
-            names[i] = it.next();
-//            System.out.println(i+" : "+names[i]);
-            i++;
-        }
-//        System.out.println("pre-in: "+names.toString());
-        Set<String> sugestions = applicantRepository.getApplicantSugestions(currentProject, 100, names);
-//        System.out.println("saiu");
-        ArrayList<Applicant> aplicants = new ArrayList<Applicant>();
-        for (String sugestion : sugestions) {
-            aplicants.add(new Applicant(sugestion));
-        }
-        setSelectedRule(rule);
-        setAppSugestions(aplicants);
-
-    }
-
-    public void print(Applicant rule){
-        System.out.println("APP "+rule.getName());
-    }
-    
-
-    public List<Rule> getApplicantRules() {
-        return applicantRules;
-    }
-
-    public void setApplicantRules(List<Rule> applicantRules) {
-        this.applicantRules = applicantRules;
-    }
-
-    public List<Rule> getInventorRules() {
-        return inventorRules;
-    }
-
-    public void setInventorRules(List<Rule> inventorRules) {
-        this.inventorRules = inventorRules;
     }
 
     public LazyRuleDataModel getLazyApplicants() {
@@ -152,23 +131,5 @@ public class RuleController implements Serializable {
 
     public void setLazyInventors(LazyRuleDataModel lazyInventors) {
         this.lazyInventors = lazyInventors;
-    }
-
-    public List<Applicant> getAppSugestions() {
-        return appSugestions;
-    }
-
-    public void setAppSugestions(List<Applicant> appSugestions) {
-        this.appSugestions = appSugestions;
-    }
-
-    public Rule getSelectedRule() {
-        return selectedRule;
-    }
-
-    public void setSelectedRule(Rule selectedRule) {
-        this.selectedRule = selectedRule;
-    }
-    
-    
+    }    
 }

@@ -211,7 +211,7 @@ public class ApplicantRepository {
             Query queryProject = new QueryParser(Version.LUCENE_47, "project", analyzer)
                     .parse(project.getId().toString());
             queryProject.setBoost(0.1f);
-            System.out.println("An");
+//            System.out.println("An");
             IndexSearcher searcher = new IndexSearcher(reader);
             for (String name : names) {
                 // Cria uma stream de tokens com o analyzer

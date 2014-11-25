@@ -4,9 +4,10 @@ import com.github.jmkgreen.morphia.annotations.Embedded;
 import com.github.jmkgreen.morphia.annotations.Entity;
 import com.github.jmkgreen.morphia.annotations.Id;
 import com.github.jmkgreen.morphia.annotations.Reference;
+import com.github.jmkgreen.morphia.annotations.Transient;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import org.bson.types.ObjectId;
 
@@ -31,6 +32,11 @@ public class Rule implements Serializable {
     private ApplicantType nature;
     private RuleType type;
 
+    @Transient
+    private List<Applicant> appSugestions;
+    @Transient
+    private List<Inventor> invSugestions;
+    
     @Reference
     private Project project;
 
@@ -124,4 +130,21 @@ public class Rule implements Serializable {
     public void setProject(Project project) {
         this.project = project;
     }  
+
+    public List<Applicant> getAppSugestions() {
+        return appSugestions;
+    }
+
+    public void setAppSugestions(List<Applicant> appSugestions) {
+        this.appSugestions = appSugestions;
+    }
+
+    public List<Inventor> getInvSugestions() {
+        return invSugestions;
+    }
+
+    public void setInvSugestions(List<Inventor> invSugestions) {
+        this.invSugestions = invSugestions;
+    }
+    
 }

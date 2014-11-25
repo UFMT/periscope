@@ -1,7 +1,5 @@
 package br.ufmt.periscope.repository;
 
-import br.ufmt.periscope.model.Applicant;
-import br.ufmt.periscope.model.Patent;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -16,10 +14,7 @@ import br.ufmt.periscope.model.RuleType;
 import com.github.jmkgreen.morphia.Datastore;
 import com.github.jmkgreen.morphia.Key;
 import com.github.jmkgreen.morphia.query.Query;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 @Named
 public class RuleRepository {

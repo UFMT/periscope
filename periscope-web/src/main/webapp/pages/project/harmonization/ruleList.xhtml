@@ -7,19 +7,17 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template/template.xhtml">
-
         <ui:define name="content">
             <ui:include src="/template/flashmessages.xhtml" />
             <h2>#{msgs['harmonization.rules']}</h2>
             <br/>
-            <p:tabView id="tabView"> 
+            <p:tabView id="tabView" dynamic="true"> 
                 <p:tab id="tab1" title="#{msgs['applicants']}">				
                     <p:dataTable id="ruleApplicants" var="rule" style="font-size:12px"
                                  emptyMessage="#{msgs['no.rules']}"
                                  value="#{ruleController.lazyApplicants}" paginator="true" lazy="true"
                                  paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
-                                 rowKey="#{rule.id.toString()}" sortBy="#{rule.name}">
-
+                                 rowKey="#{rule.id.toString()}" sortBy="#{rule.name}" >
                         <p:columnGroup type="header">
                             <p:row>						
                                 <p:column rowspan="2" headerText="#{msgs['name']}" sortBy="#{rule.name}"/>
@@ -28,6 +26,7 @@
                                 <p:column rowspan="2" headerText="#{msgs['country']}" sortBy="#{rule.country.name}"/>
                                 <p:column rowspan="2" headerText="#{msgs['nature']}" sortBy="#{rule.nature.name}"/>
                                 <p:column rowspan="2" headerText="#{msgs['actions']}" />
+                                <p:column rowspan="2" headerText="#{msgs['sugestions']}"/>
                             </p:row>
                         </p:columnGroup>		
                         <p:column>														
@@ -47,10 +46,10 @@
                         </p:column>
                         <p:column>
                             <center>
-                                <h:form style="margin-bottom:0px">
+                                    <h:form style="margin-bottom:0px">
                                     <h:commandLink value="#{msgs['apply']}"
                                                    style="color:white;margin-right: 10px" class="btn btn-inverse"
-                                                   action="#{ruleController.apply(rule.id.toString())}">	
+                                                   action="#{ruleController.applyApplicant(rule)}">	
                                     </h:commandLink>
                                     <h:commandLink value="#{msgs['delete']}"
                                                    style="color:white;margin-right: 10px" class="btn btn-inverse"
@@ -58,11 +57,36 @@
                                                                return false;
                                                            }" 
                                                    action="#{ruleController.delete(rule.id.toString())}">										
-                                    </h:commandLink>							
+                                    </h:commandLink>
                                 </h:form>
                             </center>
                         </p:column>
-                    </p:dataTable>				
+                        <p:column>
+                            <h:form>
+                                <center>
+                                    <p:accordionPanel activeIndex="null" rendered="#{rule.appSugestions.size() > 0}">
+                                        <p:tab titleStyle="font-size:12; color:initial" 
+                                               title="#{msgs['show']}">
+                                            <p:dataTable value="#{rule.appSugestions}"
+                                                         emptyMessage="#{msgs['no.sugestions']}" var="app" id="tabela">
+                                                <p:column>
+                                                    <p:selectBooleanCheckbox 
+                                                                value="#{app.selected}">
+                                                        <p:ajax event="change" update="@this"/>
+                                                    </p:selectBooleanCheckbox>
+                                                </p:column>
+                                                <p:column>
+                                                    #{app.name}
+                                                </p:column>
+                                            </p:dataTable>
+                                            
+                                        </p:tab>
+                                    </p:accordionPanel>
+                                    <h:outputLabel value="#{msgs['no.sugestions']}" rendered="#{rule.appSugestions.size() == 0}"/>
+                                </center>
+                            </h:form>
+                        </p:column>
+                    </p:dataTable>
                 </p:tab>  			
                 <p:tab id="tab2" title="#{msgs['inventors']}">					
                     <p:dataTable id="ruleInventors" var="rule" style="font-size:12px"
@@ -78,6 +102,7 @@
                                 <p:column rowspan="2" headerText="#{msgs['substitutions']}" />
                                 <p:column rowspan="2" headerText="#{msgs['country']}" sortBy="#{rule.country.name}"/>
                                 <p:column rowspan="2" headerText="#{msgs['actions']}" />
+                                <p:column rowspan="2" headerText="#{msgs['sugestions']}"/>
                             </p:row>
                         </p:columnGroup>		
                         <p:column>														
@@ -97,22 +122,52 @@
                                 <h:form style="margin-bottom:0px">
                                     <h:commandLink value="#{msgs['apply']}"
                                                    style="color:white;margin-right: 10px" class="btn btn-inverse"
-                                                   action="#{ruleController.apply(rule.id.toString())}">	
+                                                   action="#{ruleController.applyInventor(rule)}">	
                                     </h:commandLink>
                                     <h:commandLink value="#{msgs['delete']}"
                                                    style="color:white;margin-right: 10px" class="btn btn-inverse"
                                                    onclick="if (!confirm('#{msgs['you.sure']}')) {
                                                                return false;
-                                                           }" 
-                                                   action="#{ruleController.delete(rule.id.toString())}">
-                                    </h:commandLink>							
+                                                           }"
+                                                   action="#{ruleController.delete(rule.id.toString())}">										
+                                    </h:commandLink>
                                 </h:form>
                             </center>
+                        </p:column>
+                        <p:column>
+                            <h:form>
+                                <center>
+                                    <p:accordionPanel activeIndex="null" rendered="#{rule.invSugestions.size() > 0}">
+                                        <p:tab titleStyle="font-size:12; color:initial" 
+                                               title="#{msgs['show']}">
+                                            <p:dataTable value="#{rule.invSugestions}"
+                                                         emptyMessage="#{msgs['no.sugestions']}" var="inv" id="tabela">
+                                                <p:column>
+                                                    <p:selectBooleanCheckbox 
+                                                                value="#{inv.selected}">
+                                                        <p:ajax event="change" update="@this"/>
+                                                    </p:selectBooleanCheckbox>
+                                                </p:column>
+                                                <p:column>
+                                                    #{inv.name}
+                                                </p:column>
+                                            </p:dataTable>
+                                        </p:tab>
+                                    </p:accordionPanel>
+                                    <h:outputLabel value="#{msgs['no.sugestions']}" rendered="#{rule.invSugestions.size() == 0}"/>
+                                </center>
+                            </h:form>
                         </p:column>
                     </p:dataTable>
                 </p:tab>  
 
-            </p:tabView>		
+            </p:tabView>
+            <h:form>
+                <center>
+                    <h:commandLink value="#{msgs['apply.all']}" style="color:white"
+                                   class="btn btn-large btn-info" action="#{ruleController.applyAll()}"/>
+                </center>
+            </h:form>
         </ui:define>
     </ui:composition>
-</html>
+</html>			

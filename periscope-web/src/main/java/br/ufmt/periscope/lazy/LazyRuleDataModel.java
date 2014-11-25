@@ -1,7 +1,10 @@
 package br.ufmt.periscope.lazy;
 
 import br.ufmt.periscope.model.Applicant;
+import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.model.Rule;
+import br.ufmt.periscope.repository.ApplicantRepository;
+import br.ufmt.periscope.repository.InventorRepository;
 import br.ufmt.periscope.repository.RuleRepository;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,6 +23,10 @@ public class LazyRuleDataModel extends LazyDataModel<Rule>{
     RuleRepository ruleRepository;
     private List<Rule> rules;
     private Integer searchType;
+    private @Inject
+    ApplicantRepository applicantRepository;
+    private @Inject
+    InventorRepository inventorRepository;
 
     
     @Override
@@ -47,11 +54,55 @@ public class LazyRuleDataModel extends LazyDataModel<Rule>{
     public List<Rule> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
         
         ruleRepository.setSearchType(this.searchType);
-        rules = ruleRepository.load(first, pageSize, sortField, sortOrder.ordinal(), filters);
+        
+        List<Rule> regras = ruleRepository.load(first, pageSize, sortField, sortOrder.ordinal(), filters);
+        rules = new ArrayList<Rule>();
+        if (this.searchType == 1) {
+            for (Rule rule : regras) {
+                rule.setAppSugestions(loadApplicantSugestions(rule));
+                rules.add(rule);
+            }    
+        }else{
+            for (Rule rule : regras) {
+                rule.setInvSugestions(loadInventorSugestions(rule));
+                rules.add(rule);
+            }
+        }
+        
         return rules;
     }
     
+    public List<Applicant> loadApplicantSugestions(Rule rule) {
+        String[] names = new String[rule.getSubstitutions().size()];
+        int i = 0;
+        for (Iterator<String> it = rule.getSubstitutions().iterator(); it.hasNext();) {
+            names[i] = it.next();
+            i++;
+        }
+        Set<String> sugestions = applicantRepository.getApplicantSugestions(ruleRepository.getCurrentProject(), 100, names);
+        ArrayList<Applicant> aplicants = new ArrayList<Applicant>();
+        for (String sugestion : sugestions) {
+            aplicants.add(new Applicant(sugestion));
+        }
+        rule.setAppSugestions(aplicants);
+        return aplicants;
+    }
     
+    public List<Inventor> loadInventorSugestions(Rule rule) {
+        String[] names = new String[rule.getSubstitutions().size()];
+        int i = 0;
+        for (Iterator<String> it = rule.getSubstitutions().iterator(); it.hasNext();) {
+            names[i] = it.next();
+            i++;
+        }
+        Set<String> sugestions = inventorRepository.getInventorSugestions(ruleRepository.getCurrentProject(), 100, names);
+        ArrayList<Inventor> inventors = new ArrayList<Inventor>();
+        for (String sugestion : sugestions) {
+            inventors.add(new Inventor(sugestion));
+        }
+        rule.setInvSugestions(inventors);
+        return inventors;
+    }
 
     public Integer getSearchType() {
         return searchType;
