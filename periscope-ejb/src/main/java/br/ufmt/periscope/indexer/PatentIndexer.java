@@ -1,27 +1,25 @@
 package br.ufmt.periscope.indexer;
 
 import br.ufmt.periscope.indexer.resources.analysis.PatenteeAnalyzer;
-import java.io.IOException;
-import java.util.Iterator;
-import java.util.logging.Logger;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.index.CorruptIndexException;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.Term;
-
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
 import org.apache.lucene.document.TextField;
+import org.apache.lucene.index.CorruptIndexException;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.Term;
 
 @Named
 @RequestScoped
@@ -36,14 +34,21 @@ public class PatentIndexer {
     private @Inject
     Logger log;
 
-    public void indexPatents(Iterable<Patent> patents) {
-        Iterator<Patent> it = patents.iterator();
-        while (it.hasNext()) {
-            Patent p = it.next();
-            if (p == null) {
-                continue;
+    public void indexPatents(List<Patent> patents, Project project) {
+//        System.out.println("LISTA : "+patents.size());
+        for (Patent patent : patents) {
+            if (patent!= null) {
+                patent.setProject(project);
+                indexPatent(patent);
             }
-            indexPatent(p);
+        }
+    }
+
+    public void indexPatents(List<Patent> patents) {
+        for (Patent patent : patents) {
+            if (patent != null) {
+                indexPatent(patent);
+            }
         }
     }
 

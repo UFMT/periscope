@@ -12,7 +12,6 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import javax.faces.bean.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.bson.types.Code;
@@ -26,10 +25,8 @@ import com.github.jmkgreen.morphia.Datastore;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import javax.faces.bean.RequestScoped;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;

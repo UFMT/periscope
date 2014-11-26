@@ -29,6 +29,7 @@ public class Harmonization {
      * @param rule
      */
     public void applyRule(Rule rule) {
+//        Long in = System.currentTimeMillis();
         if (rule == null) {
             return;
         }
@@ -43,6 +44,7 @@ public class Harmonization {
                 break;
 
         }
+//        System.out.println("Aplicar 1 "+(System.currentTimeMillis() - in));
     }
 
     private void applyApplicantRule(Rule rule) {
@@ -54,6 +56,7 @@ public class Harmonization {
         DBObject dbObjectNature = mapper.toDBObject(rule.getNature());
         String applicants[] = new String[rule.getSubstitutions().size()];
         applicants = rule.getSubstitutions().toArray(applicants);
+//        Long ini = System.currentTimeMillis();
         for (String applicant : applicants) {
             DBObject query = BasicDBObjectBuilder
                     .start("project.$id", projectId).add("applicants.name", applicant).get();
@@ -70,15 +73,20 @@ public class Harmonization {
             ds.getCollection(Patent.class)
                     .updateMulti(query, updateOp);
         }
+//        System.out.println("Tempo aplicar "+(System.currentTimeMillis() - ini));
+//        ini = System.currentTimeMillis();
         List<Patent> patents = ds
                 .find(Patent.class)
                 .field("project")
                 .equal(rule.getProject())
                 .field("applicants.name")
                 .in(rule.getSubstitutions())
+                .retrievedFields(true, "_id", "titleSelect", "publicationNumber", "applicants", "inventors")
                 .asList();
-
-        indexer.indexPatents(patents);
+//        System.out.println("Tempo load "+(System.currentTimeMillis() - ini));
+//        ini = System.currentTimeMillis();
+        indexer.indexPatents(patents, rule.getProject());
+//        System.out.println("Tempo indexar "+(System.currentTimeMillis() - ini));
 
     }
 
@@ -117,9 +125,10 @@ public class Harmonization {
                 .equal(rule.getProject())
                 .field("inventors.name")
                 .in(rule.getSubstitutions())
+                .retrievedFields(true, "_id", "titleSelect", "publicationNumber", "applicants", "inventors")
                 .asList();
 
-        indexer.indexPatents(patents);
+        indexer.indexPatents(patents, rule.getProject());
 
     }
 }

@@ -117,7 +117,6 @@ public class ProjectController {
     }
 
     public String reindexAll(Project project) {
-        System.out.println("Project : " + project.getId());
         List<Patent> patents = patentRepository.getAllPatents(project);
         indexer.indexPatents(patents);
         return "";

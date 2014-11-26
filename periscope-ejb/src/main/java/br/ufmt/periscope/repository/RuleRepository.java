@@ -54,13 +54,14 @@ public class RuleRepository {
     }
 
     public List<Rule> getAllRule(Project project) {
-        Long ini = System.currentTimeMillis();
+//        Long ini = System.currentTimeMillis();
         try {
             return ds.find(Rule.class)
                     .field("project").equal(project)
+                    .retrievedFields(true, "_id", "name", "acronym", "substitutions", "country", "state", "type")
                     .asList();
         } finally {
-            System.out.println("Tempo " + (System.currentTimeMillis() - ini));
+//            System.out.println("Tempo " + (System.currentTimeMillis() - ini));
         }
     }
 
