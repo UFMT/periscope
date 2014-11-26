@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package br.ufmt.periscope.lazy;
 
 import br.ufmt.periscope.model.Patent;
@@ -40,8 +35,6 @@ public class LazyPatentDataModel extends LazyDataModel<Patent>{
     }
     
     
-    
-
     @Override
     public List<Patent> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
         datasource = repo.load(first, pageSize, sortField, sortOrder.ordinal(), filters);

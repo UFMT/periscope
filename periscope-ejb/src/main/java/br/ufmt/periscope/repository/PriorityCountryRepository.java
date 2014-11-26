@@ -53,12 +53,12 @@ public class PriorityCountryRepository {
 
         DBObject unwind = new BasicDBObject("$unwind", "$priorities");
         parametros.add(unwind);
-        
+
         DBObject sort1 = new BasicDBObject("$sort", new BasicDBObject("priorities.date", 1));
         parametros.add(sort1);
-        
+
         DBObject group1 = new BasicDBObject();
-        
+
         DBObject fields = new BasicDBObject("_id", "$_id");
         fields.put("country", new BasicDBObject("$first", "$priorities.country"));
         group1.put("$group", fields);

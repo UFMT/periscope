@@ -12,14 +12,14 @@ import com.github.jmkgreen.morphia.Datastore;
 @Named
 public class CountryRepository {
 
-	@Inject
-	private Datastore ds;
-		
-	public List<Country> getAll(){
-		return ds.createQuery(Country.class).order("name") .asList();
-	}
-	
-	public Country getCountryByAcronym(String acronym){
-		return ds.createQuery(Country.class).field("acronym").equal(acronym).get();		
-	}
+    @Inject
+    private Datastore ds;
+
+    public List<Country> getAll() {
+        return ds.createQuery(Country.class).order("name").asList();
+    }
+
+    public Country getCountryByAcronym(String acronym) {
+        return ds.createQuery(Country.class).field("acronym").equal(acronym).get();
+    }
 }

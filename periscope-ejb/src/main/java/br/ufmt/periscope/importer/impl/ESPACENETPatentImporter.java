@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ufmt.periscope.importer.impl;
 
 import br.ufmt.periscope.enumerated.ClassificationType;
@@ -32,10 +27,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
-/**
- *
- * @author adrian
- */
 public class ESPACENETPatentImporter implements PatentImporter {
 
     private @Inject
@@ -189,7 +180,7 @@ public class ESPACENETPatentImporter implements PatentImporter {
                     contentString = cell.getStringCellValue().replaceAll("[\u2002]", " "); // Isso é para substituir o caracter especial por espaço em codificaçao UTF8
                     fillPatentXLS(cell.getColumnIndex(), contentString.replaceAll("[\u00e2][\u20ac][\u201a]", " ")); // // Isso é para substituir o caracter especial por espaço em codificaçao CP1252
                     break;
-                
+
                 default:
                     break;
             }

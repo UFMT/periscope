@@ -13,7 +13,6 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 
 @Named
@@ -22,13 +21,12 @@ public class ApplicantTypeRepository {
     private ResourceBundle bundle;
     private @Inject
     Datastore ds;
-    
+
     @PostConstruct
-    public void init(){
+    public void init() {
         Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
         bundle = ResourceBundle.getBundle("messages", locale);
     }
-    
 
     public void createIfNotExists(ApplicantType type) {
         BasicDBObject where = new BasicDBObject("name", type.getName());

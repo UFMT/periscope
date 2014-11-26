@@ -27,7 +27,6 @@ public class MainInventorReport {
 
         for (Pair pair : i) {
             String inventor = (String) pair.getKey();
-            //System.out.println(aux.get("applicationPerYear"));
             Integer count = (Integer) pair.getValue();
             series.set(inventor, count);
         }

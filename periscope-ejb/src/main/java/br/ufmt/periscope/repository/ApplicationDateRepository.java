@@ -36,7 +36,6 @@ public class ApplicationDateRepository {
         DBObject matchProj = new BasicDBObject();
         matchProj.put("$match", new BasicDBObject("project.$id", projetoAtual.getId()));
 
-
         if (filtro.isComplete()) {
             DBObject matchComplete = new BasicDBObject();
             matchComplete.put("$match", new BasicDBObject("completed", filtro.isComplete()));
@@ -72,20 +71,16 @@ public class ApplicationDateRepository {
         AggregationOutput output = ds.getCollection(Patent.class).aggregate(
                 matchProj, parameters);
 
-//        System.out.println("APLICACAO:"+output.getCommand().toString());
-
         BasicDBList outputResult = (BasicDBList) output.getCommandResult().get("result");
 
         List<Pair> pairs = new ArrayList<Pair>();
         for (Object object : outputResult) {
             DBObject aux = (DBObject) object;
-//            if (!aux.get("_id").toString().equals("-1")) {
 
             String year = aux.get("_id").toString();
             Integer count = (Integer) aux.get("applicationPerYear");
 
             pairs.add(new Pair(year, count));
-//            }
         }
         return pairs;
     }

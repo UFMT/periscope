@@ -26,15 +26,14 @@ public class PublicationDateRepository {
     public List<Pair> getPublicationsByDate(Project projetoAtual, Filters filtro) {
 
         /**
-          db.Patent.aggregate({$match:{blacklisted:false}},
-          {$project:{ year1:{$year:"$publicationDate"}}},
-          {$group:{_id:"$year1",PublicationPerYear:{$sum:1}}}, {$sort:{_id:1}}
-          );
+         db.Patent.aggregate({$match:{blacklisted:false}},
+         {$project:{ year1:{$year:"$publicationDate"}}},
+         {$group:{_id:"$year1",PublicationPerYear:{$sum:1}}}, {$sort:{_id:1}}
+         );
          */
         ArrayList<DBObject> parametros = new ArrayList<DBObject>();
         DBObject matchProj = new BasicDBObject();
         matchProj.put("$match", new BasicDBObject("project.$id", projetoAtual.getId()));
-
 
         if (filtro.isComplete()) {
             DBObject matchComplete = new BasicDBObject();
@@ -70,7 +69,6 @@ public class PublicationDateRepository {
 
         AggregationOutput output = ds.getCollection(Patent.class).aggregate(
                 matchProj, parameters);
-
 
         BasicDBList outputResult = (BasicDBList) output.getCommandResult().get("result");
 

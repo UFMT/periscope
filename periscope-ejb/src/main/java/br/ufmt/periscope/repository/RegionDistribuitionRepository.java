@@ -76,7 +76,6 @@ public class RegionDistribuitionRepository {
             }
 
         }
-//        System.out.println("saiu repositorio");
         return pairs;
 
     }

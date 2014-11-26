@@ -36,7 +36,7 @@ public class Rule implements Serializable {
     private List<Applicant> appSugestions;
     @Transient
     private List<Inventor> invSugestions;
-    
+
     @Reference
     private Project project;
 
@@ -56,7 +56,7 @@ public class Rule implements Serializable {
     }
 
     public String getName() {
-        if(name != null){
+        if (name != null) {
             name = name.toUpperCase();
         }
         return name;
@@ -67,7 +67,7 @@ public class Rule implements Serializable {
     }
 
     public String getAcronym() {
-        if(acronym != null){
+        if (acronym != null) {
             acronym = acronym.toUpperCase();
         }
         return acronym;
@@ -94,7 +94,7 @@ public class Rule implements Serializable {
     }
 
     public ApplicantType getNature() {
-        if(nature == null){
+        if (nature == null) {
             nature = new ApplicantType();
         }
         return nature;
@@ -117,7 +117,7 @@ public class Rule implements Serializable {
     }
 
     public State getState() {
-        if(state == null){
+        if (state == null) {
             state = new State();
         }
         return state;
@@ -129,7 +129,7 @@ public class Rule implements Serializable {
 
     public void setProject(Project project) {
         this.project = project;
-    }  
+    }
 
     public List<Applicant> getAppSugestions() {
         return appSugestions;
@@ -146,5 +146,5 @@ public class Rule implements Serializable {
     public void setInvSugestions(List<Inventor> invSugestions) {
         this.invSugestions = invSugestions;
     }
-    
+
 }

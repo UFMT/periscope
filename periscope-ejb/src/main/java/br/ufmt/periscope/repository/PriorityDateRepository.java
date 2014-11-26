@@ -28,7 +28,6 @@ public class PriorityDateRepository {
          *   {$group:{_id:"$_id", year:{$first:"$year1"}}}, 
          *   {$group:{_id:"$year", prioritiesPerYear:{$sum:1}}});
          */
-
         ArrayList<DBObject> parametros = new ArrayList<DBObject>();
         DBObject matchProj = new BasicDBObject();
         matchProj.put("$match", new BasicDBObject("project.$id", currentProject.getId()));

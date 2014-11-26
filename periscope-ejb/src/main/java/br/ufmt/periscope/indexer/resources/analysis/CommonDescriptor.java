@@ -1,25 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package br.ufmt.periscope.indexer.resources.analysis;
 
 import com.github.jmkgreen.morphia.annotations.Entity;
 import com.github.jmkgreen.morphia.annotations.Id;
-import com.github.jmkgreen.morphia.annotations.Reference;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author mattyws
- */
 @Entity
-public class CommonDescriptor implements Serializable{
-    
+public class CommonDescriptor implements Serializable {
+
     @Id
     private String word;
     private List<List<String>> followedBy;
@@ -94,5 +82,4 @@ public class CommonDescriptor implements Serializable{
         this.onlyPrecededBy = onlyPrecededBy;
     }
 
-    
 }

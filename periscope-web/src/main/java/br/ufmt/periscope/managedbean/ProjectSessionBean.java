@@ -28,9 +28,9 @@ public class ProjectSessionBean implements Serializable {
 
     public String openProject(String idProject) {
         Query<Project> query = ds.createQuery(Project.class);
-        query.retrievedFields(false,"patents").field("_id").equal(new ObjectId(idProject));
+        query.retrievedFields(false, "patents").field("_id").equal(new ObjectId(idProject));
         currentProject = query.asList().get(0);
-      
+
         if (isProjectSelected()) {
             return "projectHome";
         } else {
@@ -41,7 +41,7 @@ public class ProjectSessionBean implements Serializable {
     public boolean isProjectSelected() {
         return currentProject != null;
     }
-    
+
     @Named
     @Produces
     @CurrentProject

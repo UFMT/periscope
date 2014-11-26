@@ -1,8 +1,6 @@
 package br.ufmt.periscope.indexer.resources.analysis;
 
 import java.io.Reader;
-import javax.annotation.PostConstruct;
-import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -31,7 +29,7 @@ public class PatenteeAnalyzer extends Analyzer {
     private @Inject
     CommonDescriptorsSet descriptorSet;
     public Version matchVersion;
-    
+
     @Inject
     public PatenteeAnalyzer(Version version) {
         this.matchVersion = version;

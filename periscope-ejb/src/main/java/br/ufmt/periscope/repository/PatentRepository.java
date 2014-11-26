@@ -76,7 +76,6 @@ public class PatentRepository {
         p.setProject(project);
         if (!patentExistsForProject(p, project)) {
             validator.validate(p);
-//            System.out.println(p.getCompleted());
             project.getPatents().add(p);
             ds.save(p);
             ds.save(project);
@@ -177,7 +176,7 @@ public class PatentRepository {
         Query query = ds.find(Patent.class)
                 .field("project").equal(this.currentProject)
                 .field("blacklisted").equal(this.blacklisted);
-        if(this.completed != null){
+        if (this.completed != null) {
             query.field("completed").equal(this.completed);
         }
 

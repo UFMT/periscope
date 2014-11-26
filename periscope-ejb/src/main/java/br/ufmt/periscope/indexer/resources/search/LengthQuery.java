@@ -1,15 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ufmt.periscope.indexer.resources.search;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.lucene.index.FilteredTermsEnum;
-import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.index.Terms;
 import org.apache.lucene.index.TermsEnum;
@@ -50,7 +41,7 @@ public class LengthQuery extends MultiTermQuery {
     @Override
     protected TermsEnum getTermsEnum(Terms terms, AttributeSource as) throws IOException {
         TermsEnum tenum = terms.iterator(null);
-        if(name.bytes().length == 0) {
+        if (name.bytes().length == 0) {
             return tenum;
         }
         return new LengthTermEnum(tenum, acronym, name);

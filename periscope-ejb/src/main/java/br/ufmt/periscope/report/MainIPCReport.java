@@ -15,25 +15,25 @@ import br.ufmt.periscope.util.Filters;
 @Named
 public class MainIPCReport {
 
-	private @Inject
-	ClassificationRepository repo;
+    private @Inject
+    ClassificationRepository repo;
 
-	public ChartSeries ipcCount(Project currentProject, boolean klass,
-			boolean subKlass, boolean group, boolean subGroup, int limit, Filters filtro) {
+    public ChartSeries ipcCount(Project currentProject, boolean klass,
+            boolean subKlass, boolean group, boolean subGroup, int limit, Filters filtro) {
 
-		ChartSeries series = new ChartSeries("Contagem classificação");
-		
-		List<Pair> i = repo.getMainIPC(currentProject, klass, subKlass, group, subGroup, limit, filtro);
-		
-		Collections.reverse(i);
-		
-		for (Pair pair : i) {
-			String ipc = (String)pair.getKey();
-			Integer count = (Integer)pair.getValue();
-			series.set(ipc, count);
-		}
+        ChartSeries series = new ChartSeries("Contagem classificação");
 
-		return series;
-	}
+        List<Pair> i = repo.getMainIPC(currentProject, klass, subKlass, group, subGroup, limit, filtro);
+
+        Collections.reverse(i);
+
+        for (Pair pair : i) {
+            String ipc = (String) pair.getKey();
+            Integer count = (Integer) pair.getValue();
+            series.set(ipc, count);
+        }
+
+        return series;
+    }
 
 }

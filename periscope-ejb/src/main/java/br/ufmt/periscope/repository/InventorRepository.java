@@ -27,8 +27,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.apache.lucene.analysis.Analyzer;
@@ -111,7 +109,6 @@ public class InventorRepository {
                 "applicationPerInventor", -1));
         parametros.add(sort);
 
-//        System.out.println(limit);
         DBObject pipeLimit = new BasicDBObject("$limit", limit);
         parametros.add(pipeLimit);
 
@@ -119,7 +116,6 @@ public class InventorRepository {
         parameters = parametros.toArray(parameters);
 
         AggregationOutput output = ds.getCollection(Patent.class).aggregate(matchProj, parameters);
-//        System.out.println("query " + output.getCommand());
 
         BasicDBList outputResult = (BasicDBList) output.getCommandResult().get(
                 "result");
@@ -132,7 +128,6 @@ public class InventorRepository {
             Integer count = (Integer) aux.get("applicationPerInventor");
 
             pairs.add(new Pair(inventor, count));
-//            System.out.println(inventor + " " + count);
         }
         return pairs;
     }
@@ -183,7 +178,6 @@ public class InventorRepository {
         DBObject parameters[] = new DBObject[parametros.size()];
         parameters = parametros.toArray(parameters);
         AggregationOutput output = ds.getCollection(Patent.class).aggregate(matchProject, parameters);
-//        System.out.println(output.getCommand());
         BasicDBList outputList = (BasicDBList) output.getCommandResult().get("result");
         List<String> lista = new ArrayList<String>();
         for (Object inventor : outputList) {
@@ -236,14 +230,11 @@ public class InventorRepository {
 
                 TopScoreDocCollector collector = TopScoreDocCollector.create(1000, true);
                 BooleanQuery bq = new BooleanQuery();
-//                System.out.println(name);
                 // Criando a query, dar o name.split é para saber a existência do acrônimo
                 String[] tokens = name.split(" ");
                 // Se for maior que 1, existe um acrônimo
                 if (tokens.length > 1) {
-//                    System.out.println(tokens[0]);
                     bq.add(new PrefixQuery(new Term("inventor", tokens[0])), BooleanClause.Occur.MUST);
-//                    System.out.println(tokens[1]);
                     bq.add(new FuzzyQuery(new Term("inventor", tokens[1]), 1), BooleanClause.Occur.MUST);
                     bq.add(new LengthQuery("inventor", name), BooleanClause.Occur.MUST_NOT);
                 } else {
@@ -256,9 +247,7 @@ public class InventorRepository {
                     }
                 }
 
-
                 bq.add(queryProject, BooleanClause.Occur.MUST);
-//                System.out.println(bq);
 
                 ScoreDoc[] hits = searcher.search(bq, 1000).scoreDocs;
 
@@ -267,7 +256,6 @@ public class InventorRepository {
                 for (int i = 0; i < hits.length; ++i) {
                     int docId = hits[i].doc;
                     Document d = searcher.doc(docId);
-//                  System.out.println((i + 1) + ". " + d.get("applicant") + "\t" + hits[i].score);
                     results.add(d.get("inventor"));
 
                     if (results.size() == top) {
@@ -319,12 +307,10 @@ public class InventorRepository {
                 regex = new BasicDBObject("$regex", value).append("$options", "i");
             }
             matchFilterItem.put("inventors." + column, regex);
-//            System.out.println(matchFilterItem.toString());
         }
 
 //        DBObject matchSearch = new BasicDBObject("$match", matchFilterItem);
 //        parametros.add(matchSearch);
-
 //        DBObject matchFilter = new BasicDBObject();
         if (list != null) {
             BasicDBList lista = new BasicDBList();
@@ -386,20 +372,14 @@ public class InventorRepository {
         parametersGroup = parametrosGroup.toArray(parametersGroup);
 
         match.put("$match", matchProj);
-        long out1 = System.currentTimeMillis();
         AggregationOutput outputTotal = ds.getCollection(Patent.class).aggregate(match, parametersGroup);
-//        System.out.println("1ª Consulta Inventores: " + outputTotal.getCommand());
-//        System.out.println("Tempo 1º output: " + (System.currentTimeMillis() - out1));
         BasicDBList outputListTotal = (BasicDBList) outputTotal.getCommandResult().get("result");
         for (Object patent : outputListTotal) {
             DBObject result = (DBObject) patent;
             this.setCount(Integer.parseInt(result.get("documentCount").toString()));
             break;
         }
-        long out2 = System.currentTimeMillis();
         AggregationOutput output = ds.getCollection(Patent.class).aggregate(match, parameters);
-//        System.out.println("2ª Consulta Inventores: " + output.getCommand().toString());
-//        System.out.println("Tempo 2º output: " + (System.currentTimeMillis() - out2));
 
         BasicDBList outputList = (BasicDBList) output.getCommandResult().get("result");
 
@@ -445,7 +425,6 @@ public class InventorRepository {
 
     public boolean exists(Inventor inventor) {
 
-//        System.out.println("entrou aqui");
         ArrayList<DBObject> parametros = new ArrayList<DBObject>();
 
         DBObject matchProj = new BasicDBObject();
@@ -469,7 +448,6 @@ public class InventorRepository {
         DBObject[] parameters = new DBObject[parametros.size()];
         parameters = parametros.toArray(parameters);
 
-//        System.out.println("foi antes");
         AggregationOutput output = ds.getCollection(Patent.class).aggregate(matchP, parameters);
 
         BasicDBList outputList = (BasicDBList) output.getCommandResult().get("result");

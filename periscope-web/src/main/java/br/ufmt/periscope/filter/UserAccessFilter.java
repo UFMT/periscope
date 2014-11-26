@@ -18,47 +18,49 @@ import javax.servlet.http.HttpSession;
 import br.ufmt.periscope.model.User;
 import br.ufmt.periscope.qualifier.LoggedUser;
 
-@WebFilter(urlPatterns = { "/pages/*", "*.jsf" })
+@WebFilter(urlPatterns = {"/pages/*", "*.jsf"})
 public class UserAccessFilter implements Filter {
-	
-	private @Inject @LoggedUser Instance<User> currentUser;
-	
-	@Override
-	public void doFilter(ServletRequest request, ServletResponse response,
-			FilterChain chain) throws IOException, ServletException {
 
-		HttpServletRequest req = (HttpServletRequest) request;
-		HttpServletResponse resp = (HttpServletResponse) response;
-		HttpSession session = req.getSession(false);
-		String pageRequested = req.getRequestURI().toString();
-		String prefix = req.getContextPath();
+    private @Inject
+    @LoggedUser
+    Instance<User> currentUser;
 
-		if (pageRequested.endsWith("login.jsf")
-				|| pageRequested.endsWith("js.jsf")
-				|| pageRequested.endsWith("css.jsf")) {
-			chain.doFilter(request, response);
-			return;
-		}
-		if(session == null){
-			resp.sendRedirect(prefix + "/login.jsf");
-			return;
-		}
-		if( currentUser.get() == null){
-			resp.sendRedirect(prefix + "/login.jsf");
-			return;
-		}else{			
-			chain.doFilter(request, response);
-		}
-	}
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response,
+            FilterChain chain) throws IOException, ServletException {
 
-	@Override
-	public void init(FilterConfig arg0) throws ServletException {
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse resp = (HttpServletResponse) response;
+        HttpSession session = req.getSession(false);
+        String pageRequested = req.getRequestURI().toString();
+        String prefix = req.getContextPath();
 
-	}
+        if (pageRequested.endsWith("login.jsf")
+                || pageRequested.endsWith("js.jsf")
+                || pageRequested.endsWith("css.jsf")) {
+            chain.doFilter(request, response);
+            return;
+        }
+        if (session == null) {
+            resp.sendRedirect(prefix + "/login.jsf");
+            return;
+        }
+        if (currentUser.get() == null) {
+            resp.sendRedirect(prefix + "/login.jsf");
+            return;
+        } else {
+            chain.doFilter(request, response);
+        }
+    }
 
-	@Override
-	public void destroy() {
+    @Override
+    public void init(FilterConfig arg0) throws ServletException {
 
-	}
+    }
+
+    @Override
+    public void destroy() {
+
+    }
 
 }

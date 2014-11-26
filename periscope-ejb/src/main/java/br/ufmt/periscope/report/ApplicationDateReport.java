@@ -15,23 +15,23 @@ import java.util.Collections;
 @Named
 public class ApplicationDateReport {
 
-	private @Inject	ApplicationDateRepository repo;
+    private @Inject
+    ApplicationDateRepository repo;
 
-	public ChartSeries applicationDateSeries(Project currentProject, Filters filtro) {
-		ChartSeries series = new ChartSeries("Depositos por ano");
-                
-		List<Pair> i = repo.getApplicationsByDate(currentProject, filtro);
-                
-                Collections.reverse(i);
-		
-		for (Pair pair : i) {
-			Integer year = Integer.parseInt((String)pair.getKey());
-			//System.out.println(aux.get("applicationPerYear"));
-			Integer count = (Integer)pair.getValue();
-			series.set(year, count);
-		}		
+    public ChartSeries applicationDateSeries(Project currentProject, Filters filtro) {
+        ChartSeries series = new ChartSeries("Depositos por ano");
 
-		return series;
-	}
+        List<Pair> i = repo.getApplicationsByDate(currentProject, filtro);
+
+        Collections.reverse(i);
+
+        for (Pair pair : i) {
+            Integer year = Integer.parseInt((String) pair.getKey());
+            Integer count = (Integer) pair.getValue();
+            series.set(year, count);
+        }
+
+        return series;
+    }
 
 }

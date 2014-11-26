@@ -27,38 +27,36 @@ import com.mongodb.Mongo;
  */
 public class Resources {
 
-	//@Produces
-	//@PersistenceContext
-	//private EntityManager em;
-	
-	@Singleton
-	@Produces
-	private Mongo createMongo() {
-		try {			
-			return new Mongo();
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
+    //@Produces
+    //@PersistenceContext
+    //private EntityManager em;
+    @Singleton
+    @Produces
+    private Mongo createMongo() {
+        try {
+            return new Mongo();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-	@Produces
-	private Morphia morphia = new Morphia();
+    @Produces
+    private Morphia morphia = new Morphia();
 
+    @Produces
+    public Datastore mongoDs(Mongo mongo, Morphia morphia) {
+        Datastore ds = morphia.createDatastore(mongo, "Periscope");
+        ds.ensureCaps();
+        ds.ensureIndexes();
+        morphia.mapPackage("br.ufmt.periscope.model");
+        DatastoreHolder.getInstance().set(ds);
+        return ds;
+    }
 
-	@Produces
-	public Datastore mongoDs(Mongo mongo, Morphia morphia) {				
-		Datastore ds = morphia.createDatastore(mongo, "Periscope");		
-		ds.ensureCaps();
-		ds.ensureIndexes();
-		morphia.mapPackage("br.ufmt.periscope.model");		
-		DatastoreHolder.getInstance().set(ds);
-		return ds;
-	}	
-	
-	@Produces
-	public Logger produceLog(InjectionPoint injectionPoint) {
-		return Logger.getLogger(injectionPoint.getMember().getDeclaringClass()
-				.getName());
-	}
+    @Produces
+    public Logger produceLog(InjectionPoint injectionPoint) {
+        return Logger.getLogger(injectionPoint.getMember().getDeclaringClass()
+                .getName());
+    }
 }

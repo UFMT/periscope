@@ -4,8 +4,8 @@ import com.github.jmkgreen.morphia.annotations.Embedded;
 import java.io.Serializable;
 
 @Embedded
-public class State implements Serializable,Comparable<State>{
-    
+public class State implements Serializable, Comparable<State> {
+
     private String name;
     private String acronym;
     private String region;
@@ -45,6 +45,5 @@ public class State implements Serializable,Comparable<State>{
         }
         return ret;
     }
-    
-    
+
 }

@@ -1,7 +1,5 @@
 package br.ufmt.periscope.indexer.resources.analysis;
 
-import com.github.jmkgreen.morphia.Datastore;
-import com.mongodb.Mongo;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,8 +47,9 @@ public class CommonDescriptorsTokenFilter extends TokenFilter {
         if (!consumed) {
             consumed = true;
             while (input.incrementToken()) {
-                if(!termAtt.toString().replaceAll("[^A-Za-z0-9_]", "").isEmpty())
+                if (!termAtt.toString().replaceAll("[^A-Za-z0-9_]", "").isEmpty()) {
                     tokens.add(termAtt.toString().replaceAll("[^A-Za-z0-9_]", ""));
+                }
             }
             // The start position
             pos = 0;
@@ -61,7 +60,7 @@ public class CommonDescriptorsTokenFilter extends TokenFilter {
             if (!removed && tokens.size() > 2) {
                 // Remove the common descriptors
                 while (pos < tokens.size()) {
-                    if (descriptorsSet.contains(tokens.get(pos).trim())) {                        
+                    if (descriptorsSet.contains(tokens.get(pos).trim())) {
                         // In there we may remove it
                         removeIt = true;
                         int j = pos + 1;
@@ -74,7 +73,7 @@ public class CommonDescriptorsTokenFilter extends TokenFilter {
                             j += 1;
                         }
                         // If we need to remove, so, remove
-                        if (removeIt) {                            
+                        if (removeIt) {
                             tokens.remove(pos);
                             pos -= 1;
                         }

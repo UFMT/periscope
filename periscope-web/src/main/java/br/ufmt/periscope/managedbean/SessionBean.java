@@ -39,9 +39,8 @@ public class SessionBean implements Serializable {
         Query<User> query = ds.find(User.class)
                 .field("username").equal(loginController.getLogin())
                 .field("password").equal(loginController.getPassword());
-        
-        User u = query.get();
 
+        User u = query.get();
 
         if (u != null) {
             loggedUser = u;

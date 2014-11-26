@@ -14,13 +14,14 @@ import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.util.PDFTextStripper;
 
 public class PDFTextParser {
+
     PDFParser parser;
     String parsedText;
     PDFTextStripper pdfStripper;
     PDDocument pdDoc;
     COSDocument cosDoc;
     PDDocumentInformation pdInformation;
-    
+
     String pdfToText(String fileName) throws IOException {
         File file = new File(fileName);
         try {
@@ -28,19 +29,18 @@ public class PDFTextParser {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(PDFTextParser.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         parser.parse();
         cosDoc = parser.getDocument();
         pdfStripper = new PDFTextStripper();
         pdDoc = new PDDocument(cosDoc);
         parsedText = pdfStripper.getText(pdDoc);
-        
+
         return parsedText;
     }
-    
+
     void writeTextToFile(String pdfText, String fileName) {
-        
-        
+
         try {
             PrintWriter pw = new PrintWriter(fileName);
             pw.print(pdfText);
@@ -49,5 +49,5 @@ public class PDFTextParser {
             Logger.getLogger(PDFTextParser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }

@@ -12,109 +12,110 @@ import com.github.jmkgreen.morphia.annotations.Id;
 import com.github.jmkgreen.morphia.annotations.Reference;
 
 @Entity
-public class Project implements Serializable{
-	
-	@Id
-	private ObjectId id;
-	
-	private String title;
-	private String description;
-	private Boolean isPublic = false;
-	
-	private Date createdAt;
-	private Date updateAt;
-	
-	@Reference private User owner;
-	@Reference private List<User> observers = new ArrayList<User>();
-	@Reference private List<Rule> rules = new ArrayList<Rule>();
-	@Reference private List<Patent> patents = new ArrayList<Patent>();
-        
-	public ObjectId getId() {
-		return id;
-	}
+public class Project implements Serializable {
 
-	public void setId(ObjectId id) {
-		this.id = id;
-	}
+    @Id
+    private ObjectId id;
 
-	public String getTitle() {
-		return title;
-	}
+    private String title;
+    private String description;
+    private Boolean isPublic = false;
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    private Date createdAt;
+    private Date updateAt;
 
-	public String getDescription() {
-		return description;
-	}
+    @Reference
+    private User owner;
+    @Reference
+    private List<User> observers = new ArrayList<User>();
+    @Reference
+    private List<Rule> rules = new ArrayList<Rule>();
+    @Reference
+    private List<Patent> patents = new ArrayList<Patent>();
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public ObjectId getId() {
+        return id;
+    }
 
-	public Boolean getIsPublic() {
-		return isPublic;
-	}
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
 
-	public void setIsPublic(Boolean isPublic) {
-		this.isPublic = isPublic;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public Date getCreatedAt() {
-		return createdAt;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public Date getUpdateAt() {
-		return updateAt;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setUpdateAt(Date updateAt) {
-		this.updateAt = updateAt;
-	}
+    public Boolean getIsPublic() {
+        return isPublic;
+    }
 
-	public User getOwner() {
-		return owner;
-	}
+    public void setIsPublic(Boolean isPublic) {
+        this.isPublic = isPublic;
+    }
 
-	public void setOwner(User owner) {
-		this.owner = owner;
-	}
+    public Date getCreatedAt() {
+        return createdAt;
+    }
 
-	public List<User> getObservers() {
-		return observers;
-	}
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 
-	public void setObservers(List<User> observers) {
-		this.observers = observers;
-	}
+    public Date getUpdateAt() {
+        return updateAt;
+    }
 
-	public List<Patent> getPatents() {
-		return patents;
-	}
+    public void setUpdateAt(Date updateAt) {
+        this.updateAt = updateAt;
+    }
 
-	public void setPatents(List<Patent> patents) {
-		this.patents = patents;                
-	}
+    public User getOwner() {
+        return owner;
+    }
 
-	public List<Rule> getRules() {
-		return rules;
-	}
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
 
-	public void setRules(List<Rule> rules) {
-		this.rules = rules;
-	}
+    public List<User> getObservers() {
+        return observers;
+    }
+
+    public void setObservers(List<User> observers) {
+        this.observers = observers;
+    }
+
+    public List<Patent> getPatents() {
+        return patents;
+    }
+
+    public void setPatents(List<Patent> patents) {
+        this.patents = patents;
+    }
+
+    public List<Rule> getRules() {
+        return rules;
+    }
+
+    public void setRules(List<Rule> rules) {
+        this.rules = rules;
+    }
 
     @Override
     public String toString() {
         return "Project{" + "id=" + id + ", title=" + title + ", description=" + description + ", isPublic=" + isPublic + ", createdAt=" + createdAt + ", updateAt=" + updateAt + ", owner=" + owner + '}';
     }
 
-        
-
-	
 }

@@ -1,7 +1,6 @@
 package br.ufmt.periscope.indexer.resources.analysis;
 
 import com.github.jmkgreen.morphia.Datastore;
-import com.mongodb.Mongo;
 import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +18,10 @@ import org.apache.lucene.search.IndexSearcher;
 @Named
 public class CommonDescriptorsSet {
 
-    private @Inject IndexReader inReader;
-    private @Inject Datastore ds;
+    private @Inject
+    IndexReader inReader;
+    private @Inject
+    Datastore ds;
 
     private List<String> commonDescriptors = new ArrayList<String>();
     private BufferedReader reader;
@@ -90,8 +91,7 @@ public class CommonDescriptorsSet {
 //        }        
         CommonDescriptor descriptorSet = ds.find(CommonDescriptor.class).field("_id").equal(descriptor).get();
 
-        
-        if (descriptorSet != null) {            
+        if (descriptorSet != null) {
             return true;
         }
         return false;

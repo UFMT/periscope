@@ -1,8 +1,6 @@
 package br.ufmt.periscope.indexer;
 
 import br.ufmt.periscope.bean.SeedBean;
-import br.ufmt.periscope.indexer.resources.analysis.CommonDescriptorsSet;
-import br.ufmt.periscope.indexer.resources.analysis.PatenteeAnalyzer;
 import br.ufmt.periscope.model.Project;
 import java.io.IOException;
 import javax.enterprise.inject.Disposes;
@@ -17,9 +15,7 @@ import org.apache.lucene.store.LockObtainFailedException;
 import org.apache.lucene.store.SimpleFSLockFactory;
 import org.apache.lucene.util.Version;
 import com.github.jmkgreen.morphia.Datastore;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.lucene.analysis.Analyzer;
@@ -111,8 +107,6 @@ public class LuceneIndexerResources {
     @Produces
     public Directory getLocalLuceneDirectory() {
         Directory dir = null;
-//        System.out.println(SeedBean.PERISCOPE_DIR);
-//        System.out.println("Titulo do projeto: " + currentProject.getTitle());
         try {
             dir = FSDirectory.open(new File(SeedBean.PERISCOPE_DIR), new SimpleFSLockFactory());
         } catch (IOException ex) {

@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 import org.bson.types.ObjectId;
 
-@Entity(value="fs.files")
+@Entity(value = "fs.files")
 public class Files {
 
     @Id
@@ -21,7 +21,7 @@ public class Files {
 
     public Files() {
     }
-    
+
     public Files(ObjectId id) {
         this.id = id;
     }
@@ -89,7 +89,7 @@ public class Files {
     public void setAliases(List<String> aliases) {
         this.aliases = aliases;
     }
-    
+
     @Override
     public boolean equals(Object o) {
         if (o instanceof Files) {

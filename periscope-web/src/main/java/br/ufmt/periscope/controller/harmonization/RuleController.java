@@ -12,7 +12,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -44,8 +43,8 @@ public class RuleController implements Serializable {
         lazyInventors.setSearchType(2);
         lazyInventors.getRuleRepository().setCurrentProject(currentProject);
     }
-    
-    public String applyAll(){
+
+    public String applyAll() {
         List<Rule> rules = ruleRepository.getAllRule(currentProject);
         for (Rule rule : rules) {
             harmonization.applyRule(rule);
@@ -55,8 +54,8 @@ public class RuleController implements Serializable {
         flash.put("success", "Regra aplicada com sucesso");
         return "listRule";
     }
-    
-    public String applyApplicant(Rule rule){
+
+    public String applyApplicant(Rule rule) {
         if (rule.getAppSugestions() != null) {
             List<String> subs = new ArrayList<String>();
             for (Applicant applicant : rule.getAppSugestions()) {
@@ -71,8 +70,8 @@ public class RuleController implements Serializable {
         }
         return apply(rule.getId().toString());
     }
-    
-    public String applyInventor(Rule rule){
+
+    public String applyInventor(Rule rule) {
         if (rule.getInvSugestions() != null) {
             List<String> subs = new ArrayList<String>();
             for (Inventor inventor : rule.getInvSugestions()) {
@@ -87,7 +86,7 @@ public class RuleController implements Serializable {
         }
         return apply(rule.getId().toString());
     }
-    
+
     public String apply(String id) {
         Rule rule = ruleRepository.findById(id);
         harmonization.applyRule(rule);
@@ -119,5 +118,5 @@ public class RuleController implements Serializable {
 
     public void setLazyInventors(LazyRuleDataModel lazyInventors) {
         this.lazyInventors = lazyInventors;
-    }    
+    }
 }

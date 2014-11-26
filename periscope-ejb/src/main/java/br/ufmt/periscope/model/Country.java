@@ -18,7 +18,7 @@ public class Country implements Serializable, Comparable<Country> {
     }
 
     public String getAcronym() {
-        if(acronym != null){
+        if (acronym != null) {
             acronym = acronym.toUpperCase();
         }
         return acronym;
@@ -29,7 +29,7 @@ public class Country implements Serializable, Comparable<Country> {
     }
 
     public String getName() {
-        if(name != null){
+        if (name != null) {
             name = name.toUpperCase();
         }
         return name;
@@ -46,7 +46,6 @@ public class Country implements Serializable, Comparable<Country> {
     public void setStates(List<State> states) {
         this.states = states;
     }
-    
 
     @Override
     public int compareTo(Country o) {

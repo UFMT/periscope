@@ -19,34 +19,33 @@ import com.mongodb.DBObject;
 @Named
 public class MainApplicantReport {
 
-	private @Inject ApplicantRepository repo;
-	private @Inject Datastore ds;
-	
-	public ChartSeries mainApplicantSeries(Project currentProject, int limit, Filters filtro){
-		ChartSeries series = new ChartSeries("Número de Depositos");
-                repo.updateMainApplicants(currentProject, filtro);		
-		List<DBObject> it = ds.getDB()
-							  .getCollection("mainApplicant").find()
-							  .sort(new BasicDBObject("value",-1))
-							  .limit(limit)
-							  .toArray();
-		
-		Collections.reverse(it);
-		
-		for(DBObject obj : it){
-			String name = (String) obj.get("_id");
-			Double count = (Double) obj.get("value");
-//                        System.out.println("COut: "+count);
-			series.set(name,count.intValue());					
-		}				
-		
-		return series;
-	}
+    private @Inject
+    ApplicantRepository repo;
+    private @Inject
+    Datastore ds;
+
+    public ChartSeries mainApplicantSeries(Project currentProject, int limit, Filters filtro) {
+        ChartSeries series = new ChartSeries("Número de Depositos");
+        repo.updateMainApplicants(currentProject, filtro);
+        List<DBObject> it = ds.getDB()
+                .getCollection("mainApplicant").find()
+                .sort(new BasicDBObject("value", -1))
+                .limit(limit)
+                .toArray();
+
+        Collections.reverse(it);
+
+        for (DBObject obj : it) {
+            String name = (String) obj.get("_id");
+            Double count = (Double) obj.get("value");
+            series.set(name, count.intValue());
+        }
+
+        return series;
+    }
 
     public ApplicantRepository getRepo() {
         return repo;
     }
-        
 
 }
-

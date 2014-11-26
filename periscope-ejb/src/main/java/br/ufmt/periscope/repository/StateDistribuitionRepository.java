@@ -76,7 +76,6 @@ public class StateDistribuitionRepository {
             }
 
         }
-//        System.out.println("saiu repositorio");
         return pairs;
 
     }

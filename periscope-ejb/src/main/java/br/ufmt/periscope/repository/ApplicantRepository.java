@@ -72,7 +72,6 @@ public class ApplicantRepository {
         BasicDBObject eleMatch = new BasicDBObject("$elemMatch", new BasicDBObject("name", name));
         BasicDBObject applicants = new BasicDBObject("applicants", eleMatch);
         BasicDBObject keys = new BasicDBObject("applicants", 1);
-//            applicants.put("applicants", 1);
         DBCursor cursor = ds.getCollection(Patent.class).find(applicants, keys).limit(1);
         if (cursor.hasNext()) {
             Mapper mapper = ds.getMapper();
@@ -83,10 +82,8 @@ public class ApplicantRepository {
             if (itList.hasNext()) {
                 ret = (Applicant) mapper.fromDBObject(Applicant.class, (DBObject) itList.next(), ec);
             }
-//            System.out.println("fim");
             return ret;
         }
-//        System.out.println("NULO");
         return null;
 
     }
@@ -123,12 +120,12 @@ public class ApplicantRepository {
         return ret;
     }
 
-    public List<String> getApplicants(Project project,String begins) {
+    public List<String> getApplicants(Project project, String begins) {
         ArrayList<DBObject> parametros = new ArrayList<DBObject>();
-        DBObject matchProject = new BasicDBObject("$match",new BasicDBObject("project.$id",project.getId()).append("blacklisted", false));
-        DBObject unwind = new BasicDBObject("$unwind","$applicants");
+        DBObject matchProject = new BasicDBObject("$match", new BasicDBObject("project.$id", project.getId()).append("blacklisted", false));
+        DBObject unwind = new BasicDBObject("$unwind", "$applicants");
         parametros.add(unwind);
-        DBObject matchName = new BasicDBObject("$match", new BasicDBObject("applicants.name", new BasicDBObject("$regex", "^"+begins).append("$options", "i")));
+        DBObject matchName = new BasicDBObject("$match", new BasicDBObject("applicants.name", new BasicDBObject("$regex", "^" + begins).append("$options", "i")));
         parametros.add(matchName);
         DBObject projection = new BasicDBObject("$project", new BasicDBObject("applicants", 1));
         parametros.add(projection);
@@ -137,7 +134,6 @@ public class ApplicantRepository {
         DBObject parameters[] = new DBObject[parametros.size()];
         parameters = parametros.toArray(parameters);
         AggregationOutput output = ds.getCollection(Patent.class).aggregate(matchProject, parameters);
-//        System.out.println(output.getCommand());
         BasicDBList outputList = (BasicDBList) output.getCommandResult().get("result");
         List<String> lista = new ArrayList<String>();
         for (Object applicant : outputList) {
@@ -146,9 +142,9 @@ public class ApplicantRepository {
             lista.add(nome);
         }
         return lista;
-        
+
     }
-    
+
     public void updateMainApplicants(Project currentProject, Filters filtro) {
 
         String map = "function() { "
@@ -174,9 +170,9 @@ public class ApplicantRepository {
         } else {
             where.put("applicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim()));
         }
-        if (filtro.getApplicantType()!=null && !filtro.getApplicantType().isEmpty()) {
+        if (filtro.getApplicantType() != null && !filtro.getApplicantType().isEmpty()) {
             where.put("applicants.nature.name", filtro.getApplicantType());
-            
+
         }
 
         DBCollection coll = ds.getCollection(Patent.class);
@@ -187,8 +183,6 @@ public class ApplicantRepository {
                 OutputType.REPLACE,
                 where);
         coll.mapReduce(cmd);
-//        System.out.println("tipos de applicants: "+cmd.toString());
-//        filtro.setApplicantType(null);
 
     }
 
@@ -211,7 +205,6 @@ public class ApplicantRepository {
             Query queryProject = new QueryParser(Version.LUCENE_47, "project", analyzer)
                     .parse(project.getId().toString());
             queryProject.setBoost(0.1f);
-//            System.out.println("An");
             IndexSearcher searcher = new IndexSearcher(reader);
             for (String name : names) {
                 // Cria uma stream de tokens com o analyzer
@@ -229,14 +222,11 @@ public class ApplicantRepository {
                 stream.close();
                 TopScoreDocCollector collector = TopScoreDocCollector.create(1000, true);
                 BooleanQuery bq = new BooleanQuery();
-//                System.out.println(name);
                 // Criando a query, dar o name.split é para saber a existência do acrônimo
                 String[] tokens = name.split(" ");
                 // Se for maior que 1, existe um acrônimo
                 if (tokens.length > 1) {
-//                    System.out.println(tokens[0]);
                     bq.add(new PrefixQuery(new Term("applicant", tokens[0])), Occur.MUST);
-//                    System.out.println(tokens[1]);
                     bq.add(new FuzzyQuery(new Term("applicant", tokens[1]), 1), Occur.MUST);
                     bq.add(new LengthQuery("applicant", name), Occur.MUST_NOT);
                 } else {
@@ -249,7 +239,6 @@ public class ApplicantRepository {
                     }
                 }
                 bq.add(queryProject, Occur.MUST);
-//                System.out.println(bq);
 
                 ScoreDoc[] hits = searcher.search(bq, 1000).scoreDocs;
 
@@ -258,7 +247,6 @@ public class ApplicantRepository {
                 for (int i = 0; i < hits.length; ++i) {
                     int docId = hits[i].doc;
                     Document d = searcher.doc(docId);
-//                  System.out.println((i + 1) + ". " + d.get("applicant") + "\t" + hits[i].score);
                     results.add(d.get("applicant"));
 
                     if (results.size() == top) {
@@ -280,7 +268,6 @@ public class ApplicantRepository {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-//        System.out.println("saiu");
         return results;
 
     }
@@ -384,8 +371,6 @@ public class ApplicantRepository {
 
         outputTotal = ds.getCollection(Patent.class).aggregate(match, parametersGroup);
 
-//        System.out.println("CHEGOU AQUI");
-//        System.out.println("1ª consulta de applicants "+outputTotal.getCommand().toString());
         BasicDBList outputListTotal = (BasicDBList) outputTotal.getCommandResult().get("result");
         for (Object patent : outputListTotal) {
             DBObject result = (DBObject) patent;
@@ -394,10 +379,8 @@ public class ApplicantRepository {
         }
 
         AggregationOutput output = ds.getCollection(Patent.class).aggregate(match, parameters);
-//        System.out.println("2ª consulta de applicants "+output.getCommand().toString());
         BasicDBList outputList = (BasicDBList) output.getCommandResult().get("result");
 
-//        this.setCount(output.);
         List<Applicant> datasource = new ArrayList<Applicant>();
         for (Object patent : outputList) {
             DBObject aux = (DBObject) patent;
@@ -451,7 +434,6 @@ public class ApplicantRepository {
 
     public boolean exists(Applicant applicant) {
 
-//        System.out.println("entrou aqui");
         ArrayList<DBObject> parametros = new ArrayList<DBObject>();
 
         DBObject matchProj = new BasicDBObject();
@@ -475,7 +457,6 @@ public class ApplicantRepository {
         DBObject[] parameters = new DBObject[parametros.size()];
         parameters = parametros.toArray(parameters);
 
-//        System.out.println("foi antes");
         AggregationOutput output = ds.getCollection(Patent.class).aggregate(matchP, parameters);
 
         BasicDBList outputList = (BasicDBList) output.getCommandResult().get("result");

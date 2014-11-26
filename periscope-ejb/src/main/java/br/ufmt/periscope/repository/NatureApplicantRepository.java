@@ -24,7 +24,6 @@ public class NatureApplicantRepository {
 
         //db.Patent.aggregate({$match:{blacklisted:false}},
         //{$unwind:"$applicants"},{$group:{_id:"$applicants.nature.name", count:{$sum:1}}})
-        
         ArrayList<DBObject> parametros = new ArrayList<DBObject>();
         DBObject matchProj = new BasicDBObject();
         matchProj.put("$match", new BasicDBObject("project.$id", currentProject.getId()));
@@ -47,18 +46,17 @@ public class NatureApplicantRepository {
 
         DBObject fields = new BasicDBObject();
         fields.put("_id", nature);
-    
+
         //db.Patent.aggregate({$match:{blacklisted:false}},
         //{$unwind:"$applicants"},{$group:{_id:{name:"$applicants.name",nature:"$applicants.nature.name"}}},
         //{$group:{_id:"$_id.nature",count:{$sum:1}}},{$sort:{count:-1}})
-        
         DBObject group = new BasicDBObject("$group", fields);
         parametros.add(group);
 
         DBObject id = new BasicDBObject("_id", "$_id.nature");
-        id.put("count", new BasicDBObject("$sum",1));
-        
-        group = new BasicDBObject("$group",id);
+        id.put("count", new BasicDBObject("$sum", 1));
+
+        group = new BasicDBObject("$group", id);
         parametros.add(group);
 
         DBObject sort = new BasicDBObject("$sort", new BasicDBObject("count", -1));

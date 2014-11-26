@@ -99,11 +99,11 @@ public class Inventor implements Serializable, Comparable<Inventor> {
         if (o instanceof Inventor) {
             Inventor inventor = (Inventor) o;
             if (inventor.getName().equals(this.getName())) {
-                if(inventor.country != null){
-                    if(inventor.country.getAcronym().equals(this.country.getAcronym())){
+                if (inventor.country != null) {
+                    if (inventor.country.getAcronym().equals(this.country.getAcronym())) {
                         return true;
                     }
-                } else if (this.country == null){
+                } else if (this.country == null) {
                     return true;
                 }
                 return false;

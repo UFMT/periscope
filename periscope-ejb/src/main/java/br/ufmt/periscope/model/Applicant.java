@@ -32,14 +32,14 @@ public class Applicant implements Serializable, Comparable<Applicant> {
     }
 
     public String getName() {
-        if(name != null){
+        if (name != null) {
             name = name.toUpperCase();
         }
         return name;
     }
 
     public void setName(String name) {
-        if(name != null){
+        if (name != null) {
             name = name.toUpperCase();
         }
         this.name = name;
@@ -52,7 +52,7 @@ public class Applicant implements Serializable, Comparable<Applicant> {
     public void setAcronym(String acronym) {
         this.acronym = acronym;
     }
-    
+
     public State getState() {
         return state;
     }
@@ -60,7 +60,7 @@ public class Applicant implements Serializable, Comparable<Applicant> {
     public void setState(State state) {
         this.state = state;
     }
-    
+
     public Country getCountry() {
         return country;
     }

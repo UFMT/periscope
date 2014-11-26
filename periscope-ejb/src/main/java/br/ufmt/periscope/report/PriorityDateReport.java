@@ -11,23 +11,24 @@ import org.primefaces.model.chart.ChartSeries;
 
 @Named
 public class PriorityDateReport {
-    
-    private @Inject PriorityDateRepository repo;
-    
-    public ChartSeries priorityDateSeries(Project currentProject, Filters filtro){
+
+    private @Inject
+    PriorityDateRepository repo;
+
+    public ChartSeries priorityDateSeries(Project currentProject, Filters filtro) {
         ChartSeries series = new ChartSeries("Prioridades por ano");
-        
+
         List<Pair> i = repo.getPrioritiesByDate(currentProject, filtro);
-        
+
         Collections.reverse(i);
-        
+
         for (Pair pair : i) {
-            Integer year = Integer.parseInt((String)pair.getKey());
+            Integer year = Integer.parseInt((String) pair.getKey());
             Integer count = (Integer) pair.getValue();
             series.set(year, count);
         }
-        
+
         return series;
-        
+
     }
 }

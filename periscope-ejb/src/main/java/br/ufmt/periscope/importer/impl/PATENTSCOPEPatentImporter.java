@@ -22,10 +22,6 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
-/**
- *
- * @author adrian
- */
 public class PATENTSCOPEPatentImporter implements PatentImporter {
 
     private @Inject
@@ -49,8 +45,6 @@ public class PATENTSCOPEPatentImporter implements PatentImporter {
             //Pulando primeiras linhas
             rowIterator.next(); //Linha em branco
             rowIterator.next(); //Consulta
-            
-            
 
         } catch (IOException ex) {
             //Se entrar aqui é porque o arquivo não está no padrão

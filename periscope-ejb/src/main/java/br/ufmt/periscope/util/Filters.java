@@ -69,5 +69,5 @@ public class Filters {
     public void setApplicantType(String applicantType) {
         this.applicantType = applicantType;
     }
-    
+
 }
