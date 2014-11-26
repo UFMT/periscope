@@ -7,7 +7,6 @@ import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
-import br.ufmt.periscope.report.MainInventorReport;
 import br.ufmt.periscope.report.MainNatureApplicantReport;
 import br.ufmt.periscope.report.Pair;
 
@@ -20,7 +19,6 @@ public class NatureApplicantController extends GenericController{
 	
         @Override
 	public void refreshChart(){
-//            System.out.println("chegou");		
 		setModel(new CartesianChartModel());
 		ChartSeries series = report.NatureApplicantSeries(getCurrentProject(), getFiltro());
 		

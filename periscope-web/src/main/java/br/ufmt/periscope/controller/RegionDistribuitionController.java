@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ufmt.periscope.controller;
 
 import br.ufmt.periscope.report.Pair;
@@ -25,9 +20,7 @@ public class RegionDistribuitionController extends GenericController {
     public void refreshChart() {
         
         setModel(new CartesianChartModel());
-//        System.out.println("entrou controller");
         ChartSeries series = report.RegionDistribuitionSeries(getCurrentProject());
-//        System.out.println("saiu controller");
         getModel().addSeries(series);
 
         setPairs(new ArrayList<Pair>());

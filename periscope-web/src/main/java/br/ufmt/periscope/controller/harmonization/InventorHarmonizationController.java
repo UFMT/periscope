@@ -1,8 +1,6 @@
 package br.ufmt.periscope.controller.harmonization;
 
 import br.ufmt.periscope.lazy.LazyInventorDataModel;
-import br.ufmt.periscope.model.Applicant;
-import br.ufmt.periscope.model.ApplicantType;
 import br.ufmt.periscope.model.Country;
 import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.model.Project;
@@ -10,15 +8,10 @@ import br.ufmt.periscope.model.Rule;
 import br.ufmt.periscope.model.RuleType;
 import br.ufmt.periscope.model.State;
 import br.ufmt.periscope.qualifier.CurrentProject;
-import br.ufmt.periscope.report.Pair;
-import br.ufmt.periscope.repository.ApplicantRepository;
-import br.ufmt.periscope.repository.ApplicantTypeRepository;
 import br.ufmt.periscope.repository.CountryRepository;
 import br.ufmt.periscope.repository.InventorRepository;
 import br.ufmt.periscope.repository.RuleRepository;
-import br.ufmt.periscope.util.Filters;
 import br.ufmt.periscope.util.SelectObject;
-import com.github.jmkgreen.morphia.Datastore;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,7 +27,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
 
 @ManagedBean
@@ -65,7 +57,8 @@ public class InventorHarmonizationController implements Serializable {
     private String acronymDefault = "BR";
     private Inventor selectedRadio;
     private Integer searchType;
-    private @Inject RuleController ruleController;
+    private @Inject
+    RuleController ruleController;
 
     @PostConstruct
     public void init() {
@@ -94,7 +87,6 @@ public class InventorHarmonizationController implements Serializable {
     }
 
     public void onSelectInventor(Inventor pa) {
-//        System.out.println("INVENTOR:"+pa.getSelected());
         if (pa.getSelected()) {
             selectedInventors.add(pa);
         } else {

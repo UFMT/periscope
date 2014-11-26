@@ -1,12 +1,10 @@
 package br.ufmt.periscope.controller;
 
-import br.ufmt.periscope.model.Country;
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.qualifier.CurrentProject;
 import br.ufmt.periscope.report.Pair;
 import br.ufmt.periscope.repository.PatentRepository;
 import br.ufmt.periscope.util.Filters;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -109,7 +107,6 @@ public abstract class GenericController {
     public void selectListener(ValueChangeEvent event) {
         int sel = getFiltro().getSelecionaData();
         int newSel=  (Integer)event.getNewValue();
-//        System.out.println("trocando data:" + event.getNewValue() + " sel:" + sel);
         getFiltro().setInicio(getPatentRepository().getMinDate(getCurrentProject(), newSel));
         getFiltro().setFim(getPatentRepository().getMaxDate(getCurrentProject(), newSel));
 

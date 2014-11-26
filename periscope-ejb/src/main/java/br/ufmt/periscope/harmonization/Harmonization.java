@@ -8,14 +8,11 @@ import javax.inject.Named;
 import org.bson.types.ObjectId;
 
 import br.ufmt.periscope.indexer.PatentIndexer;
-import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Rule;
-import br.ufmt.periscope.repository.PatentRepository;
 
 import com.github.jmkgreen.morphia.Datastore;
 import com.github.jmkgreen.morphia.mapping.Mapper;
-import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DBObject;
 
@@ -25,21 +22,21 @@ public class Harmonization {
     private @Inject
     Datastore ds;
     private @Inject
-    PatentRepository patentRepository;
-    private @Inject
     PatentIndexer indexer;
 
+    /**
+     * Apply the rule
+     * @param rule
+     */
     public void applyRule(Rule rule) {
         if (rule == null) {
             return;
         }
         switch (rule.getType()) {
             case APPLICANT:
-//                System.out.println("applicant");
                 applyApplicantRule(rule);
                 break;
             case INVENTOR:
-//                System.out.println("inventor");
                 applyInventorRule(rule);
                 break;
             default:
@@ -57,35 +54,30 @@ public class Harmonization {
         DBObject dbObjectNature = mapper.toDBObject(rule.getNature());
         String applicants[] = new String[rule.getSubstitutions().size()];
         applicants = rule.getSubstitutions().toArray(applicants);
-        for (int i = 0; i < applicants.length; i++) {
-
+        for (String applicant : applicants) {
             DBObject query = BasicDBObjectBuilder
-                    .start("project.$id", projectId)
-                    .add("applicants.name", applicants[i])
-                    .get();
+                    .start("project.$id", projectId).add("applicants.name", applicant).get();
             DBObject updateOp = BasicDBObjectBuilder
                     .start("$set",
-                    BasicDBObjectBuilder
-                    .start("applicants.$.name", rule.getName())
-                    .add("applicants.$.country", dbObjectCountry)
-                    .add("applicants.$.state", dbObjectState)
-                    .add("applicants.$.nature", dbObjectNature)
-                    .add("applicants.$.acronym", rule.getAcronym())
-                    .get())
+                            BasicDBObjectBuilder
+                            .start("applicants.$.name", rule.getName())
+                            .add("applicants.$.country", dbObjectCountry)
+                            .add("applicants.$.state", dbObjectState)
+                            .add("applicants.$.nature", dbObjectNature)
+                            .add("applicants.$.acronym", rule.getAcronym())
+                            .get())
                     .get();
-
-            ds.getCollection(Patent.class).updateMulti(query, updateOp);
+            ds.getCollection(Patent.class)
+                    .updateMulti(query, updateOp);
         }
+        List<Patent> patents = ds
+                .find(Patent.class)
+                .field("project")
+                .equal(rule.getProject())
+                .field("applicants.name")
+                .in(rule.getSubstitutions())
+                .asList();
 
-        DBObject query = BasicDBObjectBuilder
-                .start("project.$id", projectId)
-                .add("applicants.name", BasicDBObjectBuilder.start("$in", applicants))
-                .get();
-
-        List<Patent> patents = ds.find(Patent.class).field("project").equal(rule.getProject()).field("applicants.name").in(rule.getSubstitutions()).asList();
-
-
-//        List<Patent> patents = patentRepository.getAllPatents(rule.getProject());
         indexer.indexPatents(patents);
 
     }
@@ -99,29 +91,34 @@ public class Harmonization {
         DBObject dbObjectNature = mapper.toDBObject(rule.getNature());
         String inventors[] = new String[rule.getSubstitutions().size()];
         inventors = rule.getSubstitutions().toArray(inventors);
-        for (int i = 0; i < inventors.length; i++) {
-
+        for (String inventor : inventors) {
             DBObject query = BasicDBObjectBuilder
                     .start("project.$id", projectId)
-                    .add("inventors.name", inventors[i])
+                    .add("inventors.name", inventor)
                     .get();
             DBObject updateOp = BasicDBObjectBuilder
                     .start("$set",
-                    BasicDBObjectBuilder
-                    .start("inventors.$.name", rule.getName())
-                    .add("inventors.$.country", dbObjectCountry)
-                    .add("inventors.$.state", dbObjectState)
-                    .add("inventors.$.nature", dbObjectNature)
-                    .add("inventors.$.acronym", rule.getAcronym())
-                    .get())
+                            BasicDBObjectBuilder
+                            .start("inventors.$.name", rule.getName())
+                            .add("inventors.$.country", dbObjectCountry)
+                            .add("inventors.$.state", dbObjectState)
+                            .add("inventors.$.nature", dbObjectNature)
+                            .add("inventors.$.acronym", rule.getAcronym())
+                            .get())
                     .get();
-            ds.getCollection(Patent.class).updateMulti(query, updateOp);
+
+            ds.getCollection(Patent.class)
+                    .updateMulti(query, updateOp);
         }
 
-        List<Patent> patents = ds.find(Patent.class).field("project").equal(rule.getProject()).field("inventors.name").in(rule.getSubstitutions()).asList();
+        List<Patent> patents = ds
+                .find(Patent.class)
+                .field("project")
+                .equal(rule.getProject())
+                .field("inventors.name")
+                .in(rule.getSubstitutions())
+                .asList();
 
-
-//        List<Patent> patents = patentRepository.getAllPatents(rule.getProject());
         indexer.indexPatents(patents);
 
     }

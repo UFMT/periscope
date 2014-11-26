@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ufmt.periscope.converter;
 
 import br.ufmt.periscope.model.Applicant;
@@ -21,9 +17,7 @@ public class ApplicantsConverter implements Converter {
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String name) {
         Applicant applicant;
-//        System.out.println("dentro:"+name);
         applicant = applicantRepository.getApplicantByName(name);
-//        System.out.println("dentro2:"+applicant.getName());
         return applicant;
 
     }

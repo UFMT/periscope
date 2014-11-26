@@ -14,7 +14,6 @@ import br.ufmt.periscope.repository.ApplicantTypeRepository;
 import br.ufmt.periscope.repository.CountryRepository;
 import br.ufmt.periscope.repository.RuleRepository;
 import br.ufmt.periscope.util.SelectObject;
-import com.github.jmkgreen.morphia.Datastore;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,8 +38,6 @@ public class ApplicantHarmonizationController implements Serializable {
     private static final long serialVersionUID = 7744517674295407077L;
     private @Inject
     Logger log;
-    private @Inject
-    Datastore ds;
     private @Inject
     @CurrentProject
     Project currentProject;
@@ -71,7 +68,6 @@ public class ApplicantHarmonizationController implements Serializable {
 
     @PostConstruct
     public void init() {
-//		List<Applicant> pas = applicantRepository.getApplicants(currentProject);
         applicantTypes = typeRepository.getAll();
         countries = countryRepository.getAll();
         applicants.getApplicantRepository().setCurrentProject(currentProject);
@@ -84,7 +80,6 @@ public class ApplicantHarmonizationController implements Serializable {
         states = defaultCountry.getStates();
         setSearchType(1);
         Collections.sort(states);
-//		applicants = new ListDataModel<SelectObject<Applicant>>(SelectObject.convertToSelectObjects(pas));		
     }
 
     public void onSelectApplicant(Applicant pa) {
@@ -133,7 +128,6 @@ public class ApplicantHarmonizationController implements Serializable {
         rule.setNature(null);
         rule.setState(null);
         if (selectedRadio != null) {
-//            System.out.println("Selecionado:" + selectedRadio.getName());
             if (selectedRadio.getName() != null) {
                 rule.setName(selectedRadio.getName());
             }
@@ -151,13 +145,11 @@ public class ApplicantHarmonizationController implements Serializable {
             if (selectedRadio.getState() != null) {
                 rule.setState(selectedRadio.getState());
             }
-//            System.out.println("RuleName:" + rule.getName());
         }
     }
 
     public String createRule() {
 
-//        System.out.println("criando rule");
         rule.setType(RuleType.APPLICANT);
         rule.setProject(currentProject);
         if (selectedApplicantSugestions != null) {
@@ -189,7 +181,6 @@ public class ApplicantHarmonizationController implements Serializable {
     }
 
     public void loadSugestions() {
-//        System.out.println("Load");
         String[] names = new String[selectedApplicants.size()];
         selectedRadio = null;
         selectedRadio = selectedApplicants.get(0);
@@ -197,7 +188,6 @@ public class ApplicantHarmonizationController implements Serializable {
         int i = 0;
         for (Applicant pa : selectedApplicants) {
             names[i] = pa.getName();
-//            System.out.println(i+" : "+names[i]);
             i++;
         }
         Set<String> sugestions = applicantRepository.getApplicantSugestions(currentProject, 100, names);

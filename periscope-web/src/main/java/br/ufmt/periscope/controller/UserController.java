@@ -24,102 +24,105 @@ import com.github.jmkgreen.morphia.Datastore;
 
 @ManagedBean
 @ViewScoped
-public class UserController {		
+public class UserController {
 
-	private @Inject Datastore ds;
-	private @Inject @LoggedUser User loggedUser;
-	private DataModel<User> users = null;
-	private User user = new User();
-	private boolean editing = false;
-	private List<UserLevel> levels = new ArrayList<UserLevel>();
-	
-	@PostConstruct
-	public void init(){
-		
+    private @Inject
+    Datastore ds;
+    private @Inject
+    @LoggedUser
+    User loggedUser;
+    private DataModel<User> users = null;
+    private User user = new User();
+    private boolean editing = false;
+    private List<UserLevel> levels = new ArrayList<UserLevel>();
+
+    @PostConstruct
+    public void init() {
+
 //		for(UserLevel ul : UserLevel.values()){
 //			if(ul.getAccessLevel() <= loggedUser.getUserLevel().getAccessLevel())
 //				levels.add(ul);
 //		}
-                levels.add(UserLevel.USER);
-		FacesContext context = FacesContext.getCurrentInstance();
-		HttpServletRequest req = (HttpServletRequest) context.getExternalContext().getRequest();		
-		if(req.getParameter("userId") != null){
-			editing = true;
-			user = ds.get(User.class,new ObjectId(req.getParameter("userId")));
-			
-		}
-	}
-		
-	public String save(){	
-		User existingUser = ds.find(User.class).field("username").equal(user.getUsername()).get();
-		boolean hasUniqueUsername = false;		
-		if(editing){			
-			if(existingUser == null){
-				hasUniqueUsername = true;
-			}else{
-				//é o proprio usuário
-				if(existingUser.getId().toString().contentEquals(user.getId().toString())){				
-					hasUniqueUsername = true;
-				}				
-			}
-		}else{			
-			hasUniqueUsername = existingUser == null;			
-		}
-		if(hasUniqueUsername){
-			ds.save(user);
-			Flash flash = FacesContext.getCurrentInstance().  
-	                getExternalContext().getFlash();
-			flash.put("success", "Salvo com Sucesso");		
-			return "userList";
-		}else{
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Login deve ser único" ,"Login já existente");
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-			return null;
-		}
-		
-	}
+        levels.add(UserLevel.USER);
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest req = (HttpServletRequest) context.getExternalContext().getRequest();
+        if (req.getParameter("userId") != null) {
+            editing = true;
+            user = ds.get(User.class, new ObjectId(req.getParameter("userId")));
 
-	public String delete(String id){
-		ds.delete(User.class,new ObjectId(id));
-		Flash flash = FacesContext.getCurrentInstance().  
+        }
+    }
+
+    public String save() {
+        User existingUser = ds.find(User.class).field("username").equal(user.getUsername()).get();
+        boolean hasUniqueUsername = false;
+        if (editing) {
+            if (existingUser == null) {
+                hasUniqueUsername = true;
+            } else {
+                //é o proprio usuário
+                if (existingUser.getId().toString().contentEquals(user.getId().toString())) {
+                    hasUniqueUsername = true;
+                }
+            }
+        } else {
+            hasUniqueUsername = existingUser == null;
+        }
+        if (hasUniqueUsername) {
+            ds.save(user);
+            Flash flash = FacesContext.getCurrentInstance().
+                    getExternalContext().getFlash();
+            flash.put("success", "Salvo com Sucesso");
+            return "userList";
+        } else {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login deve ser único", "Login já existente");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            return null;
+        }
+
+    }
+
+    public String delete(String id) {
+        ds.delete(User.class, new ObjectId(id));
+        Flash flash = FacesContext.getCurrentInstance().
                 getExternalContext().getFlash();
-		flash.put("info", "Deletado com sucesso");
-		return "userList";		
-	}
-	
-	public DataModel<User> getUsers() {		
-		if(users == null){
-			users = new ListDataModel<User>(ds.find(User.class).asList());
-		}
-		return users;
-	}
+        flash.put("info", "Deletado com sucesso");
+        return "userList";
+    }
 
-	public void setUsers(DataModel<User> users) {
-		this.users = users;
-	}
+    public DataModel<User> getUsers() {
+        if (users == null) {
+            users = new ListDataModel<User>(ds.find(User.class).asList());
+        }
+        return users;
+    }
 
-	public boolean isEditing() {
-		return editing;
-	}
+    public void setUsers(DataModel<User> users) {
+        this.users = users;
+    }
 
-	public void setEditing(boolean editing) {
-		this.editing = editing;
-	}
+    public boolean isEditing() {
+        return editing;
+    }
 
-	public User getUser() {
-		return user;
-	}
+    public void setEditing(boolean editing) {
+        this.editing = editing;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public User getUser() {
+        return user;
+    }
 
-	public List<UserLevel> getLevels() {
-		return levels;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-	public void setLevels(List<UserLevel> levels) {
-		this.levels = levels;
-	}
-	
+    public List<UserLevel> getLevels() {
+        return levels;
+    }
+
+    public void setLevels(List<UserLevel> levels) {
+        this.levels = levels;
+    }
+
 }

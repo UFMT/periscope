@@ -54,7 +54,6 @@ public class ImportPatentController implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, msg);
         } else {
             try {
-                //long tempoInicio = System.currentTimeMillis();
                 boolean imported = true;
                 List<String> errors = new ArrayList<String>();
                 for (UploadedFile file : uploadAttachment) {
@@ -64,7 +63,6 @@ public class ImportPatentController implements Serializable {
                     if (importer.initWithStream(is)) {
                         patentRepository.savePatentToDatabase(importer, currentProject);
 
-//                        System.out.println(currentProject.getPatents().size());
                     } else {
                         imported = false;
                         errors.add(file.getFileName());

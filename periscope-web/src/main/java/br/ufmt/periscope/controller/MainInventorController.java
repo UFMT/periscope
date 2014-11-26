@@ -2,7 +2,6 @@ package br.ufmt.periscope.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
@@ -37,7 +36,6 @@ public class MainInventorController extends GenericController{
 	}
         public List<String> getInventors(String query) {
         List<String> teste = report.getRepo().getInventors(getCurrentProject(), query);
-//        System.out.println(teste.size());
         return teste;
 
     }

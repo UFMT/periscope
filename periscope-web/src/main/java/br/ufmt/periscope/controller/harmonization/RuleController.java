@@ -7,15 +7,11 @@ import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.model.Rule;
 import br.ufmt.periscope.qualifier.CurrentProject;
-import br.ufmt.periscope.repository.ApplicantRepository;
 import br.ufmt.periscope.repository.RuleRepository;
-import br.ufmt.periscope.util.SelectObject;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -23,16 +19,12 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 @ManagedBean
 @ViewScoped
 public class RuleController implements Serializable {
 
     private static final long serialVersionUID = 7744517674295407077L;
-
-    private @Inject
-    Logger log;
     private @Inject
     Harmonization harmonization;
     private @Inject
@@ -47,7 +39,6 @@ public class RuleController implements Serializable {
 
     @PostConstruct
     public void init() {
-        
         lazyApplicants.setSearchType(1);
         lazyApplicants.getRuleRepository().setCurrentProject(currentProject);
         lazyInventors.setSearchType(2);
@@ -55,12 +46,9 @@ public class RuleController implements Serializable {
     }
     
     public String applyAll(){
-        Long ini = System.currentTimeMillis();
         List<Rule> rules = ruleRepository.getAllRule(currentProject);
-        
-        System.out.println("Apply "+(System.currentTimeMillis() - ini));
         for (Rule rule : rules) {
-//            harmonization.applyRule(rule);
+            harmonization.applyRule(rule);
         }
         Flash flash = FacesContext.getCurrentInstance().
                 getExternalContext().getFlash();
@@ -101,7 +89,6 @@ public class RuleController implements Serializable {
     }
     
     public String apply(String id) {
-        
         Rule rule = ruleRepository.findById(id);
         harmonization.applyRule(rule);
         Flash flash = FacesContext.getCurrentInstance().
@@ -111,7 +98,6 @@ public class RuleController implements Serializable {
     }
 
     public String delete(String id) {
-        System.out.println("Oi");
         ruleRepository.delete(id);
         Flash flash = FacesContext.getCurrentInstance().
                 getExternalContext().getFlash();

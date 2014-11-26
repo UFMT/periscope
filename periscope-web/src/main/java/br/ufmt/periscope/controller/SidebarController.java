@@ -9,9 +9,11 @@ import javax.inject.Inject;
 @ManagedBean(name = "sidebarController")
 public class SidebarController {
 
-    private @Inject @CurrentProject
+    private @Inject
+    @CurrentProject
     Project currentProject;
-    private @Inject ProjectRepository projectRepository;
+    private @Inject
+    ProjectRepository projectRepository;
 
     public boolean isEmptyPatent() {
         return projectRepository.isEmptyPatent(currentProject);

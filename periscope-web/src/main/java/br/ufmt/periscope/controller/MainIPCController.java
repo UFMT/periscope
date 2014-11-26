@@ -14,8 +14,6 @@ import org.primefaces.model.chart.ChartSeries;
 import br.ufmt.periscope.report.MainIPCReport;
 import br.ufmt.periscope.report.Pair;
 
-import br.ufmt.periscope.repository.PatentRepository;
-import java.util.Date;
 
 @ManagedBean
 @ViewScoped
@@ -43,7 +41,6 @@ public class MainIPCController extends GenericController {
     }
 
     public void update() {
-//        System.out.println(getFiltro().getApplicantName());
         if (!klass) {
             // classe nao esta selecionada
             // buscar secao

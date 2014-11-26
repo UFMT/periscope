@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-;
 
 @ManagedBean(name = "report")
 @ViewScoped
@@ -40,7 +39,6 @@ public class ReportController extends GenericController {
 
     public List<String> getApplicants(String query) {
         List<String> teste = report.getRepo().getApplicants(getCurrentProject(), query);
-//        System.out.println(teste.size());
         return teste;
 
     }
