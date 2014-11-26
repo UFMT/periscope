@@ -69,7 +69,6 @@ public class InventorHarmonizationController implements Serializable {
 
     @PostConstruct
     public void init() {
-        System.out.println("INV HARM");
         setSearchType(1);
         countries = countryRepository.getAll();
         inventors.getInventorRepository().setCurrentProject(currentProject);
@@ -161,6 +160,7 @@ public class InventorHarmonizationController implements Serializable {
                 rule.setState(state);
             }
         }
+        rule.getCountry().setStates(null);
         rule.setSubstitutions(new HashSet<String>(substitutions));
         ruleRepository.save(rule);
 

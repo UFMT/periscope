@@ -55,21 +55,21 @@ public class LazyRuleDataModel extends LazyDataModel<Rule>{
         
         ruleRepository.setSearchType(this.searchType);
         
-        List<Rule> regras = ruleRepository.load(first, pageSize, sortField, sortOrder.ordinal(), filters);
-        rules = new ArrayList<Rule>();
+        List<Rule> regras;
+        rules = ruleRepository.load(first, pageSize, sortField, sortOrder.ordinal(), filters);
+        regras = new ArrayList<Rule>();
         if (this.searchType == 1) {
-            for (Rule rule : regras) {
+            for (Rule rule : rules) {
                 rule.setAppSugestions(loadApplicantSugestions(rule));
-                rules.add(rule);
+                regras.add(rule);
             }    
         }else{
-            for (Rule rule : regras) {
+            for (Rule rule : rules) {
                 rule.setInvSugestions(loadInventorSugestions(rule));
-                rules.add(rule);
+                regras.add(rule);
             }
         }
-        
-        return rules;
+        return regras;
     }
     
     public List<Applicant> loadApplicantSugestions(Rule rule) {

@@ -4,7 +4,6 @@ import br.ufmt.periscope.lazy.LazyApplicantDataModel;
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.ApplicantType;
 import br.ufmt.periscope.model.Country;
-import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.model.Rule;
 import br.ufmt.periscope.model.RuleType;
@@ -31,7 +30,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
 
 @ManagedBean
@@ -68,12 +66,12 @@ public class ApplicantHarmonizationController implements Serializable {
     private String acronymDefault = "BR";
     private Applicant selectedRadio;
     private Integer searchType;
-    private @Inject RuleController ruleController;
+    private @Inject
+    RuleController ruleController;
 
     @PostConstruct
     public void init() {
 //		List<Applicant> pas = applicantRepository.getApplicants(currentProject);
-        System.out.println("APP HARM");
         applicantTypes = typeRepository.getAll();
         countries = countryRepository.getAll();
         applicants.getApplicantRepository().setCurrentProject(currentProject);
@@ -103,9 +101,9 @@ public class ApplicantHarmonizationController implements Serializable {
         pa.setSelected(false);
         selectedApplicants.remove(pa);
         return "";
-        
+
     }
-    
+
     public void selectListener(ValueChangeEvent event) {
         String acronym = (String) event.getNewValue();
         searchState(acronym);
@@ -118,7 +116,6 @@ public class ApplicantHarmonizationController implements Serializable {
     }
 
     public void onSelectApplicantSugestion() {
-        System.out.println("ES");
         Iterator<SelectObject<Applicant>> it = applicantSugestions.iterator();
         selectedApplicantSugestions.clear();
         while (it.hasNext()) {
@@ -179,13 +176,13 @@ public class ApplicantHarmonizationController implements Serializable {
                 rule.setState(state);
             }
         }
-
+        rule.getCountry().setStates(null);
         rule.setSubstitutions(new HashSet<String>(substitutions));
         ruleRepository.save(rule);
 
         ruleController.apply(rule.getId().toString());
         selectedApplicants.clear();
-        
+
         Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
         flash.put("success", "Regra criada e aplicada com sucesso");
         return "";
@@ -285,7 +282,6 @@ public class ApplicantHarmonizationController implements Serializable {
         this.searchType = searchType;
         applicants.setSearchType(searchType);
     }
-    
 
     public Applicant getSelectedRadio() {
         return selectedRadio;

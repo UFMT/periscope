@@ -55,17 +55,19 @@ public class RuleController implements Serializable {
     }
     
     public String applyAll(){
+        Long ini = System.currentTimeMillis();
         List<Rule> rules = ruleRepository.getAllRule(currentProject);
-        System.out.println("Apply");
+        
+        System.out.println("Apply "+(System.currentTimeMillis() - ini));
         for (Rule rule : rules) {
-            harmonization.applyRule(rule);
+//            harmonization.applyRule(rule);
         }
         Flash flash = FacesContext.getCurrentInstance().
                 getExternalContext().getFlash();
         flash.put("success", "Regra aplicada com sucesso");
         return "listRule";
     }
-
+    
     public String applyApplicant(Rule rule){
         if (rule.getAppSugestions() != null) {
             List<String> subs = new ArrayList<String>();

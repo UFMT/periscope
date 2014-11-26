@@ -29,7 +29,6 @@ public class RuleRepository {
         public List<Rule> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters) {
             
             Query query;
-            
             if (this.searchType != null && this.searchType == 1) {
                 query = ds.find(Rule.class)
                     .field("project").equal(this.currentProject)
@@ -39,7 +38,6 @@ public class RuleRepository {
                     .field("project").equal(this.currentProject)
                     .field("type").equal(RuleType.INVENTOR);
             }
-            
 
             if (sortField != null) {
                 query = query.order((sortOrder == 1 ? "-" : "") + sortField);
@@ -51,15 +49,20 @@ public class RuleRepository {
             }
             setRowCount((int) query.countAll());
             query.offset(first).limit(pageSize);
-            query.retrievedFields(true, "_id", "name", "acronym", "substitutions", "country", "state", "type", "project");
+            query.retrievedFields(true, "_id", "name", "acronym", "substitutions", "country", "state", "type");
             return query.asList();
         }
         
         
 	public List<Rule> getAllRule(Project project){
+            Long ini = System.currentTimeMillis();
+            try{
 		return ds.find(Rule.class)
 				.field("project").equal(project)
 				.asList();
+            }finally{
+                System.out.println("Tempo "+(System.currentTimeMillis() - ini));
+            }
 	}
 	
 	public List<Rule> getApplicantRule(Project project){

@@ -44,7 +44,6 @@ public class LazyPatentDataModel extends LazyDataModel<Patent>{
 
     @Override
     public List<Patent> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
-        
         datasource = repo.load(first, pageSize, sortField, sortOrder.ordinal(), filters);
         return datasource;
         
