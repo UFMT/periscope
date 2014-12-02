@@ -19,6 +19,13 @@ public class LazyApplicantDataModel extends LazyDataModel<Applicant> {
     private Integer searchType;
     private Boolean harmonization = false;
 
+    public LazyApplicantDataModel() {
+        System.out.println("Lazy Applicant Data Model");
+    }
+
+    
+    
+    
     @Override
     public int getRowCount() {
         return super.getRowCount();

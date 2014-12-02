@@ -71,12 +71,15 @@ public class PatentIndexer {
         try {
             if (pas != null) {
                 for (String a : pas) {
-                    Document doc = new Document();
-                    doc.add(new TextField("id", project.getId().toString() + String.valueOf(a.hashCode()), Field.Store.YES));
-                    doc.add(new TextField("applicant", a, Field.Store.YES));
-                    doc.add(new TextField("project", project.getId().toString(), Field.Store.YES));
-                    writer.deleteDocuments(new Term("id", doc.get("id")));
-                    writer.addDocument(doc);
+                    if (!a.trim().isEmpty()) {
+                        System.out.println("Fdp"+a);
+                        Document doc = new Document();
+                        doc.add(new TextField("id", project.getId().toString() + String.valueOf(a.hashCode()), Field.Store.YES));
+                        doc.add(new TextField("applicant", a, Field.Store.YES));
+                        doc.add(new TextField("project", project.getId().toString(), Field.Store.YES));
+                        writer.deleteDocuments(new Term("id", doc.get("id")));
+                        writer.addDocument(doc);
+                    }
                 }
             }
             if (invs != null) {

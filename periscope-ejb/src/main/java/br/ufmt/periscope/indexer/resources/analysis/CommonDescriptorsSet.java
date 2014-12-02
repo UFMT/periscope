@@ -89,9 +89,14 @@ public class CommonDescriptorsSet {
 //        } catch (IOException ex) { 
 //            Logger.getLogger(CommonDescriptorsSet.class.getName()).log(Level.SEVERE, null, ex);
 //        }        
-        CommonDescriptor descriptorSet = ds.find(CommonDescriptor.class).field("_id").equal(descriptor).get();
-
-        if (descriptorSet != null) {
+        System.out.println("The ds on contains : " + ds.toString());
+        System.out.println(descriptor);        
+        System.out.println("antes");        
+        List<CommonDescriptor> descriptorSet = ds.find(CommonDescriptor.class).field("_id").equal(descriptor).asList();
+        System.out.println("depois");
+        System.out.println(descriptorSet);
+        
+        if (descriptorSet != null && !descriptorSet.isEmpty()) {
             return true;
         }
         return false;

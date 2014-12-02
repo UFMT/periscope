@@ -1,5 +1,6 @@
 package br.ufmt.periscope.repository;
 
+import br.ufmt.periscope.indexer.resources.analysis.FastJoinAnalyzer;
 import br.ufmt.periscope.indexer.resources.search.FastJoinQuery;
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.ApplicantType;
@@ -30,6 +31,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.apache.lucene.analysis.Analyzer;
@@ -51,6 +53,7 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.util.Version;
 
+@ViewScoped
 @Named
 public class ApplicantRepository {
 
@@ -59,12 +62,18 @@ public class ApplicantRepository {
     private @Inject
     IndexReader reader;
     private @Inject
-    Analyzer analyzer;
+    FastJoinAnalyzer analyzer;
     private @Inject
     Project currentProject;
     private int count;
     private List<Applicant> list;
     private Integer searchType;
+
+    public ApplicantRepository() {
+        System.out.println("AppRepository");
+    }
+    
+    
 
     public Applicant getApplicantByName(String name) {
 

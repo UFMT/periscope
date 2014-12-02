@@ -60,25 +60,27 @@ public class CommonDescriptorsTokenFilter extends TokenFilter {
             if (!removed && tokens.size() > 2) {
                 // Remove the common descriptors
                 while (pos < tokens.size()) {
-                    if (descriptorsSet.contains(tokens.get(pos).trim())) {
-                        // In there we may remove it
-                        removeIt = true;
-                        int j = pos + 1;
-                        while (j < tokens.size() && removeIt && pos != 0) {
+                    if (!tokens.get(pos).trim().isEmpty()) {
+                        if (descriptorsSet.contains(tokens.get(pos).trim())) {
+                            // In there we may remove it
+                            removeIt = true;
+                            int j = pos + 1;
+                            while (j < tokens.size() && removeIt && pos != 0) {
                             // But if have some word after this that is not an
-                            // common descriptor, we will not remove it
-                            if (tokens.get(j).length() > 1 && !descriptorsSet.contains(tokens.get(j).trim())) {
-                                removeIt = false;
+                                // common descriptor, we will not remove it
+                                if (tokens.get(j).length() > 1 && !descriptorsSet.contains(tokens.get(j).trim())) {
+                                    removeIt = false;
+                                }
+                                j += 1;
                             }
-                            j += 1;
+                            // If we need to remove, so, remove
+                            if (removeIt) {
+                                tokens.remove(pos);
+                                pos -= 1;
+                            }
                         }
-                        // If we need to remove, so, remove
-                        if (removeIt) {
-                            tokens.remove(pos);
-                            pos -= 1;
-                        }
+                        pos += 1;
                     }
-                    pos += 1;
                 }
                 removed = true;
                 return true;

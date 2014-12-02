@@ -2,6 +2,8 @@ package br.ufmt.periscope.indexer.resources.analysis;
 
 import java.io.Reader;
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -22,14 +24,17 @@ import org.apache.lucene.util.Version;
  *
  * @author mattyws
  */
+@Named
 public class FastJoinAnalyzer extends Analyzer {
 
-    CommonDescriptorsSet descriptorSet = new CommonDescriptorsSet();
-    public Version matchVersion;
+    @Inject
+    private CommonDescriptorsSet descriptorSet;
+    public Version matchVersion = Version.LUCENE_47;
     
-    public FastJoinAnalyzer(Version version) {
-        this.matchVersion = version;
-    }
+//    public FastJoinAnalyzer(Version version) {
+//        this.matchVersion = version;
+//        System.out.println("Chupa essa manga : " + descriptorSet);
+//    }
 
     @Override
     protected TokenStreamComponents createComponents(String field, Reader reader) {

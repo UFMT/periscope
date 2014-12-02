@@ -19,33 +19,38 @@ import com.github.jmkgreen.morphia.Datastore;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.bean.ViewScoped;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
+@ViewScoped
 @Named
 public class LuceneIndexerResources {
 
     private @Inject
     Datastore ds;
 
-    private @Inject
-    Project currentProject;
+    IndexReader reader = null;
 
     @Produces
     public Version version = Version.LUCENE_47;
 
+    @Named
     @Produces
     public IndexReader getReader(Directory dir) {
-        try {
-            return DirectoryReader.open(dir);
-        } catch (CorruptIndexException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (reader == null) {
+            try {
+                System.out.println("Criando um reader");
+                reader = DirectoryReader.open(dir);
+            } catch (CorruptIndexException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        return null;
+        return reader;
     }
 
 //	@Produces
@@ -72,13 +77,12 @@ public class LuceneIndexerResources {
 //        return new CommonDescriptorsSet("");
 //    }
 //
-    @Produces
-    private Analyzer getAnalyzer() {
-//        //return new StandardAnalyzer(Version.LUCENE_47);
-        return new FastJoinAnalyzer(Version.LUCENE_47);
-    }
-    
-    
+//    @Produces
+//    private Analyzer getAnalyzer() {
+////        //return new StandardAnalyzer(Version.LUCENE_47);
+//        return new FastJoinAnalyzer(Version.LUCENE_47);
+//    }
+
     @Produces
     private IndexWriterConfig getIndexConfig(Analyzer analyzer) {
         //return new IndexWriterConfig(Version.LUCENE_47, analyzer);
@@ -134,6 +138,7 @@ public class LuceneIndexerResources {
 
     public void disposesReader(@Disposes IndexReader reader) {
         try {
+            System.out.println("Disposing reader");
             reader.close();
 
         } catch (IOException ex) {

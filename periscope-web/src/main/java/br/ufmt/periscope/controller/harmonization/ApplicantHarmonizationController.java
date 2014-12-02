@@ -66,6 +66,13 @@ public class ApplicantHarmonizationController implements Serializable {
     private @Inject
     RuleController ruleController;
 
+    public ApplicantHarmonizationController() {
+        System.out.println("App Harminization Controller");
+    }
+
+    
+    
+    
     @PostConstruct
     public void init() {
         applicantTypes = typeRepository.getAll();
