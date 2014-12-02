@@ -1,8 +1,7 @@
 package br.ufmt.periscope.indexer.resources.analysis;
 
 import java.io.Reader;
-import javax.inject.Inject;
-import javax.inject.Named;
+import javax.annotation.PostConstruct;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -23,15 +22,12 @@ import org.apache.lucene.util.Version;
  *
  * @author mattyws
  */
-@Named
-public class PatenteeAnalyzer extends Analyzer {
+public class FastJoinAnalyzer extends Analyzer {
 
-    private @Inject
-    CommonDescriptorsSet descriptorSet;
+    CommonDescriptorsSet descriptorSet = new CommonDescriptorsSet();
     public Version matchVersion;
-
-    @Inject
-    public PatenteeAnalyzer(Version version) {
+    
+    public FastJoinAnalyzer(Version version) {
         this.matchVersion = version;
     }
 
@@ -39,14 +35,9 @@ public class PatenteeAnalyzer extends Analyzer {
     protected TokenStreamComponents createComponents(String field, Reader reader) {
         // Tokenizes the string by withespace
         Tokenizer source = new WhitespaceTokenizer(Version.LUCENE_47, reader);
-
         // Break the withespace in pattern and turn in two tokens, one with
         // the acronym and other with the condesed name
-        TokenStream sink = new WhitespaceTokenFilter(
-                // Condense the name, generates the acronym (if exists)
-                // and return a token with the follow pattern
-                // "acronym condenseName"
-                new CondenseTokenFilter(
+        TokenStream sink = new CondenseTokenFilter(
                         // Removes the Common Descriptors of the company
                         new CommonDescriptorsTokenFilter(
                                 // Remove the English stopwords
@@ -54,7 +45,7 @@ public class PatenteeAnalyzer extends Analyzer {
                                         // Pass the chars to their ASCII aquivalent
                                         new ASCIIFoldingFilter(
                                                 // Normalize the string
-                                                new LowerCaseFilter(matchVersion, source)), StandardAnalyzer.STOP_WORDS_SET), descriptorSet)));
+                                                new LowerCaseFilter(matchVersion, source)), StandardAnalyzer.STOP_WORDS_SET), descriptorSet));
 
         return new TokenStreamComponents(source, sink);
     }

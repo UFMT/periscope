@@ -1,6 +1,7 @@
 package br.ufmt.periscope.indexer;
 
 import br.ufmt.periscope.bean.SeedBean;
+import br.ufmt.periscope.indexer.resources.analysis.FastJoinAnalyzer;
 import br.ufmt.periscope.model.Project;
 import java.io.IOException;
 import javax.enterprise.inject.Disposes;
@@ -71,12 +72,13 @@ public class LuceneIndexerResources {
 //        return new CommonDescriptorsSet("");
 //    }
 //
-//    @Produces
-//    private Analyzer getAnalyzer() {
-////        //return new StandardAnalyzer(Version.LUCENE_47);
-//        System.out.println("Produzindo Analyzer");
-//        return new PatenteeAnalyzer(Version.LUCENE_47);
-//    }
+    @Produces
+    private Analyzer getAnalyzer() {
+//        //return new StandardAnalyzer(Version.LUCENE_47);
+        return new FastJoinAnalyzer(Version.LUCENE_47);
+    }
+    
+    
     @Produces
     private IndexWriterConfig getIndexConfig(Analyzer analyzer) {
         //return new IndexWriterConfig(Version.LUCENE_47, analyzer);

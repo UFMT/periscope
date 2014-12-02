@@ -1,6 +1,6 @@
 package br.ufmt.periscope.repository;
 
-import br.ufmt.periscope.indexer.resources.search.LengthQuery;
+import br.ufmt.periscope.indexer.resources.search.FastJoinQuery;
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.ApplicantType;
 import br.ufmt.periscope.model.Country;
@@ -207,50 +207,25 @@ public class ApplicantRepository {
             queryProject.setBoost(0.1f);
             IndexSearcher searcher = new IndexSearcher(reader);
             for (String name : names) {
-                // Cria uma stream de tokens com o analyzer
-                TokenStream stream = analyzer.tokenStream("applicant", new StringReader(name));
-                // Passa os atributos da stream para que seja possível recuperar seu valor puro de texto
-                CharTermAttribute attr = stream.getAttribute(CharTermAttribute.class);
+                TokenStream stream = analyzer.tokenStream("applicant", new StringReader(
+                        name));
+                CharTermAttribute attr = stream
+                        .getAttribute(CharTermAttribute.class);
                 stream.reset();
-                // Recuperando o valor de texto da stream
-                name = "";
+                String valor = "";
                 while (stream.incrementToken()) {
-                    name = name + attr.toString() + " ";
+                    valor = valor + attr.toString() + ' ';
                 }
-                name = name.trim();
+                valor = valor.trim();                
                 stream.end();
                 stream.close();
-                TopScoreDocCollector collector = TopScoreDocCollector.create(1000, true);
-                BooleanQuery bq = new BooleanQuery();
-                // Criando a query, dar o name.split é para saber a existência do acrônimo
-                String[] tokens = name.split(" ");
-                // Se for maior que 1, existe um acrônimo
-                if (tokens.length > 1) {
-                    bq.add(new PrefixQuery(new Term("applicant", tokens[0])), Occur.MUST);
-                    bq.add(new FuzzyQuery(new Term("applicant", tokens[1]), 1), Occur.MUST);
-                    bq.add(new LengthQuery("applicant", name), Occur.MUST_NOT);
-                } else {
-                    if (name.length() > 3) {
-                        bq.add(new FuzzyQuery(new Term("applicant", name)),
-                                Occur.MUST);
-                    } else {
-                        bq.add(new PrefixQuery(new Term("applicant", name)),
-                                Occur.MUST);
-                    }
-                }
-                bq.add(queryProject, Occur.MUST);
-
-                ScoreDoc[] hits = searcher.search(bq, 1000).scoreDocs;
-
-                //ScoreDoc[] hits = collector.topDocs().scoreDocs;
-                //System.out.println("Found " + hits.length + " hits.");
-                for (int i = 0; i < hits.length; ++i) {
-                    int docId = hits[i].doc;
-                    Document d = searcher.doc(docId);
-                    results.add(d.get("applicant"));
-
-                    if (results.size() == top) {
-                        break;
+                Query query = new FastJoinQuery("applicant", valor, 0.8f, 0.9f);                
+                ScoreDoc[] hits = searcher.search(query, 10).scoreDocs;
+                List<String> result = new ArrayList<String>();
+                if (hits.length > 0) {
+                    for (int i = 0; i < hits.length; i++) {
+                        Document hitDoc = searcher.doc(hits[i].doc);
+                        result.add(hitDoc.get("applicant"));
                     }
                 }
             }

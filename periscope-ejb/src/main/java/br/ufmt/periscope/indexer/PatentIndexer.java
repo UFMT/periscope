@@ -1,6 +1,5 @@
 package br.ufmt.periscope.indexer;
 
-import br.ufmt.periscope.indexer.resources.analysis.PatenteeAnalyzer;
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.model.Patent;
@@ -33,8 +32,6 @@ public class PatentIndexer {
     IndexWriter writer;
     private @Inject
     IndexReader reader;
-    private @Inject
-    PatenteeAnalyzer analyzer;
     private @Inject
     ApplicantRepository paRepo;
     private @Inject
