@@ -58,7 +58,7 @@ public class PatentRepository {
             if (cont >= 30) {
                 ds.save(patentsCache);
                 ds.save(project);
-                patentIndexer.indexPatents(patentsCache);
+                patentIndexer.indexPatents(patentsCache, project);
                 patentsCache.clear();
                 cont = 0;
             }
@@ -66,7 +66,7 @@ public class PatentRepository {
         if (cont > 0) {
             ds.save(patentsCache);
             ds.save(project);
-            patentIndexer.indexPatents(patentsCache);
+            patentIndexer.indexPatents(patentsCache, project);
             patentsCache.clear();
         }
 

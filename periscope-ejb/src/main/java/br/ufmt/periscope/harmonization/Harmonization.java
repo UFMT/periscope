@@ -1,20 +1,16 @@
 package br.ufmt.periscope.harmonization;
 
-import java.util.List;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import org.bson.types.ObjectId;
-
 import br.ufmt.periscope.indexer.PatentIndexer;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Rule;
-
 import com.github.jmkgreen.morphia.Datastore;
 import com.github.jmkgreen.morphia.mapping.Mapper;
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DBObject;
+import java.util.ArrayList;
+import javax.inject.Inject;
+import javax.inject.Named;
+import org.bson.types.ObjectId;
 
 @Named
 public class Harmonization {
@@ -29,7 +25,6 @@ public class Harmonization {
      * @param rule
      */
     public void applyRule(Rule rule) {
-//        Long in = System.currentTimeMillis();
         if (rule == null) {
             return;
         }
@@ -44,7 +39,6 @@ public class Harmonization {
                 break;
 
         }
-//        System.out.println("Aplicar 1 "+(System.currentTimeMillis() - in));
     }
 
     private void applyApplicantRule(Rule rule) {
@@ -56,7 +50,6 @@ public class Harmonization {
         DBObject dbObjectNature = mapper.toDBObject(rule.getNature());
         String applicants[] = new String[rule.getSubstitutions().size()];
         applicants = rule.getSubstitutions().toArray(applicants);
-//        Long ini = System.currentTimeMillis();
         for (String applicant : applicants) {
             DBObject query = BasicDBObjectBuilder
                     .start("project.$id", projectId).add("applicants.name", applicant).get();
@@ -73,19 +66,8 @@ public class Harmonization {
             ds.getCollection(Patent.class)
                     .updateMulti(query, updateOp);
         }
-//        System.out.println("Tempo aplicar "+(System.currentTimeMillis() - ini));
 //        ini = System.currentTimeMillis();
-        List<Patent> patents = ds
-                .find(Patent.class)
-                .field("project")
-                .equal(rule.getProject())
-                .field("applicants.name")
-                .in(rule.getSubstitutions())
-                .retrievedFields(true, "_id", "titleSelect", "publicationNumber", "applicants", "inventors")
-                .asList();
-//        System.out.println("Tempo load "+(System.currentTimeMillis() - ini));
-//        ini = System.currentTimeMillis();
-        indexer.indexPatents(patents, rule.getProject());
+        indexer.indexRule(new ArrayList<String>(rule.getSubstitutions()), rule.getName(), null, null, rule.getProject());
 //        System.out.println("Tempo indexar "+(System.currentTimeMillis() - ini));
 
     }
@@ -119,16 +101,7 @@ public class Harmonization {
                     .updateMulti(query, updateOp);
         }
 
-        List<Patent> patents = ds
-                .find(Patent.class)
-                .field("project")
-                .equal(rule.getProject())
-                .field("inventors.name")
-                .in(rule.getSubstitutions())
-                .retrievedFields(true, "_id", "titleSelect", "publicationNumber", "applicants", "inventors")
-                .asList();
-
-        indexer.indexPatents(patents, rule.getProject());
+        indexer.indexRule(null, null, new ArrayList<String>(rule.getSubstitutions()), rule.getName(), rule.getProject());
 
     }
 }

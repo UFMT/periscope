@@ -1,7 +1,6 @@
 package br.ufmt.periscope.controller;
 
 import br.ufmt.periscope.indexer.PatentIndexer;
-import br.ufmt.periscope.model.Patent;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -117,8 +116,7 @@ public class ProjectController {
     }
 
     public String reindexAll(Project project) {
-        List<Patent> patents = patentRepository.getAllPatents(project);
-        indexer.indexPatents(patents);
+        indexer.reindex(project);
         return "";
     }
 

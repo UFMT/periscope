@@ -5,9 +5,13 @@ import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
+import br.ufmt.periscope.repository.ApplicantRepository;
+import br.ufmt.periscope.repository.InventorRepository;
 import java.io.IOException;
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
@@ -32,24 +36,24 @@ public class PatentIndexer {
     private @Inject
     PatenteeAnalyzer analyzer;
     private @Inject
+    ApplicantRepository paRepo;
+    private @Inject
+    InventorRepository inRepo;
+    private @Inject
     Logger log;
 
     public void indexPatents(List<Patent> patents, Project project) {
-//        System.out.println("LISTA : "+patents.size());
+        Set<String> applicants = new HashSet<String>();
+        Set<String> inventors = new HashSet<String>();
         for (Patent patent : patents) {
-            if (patent!= null) {
-                patent.setProject(project);
-                indexPatent(patent);
+            for (Applicant pa : patent.getApplicants()) {
+                applicants.add(pa.getName());
+            }
+            for (Inventor inv : patent.getInventors()) {
+                inventors.add(inv.getName());
             }
         }
-    }
-
-    public void indexPatents(List<Patent> patents) {
-        for (Patent patent : patents) {
-            if (patent != null) {
-                indexPatent(patent);
-            }
-        }
+        index(new ArrayList<String>(applicants), new ArrayList<String>(inventors), project);
     }
 
     public void deleteIndexesForProject(Project project) {
@@ -66,22 +70,65 @@ public class PatentIndexer {
         log.info("Ocorreu algum erro deletando os indices.");
     }
 
-    public void indexPatent(Patent p) {
+    public void index(List<String> pas, List<String> invs, Project project) {
         try {
-            for (Applicant a : p.getApplicants()) {
+            if (pas != null) {
+                for (String a : pas) {
+                    Document doc = new Document();
+                    doc.add(new TextField("id", project.getId().toString() + String.valueOf(a.hashCode()), Field.Store.YES));
+                    doc.add(new TextField("applicant", a, Field.Store.YES));
+                    doc.add(new TextField("project", project.getId().toString(), Field.Store.YES));
+                    writer.deleteDocuments(new Term("id", doc.get("id")));
+                    writer.addDocument(doc);
+                }
+            }
+            if (invs != null) {
+                for (String a : invs) {
+                    Document doc = new Document();
+                    doc.add(new TextField("id", project.getId().toString() + String.valueOf(a.hashCode()), Field.Store.YES));
+                    doc.add(new TextField("inventor", a, Field.Store.YES));
+                    doc.add(new TextField("project", project.getId().toString(), Field.Store.YES));
+                    writer.deleteDocuments(new Term("id", doc.get("id")));
+                    writer.addDocument(doc);
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(PatentIndexer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void reindex(Project project) {
+        deleteIndexesForProject(project);
+        List<String> pas = paRepo.getApplicants(project, "");
+        List<String> invs = inRepo.getInventors(project, "");
+        index(pas, invs, project);
+    }
+
+    public void indexRule(List<String> pas, String pa, List<String> invs, String inv, Project project) {
+        try {
+            if (pas != null) {
+                for (String a : pas) {
+                    Document doc = new Document();
+                    doc.add(new TextField("id", project.getId().toString() + String.valueOf(a.hashCode()), Field.Store.YES));
+                    writer.deleteDocuments(new Term("id", doc.get("id")));
+                }
                 Document doc = new Document();
-                doc.add(new TextField("id", p.getTitleSelect() + p.getPublicationNumber() + p.getProject().getId().toString() + String.valueOf(a.getName().hashCode()), Field.Store.YES));
-                doc.add(new TextField("applicant", a.getName(), Field.Store.YES));
-                doc.add(new TextField("project", p.getProject().getId().toString(), Field.Store.YES));
+                doc.add(new TextField("id", project.getId().toString() + String.valueOf(pa.hashCode()), Field.Store.YES));
+                doc.add(new TextField("applicant", pa, Field.Store.YES));
+                doc.add(new TextField("project", project.getId().toString(), Field.Store.YES));
                 writer.deleteDocuments(new Term("id", doc.get("id")));
                 writer.addDocument(doc);
             }
-
-            for (Inventor a : p.getInventors()) {
+            if (invs != null) {
+                for (String a : invs) {
+                    Document doc = new Document();
+                    doc.add(new TextField("id", project.getId().toString() + String.valueOf(a.hashCode()), Field.Store.YES));
+                    writer.deleteDocuments(new Term("id", doc.get("id")));
+                }
                 Document doc = new Document();
-                doc.add(new TextField("id", p.getTitleSelect() + p.getPublicationNumber() + p.getProject().getId().toString() + String.valueOf(a.getName().hashCode()), Field.Store.YES));
-                doc.add(new TextField("inventor", a.getName(), Field.Store.YES));
-                doc.add(new TextField("project", p.getProject().getId().toString(), Field.Store.YES));
+                doc.add(new TextField("id", project.getId().toString() + String.valueOf(inv.hashCode()), Field.Store.YES));
+                doc.add(new TextField("inventor", inv, Field.Store.YES));
+                doc.add(new TextField("project", project.getId().toString(), Field.Store.YES));
                 writer.deleteDocuments(new Term("id", doc.get("id")));
                 writer.addDocument(doc);
             }
@@ -89,5 +136,23 @@ public class PatentIndexer {
             Logger.getLogger(PatentIndexer.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    public void indexPatent(Patent p) {
+        Long in = System.currentTimeMillis();
+        List<String> pas = new ArrayList<String>();
+        List<String> invs = new ArrayList<String>();
+        if (p.getApplicants() != null) {
+            for (Applicant a : p.getApplicants()) {
+                pas.add(a.getName());
+            }
+        }
+        in = System.currentTimeMillis();
+        if (p.getInventors() != null) {
+            for (Inventor a : p.getInventors()) {
+                invs.add(a.getName());
+            }
+        }
+        index(pas, invs, p.getProject());
     }
 }
