@@ -46,8 +46,7 @@ public class CondenseTokenFilter extends TokenFilter {
             if (!found) {                
                 startOffset = offsetAtt.startOffset();
                 found = true;
-            }
-            System.out.println(termAtt.toString());
+            }            
             sb.append(termAtt);
             // The '_' is just to create the acronym after
             sb.append("_");

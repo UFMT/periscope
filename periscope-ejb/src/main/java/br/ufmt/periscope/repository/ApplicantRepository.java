@@ -228,13 +228,12 @@ public class ApplicantRepository {
                 valor = valor.trim();                
                 stream.end();
                 stream.close();
-                Query query = new FastJoinQuery("applicant", valor, 0.8f, 0.9f);                
+                Query query = new FastJoinQuery("applicant", valor, 0.6f, 0.6f);                
                 ScoreDoc[] hits = searcher.search(query, 10).scoreDocs;
-                List<String> result = new ArrayList<String>();
                 if (hits.length > 0) {
                     for (int i = 0; i < hits.length; i++) {
                         Document hitDoc = searcher.doc(hits[i].doc);
-                        result.add(hitDoc.get("applicant"));
+                        results.add(hitDoc.get("applicant"));
                     }
                 }
             }

@@ -231,18 +231,15 @@ public class InventorRepository {
                 stream.close();
                 Query query = new FastJoinQuery("inventor", valor, 0.8f, 0.9f);
                 ScoreDoc[] hits = searcher.search(query, 10).scoreDocs;
-                List<String> result = new ArrayList<String>();
                 if (hits.length > 0) {
                     for (int i = 0; i < hits.length; i++) {
                         Document hitDoc = searcher.doc(hits[i].doc);
-                        result.add(hitDoc.get("inventor"));
+                        results.add(hitDoc.get("inventor"));
                     }
 
                 }
             }
-            for (String name : names) {
-                results.remove(name);
-            }
+
             //searcher.close();
 
             return results;
