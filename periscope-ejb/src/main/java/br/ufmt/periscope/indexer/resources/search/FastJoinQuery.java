@@ -24,6 +24,7 @@ public class FastJoinQuery extends MultiTermQuery{
 
     public FastJoinQuery(String field, String query, float tokenThreshold, float editThreshold) {
         super(field);
+        ts = new FuzzyTokenSimilarity(tokenThreshold, editThreshold);
         if (query.contains(" ")) {
             ts = new FuzzyTokenSimilarity(tokenThreshold, editThreshold);
             String[] tokens = query.split(" ");
