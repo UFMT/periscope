@@ -29,7 +29,7 @@ public class FastJoinTermEnum extends FilteredTermsEnum {
     }
 
     @Override
-    protected AcceptStatus accept(BytesRef term) throws IOException {        
+    protected AcceptStatus accept(BytesRef term) throws IOException {                
         if(ts.execute(this.name.utf8ToString(), term.utf8ToString()) != 0) {
             if(ts.fuzzyCosine() != 0 || ts.fuzzyDice() != 0 || ts.fuzzyJaccard() != 0){
                 return AcceptStatus.YES;
