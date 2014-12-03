@@ -1,5 +1,6 @@
 package br.ufmt.periscope.repository;
 
+import br.ufmt.periscope.indexer.LuceneIndexerResources;
 import br.ufmt.periscope.indexer.resources.analysis.FastJoinAnalyzer;
 import br.ufmt.periscope.indexer.resources.search.FastJoinQuery;
 import br.ufmt.periscope.model.Country;
@@ -56,8 +57,8 @@ public class InventorRepository {
 
     private @Inject
     Datastore ds;
-    private @Inject
-    IndexReader reader;
+    private @Inject LuceneIndexerResources resources;
+    private IndexReader reader;
     private @Inject
     FastJoinAnalyzer analyzer;
     private @Inject
@@ -195,6 +196,7 @@ public class InventorRepository {
     public Set<String> getInventorSugestions(Project project, int top, String... names) {
 
         Set<String> results = new HashSet<String>();
+        reader = resources.getReader();
         try {
 //            StringBuilder queryBuilder = new StringBuilder();
 //            for (String name : names) {
@@ -241,7 +243,7 @@ public class InventorRepository {
             }
 
             //searcher.close();
-
+            resources.closeReader(reader);
             return results;
 
         } catch (CorruptIndexException e) {
@@ -251,6 +253,7 @@ public class InventorRepository {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        resources.closeReader(reader);
         return results;
 
     }

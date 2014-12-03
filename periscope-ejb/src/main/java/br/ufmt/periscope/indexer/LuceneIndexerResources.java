@@ -25,24 +25,18 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
-@ViewScoped
 @Named
 public class LuceneIndexerResources {
 
-    private @Inject
-    Datastore ds;
+    
+    private @Inject FastJoinAnalyzer analyzer;    
 
-    IndexReader reader = null;
-
-    @Produces
-    public Version version = Version.LUCENE_47;
-
-    @Named
-    @Produces
-    public IndexReader getReader(Directory dir) {
-        if (reader == null) {
-            try {
-                System.out.println("Criando um reader");
+    public IndexReader getReader() {
+        IndexReader reader=null;
+        System.out.println("Get reader");
+        Directory dir = this.getLocalLuceneDirectory();
+        if (dir != null) {
+            try {                
                 reader = DirectoryReader.open(dir);
             } catch (CorruptIndexException e) {
                 e.printStackTrace();
@@ -53,12 +47,9 @@ public class LuceneIndexerResources {
         return reader;
     }
 
-//	@Produces
-//	public IndexSearcher getSearcher(IndexReader reader){		
-//		return new IndexSearcher(reader);	
-//	}
-    @Produces
-    public IndexWriter getIndexWriter(Directory dir, IndexWriterConfig config) {
+    public IndexWriter getIndexWriter() {
+        Directory dir = this.getLocalLuceneDirectory();
+        IndexWriterConfig config = this.getIndexConfig();
         IndexWriter iw = null;
         try {
             iw = new IndexWriter(dir, config);
@@ -71,46 +62,12 @@ public class LuceneIndexerResources {
 
     }
 
-//    @Produces
-//    private CommonDescriptorsSet getCommonDescriptorSet(){
-//        System.out.println("Produzindo CommonDescriptorSet");
-//        return new CommonDescriptorsSet("");
-//    }
-//
-//    @Produces
-//    private Analyzer getAnalyzer() {
-////        //return new StandardAnalyzer(Version.LUCENE_47);
-//        return new FastJoinAnalyzer(Version.LUCENE_47);
-//    }
-
-    @Produces
-    private IndexWriterConfig getIndexConfig(Analyzer analyzer) {
-        //return new IndexWriterConfig(Version.LUCENE_47, analyzer);
+    private IndexWriterConfig getIndexConfig() {
         IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_47, analyzer);
         return config;
     }
 
-//   // @Produces
-//    public Directory getMongoDBLuceneDirectory() {
-//        DBCollection dbCollection = ds.getDB().getCollection("PatentIndex");
-//
-//        // serializers + map-store
-//        DBObjectSerializer<String> keySerializer = new SimpleFieldDBObjectSerializer<String>("key");
-//        DBObjectSerializer<MapDirectoryEntry> valueSerializer = new MapDirectoryEntrySerializer("value");
-//        ConcurrentMap<String, MapDirectoryEntry> store = new MongoConcurrentMap<String, MapDirectoryEntry>(dbCollection, keySerializer, valueSerializer);
-//
-//        // lucene directory	
-//        Directory dir;
-//        try {
-//            dir = new MapDirectory(store);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//        return dir;
-//
-//    }
-    @Produces
+    
     public Directory getLocalLuceneDirectory() {
         Directory dir = null;
         try {
@@ -121,10 +78,9 @@ public class LuceneIndexerResources {
         return dir;
 
     }
-
-    public void disposesWriter(@Disposes IndexWriter writer) {
-
-        try {
+    
+    public void closeWriter(IndexWriter writer) {
+         try {
             writer.deleteUnusedFiles();
             writer.commit();
             writer.close();
@@ -133,34 +89,15 @@ public class LuceneIndexerResources {
             Logger.getLogger(LuceneIndexerResources.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
-
     }
-
-    public void disposesReader(@Disposes IndexReader reader) {
+    
+    public void closeReader(IndexReader reader) {
         try {
-            System.out.println("Disposing reader");
+            System.out.println("closing reader");
             reader.close();
-
         } catch (IOException ex) {
-            Logger.getLogger(LuceneIndexerResources.class
-                    .getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LuceneIndexerResources.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
-//    public void disposesDirectory(@Disposes Directory dir) {
-//        try {
-//            dir.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//	public void disposesSearcher(@Disposes IndexSearcher searcher){
-//		try {
-//			System.out.println("Disposing searcher");
-//			searcher.close();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}	
-}
+ }

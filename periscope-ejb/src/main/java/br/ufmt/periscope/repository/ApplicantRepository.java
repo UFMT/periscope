@@ -1,5 +1,6 @@
 package br.ufmt.periscope.repository;
 
+import br.ufmt.periscope.indexer.LuceneIndexerResources;
 import br.ufmt.periscope.indexer.resources.analysis.FastJoinAnalyzer;
 import br.ufmt.periscope.indexer.resources.search.FastJoinQuery;
 import br.ufmt.periscope.model.Applicant;
@@ -60,7 +61,8 @@ public class ApplicantRepository {
     private @Inject
     Datastore ds;
     private @Inject
-    IndexReader reader;
+    LuceneIndexerResources resources;
+    private IndexReader reader = null;
     private @Inject
     FastJoinAnalyzer analyzer;
     private @Inject
@@ -72,8 +74,6 @@ public class ApplicantRepository {
     public ApplicantRepository() {
         System.out.println("AppRepository");
     }
-    
-    
 
     public Applicant getApplicantByName(String name) {
 
@@ -197,20 +197,8 @@ public class ApplicantRepository {
 
     public Set<String> getApplicantSugestions(Project project, int top, String... names) {
         Set<String> results = new HashSet<String>();
+        reader = resources.getReader();
         try {
-//            StringBuilder queryBuilder = new StringBuilder();
-//            for (String name : names) {
-//                String[] terms = name.split(" ", -2);
-//                for (String term : terms) {
-//                    //if(term.length() >= 4){		
-//                    queryBuilder.append(term + "~ ");
-//                    queryBuilder.append(term + "* ");
-//                    //}
-//                }
-//
-//                //queryBuilder.append("NOT \""+name+"\" ");	
-//                queryBuilder.append("\"" + name + "\"~10 ");
-//            }
             Query queryProject = new QueryParser(Version.LUCENE_47, "project", analyzer)
                     .parse(project.getId().toString());
             queryProject.setBoost(0.1f);
@@ -225,11 +213,11 @@ public class ApplicantRepository {
                 while (stream.incrementToken()) {
                     valor = valor + attr.toString() + ' ';
                 }
-                valor = valor.trim();                
+                valor = valor.trim();
                 stream.end();
                 stream.close();
-                Query query = new FastJoinQuery("applicant", valor, 0.6f, 0.6f);                
-                ScoreDoc[] hits = searcher.search(query, 10).scoreDocs;
+                Query query = new FastJoinQuery("applicant", valor, 0.6f, 0.6f);
+                ScoreDoc[] hits = searcher.search(query, top).scoreDocs;
                 if (hits.length > 0) {
                     for (int i = 0; i < hits.length; i++) {
                         Document hitDoc = searcher.doc(hits[i].doc);
@@ -239,10 +227,7 @@ public class ApplicantRepository {
             }
             for (String name : names) {
                 results.remove(name);
-            }
-            // searcher.close();
-
-            return results;
+            }           
 
         } catch (CorruptIndexException e) {
             e.printStackTrace();
@@ -251,6 +236,7 @@ public class ApplicantRepository {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        resources.closeReader(reader);
         return results;
 
     }

@@ -1,5 +1,6 @@
 package br.ufmt.periscope.bean;
 
+import br.ufmt.periscope.indexer.LuceneIndexerResources;
 import br.ufmt.periscope.indexer.resources.analysis.CommonDescriptor;
 import br.ufmt.periscope.model.ApplicantType;
 import java.io.InputStream;
@@ -43,8 +44,8 @@ public class SeedBean {
     Datastore ds;
     private @Inject
     Logger log;
-    private @Inject
-    IndexWriter writer;
+    private @Inject LuceneIndexerResources resources;
+    private IndexWriter writer;
     public static String PERISCOPE_DIR;
 
     static {
@@ -144,6 +145,7 @@ public class SeedBean {
 
     private void initCommonsDescriptors() {
         if (ds.getCount(CommonDescriptor.class) == 0l) {
+            writer = resources.getIndexWriter();
             log.info("Nenhum descritor comum encontrado.");
             List<CommonDescriptor> descriptors = Fixjure.listOf(CommonDescriptor.class)
                     .from(YamlSource.newYamlResource("descriptors.yaml")).create();
@@ -161,17 +163,8 @@ public class SeedBean {
                 }
             }
 
-            log.info("Cadastrado " + descriptors.size() + " descritores comuns.");
-            try {
-                writer.close();
-            } catch (IOException ex) {
-                Logger.getLogger(SeedBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        try {
-            writer.close();
-        } catch (IOException ex) {
-            Logger.getLogger(SeedBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            log.info("Cadastrado " + descriptors.size() + " descritores comuns.");            
+            resources.closeWriter(writer);
+        }        
     }
 }

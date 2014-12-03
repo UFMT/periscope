@@ -29,9 +29,9 @@ import org.apache.lucene.index.Term;
 public class PatentIndexer {
 
     private @Inject
-    IndexWriter writer;
-    private @Inject
-    IndexReader reader;
+    LuceneIndexerResources resources;
+
+    private IndexWriter writer = null;
     private @Inject
     ApplicantRepository paRepo;
     private @Inject
@@ -55,28 +55,31 @@ public class PatentIndexer {
 
     public void deleteIndexesForProject(Project project) {
 //        log.info("Deletando indices para o projeto " + project.getTitle());
+        writer = resources.getIndexWriter();
         try {
             writer.deleteDocuments(new Term("project", project.getId().toString()));
             log.info("Indices deletados com sucesso");
-            return;
         } catch (CorruptIndexException e) {
+            log.info("Ocorreu algum erro deletando os indices.");
             e.printStackTrace();
         } catch (IOException e) {
+            log.info("Ocorreu algum erro deletando os indices.");
             e.printStackTrace();
         }
-        log.info("Ocorreu algum erro deletando os indices.");
+        resources.closeWriter(writer);
     }
 
     public void index(List<String> pas, List<String> invs, Project project) {
         try {
+            writer = resources.getIndexWriter();
             if (pas != null) {
                 for (String a : pas) {
-                        Document doc = new Document();
-                        doc.add(new TextField("id", project.getId().toString() + String.valueOf(a.hashCode()), Field.Store.YES));
-                        doc.add(new TextField("applicant", a, Field.Store.YES));
-                        doc.add(new TextField("project", project.getId().toString(), Field.Store.YES));
-                        writer.deleteDocuments(new Term("id", doc.get("id")));
-                        writer.addDocument(doc);
+                    Document doc = new Document();
+                    doc.add(new TextField("id", project.getId().toString() + String.valueOf(a.hashCode()), Field.Store.YES));
+                    doc.add(new TextField("applicant", a, Field.Store.YES));
+                    doc.add(new TextField("project", project.getId().toString(), Field.Store.YES));
+                    writer.deleteDocuments(new Term("id", doc.get("id")));
+                    writer.addDocument(doc);
                 }
             }
             if (invs != null) {
@@ -89,6 +92,7 @@ public class PatentIndexer {
                     writer.addDocument(doc);
                 }
             }
+            resources.closeWriter(writer);
         } catch (IOException ex) {
             Logger.getLogger(PatentIndexer.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -103,6 +107,7 @@ public class PatentIndexer {
 
     public void indexRule(List<String> pas, String pa, List<String> invs, String inv, Project project) {
         try {
+            writer = resources.getIndexWriter();
             if (pas != null) {
                 for (String a : pas) {
                     Document doc = new Document();
@@ -129,6 +134,7 @@ public class PatentIndexer {
                 writer.deleteDocuments(new Term("id", doc.get("id")));
                 writer.addDocument(doc);
             }
+            resources.closeWriter(writer);
         } catch (IOException ex) {
             Logger.getLogger(PatentIndexer.class.getName()).log(Level.SEVERE, null, ex);
         }
