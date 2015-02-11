@@ -10,17 +10,26 @@ import javax.inject.Inject;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 
+/**
+ *
+ * @author ph
+ */
 @ManagedBean
 @ViewScoped
 public class StateDistribuitionController extends GenericController {
 
     private @Inject
     StateDistribuitionReport report;
+    private String chartStyle;
 
+    /**
+     *
+     */
     public void refreshChart() {
 
         setModel(new CartesianChartModel());
         ChartSeries series = report.StateDistribuitionSeries(getCurrentProject());
+        
         getModel().addSeries(series);
 
         setPairs(new ArrayList<Pair>());
@@ -29,8 +38,19 @@ public class StateDistribuitionController extends GenericController {
             Number value = series.getData().get(key);
             getPairs().add(new Pair(key, value));
         }
-
+        
+        Integer tam = series.getData().size();
+        System.out.println(tam);
+        setChartStyle("height :"+tam*50+"px");
         Collections.reverse(getPairs());
+    }
+
+    public String getChartStyle() {
+        return chartStyle;
+    }
+
+    public void setChartStyle(String chartStyle) {
+        this.chartStyle = chartStyle;
     }
 
 }

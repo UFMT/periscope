@@ -49,7 +49,11 @@ public class RuleRepository {
         }
         setRowCount((int) query.countAll());
         query.offset(first).limit(pageSize);
-        query.retrievedFields(true, "_id", "name", "acronym", "substitutions", "country", "state", "type");
+        if (this.searchType != null && this.searchType == 1) {
+            query.retrievedFields(true, "_id", "name", "acronym", "substitutions", "country", "state", "type", "nature");
+        } else {
+            query.retrievedFields(true, "_id", "name", "acronym", "substitutions", "country", "state", "type");
+        }
         return query.asList();
     }
 

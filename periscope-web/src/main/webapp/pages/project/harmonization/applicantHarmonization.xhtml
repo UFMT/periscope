@@ -36,10 +36,11 @@
                 <p:column headerText="">					
                     <p:selectBooleanCheckbox id="campo" 
                                              value="#{pa.selected}" >
-                        <p:ajax event="change" update=":tabView:formAll:selectedApplicants,@this,:#{p:component('panelSugestions')}" listener="#{applicantHarmonizationController.onSelectApplicant(pa)}"/>
+                        <p:ajax event="change" update=":tabView:formAll:selectedApplicants,@this,:#{p:component('panelSugestions')}" 
+                                listener="#{applicantHarmonizationController.onSelectApplicant(pa)}"/>
                     </p:selectBooleanCheckbox>	
                 </p:column>			
-                <p:column headerText="#{msgs['name']}" sortBy="#{pa.name}" filterBy="#{pa.name}">														
+                <p:column headerText="#{msgs['name']}" sortBy="#{pa.name}" filterBy="#{pa.name}" filterStyle="width:250px">														
                     #{pa.name}					
                 </p:column>
                 <p:column headerText="#{msgs['acronym']}" filterBy="#{pa.acronym}">	

@@ -20,6 +20,7 @@
 
                     <p:barChart id="horizontal" value="#{stateDistribuitionController.model}" rendered="#{stateDistribuitionController.model.series.get(0).getData().size()!=0}"
                                 orientation="horizontal" legendPosition="se" datatipFormat="%s"
+                                style="#{stateDistribuitionController.chartStyle}"
                                 title="#{msgs['patents.state']}" />
                     <p:dataTable id="states"
                                  emptyMessage="#{msgs['no.brazilian']}" var="pair"

@@ -55,10 +55,12 @@
                         <p:column headerText="#{msgs['application.number']}" >														
                             #{item.applicationNumber}					
                         </p:column>
-                        <p:column headerText="#{msgs['applicants']}">														
+                        <p:column headerText="#{msgs['applicants']}">
+                            #{item.applicants.size()}
                             #{item.applicantsToString}					
                         </p:column>
                         <p:column headerText="#{msgs['inventors']}" >														
+                            #{item.inventors.size()}
                             #{item.inventorsToString}					
                         </p:column>
                         <!--                    <p:column>														
