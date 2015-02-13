@@ -54,10 +54,14 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.util.Version;
 
+
 @ViewScoped
+/**
+ * This class have the methods with the queries for Applicant
+ */
 @Named
 public class ApplicantRepository {
-
+    
     private @Inject
     Datastore ds;
     private @Inject
@@ -71,10 +75,11 @@ public class ApplicantRepository {
     private List<Applicant> list;
     private Integer searchType;
 
-    public ApplicantRepository() {
-        System.out.println("AppRepository");
-    }
-
+    /**
+     * Method that query an applicant by its name.
+     * @param name String - Name of the applicant to be got.
+     * @return Applicant 
+     */
     public Applicant getApplicantByName(String name) {
 
         Applicant ret = null;
@@ -97,6 +102,11 @@ public class ApplicantRepository {
 
     }
 
+    /**
+     * Method responsible to get the applicants from database.
+     * @param project Project - Project in which the applicant most be searched.
+     * @return List&lt;String&gt; - List with the applicants queried.
+     */
     public List<Applicant> getApplicants(Project project) {
         Map<String, Applicant> map = new HashMap<String, Applicant>();
 
@@ -129,7 +139,14 @@ public class ApplicantRepository {
         return ret;
     }
 
-    public List<String> getApplicants(Project project, String begins) {
+
+    /**
+     * Method responsible to get the applicants from database.
+     * @param project Project - Project in which the applicant most be searched.
+     * @param begins String - The applicant name must begins with this string
+     * @return List&lt;String&gt; - List with the applicants queried.
+     */
+    public List<String> getApplicants(Project project,String begins) {
         ArrayList<DBObject> parametros = new ArrayList<DBObject>();
         DBObject matchProject = new BasicDBObject("$match", new BasicDBObject("project.$id", project.getId()).append("blacklisted", false));
         DBObject unwind = new BasicDBObject("$unwind", "$applicants");
@@ -154,6 +171,11 @@ public class ApplicantRepository {
 
     }
 
+    /**
+     * Method responsible to update the mainApplicant collection with MapReduce.
+     * @param currentProject Project - Current Project.
+     * @param filtro Filters - filters to be applied in the query.
+     */
     public void updateMainApplicants(Project currentProject, Filters filtro) {
 
         String map = "function() { "
@@ -195,6 +217,13 @@ public class ApplicantRepository {
 
     }
 
+    /**
+     * Method responsible for searching with <i>LUCENE</i> the suggestions of Applicants for the harmonization.
+     * @param project Project - Project where the suggestions should be searched.
+     * @param top int - Maximum amount of names to be returned.
+     * @param names String - Names of applicants to be queried.
+     * @return Set&lt;String&gt; - Set of applicants names suggested by the query
+     */
     public Set<String> getApplicantSugestions(Project project, int top, String... names) {
         Set<String> results = new HashSet<String>();
         reader = resources.getReader();
@@ -227,7 +256,7 @@ public class ApplicantRepository {
             }
             for (String name : names) {
                 results.remove(name);
-            }           
+            }
 
         } catch (CorruptIndexException e) {
             e.printStackTrace();
@@ -241,6 +270,16 @@ public class ApplicantRepository {
 
     }
 
+    /**
+     * Method responsible to search the data to fill the LazyTable of <b>Applicants</b>
+     * @param first int - The offset of the query.
+     * @param pageSize int - The limit of applicant in each page.
+     * @param sortField String - Name of the column to be sorted.
+     * @param sortOrder int - The Sort order of the column.
+     * @param filters Map&lt;String, String&gt; - Map with the column and values of the filters in the table.
+     * @param list List&lt;Applicant&gt; - List with the applicants that should not be queried.
+     * @return List&lt;Applicant&gt; - List of the applicants to be put in the table.
+     */
     public List<Applicant> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters, List<Applicant> list) {
 
         ArrayList<DBObject> parametros = new ArrayList<DBObject>();
@@ -397,10 +436,24 @@ public class ApplicantRepository {
         return datasource;
     }
 
+     /**
+     * Method responsible to search the data to fill the LazyTable of <b>Applicants</b>
+     * @param first int - The offset of the query.
+     * @param pageSize int - The limit of applicant in each page.
+     * @param sortField String - Name of the column to be sorted.
+     * @param sortOrder int - The Sort order of the column.
+     * @param filters Map&lt;String, String&gt; - Map with the column and values of the filters in the table.
+     * @return List&lt;Applicant&gt; - List of the applicants to be put in the table.
+     */
     public List<Applicant> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters) {
         return load(first, pageSize, sortField, sortOrder, filters, null);
     }
 
+    /**
+     * Method responsible to verify the existence of an applicant in a project.
+     * @param applicant - Applicant to be verified.
+     * @return boolean - The existence or not of an applicant in a project.
+     */
     public boolean exists(Applicant applicant) {
 
         ArrayList<DBObject> parametros = new ArrayList<DBObject>();

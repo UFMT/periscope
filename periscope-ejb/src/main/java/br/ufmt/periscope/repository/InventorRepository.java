@@ -29,7 +29,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.apache.lucene.analysis.Analyzer;
@@ -52,6 +51,10 @@ import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.util.Version;
 
 @ViewScoped
+/**
+ * 
+ * This class have the methods with the queries for Inventor
+ */
 @Named
 public class InventorRepository {
 
@@ -66,6 +69,13 @@ public class InventorRepository {
     private int count;
     private Integer searchType;
 
+    /**
+     * This method executes a query that's responsible to bring the MainInventor chart data.
+     * @param currentProject Project - Project where the query must be executed.
+     * @param limit int - Maximum amount of Inventors that should be bring.
+     * @param filtro Filters - Filters to be applied in the query.
+     * @return List&lt;Pair&gt; - List with the values that should be showed in the chart.
+     */
     public List<Pair> updateInventors(Project currentProject, int limit, Filters filtro) {
 
         /**
@@ -136,6 +146,11 @@ public class InventorRepository {
         return pairs;
     }
 
+    /**
+     * This methods gets a list of <b>Inventors</b> from database.
+     * @param currentProject Project - Project where the query must be executed.
+     * @return ArrayList&lt;Inventor&gt; List with the inventors of the Project.
+     */
     public ArrayList<Inventor> getInventors(Project currentProject) {
         Map<String, Inventor> map = new HashMap<String, Inventor>();
 
@@ -168,6 +183,12 @@ public class InventorRepository {
         return inventors;
     }
 
+   /**
+    * This methods gets a list of <b>Inventors</b> from database.
+    * @param project Project - Project where the query must be executed.
+    * @param begins String - The inventor should begin with this String.
+    * @return List&lt;String&gt; List with the inventors of the Project.
+    */
     public List<String> getInventors(Project project, String begins) {
         ArrayList<DBObject> parametros = new ArrayList<DBObject>();
         DBObject matchProject = new BasicDBObject("$match", new BasicDBObject("project.$id", project.getId()).append("blacklisted", false));
@@ -193,6 +214,14 @@ public class InventorRepository {
 
     }
 
+    /**
+     * 
+     * 
+     * @param project
+     * @param top
+     * @param names
+     * @return 
+     */
     public Set<String> getInventorSugestions(Project project, int top, String... names) {
 
         Set<String> results = new HashSet<String>();
@@ -435,11 +464,9 @@ public class InventorRepository {
     public List<Inventor> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters) {
         return load(first, pageSize, sortField, sortOrder, filters, null);
     }
-
     public int getCount() {
         return count;
     }
-
     public void setCount(int count) {
         this.count = count;
     }
