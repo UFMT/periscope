@@ -25,6 +25,8 @@ public class Applicant implements Serializable, Comparable<Applicant> {
 
     public Applicant() {
         country = new Country();
+        state = new State();
+        type = new ApplicantType();
     }
 
     public Applicant(String name) {

@@ -55,6 +55,8 @@ public class InventorHarmonizationController implements Serializable {
     private Rule rule = new Rule();
     private Country defaultCountry;
     private String acronymDefault = "BR";
+    private Boolean harmonized = false;
+    private Boolean sugHarmonized = false;
     private Inventor selectedRadio;
     private Integer searchType;
     private @Inject
@@ -105,9 +107,11 @@ public class InventorHarmonizationController implements Serializable {
     public void onSelectInventorSugestion() {
         Iterator<SelectObject<Inventor>> it = inventorSugestions.iterator();
         selectedInventorSugestions.clear();
+        sugHarmonized = false;
         while (it.hasNext()) {
             SelectObject<Inventor> pa = it.next();
             if (pa.isSelected()) {
+                sugHarmonized = sugHarmonized || pa.getObject().getHarmonized();
                 selectedInventorSugestions.add(pa.getObject());
             }
         }
@@ -143,8 +147,12 @@ public class InventorHarmonizationController implements Serializable {
         rule.setProject(currentProject);
         selectedInventors.addAll(selectedInventorSugestions);
         List<String> substitutions = new ArrayList<String>();
+        List<String> deletions = new ArrayList<String>();
         for (Inventor pa : selectedInventors) {
             substitutions.add(pa.getName());
+            if (pa.getHarmonized()) {
+                deletions.add(pa.getName());
+            }
         }
         rule.setCountry(countryRepository.getCountryByAcronym(rule.getCountry().getAcronym()));
         for (State state : rule.getCountry().getStates()) {
@@ -154,6 +162,12 @@ public class InventorHarmonizationController implements Serializable {
         }
         rule.getCountry().setStates(null);
         rule.setSubstitutions(new HashSet<String>(substitutions));
+        if (harmonized || sugHarmonized) {
+            for (String deletion : deletions) {
+                String id = ruleRepository.findByName(deletion).getId().toString();
+                ruleRepository.delete(id);
+            }
+        }
         ruleRepository.save(rule);
 
         ruleController.apply(rule.getId().toString());
@@ -170,14 +184,17 @@ public class InventorHarmonizationController implements Serializable {
         onSelectInventorFill();
 
         int i = 0;
+        harmonized = false;
         for (Inventor pa : selectedInventors) {
             names[i] = pa.getName();
+            harmonized = harmonized || pa.getHarmonized();
             i++;
         }
         Set<String> sugestions = inventorRepository.getInventorSugestions(currentProject, 10, names);
         List<Inventor> inventores = new ArrayList<Inventor>();
         for (String sugestion : sugestions) {
-            inventores.add(new Inventor(sugestion));
+            inventores.add(inventorRepository.getInventorByName(sugestion));
+            //inventores.add(new Inventor(sugestion));
         }
         setInventorSugestions(new ArrayList<SelectObject<Inventor>>(SelectObject.convertToSelectObjects(inventores)));
     }
@@ -254,4 +271,21 @@ public class InventorHarmonizationController implements Serializable {
         this.searchType = searchType;
         inventors.setSearchType(searchType);
     }
+
+    public Boolean getHarmonized() {
+        return harmonized;
+    }
+
+    public void setHarmonized(Boolean harmonized) {
+        this.harmonized = harmonized;
+    }
+
+    public Boolean getSugHarmonized() {
+        return sugHarmonized;
+    }
+
+    public void setSugHarmonized(Boolean sugHarmonized) {
+        this.sugHarmonized = sugHarmonized;
+    }
+
 }

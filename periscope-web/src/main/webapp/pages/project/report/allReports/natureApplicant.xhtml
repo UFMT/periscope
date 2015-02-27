@@ -22,7 +22,8 @@
 
                 <h:panelGrid columns="1" id="tudo" styleClass="container" >
                     
-                    <p:barChart id="horizontal" value="#{natureApplicantController.model}" rendered="#{natureApplicantController.model.series.get(0).getData().size()!=0}"
+                    <p:barChart id="horizontal" value="#{natureApplicantController.model}" 
+                                rendered="#{natureApplicantController.model.series.get(0).getData().size()!=0}"
                             orientation="horizontal" legendPosition="se" datatipFormat="%s"
                             title="#{msgs.natureDepositor}" />
 

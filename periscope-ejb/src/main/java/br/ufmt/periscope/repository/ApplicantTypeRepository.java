@@ -41,9 +41,6 @@ public class ApplicantTypeRepository {
 
     public List<ApplicantType> getAll() {
         List<ApplicantType> ret = ds.createQuery(ApplicantType.class).order("name").asList();
-        for (ApplicantType applicantType : ret) {
-            applicantType.setName(bundle.getString(applicantType.getName()));
-        }
         Collections.sort(ret);
         return ret;
     }

@@ -29,32 +29,26 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
-import org.apache.lucene.search.BooleanClause;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.util.Version;
 
-@ViewScoped
 /**
  * 
  * This class have the methods with the queries for Inventor
  */
+@ViewScoped
 @Named
 public class InventorRepository {
 
@@ -69,6 +63,28 @@ public class InventorRepository {
     private int count;
     private Integer searchType;
 
+    public Inventor getInventorByName(String name) {
+
+        Inventor ret = null;
+        BasicDBObject eleMatch = new BasicDBObject("$elemMatch", new BasicDBObject("name", name));
+        BasicDBObject inventors = new BasicDBObject("inventors", eleMatch);
+        BasicDBObject keys = new BasicDBObject("inventors", 1);
+        DBCursor cursor = ds.getCollection(Patent.class).find(inventors, keys);
+        if (cursor.hasNext()) {
+            Mapper mapper = ds.getMapper();
+            EntityCache ec = mapper.createEntityCache();
+
+            BasicDBList objList = (BasicDBList) cursor.next().get("inventors");
+            for (Object obj : objList) {
+                ret = (Inventor) mapper.fromDBObject(Inventor.class, (DBObject) obj, ec);
+                if (ret.getName().equals(name)) {
+                    return ret;
+                }
+            }
+        }
+        return null;
+
+    }
     /**
      * This method executes a query that's responsible to bring the MainInventor chart data.
      * @param currentProject Project - Project where the query must be executed.

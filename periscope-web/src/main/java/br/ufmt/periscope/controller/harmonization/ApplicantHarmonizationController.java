@@ -61,6 +61,8 @@ public class ApplicantHarmonizationController implements Serializable {
     private Country defaultCountry;
     private Rule rule = new Rule();
     private String acronymDefault = "BR";
+    private Boolean harmonized = false;
+    private Boolean sugHarmonized = false;
     private Applicant selectedRadio;
     private Integer searchType;
     private @Inject
@@ -120,9 +122,11 @@ public class ApplicantHarmonizationController implements Serializable {
     public void onSelectApplicantSugestion() {
         Iterator<SelectObject<Applicant>> it = applicantSugestions.iterator();
         selectedApplicantSugestions.clear();
+        sugHarmonized = false;
         while (it.hasNext()) {
             SelectObject<Applicant> pa = it.next();
             if (pa.isSelected()) {
+                sugHarmonized = sugHarmonized || pa.getObject().getHarmonized();
                 selectedApplicantSugestions.add(pa.getObject());
             }
         }
@@ -156,15 +160,19 @@ public class ApplicantHarmonizationController implements Serializable {
     }
 
     public String createRule() {
-
+        
         rule.setType(RuleType.APPLICANT);
         rule.setProject(currentProject);
         if (selectedApplicantSugestions != null) {
             selectedApplicants.addAll(selectedApplicantSugestions);
         }
         List<String> substitutions = new ArrayList<String>();
+        List<String> deletions = new ArrayList<String>();
         for (Applicant pa : selectedApplicants) {
             substitutions.add(pa.getName());
+            if (pa.getHarmonized()) {
+                deletions.add(pa.getName());
+            }
         }
         if (rule.getNature().getName().contentEquals("")) {
             rule.setNature(null);
@@ -177,6 +185,12 @@ public class ApplicantHarmonizationController implements Serializable {
         }
         rule.getCountry().setStates(null);
         rule.setSubstitutions(new HashSet<String>(substitutions));
+        if (harmonized || sugHarmonized) {
+            for (String deletion : deletions) {
+                String id = ruleRepository.findByName(deletion).getId().toString();
+                ruleRepository.delete(id);
+            }
+        }
         ruleRepository.save(rule);
 
         ruleController.apply(rule.getId().toString());
@@ -186,21 +200,24 @@ public class ApplicantHarmonizationController implements Serializable {
         flash.put("success", "Regra criada e aplicada com sucesso");
         return "";
     }
-
+    
     public void loadSugestions() {
         String[] names = new String[selectedApplicants.size()];
         selectedRadio = null;
         selectedRadio = selectedApplicants.get(0);
         onSelectApplicantFill();
         int i = 0;
+        harmonized = false;
         for (Applicant pa : selectedApplicants) {
             names[i] = pa.getName();
+            harmonized = harmonized || pa.getHarmonized();
             i++;
         }
         Set<String> sugestions = applicantRepository.getApplicantSugestions(currentProject, 100, names);
         List<Applicant> aplicants = new ArrayList<Applicant>();
         for (String sugestion : sugestions) {
-            aplicants.add(new Applicant(sugestion));
+            aplicants.add(applicantRepository.getApplicantByName(sugestion));
+            //aplicants.add(new Applicant(sugestion));
         }
         setApplicantSugestions(new ArrayList<SelectObject<Applicant>>(SelectObject.convertToSelectObjects(aplicants)));
 
@@ -294,6 +311,22 @@ public class ApplicantHarmonizationController implements Serializable {
 
     public void setSelectedsApplicantSugestions(List<SelectObject<Applicant>> selectedsApplicantSugestions) {
         this.selectedsApplicantSugestions = selectedsApplicantSugestions;
+    }
+
+    public Boolean getHarmonized() {
+        return harmonized;
+    }
+
+    public void setHarmonized(Boolean harmonized) {
+        this.harmonized = harmonized;
+    }
+
+    public Boolean getSugHarmonized() {
+        return sugHarmonized;
+    }
+
+    public void setSugHarmonized(Boolean sugHarmonized) {
+        this.sugHarmonized = sugHarmonized;
     }
 
 }

@@ -62,7 +62,7 @@ public class RuleRepository {
         try {
             return ds.find(Rule.class)
                     .field("project").equal(project)
-                    .retrievedFields(true, "_id", "name", "acronym", "substitutions", "country", "state", "type")
+                    .retrievedFields(true, "_id", "name", "acronym", "substitutions", "country", "state", "type", "nature")
                     .asList();
         } finally {
 //            System.out.println("Tempo " + (System.currentTimeMillis() - ini));

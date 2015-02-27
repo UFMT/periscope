@@ -9,7 +9,7 @@
     <f:view contentType="text/html">
         <p:dialog id="applicantSugestions" widgetVar="sugestionsDialog" modal="true"
                   header="#{msgs['create.rule']}" resizable="false">
-            
+
             <h:panelGrid columns="2" id="panelApplicantHarmonized">		
                 <h:outputLabel value="#{msgs['harmonized.name']} " style="font-weight:bold"/>				
                 <p:inputText value="#{applicantHarmonizationController.rule.name}"/>
@@ -18,21 +18,25 @@
                 <p:inputText value="#{applicantHarmonizationController.rule.acronym}"/>
 
                 <h:outputLabel value="#{msgs['country']} " style="font-weight:bold"/>				
-                <p:selectOneMenu value="#{applicantHarmonizationController.rule.country.acronym}" valueChangeListener="#{applicantHarmonizationController.selectListener}">
-                    <f:selectItems value="#{applicantHarmonizationController.countries}" var="c" itemValue="#{c.acronym}" itemLabel="#{c.name}"/>
+                <p:selectOneMenu value="#{applicantHarmonizationController.rule.country.acronym}" 
+                                 valueChangeListener="#{applicantHarmonizationController.selectListener}">
+                    <f:selectItems value="#{applicantHarmonizationController.countries}" var="c" 
+                                   itemValue="#{c.acronym}" itemLabel="#{c.name}"/>
                     <p:ajax event="change" update="@this,state"/>
                 </p:selectOneMenu>
 
                 <h:outputLabel value="#{msgs['state']}" style="font-weight: bold"/>
                 <p:selectOneMenu value="#{applicantHarmonizationController.rule.state.acronym}"  id="state">
-                    <f:selectItem itemLabel="Nenhuma" itemValue=""/>
-                    <f:selectItems  value="#{applicantHarmonizationController.states}" var="c" itemValue="#{c.acronym}" itemLabel="#{c.name}"/>
+                    <f:selectItem itemLabel="#{msgs['none']}" itemValue=""/>
+                    <f:selectItems  value="#{applicantHarmonizationController.states}" var="c" 
+                                    itemValue="#{c.acronym}" itemLabel="#{c.name}"/>
                 </p:selectOneMenu>
 
                 <h:outputLabel value="#{msgs['nature']} " style="font-weight:bold"/>
                 <p:selectOneMenu id="cmbNature" value="#{applicantHarmonizationController.rule.nature.name}">
                     <f:selectItem itemLabel="#{msgs['none']}" itemValue=""/>
-                    <f:selectItems value="#{applicantHarmonizationController.applicantTypes}" var="t" itemValue="#{t.name}" itemLabel="#{t.name}" />	
+                    <f:selectItems value="#{applicantHarmonizationController.applicantTypes}" var="t" 
+                                   itemValue="#{t.name}" itemLabel="#{msgs[t.name]}" />	
                 </p:selectOneMenu>						
             </h:panelGrid>		
             <p:separator/>
@@ -50,7 +54,7 @@
                 </h:column>
                 <h:column>				
                     <p:dataTable value="#{applicantHarmonizationController.selectedApplicants}" selectionMode="single"
-                                  rowKey="#{spa.name}"
+                                 rowKey="#{spa.name}"
                                  selection="#{applicantHarmonizationController.selectedRadio}" var="spa">
                         <p:ajax event="rowSelect" listener="#{applicantHarmonizationController.onSelectApplicantFill}" update=":#{p:component('panelApplicantHarmonized')}" />
                         <p:column headerText="#{msgs['name']}">#{spa.name}</p:column>
@@ -65,8 +69,8 @@
                                    value="#{applicantHarmonizationController.applicantSugestions}">
                             <li>
                                 <p:selectBooleanCheckbox
-                                    onchange="#{applicantHarmonizationController.onSelectApplicantSugestion()}" value="#{sug.selected}">
-                                    <p:ajax update="@this"/>
+                                    onchange="#{applicantHarmonizationController.onSelectApplicantSugestion()}" value="#{sug.selected}" >
+                                    <p:ajax event="change" update="@this"/>
                                 </p:selectBooleanCheckbox>
                                 #{sug.object.name}
                             </li>
@@ -79,9 +83,13 @@
             </h:panelGrid>
             <p:spacer height="50"/>
             <center>
-                <p:commandButton value="#{msgs['save.apply']}" action="#{applicantHarmonizationController.createRule()}" oncomplete="sugestionsDialog.hide()"
+                <h:outputLabel rendered="#{applicantHarmonizationController.harmonized || applicantHarmonizationController.sugHarmonized}"
+                               value="#{msgs['saving.overwrite']}" style="font-weight:bold" />
+            </center>
+            <center>
+                <p:commandButton value="#{msgs['save.apply']}" action="#{applicantHarmonizationController.createRule()}" 
+                                 oncomplete="sugestionsDialog.hide()"
                                  update=":#{p:component('formAll')}"/>
-
                 <p:commandButton value="#{msgs['cancel']}" immediate="true"
                                  oncomplete="sugestionsDialog.hide()" />
             </center>

@@ -57,10 +57,11 @@ public class Harmonization {
                     .start("$set",
                             BasicDBObjectBuilder
                             .start("applicants.$.name", rule.getName())
+                            .add("applicants.$.harmonized", true)
+                            .add("applicants.$.acronym", rule.getAcronym())
+                            .add("applicants.$.nature", dbObjectNature)
                             .add("applicants.$.country", dbObjectCountry)
                             .add("applicants.$.state", dbObjectState)
-                            .add("applicants.$.nature", dbObjectNature)
-                            .add("applicants.$.acronym", rule.getAcronym())
                             .get())
                     .get();
             ds.getCollection(Patent.class)
@@ -90,6 +91,7 @@ public class Harmonization {
                     .start("$set",
                             BasicDBObjectBuilder
                             .start("inventors.$.name", rule.getName())
+                            .add("inventors.$.harmonized", true)
                             .add("inventors.$.country", dbObjectCountry)
                             .add("inventors.$.state", dbObjectState)
                             .add("inventors.$.nature", dbObjectNature)
