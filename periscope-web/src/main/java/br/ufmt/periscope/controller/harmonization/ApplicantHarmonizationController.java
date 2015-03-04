@@ -72,9 +72,6 @@ public class ApplicantHarmonizationController implements Serializable {
         System.out.println("App Harminization Controller");
     }
 
-    
-    
-    
     @PostConstruct
     public void init() {
         applicantTypes = typeRepository.getAll();
@@ -160,7 +157,7 @@ public class ApplicantHarmonizationController implements Serializable {
     }
 
     public String createRule() {
-        
+
         rule.setType(RuleType.APPLICANT);
         rule.setProject(currentProject);
         if (selectedApplicantSugestions != null) {
@@ -184,13 +181,14 @@ public class ApplicantHarmonizationController implements Serializable {
             }
         }
         rule.getCountry().setStates(null);
-        rule.setSubstitutions(new HashSet<String>(substitutions));
         if (harmonized || sugHarmonized) {
             for (String deletion : deletions) {
-                String id = ruleRepository.findByName(deletion).getId().toString();
-                ruleRepository.delete(id);
+                Rule rul = ruleRepository.findByName(deletion);
+                substitutions.addAll(rul.getSubstitutions());
+                ruleRepository.delete(rul.getId().toString());
             }
         }
+        rule.setSubstitutions(new HashSet<String>(substitutions));
         ruleRepository.save(rule);
 
         ruleController.apply(rule.getId().toString());
@@ -198,16 +196,16 @@ public class ApplicantHarmonizationController implements Serializable {
 
         Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
         flash.put("success", "Regra criada e aplicada com sucesso");
-        return "";
+        return "listRule";
     }
-    
+
     public void loadSugestions() {
         String[] names = new String[selectedApplicants.size()];
         selectedRadio = null;
         selectedRadio = selectedApplicants.get(0);
         onSelectApplicantFill();
         int i = 0;
-        harmonized = false;
+        sugHarmonized = harmonized = false;
         for (Applicant pa : selectedApplicants) {
             names[i] = pa.getName();
             harmonized = harmonized || pa.getHarmonized();
@@ -215,9 +213,15 @@ public class ApplicantHarmonizationController implements Serializable {
         }
         Set<String> sugestions = applicantRepository.getApplicantSugestions(currentProject, 100, names);
         List<Applicant> aplicants = new ArrayList<Applicant>();
+        Applicant app;
         for (String sugestion : sugestions) {
-            aplicants.add(applicantRepository.getApplicantByName(sugestion));
-            //aplicants.add(new Applicant(sugestion));
+            System.out.println("preSug " + sugestion);
+            app = new Applicant(sugestion);
+            if (ruleRepository.isRule(sugestion)) {
+                System.out.println("ISRULE");
+                app.setHarmonized(true);
+            }
+            aplicants.add(app);
         }
         setApplicantSugestions(new ArrayList<SelectObject<Applicant>>(SelectObject.convertToSelectObjects(aplicants)));
 
@@ -229,6 +233,10 @@ public class ApplicantHarmonizationController implements Serializable {
         } else {
             pa.setSelected(false);
         }
+    }
+
+    public Boolean overwrite() {
+        return harmonized || sugHarmonized;
     }
 
     public DataModel<Applicant> getApplicants() {

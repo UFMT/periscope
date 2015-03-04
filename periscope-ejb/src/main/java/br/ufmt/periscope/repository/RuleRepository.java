@@ -92,6 +92,10 @@ public class RuleRepository {
         }
         Key k = ds.save(rule);
     }
+    
+    public Boolean isRule(String name){
+        return !(ds.find(Rule.class).field("name").equal(name).get() == null);
+    }
 
     public Rule findByName(String name) {
         return ds.find(Rule.class).field("name").equal(name).get();
@@ -102,7 +106,6 @@ public class RuleRepository {
     }
 
     public void delete(String id) {
-        System.out.println("oi");
         ds.delete(Rule.class, new ObjectId(id));
     }
 

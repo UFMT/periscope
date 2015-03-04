@@ -56,7 +56,8 @@
                     <p:dataTable value="#{applicantHarmonizationController.selectedApplicants}" selectionMode="single"
                                  rowKey="#{spa.name}"
                                  selection="#{applicantHarmonizationController.selectedRadio}" var="spa">
-                        <p:ajax event="rowSelect" listener="#{applicantHarmonizationController.onSelectApplicantFill}" update=":#{p:component('panelApplicantHarmonized')}" />
+                        <p:ajax event="rowSelect" listener="#{applicantHarmonizationController.onSelectApplicantFill}" 
+                                update=":#{p:component('panelApplicantHarmonized')}" />
                         <p:column headerText="#{msgs['name']}">#{spa.name}</p:column>
                     </p:dataTable>
                 </h:column>
@@ -70,7 +71,7 @@
                             <li>
                                 <p:selectBooleanCheckbox
                                     onchange="#{applicantHarmonizationController.onSelectApplicantSugestion()}" value="#{sug.selected}" >
-                                    <p:ajax event="change" update="@this"/>
+                                    <p:ajax event="change" update="@this, :#{p:component('over')}"/>
                                 </p:selectBooleanCheckbox>
                                 #{sug.object.name}
                             </li>
@@ -83,12 +84,15 @@
             </h:panelGrid>
             <p:spacer height="50"/>
             <center>
-                <h:outputLabel rendered="#{applicantHarmonizationController.harmonized || applicantHarmonizationController.sugHarmonized}"
-                               value="#{msgs['saving.overwrite']}" style="font-weight:bold" />
-            </center>
-            <center>
-                <p:commandButton value="#{msgs['save.apply']}" action="#{applicantHarmonizationController.createRule()}" 
-                                 oncomplete="sugestionsDialog.hide()"
+                <p:commandButton value="#{msgs['save.apply']}" id="over"
+                                 action="#{applicantHarmonizationController.createRule()}" 
+                                 onclick="if (#{applicantHarmonizationController.overwrite()})
+                                         {
+                                             return confirm('#{msgs['saving.overwrite']}');
+                                         }
+                                         else {
+                                             return true;
+                                         }"
                                  update=":#{p:component('formAll')}"/>
                 <p:commandButton value="#{msgs['cancel']}" immediate="true"
                                  oncomplete="sugestionsDialog.hide()" />

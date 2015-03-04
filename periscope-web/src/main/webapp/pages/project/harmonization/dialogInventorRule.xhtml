@@ -60,7 +60,7 @@
                             <li>
                                 <p:selectBooleanCheckbox
                                     onchange="#{inventorHarmonizationController.onSelectInventorSugestion()}" value="#{sug.selected}">
-                                    <p:ajax update="@this"/>
+                                    <p:ajax update="@this, :#{p:component('over')}"/>
                                 </p:selectBooleanCheckbox>
                                 #{sug.object.name}
                             </li>
@@ -73,11 +73,16 @@
             </h:panelGrid>
             <p:spacer height="50"/>
             <center>
-                <h:outputLabel rendered="#{inventorHarmonizationController.harmonized || inventorHarmonizationController.sugHarmonized}"
-                               value="#{msgs['saving.overwrite']}" style="font-weight:bold" />
-            </center>
-            <center>
-                <p:commandButton value="#{msgs['save.apply']}" action="#{inventorHarmonizationController.createRule()}" oncomplete="invSugestionsDialog.hide()"/>
+                <p:commandButton value="#{msgs['save.apply']}" id="over"
+                                 action="#{inventorHarmonizationController.createRule()}" 
+                                 onclick="if (#{inventorHarmonizationController.overwrite()})
+                                         {
+                                             return confirm('#{msgs['saving.overwrite']}');
+                                         }
+                                         else {
+                                             return true;
+                                         }"
+                                 update=":#{p:component('formAll')}"/>
 
                 <p:commandButton value="#{msgs['cancel']}" immediate="true"
                                  oncomplete="invSugestionsDialog.hide()" />

@@ -161,13 +161,14 @@ public class InventorHarmonizationController implements Serializable {
             }
         }
         rule.getCountry().setStates(null);
-        rule.setSubstitutions(new HashSet<String>(substitutions));
         if (harmonized || sugHarmonized) {
             for (String deletion : deletions) {
-                String id = ruleRepository.findByName(deletion).getId().toString();
-                ruleRepository.delete(id);
+                Rule rul = ruleRepository.findByName(deletion);
+                substitutions.addAll(rul.getSubstitutions());
+                ruleRepository.delete(rul.getId().toString());
             }
         }
+        rule.setSubstitutions(new HashSet<String>(substitutions));
         ruleRepository.save(rule);
 
         ruleController.apply(rule.getId().toString());
@@ -184,7 +185,7 @@ public class InventorHarmonizationController implements Serializable {
         onSelectInventorFill();
 
         int i = 0;
-        harmonized = false;
+        sugHarmonized = harmonized = false;
         for (Inventor pa : selectedInventors) {
             names[i] = pa.getName();
             harmonized = harmonized || pa.getHarmonized();
@@ -192,9 +193,13 @@ public class InventorHarmonizationController implements Serializable {
         }
         Set<String> sugestions = inventorRepository.getInventorSugestions(currentProject, 10, names);
         List<Inventor> inventores = new ArrayList<Inventor>();
+        Inventor inv;
         for (String sugestion : sugestions) {
-            inventores.add(inventorRepository.getInventorByName(sugestion));
-            //inventores.add(new Inventor(sugestion));
+            inv = new Inventor(sugestion);
+            if (ruleRepository.isRule(sugestion)) {
+                inv.setHarmonized(true);
+            }
+            inventores.add(inv);
         }
         setInventorSugestions(new ArrayList<SelectObject<Inventor>>(SelectObject.convertToSelectObjects(inventores)));
     }
@@ -205,6 +210,10 @@ public class InventorHarmonizationController implements Serializable {
         } else {
             pa.setSelected(false);
         }
+    }
+
+    public Boolean overwrite() {
+        return harmonized || sugHarmonized;
     }
 
     public Rule getRule() {
