@@ -4,6 +4,7 @@ import br.ufmt.periscope.enumerated.ClassificationType;
 import br.ufmt.periscope.importer.PatentImporter;
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Classification;
+import br.ufmt.periscope.model.History;
 import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Priority;
@@ -226,6 +227,10 @@ public class ESPACENETPatentImporter implements PatentImporter {
                         inventor.setCountry(countryRepository.getCountryByAcronym(country));
                     }
                     if (!name.trim().isEmpty()) {
+                        History h = new History();
+                        h.setName(inventor.getName());
+                        h.setCountry(inventor.getCountry());
+                        inventor.setHistory(h);
                         inventors.add(inventor);
                     }
                 }
@@ -252,6 +257,10 @@ public class ESPACENETPatentImporter implements PatentImporter {
                         applicant.setCountry(countryRepository.getCountryByAcronym(country));
                     }
                     if (!name.trim().isEmpty()) {
+                        History h = new History();
+                        h.setName(applicant.getName());
+                        h.setCountry(applicant.getCountry());
+                        applicant.setHistory(h);
                         applicants.add(applicant);
                     }
                 }
@@ -353,23 +362,30 @@ public class ESPACENETPatentImporter implements PatentImporter {
                     case 3:
                         if (!contentString.replaceAll("\\[.*]", "").trim().isEmpty()) {
                             Inventor inventor = new Inventor();
+                            History history = new History();
                             inventor.setName(contentString.replaceAll("\\[.*]", "").trim());
-
                             try {
                                 inventor.setCountry(countryRepository.getCountryByAcronym(contentString.substring(contentString.indexOf("[") + 1, contentString.indexOf("]"))));
                             } catch (IndexOutOfBoundsException ex) {
                             }
+                            history.setName(inventor.getName());
+                            history.setCountry(inventor.getCountry());
+                            inventor.setHistory(history);
                             inventors.add(inventor);
                         }
                         break;
                     case 4:
                         if (!contentString.replaceAll("\\[.*]", "").trim().isEmpty()) {
                             Applicant applicant = new Applicant();
+                            History history = new History();
                             applicant.setName(contentString.replaceAll("\\[.*]", "").trim());
                             try {
                                 applicant.setCountry(countryRepository.getCountryByAcronym(contentString.substring(contentString.indexOf("[") + 1, contentString.indexOf("]"))));
                             } catch (IndexOutOfBoundsException ex) {
                             }
+                            history.setName(applicant.getName());
+                            history.setCountry(applicant.getCountry());
+                            applicant.setHistory(history);
                             applicants.add(applicant);
                         }
                         break;

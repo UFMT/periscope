@@ -12,6 +12,8 @@ public class Applicant implements Serializable, Comparable<Applicant> {
     private String name;
     private String acronym;
     @Embedded
+    private History history;
+    @Embedded
     private Country country;
     @Embedded
     private State state;
@@ -27,10 +29,13 @@ public class Applicant implements Serializable, Comparable<Applicant> {
         country = new Country();
         state = new State();
         type = new ApplicantType();
+        history = new History();
     }
 
     public Applicant(String name) {
         this.name = name;
+        this.history = new History();
+        this.history.setName(name);
     }
 
     public String getName() {
@@ -53,6 +58,14 @@ public class Applicant implements Serializable, Comparable<Applicant> {
 
     public void setAcronym(String acronym) {
         this.acronym = acronym;
+    }
+
+    public History getHistory() {
+        return history;
+    }
+
+    public void setHistory(History history) {
+        this.history = history;
     }
 
     public State getState() {

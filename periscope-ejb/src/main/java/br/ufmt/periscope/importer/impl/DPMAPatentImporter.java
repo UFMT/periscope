@@ -15,6 +15,7 @@ import br.ufmt.periscope.enumerated.ClassificationType;
 import br.ufmt.periscope.importer.PatentImporter;
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Classification;
+import br.ufmt.periscope.model.History;
 import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.repository.CountryRepository;
@@ -113,6 +114,7 @@ public class DPMAPatentImporter implements PatentImporter {
         List<Inventor> listInventors = patent.getInventors();
         array = vet[4].split(", ", -2);
         Inventor inventor = new Inventor();
+        History history = new History();
         if (array[0].trim().length() > 0) {
             inventor.setName(array[0].trim());
             if (1 < array.length) {
@@ -127,6 +129,9 @@ public class DPMAPatentImporter implements PatentImporter {
                     if (i + 1 < array.length) {
                         inventor.setCountry(countryRepository.getCountryByAcronym(array[i + 1].substring(0, 2)));
                     }
+                    history.setName(inventor.getName());
+                    history.setCountry(inventor.getCountry());
+                    inventor.setHistory(history);
                     listInventors.add(inventor);
                 }
             }
@@ -139,6 +144,7 @@ public class DPMAPatentImporter implements PatentImporter {
         List<Applicant> listPa = patent.getApplicants();
         array = vet[5].split(", ", -2);
         Applicant applicant = new Applicant();
+        History history = new History();
         if (array[0].trim().length() > 0) {
             applicant.setName(array[0].trim());
             if (1 < array.length) {
@@ -155,6 +161,9 @@ public class DPMAPatentImporter implements PatentImporter {
                     if (applicant.getCountry() == null) {
                         applicant.setCountry(null);
                     }
+                    history.setName(applicant.getName());
+                    history.setCountry(applicant.getCountry());
+                    applicant.setHistory(history);
                     listPa.add(applicant);
                 }
             }

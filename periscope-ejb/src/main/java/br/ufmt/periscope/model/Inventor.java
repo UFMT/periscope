@@ -10,6 +10,8 @@ public class Inventor implements Serializable, Comparable<Inventor> {
     private String name;
     private String acronym;
     @Embedded
+    private History history;
+    @Embedded
     private Country country;
     @Embedded
     private State state;
@@ -21,10 +23,14 @@ public class Inventor implements Serializable, Comparable<Inventor> {
 
     public Inventor() {
         country = new Country();
+        state = new State();
+        history = new History();
     }
 
     public Inventor(String name) {
         this.name = name;
+        this.history = new History();
+        this.history.setName(name);
     }
 
     public State getState() {
@@ -47,6 +53,14 @@ public class Inventor implements Serializable, Comparable<Inventor> {
             name = name.toUpperCase();
         }
         this.name = name;
+    }
+
+    public History getHistory() {
+        return history;
+    }
+
+    public void setHistory(History history) {
+        this.history = history;
     }
 
     public Country getCountry() {
