@@ -1,5 +1,6 @@
 package br.ufmt.periscope.repository;
 
+import br.ufmt.periscope.model.Patent;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -14,6 +15,7 @@ import br.ufmt.periscope.model.RuleType;
 import com.github.jmkgreen.morphia.Datastore;
 import com.github.jmkgreen.morphia.Key;
 import com.github.jmkgreen.morphia.query.Query;
+import com.mongodb.DB;
 import java.util.Map;
 
 @Named
@@ -67,6 +69,27 @@ public class RuleRepository {
         } finally {
 //            System.out.println("Tempo " + (System.currentTimeMillis() - ini));
         }
+    }
+    
+    public void undoRule(Project project, String name){
+        DB db = ds.getCollection(Patent.class).getDB();
+        String fnc = "function(project, name){"
+                +       "db.Patent.find({\"project.$id\": project"
+                +       ", \"applicants.name\" : name}).forEach(function(pa){"
+                +           "var newAps = [];"
+                +           "pa.applicants.forEach(function(ap){"
+                +               "if(ap.name = name){"
+                +                   "ap.name = ap.history.name;"
+                +                   "ap.harmonized = false;"
+                +                   "ap.country.name = ap.history.country.name;"
+                +                   "ap.country.acronym = ap.history.country.acronym;"
+                +               "}"
+                +               "newAps.push(ap);"
+                +           "});"
+                +           "db.Patent.update({ _id: pa._id },{ \"$set\": { \"applicants\": newAps } });"
+                +       "});"
+                +   "};";
+        System.out.println(db.eval(fnc, project.getId(), name));
     }
 
     public List<Rule> getApplicantRule(Project project) {

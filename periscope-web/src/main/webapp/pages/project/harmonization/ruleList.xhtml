@@ -49,7 +49,7 @@
                         </p:column>
                         <p:column>
                             <center>
-                                    <h:form style="margin-bottom:0px">
+                                <h:form style="margin-bottom:0px">
                                     <h:commandLink value="#{msgs['apply']}"
                                                    style="color:white;margin-right: 10px" class="btn btn-inverse"
                                                    action="#{ruleController.applyApplicant(rule)}">	
@@ -61,6 +61,12 @@
                                                            }" 
                                                    action="#{ruleController.delete(rule.id.toString())}">										
                                     </h:commandLink>
+                                    <h:commandLink value="#{msgs['undo']}" 
+                                                   style="color:white;margin-right: 10px" class="btn btn-inverse"
+                                                   onclick="if (!confirm('#{msgs['you.sure']}')) {
+                                                               return false;
+                                                           }"
+                                                   action="#{ruleController.undo(rule.name)}"/>
                                 </h:form>
                             </center>
                         </p:column>
@@ -74,7 +80,7 @@
                                                          emptyMessage="#{msgs['no.sugestions']}" var="app" id="tabela">
                                                 <p:column>
                                                     <p:selectBooleanCheckbox 
-                                                                value="#{app.selected}">
+                                                        value="#{app.selected}">
                                                         <p:ajax event="change" update="@this"/>
                                                     </p:selectBooleanCheckbox>
                                                 </p:column>
@@ -82,7 +88,7 @@
                                                     #{app.name}
                                                 </p:column>
                                             </p:dataTable>
-                                            
+
                                         </p:tab>
                                     </p:accordionPanel>
                                     <h:outputLabel value="#{msgs['no.sugestions']}" rendered="#{rule.appSugestions.size() == 0}"/>
@@ -147,7 +153,7 @@
                                                          emptyMessage="#{msgs['no.sugestions']}" var="inv" id="tabela">
                                                 <p:column>
                                                     <p:selectBooleanCheckbox 
-                                                                value="#{inv.selected}">
+                                                        value="#{inv.selected}">
                                                         <p:ajax event="change" update="@this"/>
                                                     </p:selectBooleanCheckbox>
                                                 </p:column>

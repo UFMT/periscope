@@ -109,6 +109,11 @@ public class RuleController implements Serializable {
         return "listRule";
     }
 
+    public String undo(String name){
+        ruleRepository.undoRule(currentProject, name);
+        return "listRule";
+    }
+    
     public LazyRuleDataModel getLazyApplicants() {
         return lazyApplicants;
     }
