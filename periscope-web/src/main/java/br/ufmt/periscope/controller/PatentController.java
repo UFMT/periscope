@@ -7,6 +7,7 @@ import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Classification;
 import br.ufmt.periscope.model.Country;
 import br.ufmt.periscope.model.Files;
+import br.ufmt.periscope.model.History;
 import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Priority;
@@ -107,6 +108,29 @@ public class PatentController {
         
         updateList();
     }
+    
+//    public void redo(){
+//        List<Patent> ps = patentRepository.getAllPatents(currentProject);
+//        for (Patent p : ps) {
+//            ArrayList<Applicant> pas = new ArrayList<Applicant>();
+//            ArrayList<Inventor> invs = new ArrayList<Inventor>();
+//            for (Applicant pa : p.getApplicants()) {
+//                History h = new History();
+//                h.setName(pa.getName());
+//                h.setCountry(pa.getCountry());
+//                pa.setHistory(h);
+//                pas.add(pa);
+//            }
+//            for (Inventor in : p.getInventors()) {
+//                History h = new History();
+//                h.setName(in.getName());
+//                h.setCountry(in.getCountry());
+//                in.setHistory(h);
+//                invs.add(in);
+//            }
+//            patentRepository.savePatent(p);
+//        }
+//    }
 
     /**
      * Updates the selected patent's applicants list

@@ -108,6 +108,15 @@ public class RuleController implements Serializable {
         flash.put("info", "Deletado com sucesso");
         return "listRule";
     }
+    
+    public String delete(String name, String id) {
+        undo(name);
+        ruleRepository.delete(id);
+        Flash flash = FacesContext.getCurrentInstance().
+                getExternalContext().getFlash();
+        flash.put("info", "Deletado com sucesso");
+        return "listRule";
+    }
 
     public String undo(String name){
         ruleRepository.undoRule(currentProject, name);

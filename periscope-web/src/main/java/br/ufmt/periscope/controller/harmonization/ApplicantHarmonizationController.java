@@ -181,7 +181,7 @@ public class ApplicantHarmonizationController implements Serializable {
             }
         }
         rule.getCountry().setStates(null);
-        if (harmonized || sugHarmonized) {
+        if (overwrite()) {
             for (String deletion : deletions) {
                 Rule rul = ruleRepository.findByName(deletion);
                 substitutions.addAll(rul.getSubstitutions());
