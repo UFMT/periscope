@@ -71,7 +71,7 @@ public class RuleRepository {
         }
     }
     
-    public void undoRule(Project project, String name){
+    public void undoApplicantRule(Project project, String name){
         DB db = ds.getCollection(Patent.class).getDB();
         String fnc = "function(project, name){"
                 +       "db.Patent.find({\"project.$id\": project"
@@ -92,6 +92,27 @@ public class RuleRepository {
         System.out.println(db.eval(fnc, project.getId(), name));
     }
 
+    public void undoInventorRule(Project project, String name){
+        DB db = ds.getCollection(Patent.class).getDB();
+        String fnc = "function(project, name){"
+                +       "db.Patent.find({\"project.$id\": project"
+                +       ", \"inventors.name\" : name}).forEach(function(pa){"
+                +           "var newInvs = [];"
+                +           "pa.inventors.forEach(function(inv){"
+                +               "if(inv.name = name){"
+                +                   "inv.name = inv.history.name;"
+                +                   "inv.harmonized = false;"
+                +                   "inv.country.name = inv.history.country.name;"
+                +                   "inv.country.acronym = inv.history.country.acronym;"
+                +               "}"
+                +               "newInvs.push(inv);"
+                +           "});"
+                +           "db.Patent.update({ _id: pa._id },{ \"$set\": { \"inventors\": newInvs } });"
+                +       "});"
+                +   "};";
+        System.out.println(db.eval(fnc, project.getId(), name));
+    }
+    
     public List<Rule> getApplicantRule(Project project) {
         return ds.find(Rule.class)
                 .field("project").equal(project)

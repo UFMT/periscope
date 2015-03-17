@@ -110,18 +110,22 @@ public class RuleController implements Serializable {
         return "listRule";
     }
     
-    public String delete(String name, String id) {
-        undo(name);
-        ruleRepository.delete(id);
-        Flash flash = FacesContext.getCurrentInstance().
-                getExternalContext().getFlash();
-        flash.put("info", "Deletado com sucesso");
-        return "listRule";
+    public String deleteAppRule(String name, String id) {
+        undoAppRule(name);
+        return delete(id);
+    }
+    
+    public String deleteInvRule(String name, String id){
+        undoInvRule(name);
+        return delete(id);
     }
 
-    public String undo(String name){
-        ruleRepository.undoRule(currentProject, name);
-        return "listRule";
+    public void undoAppRule(String name){
+        ruleRepository.undoApplicantRule(currentProject, name);
+    }
+    
+    public void undoInvRule(String name){
+        ruleRepository.undoInventorRule(currentProject, name);
     }
     
     public LazyRuleDataModel getLazyApplicants() {
