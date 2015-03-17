@@ -61,6 +61,7 @@ public class RuleController implements Serializable {
     }
 
     public String applyApplicant(Rule rule) {
+        System.out.println("APP RULE");
         if (rule.getAppSugestions() != null) {
             List<String> subs = new ArrayList<String>();
             for (Applicant applicant : rule.getAppSugestions()) {
