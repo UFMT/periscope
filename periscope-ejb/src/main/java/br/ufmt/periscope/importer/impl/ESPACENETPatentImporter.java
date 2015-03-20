@@ -4,6 +4,7 @@ import br.ufmt.periscope.enumerated.ClassificationType;
 import br.ufmt.periscope.importer.PatentImporter;
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Classification;
+import br.ufmt.periscope.model.Country;
 import br.ufmt.periscope.model.History;
 import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.model.Patent;
@@ -190,6 +191,10 @@ public class ESPACENETPatentImporter implements PatentImporter {
     }
 
     private void fillPatentXLS(int columnIndex, String contentString) {
+        Country nulCountry = new Country();
+        nulCountry.setName("");
+        nulCountry.setAcronym("");
+        nulCountry.setStates(null);
         String aux;
         StringTokenizer st;
         switch (columnIndex) {
@@ -225,6 +230,9 @@ public class ESPACENETPatentImporter implements PatentImporter {
                         }
                         inventor.setName(name);
                         inventor.setCountry(countryRepository.getCountryByAcronym(country));
+                        if (inventor.getCountry() == null) {
+                            inventor.setCountry(nulCountry);
+                        }
                     }
                     if (!name.trim().isEmpty()) {
                         History h = new History();
@@ -255,6 +263,9 @@ public class ESPACENETPatentImporter implements PatentImporter {
                         }
                         applicant.setName(name);
                         applicant.setCountry(countryRepository.getCountryByAcronym(country));
+                        if (applicant.getCountry() == null) {
+                            applicant.setCountry(nulCountry);
+                        }
                     }
                     if (!name.trim().isEmpty()) {
                         History h = new History();
@@ -332,6 +343,10 @@ public class ESPACENETPatentImporter implements PatentImporter {
     private void fillPatentCSV() {
         patent.setLanguage(lang);
         vet = line.split("\",");
+        Country nulCountry = new Country();
+        nulCountry.setName("");
+        nulCountry.setAcronym("");
+        nulCountry.setStates(null);
 
         List<Inventor> inventors = patent.getInventors();
         List<Applicant> applicants = patent.getApplicants();
@@ -368,6 +383,9 @@ public class ESPACENETPatentImporter implements PatentImporter {
                                 inventor.setCountry(countryRepository.getCountryByAcronym(contentString.substring(contentString.indexOf("[") + 1, contentString.indexOf("]"))));
                             } catch (IndexOutOfBoundsException ex) {
                             }
+                            if (inventor.getCountry() == null) {
+                                inventor.setCountry(nulCountry);
+                            }
                             history.setName(inventor.getName());
                             history.setCountry(inventor.getCountry());
                             inventor.setHistory(history);
@@ -382,6 +400,9 @@ public class ESPACENETPatentImporter implements PatentImporter {
                             try {
                                 applicant.setCountry(countryRepository.getCountryByAcronym(contentString.substring(contentString.indexOf("[") + 1, contentString.indexOf("]"))));
                             } catch (IndexOutOfBoundsException ex) {
+                            }
+                            if (applicant.getCountry() == null) {
+                                applicant.setCountry(nulCountry);
                             }
                             history.setName(applicant.getName());
                             history.setCountry(applicant.getCountry());

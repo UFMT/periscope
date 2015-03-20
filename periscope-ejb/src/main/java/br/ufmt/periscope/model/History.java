@@ -11,6 +11,9 @@ public class History implements Serializable{
     private Country country;
 
     public History() {
+        this.country = new Country();
+        this.country.setName("");
+        this.country.setAcronym("");
     }
 
     public String getName() {
