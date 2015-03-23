@@ -12,6 +12,7 @@ public class History implements Serializable{
 
     public History() {
         this.country = new Country();
+        this.country.setStates(null);
         this.country.setName("");
         this.country.setAcronym("");
     }
