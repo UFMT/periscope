@@ -1,5 +1,8 @@
 package br.ufmt.periscope.enumerated;
 
+/**
+ * Enum para os tipos de classificação de patentes
+ */
 public enum ClassificationType {
 
 	ICAI,EC,ECC,ECNO,

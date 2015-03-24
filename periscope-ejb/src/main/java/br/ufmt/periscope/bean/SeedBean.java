@@ -38,13 +38,18 @@ import org.apache.lucene.index.Term;
 @RequestScoped
 @Singleton
 @Startup
+/**
+ * Isere dados iniciais nos documentos de Usuários, Países, Descritores comuns e
+ * Natureza das Patentes
+ */
 public class SeedBean {
 
     private @Inject
     Datastore ds;
     private @Inject
     Logger log;
-    private @Inject LuceneIndexerResources resources;
+    private @Inject
+    LuceneIndexerResources resources;
     private IndexWriter writer;
     public static String PERISCOPE_DIR;
 
@@ -63,8 +68,11 @@ public class SeedBean {
         }
 
     }
-
+    
     @PostConstruct
+    /**
+     * Método executado quando é implantado no servidor
+     */
     public void atStartup() {
         log.info("Inicializando seeder");
         initUsers();
@@ -76,6 +84,11 @@ public class SeedBean {
         insertAlgorithFromFile("LiquidMetal", "js/liquidmetal.js");
     }
 
+    /**
+     * Insere algoritmos javascript no MongoDB
+     * @param name Nome da função para ser chamada no Mongo
+     * @param path Caminho para o arquivo do algoritmo da função
+     */
     private void insertAlgorithFromFile(String name, String path) {
 
         DB db = ds.getDB();
@@ -96,13 +109,16 @@ public class SeedBean {
 
     }
 
+    /**
+     * Inicia as naturezas das patentes a partir do arquivo yaml correspondente
+     */
     private void initApplicantTypes() {
         if (ds.getCount(ApplicantType.class) == 0l) {
             log.info("Nenhuma Natureza encontrada.");
             List<ApplicantType> applicantTypes = Fixjure
                     .listOf(ApplicantType.class)
                     .from(YamlSource
-                    .newYamlResource("applicantType-inicial.yaml"))
+                            .newYamlResource("applicantType-inicial.yaml"))
                     .create();
             Iterator<ApplicantType> it = applicantTypes.iterator();
             while (it.hasNext()) {
@@ -113,13 +129,16 @@ public class SeedBean {
 
     }
 
+    /**
+     * Inicia os países a partir do arquivo yaml correspondente
+     */
     private void initCountries() {
         if (ds.getCount(Country.class) == 0l) {
             log.info("Nenhum país encontrado.");
             List<Country> countries = Fixjure
                     .listOf(Country.class)
                     .from(YamlSource
-                    .newYamlResource("country-inicial-data.yaml"))
+                            .newYamlResource("country-inicial-data.yaml"))
                     .create();
             Iterator<Country> it = countries.iterator();
             while (it.hasNext()) {
@@ -129,6 +148,9 @@ public class SeedBean {
         }
     }
 
+   /**
+    * Inicia os usuários iniciais a partir do arquivo yaml correspondente
+    */
     private void initUsers() {
         if (ds.getCount(User.class) == 0l) {
             log.info("Nenhum usuário encontrado.");
@@ -143,6 +165,10 @@ public class SeedBean {
         }
     }
 
+    /**
+     * Inicia os descritores comuns para o processo de harmonização
+     * a partir do arquivo yaml correspondente
+     */
     private void initCommonsDescriptors() {
         if (ds.getCount(CommonDescriptor.class) == 0l) {
             writer = resources.getIndexWriter();
@@ -163,8 +189,8 @@ public class SeedBean {
                 }
             }
 
-            log.info("Cadastrado " + descriptors.size() + " descritores comuns.");            
+            log.info("Cadastrado " + descriptors.size() + " descritores comuns.");
             resources.closeWriter(writer);
-        }        
+        }
     }
 }

@@ -39,6 +39,8 @@ import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
@@ -276,7 +278,10 @@ public class InventorRepository {
                 valor = valor.trim();
                 stream.end();
                 stream.close();
-                Query query = new FastJoinQuery("inventor", valor, 0.8f, 0.9f);
+                BooleanQuery query = new BooleanQuery();
+                Query fastQuery = new FastJoinQuery("inventor", valor, 0.8f, 0.9f);
+                query.add(fastQuery, BooleanClause.Occur.MUST);
+                query.add(queryProject, BooleanClause.Occur.MUST);
                 ScoreDoc[] hits = searcher.search(query, 10).scoreDocs;
                 if (hits.length > 0) {
                     for (int i = 0; i < hits.length; i++) {

@@ -71,7 +71,7 @@ public class PatentIndexer {
 
     public void index(List<String> pas, List<String> invs, Project project) {
         try {
-            writer = resources.getIndexWriter();
+            writer = resources.getIndexWriter();            
             if (pas != null) {
                 for (String a : pas) {
                     Document doc = new Document();

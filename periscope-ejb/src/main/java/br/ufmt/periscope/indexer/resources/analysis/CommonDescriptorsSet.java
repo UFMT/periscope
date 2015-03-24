@@ -11,25 +11,28 @@ import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.search.IndexSearcher;
 
 /**
- * This class will contains the commons company descriptors Now, it's just use a
- * ArrayList, but this may change in the future
+ * O conjunto de descritores comuns. Gerencia as buscas a base de dados de
+ * descritores comuns.
  *
- * @author mattyws
  */
 @Named
 public class CommonDescriptorsSet {
 
     private @Inject
-    Datastore ds;    
+    Datastore ds;
 
     /**
-     * Constructor for Lucene based CommonDescriptorsSet
+     * Construtor simples da classe
      */
     public CommonDescriptorsSet() {
     }
 
-    
-    public boolean contains(String descriptor) {       
+    /**
+     * Verifica se a palavra é um descritor comum
+     * @param descriptor a palavra a ser buscada
+     * @return true se a palavra existe na base de dados, false caso contrário.
+     */
+    public boolean contains(String descriptor) {
         List<CommonDescriptor> descriptorSet = ds
                 .find(CommonDescriptor.class)
                 .field("_id").equal(descriptor)

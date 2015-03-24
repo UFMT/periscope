@@ -42,6 +42,8 @@ import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
@@ -239,7 +241,10 @@ public class ApplicantRepository {
                 valor = valor.trim();
                 stream.end();
                 stream.close();
-                Query query = new FastJoinQuery("applicant", valor, 0.6f, 0.6f);
+                BooleanQuery query = new BooleanQuery();                
+                Query fastQuery = new FastJoinQuery("applicant", valor, 0.6f, 0.6f);
+                query.add(queryProject, BooleanClause.Occur.MUST);
+                query.add(fastQuery, BooleanClause.Occur.MUST);
                 ScoreDoc[] hits = searcher.search(query, top).scoreDocs;
                 if (hits.length > 0) {
                     for (int i = 0; i < hits.length; i++) {

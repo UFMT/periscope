@@ -13,15 +13,19 @@ import javax.inject.Named;
 import org.bson.types.ObjectId;
 
 @Named
+/**
+ * Realiza a harmonização na base de dados, tanto para inventores quanto
+ * para aplicante.
+ */
 public class Harmonization {
-
+    
     private @Inject
     Datastore ds;
     private @Inject
     PatentIndexer indexer;
 
     /**
-     * Apply the rule
+     * Aplica a regra de harmonização
      * @param rule
      */
     public void applyRule(Rule rule) {
@@ -41,6 +45,10 @@ public class Harmonization {
         }
     }
 
+    /**
+     * Aplica a regra para aplicante
+     * @param rule 
+     */
     private void applyApplicantRule(Rule rule) {
         ObjectId projectId = rule.getProject().getId();
         Mapper mapper = ds.getMapper();
@@ -73,6 +81,10 @@ public class Harmonization {
 
     }
 
+    /**
+     * Aplica a regra para inventores
+     * @param rule 
+     */
     private void applyInventorRule(Rule rule) {
         ObjectId projectId = rule.getProject().getId();
         Mapper mapper = ds.getMapper();
