@@ -245,20 +245,6 @@ public class InventorRepository {
         Set<String> results = new HashSet<String>();
         reader = resources.getReader();
         try {
-//            StringBuilder queryBuilder = new StringBuilder();
-//            for (String name : names) {
-//                String[] terms = name.split(" ", -2);
-//                for (String term : terms) {
-//                    //if(term.length() >= 4){		
-//                    queryBuilder.append(term + "~ ");
-//                    queryBuilder.append(term + "* ");
-//                    //}
-//                }
-//
-//                //queryBuilder.append("NOT \""+name+"\" ");	
-//                queryBuilder.append("\"" + name + "\"~10 ");
-//            }
-
             Query queryProject = new QueryParser(Version.LUCENE_47, "project", analyzer)
                     .parse(project.getId().toString());
             queryProject.setBoost(0.1f);
