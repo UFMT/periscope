@@ -270,7 +270,7 @@ public class InventorRepository {
                         name));
                 CharTermAttribute attr = stream
                         .getAttribute(CharTermAttribute.class);
-                stream.reset();
+                stream.reset();                
                 String valor = "";
                 while (stream.incrementToken()) {
                     valor = valor + attr.toString() + ' ';
