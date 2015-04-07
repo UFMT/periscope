@@ -22,7 +22,7 @@
                     <label>#{msgs['item.number']}:</label>
                     <p:spinner value="#{controller.limit}" maxlength="3" min="5" max="20"
                                style="padding:0 20px 0 0" rendered="#{rendSpinner}">
-                        <p:ajax listener="#{controller.refreshChart()}" update="@form"  />
+                        
                     </p:spinner>
                     <h:outputText value="#{msgs['period.interest']}:"/> 
                     <p:selectOneMenu value="#{controller.filtro.selecionaData}" id="selDate"  valueChangeListener="#{controller.selectListener}">
@@ -54,10 +54,9 @@
                     <p:outputLabel value="#{msgs['applicant.type']}:" rendered="#{applicantNature}"/>  
                     <p:selectOneMenu id="cmbAppType" value="#{report.filtro.applicantType}" style="width: 500px" rendered="#{applicantNature}">
                         <f:selectItem itemLabel="#{msgs['none']}" itemValue=""/>
-                        <f:selectItems value="#{applicantTypeRepository.all}" var="t" itemValue="#{t.name}" itemLabel="#{t.name}" />	
+                        <f:selectItems value="#{applicantTypeRepository.all}" var="t" itemValue="#{t.name}" itemLabel="#{msgs[t.name]}" />	
 
-                        <p:ajax update=":#{p:component('tudo')},@this"
-                                listener="#{report.refreshChart()}" />
+                        
                     </p:selectOneMenu>
                 </h:panelGrid>
 
@@ -94,8 +93,7 @@
                 <h:panelGrid columns="2" cellpadding="5">
                     <p:selectBooleanCheckbox id="complete" itemLabel="#{msgs['completo']}"
                                              value="#{controller.filtro.complete}">
-                        <p:ajax update=":#{p:component('tudo')}" 
-                                listener="#{controller.refreshChart()}" />
+                        
                     </p:selectBooleanCheckbox>
                     <br />
 

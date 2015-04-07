@@ -28,7 +28,7 @@ public class PatentBrazilianController {
     @PostConstruct
     public void init() {
         patents.getRepo().setBlacklisted(false);
-        patents.getRepo().setCompleted(false);
+        patents.getRepo().setCompleted(true);
         patents.getRepo().setCurrentProject(currentProject);
     }
 

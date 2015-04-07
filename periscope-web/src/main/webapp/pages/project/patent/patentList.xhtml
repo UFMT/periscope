@@ -15,7 +15,7 @@
                     <ul class="nav nav-pills pull-left">
                         <ui:repeat var="type" value="#{patentController.filters}">
                             <li class="#{(param['listType'] == type or patentController.type == type) ? 'active' : ''}">
-                                <p:commandLink value="#{msgs[type]}" update=":formType" 
+                                <p:commandLink value="#{msgs[type]}" update=":formType" ajax="false"
                                                action="#{patentController.updateList}">			    
                                     <f:param name="listType" value="#{type}"/>
                                 </p:commandLink>

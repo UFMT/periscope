@@ -195,8 +195,8 @@ public class PatentRepository {
     public List<Patent> loadBrazilian(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters) {
         Query query = ds.find(Patent.class)
                 .field("project").equal(this.currentProject)
-                .field("completed").equal(this.completed)
-                .field("blacklisted").equal(this.blacklisted)
+                //.field("completed").equal(this.completed)
+                //.field("blacklisted").equal(this.blacklisted)
                 .field("priorities.country.acronym").equal("BR");
         if (sortField != null) {
             query = query.order((sortOrder == 1 ? "-" : "") + sortField);
