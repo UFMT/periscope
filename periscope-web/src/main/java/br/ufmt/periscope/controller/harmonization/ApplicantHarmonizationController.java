@@ -1,6 +1,7 @@
 package br.ufmt.periscope.controller.harmonization;
 
 import br.ufmt.periscope.lazy.LazyApplicantDataModel;
+import br.ufmt.periscope.lazy.LazyPatentDataModel;
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.ApplicantType;
 import br.ufmt.periscope.model.Country;
@@ -51,6 +52,8 @@ public class ApplicantHarmonizationController implements Serializable {
     CountryRepository countryRepository;
     private @Inject
     LazyApplicantDataModel applicants;
+    private @Inject
+    LazyPatentDataModel patents;
     private List<Applicant> selectedApplicants = new ArrayList<Applicant>();
     private List<Applicant> selectedApplicantSugestions = new ArrayList<Applicant>();
     private List<SelectObject<Applicant>> applicantSugestions = null;
@@ -80,7 +83,7 @@ public class ApplicantHarmonizationController implements Serializable {
         selectedApplicants.clear();
         applicants.setSelectedApplicants(selectedApplicants);
         applicants.setHarmonization(true);
-
+        patents.getRepo().setCurrentProject(currentProject);
         defaultCountry = countryRepository.getCountryByAcronym(acronymDefault);
         rule.setCountry(defaultCountry);
         states = defaultCountry.getStates();
@@ -103,6 +106,11 @@ public class ApplicantHarmonizationController implements Serializable {
         selectedApplicants.remove(pa);
         return "";
 
+    }
+    
+    public void loadDocs(String name){
+        patents.setType("applicant");
+        patents.setName(name);
     }
 
     public void selectListener(ValueChangeEvent event) {
@@ -196,7 +204,7 @@ public class ApplicantHarmonizationController implements Serializable {
 
         Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
         flash.put("success", "Regra criada e aplicada com sucesso");
-        return "listRule";
+        return "";
     }
 
     public void loadSugestions() {
@@ -337,4 +345,11 @@ public class ApplicantHarmonizationController implements Serializable {
         this.sugHarmonized = sugHarmonized;
     }
 
+    public LazyPatentDataModel getPatents() {
+        return patents;
+    }
+
+    public void setPatents(LazyPatentDataModel patents) {
+        this.patents = patents;
+    }
 }

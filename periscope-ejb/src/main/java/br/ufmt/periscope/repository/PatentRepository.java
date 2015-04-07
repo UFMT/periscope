@@ -169,7 +169,7 @@ public class PatentRepository {
         GridFS fs = new GridFS(db);
         return fs;
     }
-
+    
     public List<Patent> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters) {
         Query query = ds.find(Patent.class)
                 .field("project").equal(this.currentProject)
@@ -189,6 +189,43 @@ public class PatentRepository {
         setRowCount((int) query.countAll());
         query.offset(first).limit(pageSize);
         query.retrievedFields(true, "_id", "titleSelect", "mainClassification", "publicationDate", "applicationNumber", "applicants", "inventors", "blacklisted", "presentationFile", "patentInfo");
+        return query.asList();
+    }
+    public List<Patent> loadApplicantDocs(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters, String name) {
+        Query query = ds.find(Patent.class)
+                .field("project").equal(this.currentProject)
+                .field("applicants.name").equal(name);
+        
+        if (sortField != null) {
+            query = query.order((sortOrder == 1 ? "-" : "") + sortField);
+        }
+        for (Map.Entry<String, String> entry : filters.entrySet()) {
+            String column = entry.getKey();
+            String value = entry.getValue();
+            query.field(column).containsIgnoreCase(value);
+        }
+        setRowCount((int) query.countAll());
+        query.offset(first).limit(pageSize);
+        query.retrievedFields(true, "titleSelect","applicationNumber");
+        return query.asList();
+    }
+    
+    public List<Patent> loadInventorDocs(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters, String name) {
+        Query query = ds.find(Patent.class)
+                .field("project").equal(this.currentProject)
+                .field("inventors.name").equal(name);
+        
+        if (sortField != null) {
+            query = query.order((sortOrder == 1 ? "-" : "") + sortField);
+        }
+        for (Map.Entry<String, String> entry : filters.entrySet()) {
+            String column = entry.getKey();
+            String value = entry.getValue();
+            query.field(column).containsIgnoreCase(value);
+        }
+        setRowCount((int) query.countAll());
+        query.offset(first).limit(pageSize);
+        query.retrievedFields(true, "titleSelect","applicationNumber");
         return query.asList();
     }
 

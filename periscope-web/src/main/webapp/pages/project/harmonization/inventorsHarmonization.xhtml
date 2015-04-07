@@ -36,7 +36,8 @@
                 <p:column headerText="">					
                     <p:selectBooleanCheckbox id="campo" 
                                              value="#{pa.selected}" >
-                        <p:ajax event="change" update=":tabView:formAl:selectedInventors,@this,:#{p:component('panelSugestions')}" 
+                        <p:ajax event="change" update=":tabView:formAl:selectedInventors,@this,:tabView:formAl:newRule,
+                                :#{p:component('panelSugestions')}" 
                                 listener="#{inventorHarmonizationController.onSelectInventor(pa)}"/>
                     </p:selectBooleanCheckbox>	
                 </p:column>		
@@ -51,11 +52,10 @@
                 </p:column>
                 <p:column headerText="#{msgs['actions']}">
                     <center>
-                        <h:form style="margin-bottom:0px">
-                            <h:commandLink value="#{msgs['edit']}"
-                                           style="color:white;margin-right: 10px" class="btn btn-inverse">	
-                            </h:commandLink>							
-                        </h:form>
+                        <p:commandLink id="showDocs" value="#{msgs['show.docs']}" update="inventorDocs"
+                                oncomplete="inventorDocsDialog.show()" action="#{inventorHarmonizationController.loadDocs(pa.name)}"
+                                style="color:white;margin-right: 10px" styleClass="btn btn-inverse"/>			
+                        <ui:include src="/pages/project/harmonization/dialogInventorDocs.xhtml" />		
                     </center>
                 </p:column>
             </p:dataTable>
@@ -87,14 +87,16 @@
                 </p:column>
                 <p:column>
                     <p:commandButton icon="ui-icon-closethick" action="#{inventorHarmonizationController.unselect(pa)}"
-                                     update = ":tabView:formAl:inventors,:tabView:formAl:selectedInventors,:#{p:component('panelSugestions')}"
+                                     update = ":tabView:formAl:inventors,:tabView:formAl:selectedInventors,:tabView:formAl:newRule,
+                                     :#{p:component('panelSugestions')}"
                                      ajax="true"
                                      />
                 </p:column> 
             </p:dataTable>
 
-            <p:commandLink value="#{msgs['new.rule']}"  update="inventorSugestions" oncomplete="invSugestionsDialog.show()"
-                           action="#{inventorHarmonizationController.loadSugestions()}"
+            <p:commandLink id="newRule" value="#{msgs['new.rule']}"  update="inventorSugestions" 
+                           oncomplete="invSugestionsDialog.show()" action="#{inventorHarmonizationController.loadSugestions()}"
+                           disabled="#{inventorHarmonizationController.selectedInventors.size() == 0}"
                            style="color:white;margin-right: 10px" styleClass="btn btn-inverse"/>			
             <ui:include src="/pages/project/harmonization/dialogInventorRule.xhtml" />
 

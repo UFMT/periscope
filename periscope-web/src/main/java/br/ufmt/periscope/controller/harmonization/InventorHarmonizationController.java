@@ -1,6 +1,7 @@
 package br.ufmt.periscope.controller.harmonization;
 
 import br.ufmt.periscope.lazy.LazyInventorDataModel;
+import br.ufmt.periscope.lazy.LazyPatentDataModel;
 import br.ufmt.periscope.model.Country;
 import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.model.Project;
@@ -50,6 +51,8 @@ public class InventorHarmonizationController implements Serializable {
     RuleRepository ruleRepository;
     private @Inject
     CountryRepository countryRepository;
+    private @Inject
+    LazyPatentDataModel patents;
     private List<Country> countries = new ArrayList<Country>();
     private List<State> states;
     private Rule rule = new Rule();
@@ -70,6 +73,8 @@ public class InventorHarmonizationController implements Serializable {
         inventors.setHarmonization(true);
         selectedInventors.clear();
         inventors.setSelectedInventors(selectedInventors);
+        
+        patents.getRepo().setCurrentProject(currentProject);
 
         defaultCountry = countryRepository.getCountryByAcronym(acronymDefault);
         rule.setCountry(defaultCountry);
@@ -82,6 +87,11 @@ public class InventorHarmonizationController implements Serializable {
         searchState(acronym);
     }
 
+    public void loadDocs(String name){
+        patents.setType("inventor");
+        patents.setName(name);
+    }
+    
     private void searchState(String acronym) {
         Country country = countryRepository.getCountryByAcronym(acronym);
         states = country.getStates();
@@ -161,7 +171,7 @@ public class InventorHarmonizationController implements Serializable {
             }
         }
         rule.getCountry().setStates(null);
-        if (harmonized || sugHarmonized) {
+        if (overwrite()) {
             for (String deletion : deletions) {
                 Rule rul = ruleRepository.findByName(deletion);
                 substitutions.addAll(rul.getSubstitutions());
@@ -175,7 +185,7 @@ public class InventorHarmonizationController implements Serializable {
         selectedInventors.clear();
         Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
         flash.put("success", "Regra criada com sucesso");
-        return "listRule";
+        return "";
     }
 
     public void loadSugestions() {
@@ -297,4 +307,11 @@ public class InventorHarmonizationController implements Serializable {
         this.sugHarmonized = sugHarmonized;
     }
 
+    public LazyPatentDataModel getPatents() {
+        return patents;
+    }
+
+    public void setPatents(LazyPatentDataModel patents) {
+        this.patents = patents;
+    }
 }

@@ -13,6 +13,8 @@ import org.primefaces.model.SortOrder;
 public class LazyPatentDataModel extends LazyDataModel<Patent>{
     private @Inject PatentRepository repo;
     private List<Patent> datasource;
+    private String type;
+    private String name;
 
     @Override
     public int getRowCount() {
@@ -37,7 +39,13 @@ public class LazyPatentDataModel extends LazyDataModel<Patent>{
     
     @Override
     public List<Patent> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
-        datasource = repo.load(first, pageSize, sortField, sortOrder.ordinal(), filters);
+        if (this.type == null){
+            datasource = repo.load(first, pageSize, sortField, sortOrder.ordinal(), filters);
+        }else if (this.type.equals("applicant")) {
+            datasource = repo.loadApplicantDocs(first, pageSize, sortField, sortOrder.ordinal(), filters, this.name);
+        }else if(this.type.equals("inventor")){
+            datasource = repo.loadInventorDocs(first, pageSize, sortField, sortOrder.ordinal(), filters, this.name);
+        }
         return datasource;
         
     }
@@ -48,6 +56,22 @@ public class LazyPatentDataModel extends LazyDataModel<Patent>{
 
     public void setRepo(PatentRepository repo) {
         this.repo = repo;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     

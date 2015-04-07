@@ -36,7 +36,8 @@
                 <p:column headerText="">					
                     <p:selectBooleanCheckbox id="campo" 
                                              value="#{pa.selected}" >
-                        <p:ajax event="change" update=":tabView:formAll:selectedApplicants,@this,:#{p:component('panelSugestions')}" 
+                        <p:ajax event="change" update=":tabView:formAll:selectedApplicants,@this,:tabView:formAll:newRule,
+                                :#{p:component('panelSugestions')}" 
                                 listener="#{applicantHarmonizationController.onSelectApplicant(pa)}"/>
                     </p:selectBooleanCheckbox>	
                 </p:column>			
@@ -54,11 +55,10 @@
                 </p:column>
                 <p:column headerText="#{msgs['actions']}" >
                     <center>
-                        <h:form style="margin-bottom:0px">
-                            <h:commandLink value="#{msgs['edit']}"
-                                           style="color:white;margin-right: 10px" class="btn btn-inverse">	
-                            </h:commandLink>							
-                        </h:form>
+                        <p:commandLink id="showDocs" value="#{msgs['show.docs']}" update="applicantDocs"
+                                oncomplete="applicantDocsDialog.show()" action="#{applicantHarmonizationController.loadDocs(pa.name)}"
+                                style="color:white;margin-right: 10px" styleClass="btn btn-inverse"/>			
+                            <ui:include src="/pages/project/harmonization/dialogApplicantDocs.xhtml" />						
                     </center>
                 </p:column>
             </p:dataTable>
@@ -94,15 +94,17 @@
                 </p:column>		
                 <p:column>
                     <p:commandButton icon="ui-icon-closethick" action="#{applicantHarmonizationController.unselect(pa)}"
-                                     update = ":tabView:formAll:applicants,:tabView:formAll:selectedApplicants,:#{p:component('panelSugestions')}"
+                                     update = ":tabView:formAll:applicants,:tabView:formAll:selectedApplicants,:tabView:formAll:newRule,
+                                     :#{p:component('panelSugestions')}"
                                      ajax="true"
                                      
                                      />
                 </p:column> 
             </p:dataTable>
 
-            <p:commandLink value="#{msgs['new.rule']}"  update="applicantSugestions" oncomplete="sugestionsDialog.show()"
-                           action="#{applicantHarmonizationController.loadSugestions()}"
+            <p:commandLink id="newRule" value="#{msgs['new.rule']}"  update="applicantSugestions" 
+                           oncomplete="sugestionsDialog.show()" action="#{applicantHarmonizationController.loadSugestions()}" 
+                           disabled="#{applicantHarmonizationController.selectedApplicants.size() == 0}"
                            style="color:white;margin-right: 10px" styleClass="btn btn-inverse"/>			
             <ui:include src="/pages/project/harmonization/dialogApplicantRule.xhtml" />					
         </h:form>				
