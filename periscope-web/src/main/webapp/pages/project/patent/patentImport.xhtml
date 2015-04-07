@@ -14,18 +14,7 @@
                     <center><h1>#{msgs['import.data']}</h1></center>
                     <p:panel id="pnlImport" style="font">
 
-                        <p:fileUpload id="fileUpload" label="#{msgs['choose.files']}"
-                                      uploadLabel="#{msgs['upload.files']}" cancelLabel="#{msgs['cancel']}"
-                                      fileUploadListener="#{importPatentController.handleFileUpload}"
-                                      mode="advanced"
-                                      allowTypes="/(.csv|.xls)$/"
-                                      multiple="true"
-                                      update="messages">
-
-                        </p:fileUpload>
-
-
-                        <br/>
+                        
                         <h:panelGrid columns="3">
                             <p:outputLabel>#{msgs['file.origin']} :</p:outputLabel>
                             <p:selectOneMenu value="#{importPatentController.fileOrigin}">
@@ -51,6 +40,19 @@
                                 </p:tooltip>-->
                             </p:panel>
                         </h:panelGrid>
+
+                        <br/>
+                        
+                        <p:fileUpload id="fileUpload" label="#{msgs['choose.files']}"
+                                      uploadLabel="#{msgs['upload.files']}" cancelLabel="#{msgs['cancel']}"
+                                      fileUploadListener="#{importPatentController.handleFileUpload}"
+                                      mode="advanced"
+                                      allowTypes="/(.csv|.xls)$/"
+                                      multiple="true"
+                                      update="messages">
+
+                        </p:fileUpload>
+                        
                         <br/>					
 		
                         <p:commandButton id="btnImport"  ajax="#{not empty currentProject.patents}" value="#{msgs['import']}" update="messages :superbody" action="#{importPatentController.importPatents()}"/>
