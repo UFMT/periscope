@@ -30,7 +30,9 @@
                                      paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
                                      rowKey="#{item.id}" lazy="true" filterEvent="enter" 
                                      >
-
+                            <f:facet name="header">
+                                <p:outputLabel value="#{msgs['listing']} #{patentBrazilianController.partialCount} #{msgs['of']} #{patentController.totalCount} #{msgs['patents.registered']}" style="font-size:20px"/>
+                            </f:facet>
                             <p:column  headerText="#{msgs['country']}">
                                 #{item.applicationNumber.substring(0, 2)}
                             </p:column>
