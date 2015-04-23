@@ -28,14 +28,20 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.Enumeration;
+import java.util.jar.Manifest;
+import javax.enterprise.inject.Produces;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.RequestScoped;
+import javax.inject.Named;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
 
-@RequestScoped
+@ApplicationScoped
 @Singleton
 @Startup
 /**
@@ -53,6 +59,8 @@ public class SeedBean {
     private IndexWriter writer;
     public static String PERISCOPE_DIR;
 
+    private String versionNumber = "";
+
     static {
         PERISCOPE_DIR = System.getenv("PERISCOPE_DIR");
         if (PERISCOPE_DIR == null) {
@@ -68,12 +76,13 @@ public class SeedBean {
         }
 
     }
-    
+
     @PostConstruct
     /**
      * Método executado quando é implantado no servidor
      */
     public void atStartup() {
+
         log.info("Inicializando seeder");
         initUsers();
         initCountries();
@@ -82,10 +91,48 @@ public class SeedBean {
         insertAlgorithFromFile("lcs", "js/longestCommonSubstring.js");
         insertAlgorithFromFile("levenshtein", "js/levenshtein.js");
         insertAlgorithFromFile("LiquidMetal", "js/liquidmetal.js");
+
+        try {
+            Enumeration<URL> resources = getClass().getClassLoader().getResources("META-INF/MANIFEST.MF");
+            while (resources.hasMoreElements()) {
+                URL url = resources.nextElement();
+                if (url.getFile().contains("periscope-ejb")) {
+                    try {
+                        Manifest manifest = new Manifest(url.openStream());
+                        // check that this is your manifest and do what you need or get the next one
+                        versionNumber = "";
+                        java.util.jar.Attributes attributes = manifest.getMainAttributes();
+                        if (attributes != null) {
+                            java.util.Iterator it = attributes.keySet().iterator();
+                            while (it.hasNext()) {
+                                java.util.jar.Attributes.Name key = (java.util.jar.Attributes.Name) it.next();
+                                String keyword = key.toString();
+                                if (keyword.equals("Implementation-Build")) {
+                                    versionNumber = (String) attributes.get(key);
+                                    break;
+                                }
+                            }
+                        }
+                    } catch (IOException E) {
+                        // handle
+                    }
+                }
+            }
+        } catch (IOException E) {
+            // handle
+            E.printStackTrace();
+        }
+    }
+
+    @Produces
+    @Named(value = "versionNumber")
+    public String getVersion() {
+        return versionNumber;
     }
 
     /**
      * Insere algoritmos javascript no MongoDB
+     *
      * @param name Nome da função para ser chamada no Mongo
      * @param path Caminho para o arquivo do algoritmo da função
      */
@@ -148,9 +195,9 @@ public class SeedBean {
         }
     }
 
-   /**
-    * Inicia os usuários iniciais a partir do arquivo yaml correspondente
-    */
+    /**
+     * Inicia os usuários iniciais a partir do arquivo yaml correspondente
+     */
     private void initUsers() {
         if (ds.getCount(User.class) == 0l) {
             log.info("Nenhum usuário encontrado.");
@@ -166,8 +213,8 @@ public class SeedBean {
     }
 
     /**
-     * Inicia os descritores comuns para o processo de harmonização
-     * a partir do arquivo yaml correspondente
+     * Inicia os descritores comuns para o processo de harmonização a partir do
+     * arquivo yaml correspondente
      */
     private void initCommonsDescriptors() {
         if (ds.getCount(CommonDescriptor.class) == 0l) {

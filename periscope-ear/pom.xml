@@ -32,6 +32,8 @@
             <url>http://repository.primefaces.org</url>
         </repository>
     </repositories>
+    
+    
 
     <build>
         <finalName>periscope</finalName>
@@ -57,8 +59,10 @@
                             <contextRoot>/periscope</contextRoot>
                         </webModule>
                     </modules>
+                    
                 </configuration>
             </plugin>
+            
             <!-- The JBoss AS plugin deploys your ear to a local JBoss AS container -->
             <!-- Due to Maven's lack of intelligence with EARs we need to configure 
             the jboss-as maven plugin to skip deployment for all modules. We then enable 
