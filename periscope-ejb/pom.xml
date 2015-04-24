@@ -159,6 +159,11 @@
                 <version>1.3</version>
                 <configuration>
                     <shortRevisionLength>7</shortRevisionLength>
+                    <format>{0}-{1,date,yyyyMMdd}</format>
+                    <items>
+                        <item>scmVersion</item>
+                        <item>timestamp</item>
+                    </items>
                 </configuration>
                 <executions>
                     <execution>
