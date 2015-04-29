@@ -8,7 +8,7 @@
 
     <f:view contentType="text/html">
         <h:form id="formAll">
-            
+
             <p:dataTable id="applicants" var="pa" style="font-size:12px"
                          emptyMessage="#{msgs['no.applicant']}"
                          value="#{applicantHarmonizationController.applicants}" paginator="true"
@@ -31,7 +31,7 @@
                     </h:panelGrid> 
 
                 </f:facet>
-               
+
 
                 <p:column headerText="">					
                     <p:selectBooleanCheckbox id="campo" 
@@ -55,11 +55,10 @@
                 </p:column>
                 <p:column headerText="#{msgs['actions']}" >
                     <center>
-                        <p:commandLink id="showDocs" value="#{msgs['show.docs']}" update="applicantDocs"
-                                        oncomplete="applicantDocsDialog.show()" 
-                                        action="#{applicantHarmonizationController.loadDocs(pa.name)}"
-                                        style="color:white;margin-right: 10px" styleClass="btn btn-inverse"/>			
-                            <ui:include src="/pages/project/harmonization/dialogApplicantDocs.xhtml" />						
+                        <p:commandLink id="showDocs" value="#{msgs['show.docs']}" update=":tabView:formAll:applicantDocs"
+                                       oncomplete="applicantDocsDialog.show()" 
+                                       action="#{applicantHarmonizationController.loadDocs(pa.name)}"
+                                       style="color:white;margin-right: 10px" styleClass="btn btn-inverse"/>			
                     </center>
                 </p:column>
             </p:dataTable>
@@ -98,7 +97,7 @@
                                      update = ":tabView:formAll:applicants,:tabView:formAll:selectedApplicants,
                                      :tabView:formAll:newRule, :#{p:component('panelSugestions')}"
                                      ajax="true"
-                                     
+
                                      />
                 </p:column> 
             </p:dataTable>
@@ -107,7 +106,34 @@
                            oncomplete="sugestionsDialog.show()" action="#{applicantHarmonizationController.loadSugestions()}" 
                            disabled="#{applicantHarmonizationController.selectedApplicants.size() == 0}"
                            style="color:white;margin-right: 10px" styleClass="btn btn-inverse"/>			
-            <ui:include src="/pages/project/harmonization/dialogApplicantRule.xhtml" />					
+            <ui:include src="/pages/project/harmonization/dialogApplicantRule.xhtml" />
+
+            <p:dialog id="applicantDocs" widgetVar="applicantDocsDialog" modal="true" 
+                      header="#{msgs['applicant.docs']}" resizable="false">
+
+                <p:dataTable id="patents" var="patent" style="font-size:12px"
+                             emptyMessage="#{msgs['no.docs']}"
+                             value="#{applicantHarmonizationController.patents}" paginator="true"
+                             paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+                             rowKey="#{patent.titleSelect}" filterEvent="enter" lazy="true">
+                    <p:column headerText="#{msgs['application.number']}">
+                        #{patent.applicationNumber}
+                    </p:column>
+                    <p:column headerText="#{msgs['title']}" >
+                        #{patent.titleSelect}
+                    </p:column>
+                    <p:column headerText="#{msgs['applicants']}">
+                        #{patent.applicants.size()}
+                        #{patent.applicantsToString}					
+                    </p:column>
+                    <p:column headerText="#{msgs['inventors']}" >														
+                        #{patent.inventors.size()}
+                        #{patent.inventorsToString}					
+                    </p:column>
+                </p:dataTable>
+
+            </p:dialog>
+
         </h:form>				
 
     </f:view>

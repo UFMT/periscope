@@ -52,10 +52,10 @@
                 </p:column>
                 <p:column headerText="#{msgs['actions']}">
                     <center>
-                        <p:commandLink id="showDocs" value="#{msgs['show.docs']}" update="inventorDocs"
-                                oncomplete="inventorDocsDialog.show()" action="#{inventorHarmonizationController.loadDocs(pa.name)}"
-                                style="color:white;margin-right: 10px" styleClass="btn btn-inverse"/>			
-                        <ui:include src="/pages/project/harmonization/dialogInventorDocs.xhtml" />		
+                        <p:commandLink id="showDocs" value="#{msgs['show.docs']}" update=":tabView:formAl:inventorDocs"
+                                       oncomplete="inventorDocsDialog.show()" 
+                                       action="#{inventorHarmonizationController.loadDocs(pa.name)}"
+                                       style="color:white;margin-right: 10px" styleClass="btn btn-inverse"/>				
                     </center>
                 </p:column>
             </p:dataTable>
@@ -100,6 +100,32 @@
                            style="color:white;margin-right: 10px" styleClass="btn btn-inverse"/>			
             <ui:include src="/pages/project/harmonization/dialogInventorRule.xhtml" />
 
+            <p:dialog id="inventorDocs" widgetVar="inventorDocsDialog" modal="true"
+                      header="#{msgs['inventor.docs']}" resizable="false">
+
+                <p:dataTable 
+                    id="patents" var="patent" style="font-size:12px"
+                    emptyMessage="#{msgs['no.docs']}"
+                    value="#{inventorHarmonizationController.patents}" paginator="true"
+                    paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+                    rowKey="#{patent.titleSelect}" filterEvent="enter" lazy="true">
+                    <p:column headerText="#{msgs['application.number']}">
+                        #{patent.applicationNumber}
+                    </p:column>
+                    <p:column headerText="#{msgs['title']}" >
+                        #{patent.titleSelect}
+                    </p:column>
+                    <p:column headerText="#{msgs['applicants']}">
+                        #{patent.applicants.size()}
+                        #{patent.applicantsToString}					
+                    </p:column>
+                    <p:column headerText="#{msgs['inventors']}" >														
+                        #{patent.inventors.size()}
+                        #{patent.inventorsToString}					
+                    </p:column>
+                </p:dataTable>
+
+            </p:dialog>
         </h:form>				
 
     </f:view>
