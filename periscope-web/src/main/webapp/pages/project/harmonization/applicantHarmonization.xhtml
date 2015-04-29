@@ -56,8 +56,9 @@
                 <p:column headerText="#{msgs['actions']}" >
                     <center>
                         <p:commandLink id="showDocs" value="#{msgs['show.docs']}" update="applicantDocs"
-                                oncomplete="applicantDocsDialog.show()" action="#{applicantHarmonizationController.loadDocs(pa.name)}"
-                                style="color:white;margin-right: 10px" styleClass="btn btn-inverse"/>			
+                                        oncomplete="applicantDocsDialog.show()" 
+                                        action="#{applicantHarmonizationController.loadDocs(pa.name)}"
+                                        style="color:white;margin-right: 10px" styleClass="btn btn-inverse"/>			
                             <ui:include src="/pages/project/harmonization/dialogApplicantDocs.xhtml" />						
                     </center>
                 </p:column>
@@ -94,8 +95,8 @@
                 </p:column>		
                 <p:column>
                     <p:commandButton icon="ui-icon-closethick" action="#{applicantHarmonizationController.unselect(pa)}"
-                                     update = ":tabView:formAll:applicants,:tabView:formAll:selectedApplicants,:tabView:formAll:newRule,
-                                     :#{p:component('panelSugestions')}"
+                                     update = ":tabView:formAll:applicants,:tabView:formAll:selectedApplicants,
+                                     :tabView:formAll:newRule, :#{p:component('panelSugestions')}"
                                      ajax="true"
                                      
                                      />

@@ -22,6 +22,14 @@
                 <p:column headerText="#{msgs['title']}" >
                     #{patent.titleSelect}
                 </p:column>
+                <p:column headerText="#{msgs['applicants']}">
+                    #{patent.applicants.size()}
+                    #{patent.applicantsToString}					
+                </p:column>
+                <p:column headerText="#{msgs['inventors']}" >														
+                    #{patent.inventors.size()}
+                    #{patent.inventorsToString}					
+                </p:column>
             </p:dataTable>
 
         </p:dialog>

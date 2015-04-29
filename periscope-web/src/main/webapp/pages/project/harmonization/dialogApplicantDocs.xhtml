@@ -7,11 +7,10 @@
       xmlns:p="http://primefaces.org/ui">
 
     <f:view contentType="text/html">
-        <p:dialog id="applicantDocs" widgetVar="applicantDocsDialog" modal="true"
+        <p:dialog id="applicantDocs" widgetVar="applicantDocsDialog" modal="true" 
                   header="#{msgs['applicant.docs']}" resizable="false">
 
-            <p:dataTable 
-                         id="patents" var="patent" style="font-size:12px"
+            <p:dataTable id="patents" var="patent" style="font-size:12px"
                          emptyMessage="#{msgs['no.docs']}"
                          value="#{applicantHarmonizationController.patents}" paginator="true"
                          paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
@@ -21,6 +20,14 @@
                 </p:column>
                 <p:column headerText="#{msgs['title']}" >
                     #{patent.titleSelect}
+                </p:column>
+                <p:column headerText="#{msgs['applicants']}">
+                    #{patent.applicants.size()}
+                    #{patent.applicantsToString}					
+                </p:column>
+                <p:column headerText="#{msgs['inventors']}" >														
+                    #{patent.inventors.size()}
+                    #{patent.inventorsToString}					
                 </p:column>
             </p:dataTable>
 
