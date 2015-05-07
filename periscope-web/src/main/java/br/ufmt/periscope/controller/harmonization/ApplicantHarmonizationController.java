@@ -31,6 +31,8 @@ import javax.faces.context.Flash;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import org.primefaces.context.RequestContext;
 
 @ManagedBean
 @ViewScoped
@@ -67,12 +69,13 @@ public class ApplicantHarmonizationController implements Serializable {
     private Boolean harmonized = false;
     private Boolean sugHarmonized = false;
     private Applicant selectedRadio;
+    private Rule originalRule;
     private Integer searchType;
     private @Inject
     RuleController ruleController;
 
     public ApplicantHarmonizationController() {
-        System.out.println("App Harminization Controller");
+//        System.out.println("App Harminization Controller");
     }
 
     @PostConstruct
@@ -88,27 +91,55 @@ public class ApplicantHarmonizationController implements Serializable {
         rule.setCountry(defaultCountry);
         states = defaultCountry.getStates();
         setSearchType(1);
+        originalRule = null;
         Collections.sort(states);
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest req = (HttpServletRequest) context.getExternalContext().getRequest();
+        if (req.getParameter("ruleId") != null) {
+            rule = ruleRepository.findById(req.getParameter("ruleId"));
+            originalRule = rule;
+            for (String pa : rule.getSubstitutions()) {
+                Applicant ap = applicantRepository.getApplicantByName(pa);
+                if (ap == null) {
+                    selectedApplicants.add(new Applicant(pa));
+                } else {
+                    selectedApplicants.add(ap);
+                }
+            }
+        }
+    }
+
+    public void updateHarmonized() {
+        harmonized = false;
+        for (Applicant applicant : selectedApplicants) {
+            if (!applicant.getName().equals(rule.getName())) {
+                harmonized = harmonized || applicant.getHarmonized();
+            }
+        }
     }
 
     public void onSelectApplicant(Applicant pa) {
-
         if (pa.getSelected()) {
             selectedApplicants.add(pa);
         } else {
             selectedApplicants.remove(pa);
         }
-
+        if (originalRule != null) {
+            updateHarmonized();
+        }
     }
 
     public String unselect(Applicant pa) {
         pa.setSelected(false);
         selectedApplicants.remove(pa);
+        if (originalRule != null) {
+            updateHarmonized();
+            RequestContext.getCurrentInstance().reset(":formAll:applicants");
+        }
         return "";
-
     }
-    
-    public void loadDocs(String name){
+
+    public void loadDocs(String name) {
         patents.setType("applicant");
         patents.setName(name);
     }
@@ -164,8 +195,12 @@ public class ApplicantHarmonizationController implements Serializable {
         }
     }
 
-    public String createRule() {
+    public String updateRule() {
+        ruleRepository.delete(rule.getId().toString());
+        return createRule() + "listRule";
+    }
 
+    public String createRule() {
         rule.setType(RuleType.APPLICANT);
         rule.setProject(currentProject);
         if (selectedApplicantSugestions != null) {
@@ -179,6 +214,15 @@ public class ApplicantHarmonizationController implements Serializable {
                 deletions.add(pa.getName());
             }
         }
+
+        if (originalRule != null) {
+            for (String pa : originalRule.getSubstitutions()) {
+                if (!substitutions.contains(pa)) {
+                    ruleRepository.unbindApplicantFromRule(currentProject, pa);
+                }
+            }
+        }
+
         if (rule.getNature().getName().contentEquals("")) {
             rule.setNature(null);
         }
@@ -192,15 +236,17 @@ public class ApplicantHarmonizationController implements Serializable {
         if (overwrite()) {
             for (String deletion : deletions) {
                 Rule rul = ruleRepository.findByName(deletion);
-                substitutions.addAll(rul.getSubstitutions());
-                ruleRepository.delete(rul.getId().toString());
+                if (rul != null) {
+                    substitutions.addAll(rul.getSubstitutions());
+                    ruleRepository.delete(rul.getId().toString());
+                }
             }
         }
         rule.setSubstitutions(new HashSet<String>(substitutions));
         ruleRepository.save(rule);
-
         ruleController.apply(rule.getId().toString());
         selectedApplicants.clear();
+        rule = new Rule();
 
         Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
         flash.put("success", "Regra criada e aplicada com sucesso");
@@ -223,10 +269,8 @@ public class ApplicantHarmonizationController implements Serializable {
         List<Applicant> aplicants = new ArrayList<Applicant>();
         Applicant app;
         for (String sugestion : sugestions) {
-            System.out.println("preSug " + sugestion);
             app = new Applicant(sugestion);
             if (ruleRepository.isRule(sugestion)) {
-                System.out.println("ISRULE");
                 app.setHarmonized(true);
             }
             aplicants.add(app);
@@ -351,5 +395,13 @@ public class ApplicantHarmonizationController implements Serializable {
 
     public void setPatents(LazyPatentDataModel patents) {
         this.patents = patents;
+    }
+
+    public Rule getOriginalRule() {
+        return originalRule;
+    }
+
+    public void setOriginalRule(Rule originalRule) {
+        this.originalRule = originalRule;
     }
 }

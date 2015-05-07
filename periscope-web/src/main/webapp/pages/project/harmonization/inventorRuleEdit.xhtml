@@ -1,0 +1,194 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/template.xhtml">
+
+        <ui:define name="content">
+            <center><h1>#{msgs['edit.rule']}</h1></center>
+            <h:form id="formAll">
+                <p:fieldset  toggleable="true" toggleSpeed="500" legend="#{msgs['header']}">
+                    <p:messages id="msgs"/>
+                    <h:panelGrid border="0" columns="3" columnClasses="column-left,null,column-right">
+
+                        <h:panelGrid border="0" columns="2" >
+                            <h:outputLabel value="#{msgs['name']}*: " style="font-weight: bold"/>
+                            <p:inputText value="#{inventorHarmonizationController.rule.name}" required="true"
+                                         style="color:  #000000"
+                                         requiredMessage="#{msgs['name']} #{msgs['obligatory.field']}" id="name"/>
+
+                            <h:outputLabel value="#{msgs['acronym']} : " style="font-weight: bold"/>
+                            <p:inputText value="#{inventorHarmonizationController.rule.acronym}" id="acronym"/>
+
+                            <h:outputLabel value="#{msgs['country']} : " style="font-weight:bold"/>
+                            <p:selectOneMenu value="#{inventorHarmonizationController.rule.country.acronym}" 
+                                             styleClass="column-left"
+                                             valueChangeListener="#{inventorHarmonizationController.selectListener}">
+                                <f:selectItems value="#{inventorHarmonizationController.countries}" var="c" 
+                                               itemValue="#{c.acronym}" itemLabel="#{c.name}"/>
+                                <p:ajax event="change" update="@this,state"/>
+                            </p:selectOneMenu>
+
+                            <h:outputLabel value="#{msgs['state']} : " style="font-weight: bold"/>
+                            <p:selectOneMenu value="#{inventorHarmonizationController.rule.state.acronym}"  
+                                             styleClass="column-left" id="state">
+                                <f:selectItem itemLabel="#{msgs['none']}" itemValue=""/>
+                                <f:selectItems  value="#{inventorHarmonizationController.states}" var="c" 
+                                                itemValue="#{c.acronym}" itemLabel="#{c.name}"/>
+                            </p:selectOneMenu>
+
+                            <h:outputLabel value="* #{msgs['obligatory.fields']}"/>
+
+                        </h:panelGrid>
+
+                        <p:spacer width="1" height="175" style="position: relative; bottom: -5px;
+                                  background-color: #A8A8A8; margin-left: 10px;margin-right: 10px" />
+
+                        <h:panelGrid border="0" columns="2" style="float: right">
+                            <f:facet name="header">
+                                <h4>#{msgs['original.information']}:</h4>
+                            </f:facet>
+                            <h:outputLabel value="#{msgs['name']} : " style="font-weight: bold; float: left"/>
+                            <p:inputText value="#{inventorHarmonizationController.originalRule.name}" 
+                                         style="font-weight: bold" disabled="true" />
+
+                            <h:outputLabel value="#{msgs['acronym']} : " style="font-weight: bold; float: left"/>
+                            <p:inputText value="#{inventorHarmonizationController.originalRule.acronym}"
+                                         style="font-weight: bold" disabled="true"/>
+
+                            <h:outputLabel value="#{msgs['country']} :" style="font-weight:bold; float: left"/>
+                            <p:inputText value="#{inventorHarmonizationController.originalRule.country.name}"
+                                         style="font-weight: bold" disabled="true"/>
+
+                            <h:outputLabel value="#{msgs['state']} :" style="font-weight: bold; float: left"/>
+                            <p:inputText value="#{inventorHarmonizationController.originalRule.state.name}"
+                                         style="font-weight: bold" disabled="true"/>
+
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </p:fieldset>
+                <p:fieldset toggleable="true" toggleSpeed="500" legend="#{msgs['substitutions']}" id="fields">
+                    <p:dataTable id="selectedInventors" var="pa" style="font-size:12px"
+                                 emptyMessage="#{msgs['no.selectedinventors']}, #{msgs['must.select']}" widgetVar="tblSelected"
+                                 value="#{inventorHarmonizationController.selectedInventors}" paginator="true"
+                                 paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+                                 rowKey="#{pa.name}" sortBy="#{pa.name}"
+                                 rowStyleClass="#{pa.harmonized ? 'harmonized-row' : 'normal-row'}">
+
+                        <p:columnGroup type="header">
+                            <p:row>					
+                                <p:column rowspan="2" headerText="#{msgs['name']}" sortBy="#{pa.name}"/>
+                                <p:column rowspan="2" headerText="#{msgs['acronym']}" />
+                                <p:column rowspan="2" headerText="#{msgs['country']}" />
+                                <p:column rowspan="2" headerText="Docs" sortBy="#{pa.documentCount}"/>
+                                <p:column style="width: 5px"/>
+                            </p:row>
+                        </p:columnGroup>		
+                        <p:column>														
+                            #{pa.name}					
+                        </p:column>
+                        <p:column>														
+                            #{pa.acronym == null ? '-' : pa.acronym}					
+                        </p:column>
+                        <p:column>														
+                            #{pa.country == null ? '-' : pa.country.name}					
+                        </p:column>
+                        <p:column>														
+                            #{pa.documentCount == 0 ? '-' : pa.documentCount}					
+                        </p:column>		
+                        <p:column>
+                            <p:commandButton icon="ui-icon-closethick" action="#{inventorHarmonizationController.unselect(pa)}"
+                                             partialSubmit="true" process=":#{p:component('formAll')}" immediate="true"
+                                             update = ":formAll:inventors,:formAll:selectedInventors,
+                                             :formAll:updateRule"
+                                             ajax="true"
+                                             />
+                        </p:column> 
+                    </p:dataTable>
+
+                    <p:separator/>
+
+                    <h:panelGrid columns="3">
+                        <p:outputLabel styleClass="harmonized-row" value="___"/>
+                        <p:outputLabel id="harmonized" value=": #{msgs['harmonized']}"/>
+                        <p:tooltip for="harmonized">
+                            <p:outputLabel value="#{msgs['inventor']} #{msgs['alredy.harmonized']}" escape="false"/>
+                        </p:tooltip>
+                    </h:panelGrid>
+
+                    <p:separator/>
+
+                    <p:dataTable id="inventors" var="pa" style="font-size:12px"
+                                 emptyMessage="#{msgs['no.inventor']}"
+                                 value="#{inventorHarmonizationController.inventors}" paginator="true"
+                                 paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+                                 rowKey="#{pa.name}" filterEvent="enter" lazy="true"
+                                 rowStyleClass="#{pa.harmonized ? 'harmonized-row' : 'normal-row'}">
+                        <f:facet name="header">
+                            <h:panelGrid columns="4" style="width: 20%" cellpadding="5">  
+                                <p:column>
+                                    <p:outputLabel value="#{msgs['filter.type']}"/>  
+                                </p:column>
+                                <p:column>
+                                    <p:selectOneMenu id="searchType" value="#{inventorHarmonizationController.searchType}">
+                                        <f:selectItem itemLabel="#{msgs['start.with']}" itemValue="1"/>
+                                        <f:selectItem itemLabel="#{msgs['contains']}" itemValue="2"/>  
+                                        <p:ajax event="change" update="inventors"/>
+                                    </p:selectOneMenu>
+                                </p:column>
+                                <p:column/>
+                                <p:column/>
+                            </h:panelGrid> 
+
+                        </f:facet>
+
+
+                        <p:column headerText="">					
+                            <p:selectBooleanCheckbox id="campo" value="#{pa.selected}" >
+                                <p:ajax event="change" update=":formAll:selectedInventors,@this,:formAll:updateRule" 
+                                        listener="#{inventorHarmonizationController.onSelectInventor(pa)}"/>
+                            </p:selectBooleanCheckbox>	
+                        </p:column>			
+                        <p:column headerText="#{msgs['name']}" sortBy="#{pa.name}" filterBy="#{pa.name}" filterStyle="width:250px">														
+                            #{pa.name}					
+                        </p:column>
+                        <p:column headerText="#{msgs['acronym']}" filterBy="#{pa.acronym}">	
+                            #{pa.acronym}					
+                        </p:column>
+                        <p:column headerText="#{msgs['country']}" sortBy="#{pa.country.name}">														
+                            #{pa.country == null ? '' : pa.country.name}					
+                        </p:column >
+                        <p:column headerText="Docs" sortBy="#{pa.documentCount}">														
+                            #{pa.documentCount}					
+                        </p:column>
+                    </p:dataTable>
+                </p:fieldset>
+                <center>
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:commandLink value="#{msgs['update']}" id="updateRule" ajax="false"
+                                       update=":formAll:selectedInventors,:formAll:inventors"
+                                       action="#{inventorHarmonizationController.updateRule()}"
+                                       onclick="if (#{inventorHarmonizationController.overwrite()})
+                                               {
+                                                   if (!confirm('#{msgs['saving.overwrite']}')) {
+                                                       return false;
+                                                   }
+                                               }"
+                                       disabled="#{inventorHarmonizationController.selectedInventors.size() == 0}"
+                                       style="color:white"  class="btn-large btn btn-info">
+                            <f:param name="tabIndex" value="1" />
+                        </p:commandLink>
+                        <h:commandLink value="#{msgs['cancel']}" immediate="true" action="ruleList" 
+                                       style="color:white"  class="btn-large btn btn-info">
+                            <f:param name="tabIndex" value="1" />
+                        </h:commandLink>
+                    </h:panelGrid>
+                </center>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

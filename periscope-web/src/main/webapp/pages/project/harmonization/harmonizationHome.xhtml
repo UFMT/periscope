@@ -1,31 +1,34 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="/template/template.xhtml">
+    <ui:composition template="/template/template.xhtml">
 
-	<ui:define name="content">
-		<ui:include src="/template/flashmessages.xhtml" />
-		<h2>#{msgs['harmonization']}</h2>
-		<br/>
-		<h:form>		
-			<p:commandButton value="#{msgs['list.rules']}" action="listRule" ajax="false" />
-		</h:form>
-		<p:tabView id="tabView">  
-		
-			<p:tab id="tab1" title="#{msgs['applicants']}">
-				<ui:include src="/pages/project/harmonization/applicantHarmonization.xhtml" />
-			</p:tab>  
-			
-			<p:tab id="tab2" title="#{msgs['inventors']}">			
-				<ui:include src="/pages/project/harmonization/inventorsHarmonization.xhtml" />
-			</p:tab>  
-			
-		</p:tabView>		
-	</ui:define>
-</ui:composition>
+        <ui:define name="content">
+            <ui:include src="/template/flashmessages.xhtml" />
+            <h2>#{msgs['harmonization']}</h2>
+            <br/>
+            <h:form>
+                <p:commandButton value="#{msgs['list.rules']}" action="listRule" ajax="false" />
+            </h:form>
+            <p:tabView id="tabView" widgetVar="harmonizationTabs" activeIndex="#{inventorHarmonizationController.tabIndex}"
+                       onTabChange="tabChangeHelper([{name : 'activeIndex', value : index}])">  
+                <p:tab id="tab1" title="#{msgs['applicants']}">
+                    <ui:include src="/pages/project/harmonization/applicantHarmonization.xhtml" />
+                </p:tab>  
+
+                <p:tab id="tab2" title="#{msgs['inventors']}">			
+                    <ui:include src="/pages/project/harmonization/inventorsHarmonization.xhtml" />
+                </p:tab>  
+            </p:tabView>
+            <h:form id="tabChangeHelperForm">
+                <p:remoteCommand name="tabChangeHelper" actionListener="#{inventorHarmonizationController.tabIndexChanger()}" />
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
 </html>

@@ -72,6 +72,7 @@ public class InventorRepository {
         BasicDBObject inventors = new BasicDBObject("inventors", eleMatch);
         BasicDBObject keys = new BasicDBObject("inventors", 1);
         DBCursor cursor = ds.getCollection(Patent.class).find(inventors, keys);
+        int docCount = ds.getCollection(Patent.class).find(inventors, keys).count();
         if (cursor.hasNext()) {
             Mapper mapper = ds.getMapper();
             EntityCache ec = mapper.createEntityCache();
@@ -80,6 +81,7 @@ public class InventorRepository {
             for (Object obj : objList) {
                 ret = (Inventor) mapper.fromDBObject(Inventor.class, (DBObject) obj, ec);
                 if (ret.getName().equals(name)) {
+                    ret.setDocumentCount(docCount);
                     return ret;
                 }
             }

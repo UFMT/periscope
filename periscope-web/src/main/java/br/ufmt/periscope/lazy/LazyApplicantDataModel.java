@@ -20,7 +20,7 @@ public class LazyApplicantDataModel extends LazyDataModel<Applicant> {
     private Boolean harmonization = false;
 
     public LazyApplicantDataModel() {
-        System.out.println("Lazy Applicant Data Model");
+//        System.out.println("Lazy Applicant Data Model");
     }
 
     

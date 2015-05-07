@@ -82,6 +82,7 @@ public class ApplicantRepository {
         BasicDBObject applicants = new BasicDBObject("applicants", eleMatch);
         BasicDBObject keys = new BasicDBObject("applicants", 1);
         DBCursor cursor = ds.getCollection(Patent.class).find(applicants, keys);
+        int docCount = ds.getCollection(Patent.class).find(applicants, keys).count();
         if (cursor.hasNext()) {
             Mapper mapper = ds.getMapper();
             EntityCache ec = mapper.createEntityCache();
@@ -90,6 +91,7 @@ public class ApplicantRepository {
             for (Object obj : objList) {
                 ret = (Applicant) mapper.fromDBObject(Applicant.class, (DBObject) obj, ec);
                 if (ret.getName().equals(name)) {
+                    ret.setDocumentCount(docCount);
                     return ret;
                 }
             }
@@ -97,7 +99,7 @@ public class ApplicantRepository {
         return null;
 
     }
-
+    
     /**
      * Method responsible to get the applicants from database.
      * @param project Project - Project in which the applicant most be searched.

@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -29,6 +30,9 @@ import javax.faces.context.Flash;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import org.primefaces.component.tabview.TabView;
+import org.primefaces.context.RequestContext;
 
 @ManagedBean
 @ViewScoped
@@ -61,9 +65,16 @@ public class InventorHarmonizationController implements Serializable {
     private Boolean harmonized = false;
     private Boolean sugHarmonized = false;
     private Inventor selectedRadio;
+    private Rule originalRule;
     private Integer searchType;
+    private Integer tabIndex;
+    private TabView tabView;
     private @Inject
     RuleController ruleController;
+
+    public InventorHarmonizationController() {
+//        System.out.println("Inv Harmonization Controller");
+    }
 
     @PostConstruct
     public void init() {
@@ -73,13 +84,38 @@ public class InventorHarmonizationController implements Serializable {
         inventors.setHarmonization(true);
         selectedInventors.clear();
         inventors.setSelectedInventors(selectedInventors);
-        
+
         patents.getRepo().setCurrentProject(currentProject);
 
         defaultCountry = countryRepository.getCountryByAcronym(acronymDefault);
         rule.setCountry(defaultCountry);
         states = defaultCountry.getStates();
+        originalRule = null;
+        tabIndex = 0;
         Collections.sort(states);
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest req = (HttpServletRequest) context.getExternalContext().getRequest();
+        if (req.getParameter("ruleId") != null) {
+            rule = ruleRepository.findById(req.getParameter("ruleId"));
+            originalRule = rule;
+            for (String pa : rule.getSubstitutions()) {
+                Inventor ap = inventorRepository.getInventorByName(pa);
+                if (ap == null) {
+                    selectedInventors.add(new Inventor(pa));
+                } else {
+                    selectedInventors.add(ap);
+                }
+            }
+        }
+    }
+
+    public void updateHarmonized() {
+        harmonized = false;
+        for (Inventor inventor : selectedInventors) {
+            if (!inventor.getName().equals(rule.getName())) {
+                harmonized = harmonized || inventor.getHarmonized();
+            }
+        }
     }
 
     public void selectListener(ValueChangeEvent event) {
@@ -87,11 +123,11 @@ public class InventorHarmonizationController implements Serializable {
         searchState(acronym);
     }
 
-    public void loadDocs(String name){
+    public void loadDocs(String name) {
         patents.setType("inventor");
         patents.setName(name);
     }
-    
+
     private void searchState(String acronym) {
         Country country = countryRepository.getCountryByAcronym(acronym);
         states = country.getStates();
@@ -104,14 +140,19 @@ public class InventorHarmonizationController implements Serializable {
         } else {
             selectedInventors.remove(pa);
         }
-
+        if (originalRule != null) {
+            updateHarmonized();
+        }
     }
 
     public String unselect(Inventor pa) {
         pa.setSelected(false);
         selectedInventors.remove(pa);
+        if (originalRule != null) {
+            updateHarmonized();
+            RequestContext.getCurrentInstance().reset(":formAll:inventors");
+        }
         return "";
-
     }
 
     public void onSelectInventorSugestion() {
@@ -140,7 +181,7 @@ public class InventorHarmonizationController implements Serializable {
             if (selectedRadio.getAcronym() != null) {
                 rule.setAcronym(selectedRadio.getAcronym());
             }
-            if (selectedRadio.getCountry() != null) {
+            if (selectedRadio.getCountry() != null && !selectedRadio.getCountry().getName().equals("")) {
                 selectedRadio.getCountry().setStates(null);
                 rule.setCountry(selectedRadio.getCountry());
                 searchState(selectedRadio.getCountry().getAcronym());
@@ -149,6 +190,11 @@ public class InventorHarmonizationController implements Serializable {
                 rule.setState(selectedRadio.getState());
             }
         }
+    }
+
+    public String updateRule() {
+        ruleRepository.delete(rule.getId().toString());
+        return createRule() + "listRule";
     }
 
     public String createRule() {
@@ -164,6 +210,15 @@ public class InventorHarmonizationController implements Serializable {
                 deletions.add(pa.getName());
             }
         }
+
+        if (originalRule != null) {
+            for (String inv : originalRule.getSubstitutions()) {
+                if (!substitutions.contains(inv)) {
+                    ruleRepository.unbindInventorFromRule(currentProject, inv);
+                }
+            }
+        }
+
         rule.setCountry(countryRepository.getCountryByAcronym(rule.getCountry().getAcronym()));
         for (State state : rule.getCountry().getStates()) {
             if (state.getAcronym().equals(rule.getState().getAcronym())) {
@@ -174,15 +229,19 @@ public class InventorHarmonizationController implements Serializable {
         if (overwrite()) {
             for (String deletion : deletions) {
                 Rule rul = ruleRepository.findByName(deletion);
-                substitutions.addAll(rul.getSubstitutions());
-                ruleRepository.delete(rul.getId().toString());
+                if (rul != null) {
+                    substitutions.addAll(rul.getSubstitutions());
+                    ruleRepository.delete(rul.getId().toString());
+                }
             }
         }
         rule.setSubstitutions(new HashSet<String>(substitutions));
         ruleRepository.save(rule);
-
         ruleController.apply(rule.getId().toString());
         selectedInventors.clear();
+        rule = new Rule();
+        tabIndex = 1;
+
         Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
         flash.put("success", "Regra criada com sucesso");
         return "";
@@ -190,7 +249,7 @@ public class InventorHarmonizationController implements Serializable {
 
     public void loadSugestions() {
         String[] names = new String[selectedInventors.size()];
-
+        selectedRadio = null;
         selectedRadio = selectedInventors.get(0);
         onSelectInventorFill();
 
@@ -222,7 +281,16 @@ public class InventorHarmonizationController implements Serializable {
         }
     }
 
+    public void tabIndexChanger() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        Map<String, String> paramMap = context.getExternalContext().getRequestParameterMap();
+        String paramIndex = paramMap.get("activeIndex");
+        setTabIndex(Integer.valueOf(paramIndex));
+        System.out.println("Active index changed to " + tabIndex);
+    }
+
     public Boolean overwrite() {
+        System.out.println("oi");
         return harmonized || sugHarmonized;
     }
 
@@ -313,5 +381,29 @@ public class InventorHarmonizationController implements Serializable {
 
     public void setPatents(LazyPatentDataModel patents) {
         this.patents = patents;
+    }
+
+    public Integer getTabIndex() {
+        return tabIndex;
+    }
+
+    public void setTabIndex(Integer tabIndex) {
+        this.tabIndex = tabIndex;
+    }
+
+    public Rule getOriginalRule() {
+        return originalRule;
+    }
+
+    public void setOriginalRule(Rule originalRule) {
+        this.originalRule = originalRule;
+    }
+
+    public TabView getTabView() {
+        return tabView;
+    }
+
+    public void setTabView(TabView tabView) {
+        this.tabView = tabView;
     }
 }

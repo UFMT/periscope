@@ -50,6 +50,14 @@
             <to-view-id>/pages/project/harmonization/ruleList.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
+            <from-outcome>applicantEditRule</from-outcome>
+            <to-view-id>/pages/project/harmonization/applicantRuleEdit.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>inventorEditRule</from-outcome>
+            <to-view-id>/pages/project/harmonization/inventorRuleEdit.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
             <from-outcome>mainApplicantReport</from-outcome>
             <to-view-id>/pages/project/report/allReports/mainApplicant.xhtml</to-view-id>
         </navigation-case>

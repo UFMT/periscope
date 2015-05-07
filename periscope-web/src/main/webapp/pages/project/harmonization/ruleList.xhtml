@@ -14,63 +14,66 @@
             <h:form>
                 <p:commandButton value="#{msgs['back']}" action="harmonizationHome" ajax="false" />
             </h:form>
-            <p:tabView id="tabView" dynamic="true"> 
-                <p:tab id="tab1" title="#{msgs['applicants']}">				
-                    <p:dataTable id="ruleApplicants" var="rule" style="font-size:12px"
-                                 emptyMessage="#{msgs['no.rules']}"
-                                 value="#{ruleController.lazyApplicants}" paginator="true" lazy="true"
-                                 paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
-                                 rowKey="#{rule.id.toString()}" sortBy="#{rule.name}" >
-                        <p:columnGroup type="header">
-                            <p:row>						
-                                <p:column rowspan="2" headerText="#{msgs['name']}" sortBy="#{rule.name}"/>
-                                <p:column rowspan="2" headerText="#{msgs['acronym']}" sortBy="#{rule.acronym}"/>
-                                <p:column rowspan="2" headerText="#{msgs['substitutions']}" />
-                                <p:column rowspan="2" headerText="#{msgs['country']}" sortBy="#{rule.country.name}"/>
-                                <p:column rowspan="2" headerText="#{msgs['nature']}" sortBy="#{rule.nature.name}"/>
-                                <p:column rowspan="2" headerText="#{msgs['actions']}" />
-                                <p:column rowspan="2" headerText="#{msgs['sugestions']}"/>
-                            </p:row>
-                        </p:columnGroup>		
-                        <p:column>														
-                            #{rule.name}					
-                        </p:column>
-                        <p:column>														
-                            #{rule.acronym}					
-                        </p:column>
-                        <p:column>														
-                            #{rule.substitutions}					
-                        </p:column>
-                        <p:column>														
-                            #{rule.country == null ? '' : rule.country.name}					
-                        </p:column>
-                        <p:column>														
-                            #{rule.nature == null ? '' : msgs[rule.nature.name]}					
-                        </p:column>
-                        <p:column>
-                            <center>
-                                <h:form style="margin-bottom:0px">
+            <h:form>
+
+                <p:tabView id="tabView" dynamic="true" activeIndex="#{ruleController.tabIndex}"> 
+                    <p:tab id="tab1" title="#{msgs['applicants']}">
+                        <p:dataTable id="ruleApplicants" var="appRule" style="font-size:12px"
+                                     emptyMessage="#{msgs['no.rules']}"
+                                     value="#{ruleController.lazyApplicants}" paginator="true" lazy="true"
+                                     paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+                                     rowKey="#{appRule.id.toString()}" sortBy="#{appRule.name}" >
+                            <p:columnGroup type="header">
+                                <p:row>						
+                                    <p:column rowspan="2" headerText="#{msgs['name']}" sortBy="#{appRule.name}"/>
+                                    <p:column rowspan="2" headerText="#{msgs['acronym']}" sortBy="#{appRule.acronym}"/>
+                                    <p:column rowspan="2" headerText="#{msgs['substitutions']}" />
+                                    <p:column rowspan="2" headerText="#{msgs['country']}" sortBy="#{appRule.country.name}"/>
+                                    <p:column rowspan="2" headerText="#{msgs['nature']}" sortBy="#{appRule.nature.name}"/>
+                                    <p:column rowspan="2" headerText="#{msgs['actions']}" />
+                                    <p:column rowspan="2" headerText="#{msgs['sugestions']}"/>
+                                </p:row>
+                            </p:columnGroup>		
+                            <p:column>														
+                                #{appRule.name}					
+                            </p:column>
+                            <p:column>														
+                                #{appRule.acronym}					
+                            </p:column>
+                            <p:column>														
+                                #{appRule.substitutions}					
+                            </p:column>
+                            <p:column>														
+                                #{appRule.country == null ? '' : appRule.country.name}					
+                            </p:column>
+                            <p:column>														
+                                #{appRule.nature == null ? '' : msgs[appRule.nature.name]}					
+                            </p:column>
+                            <p:column>
+                                <center>
+                                    <h:commandLink value="#{msgs['edit']}" action="applicantEditRule" 
+                                                   style="color:white;margin-right: 10px" class="btn btn-inverse">
+                                        <f:param name="ruleId" value="#{appRule.id}" />
+                                    </h:commandLink>
                                     <h:commandLink value="#{msgs['apply']}"
                                                    style="color:white;margin-right: 10px" class="btn btn-inverse"
-                                                   action="#{ruleController.applyApplicant(rule)}">	
+                                                   action="#{ruleController.applyApplicant(appRule)}">	
                                     </h:commandLink>
                                     <h:commandLink value="#{msgs['undo.delete']}"
                                                    style="color:white;margin-right: 10px" class="btn btn-inverse"
                                                    onclick="if (!confirm('#{msgs['you.sure']}')) {
                                                                return false;
                                                            }" 
-                                                   action="#{ruleController.deleteAppRule(rule.name, rule.id.toString())}">										
+                                                   action="#{ruleController.deleteAppRule(appRule.name, appRule.id.toString())}">										
                                     </h:commandLink>
-                                </h:form>
-                            </center>
-                        </p:column>
-                        <p:column>
-                            <h:form>
+                                </center>
+                            </p:column>
+                            <p:column>
                                 <center>
-                                    <p:accordionPanel activeIndex="null" rendered="#{rule.appSugestions.size() > 0}">
+                                    <p:accordionPanel activeIndex="null" rendered="#{appRule.appSugestions.size() > 0}">
                                         <p:tab titleStyle="font-size:12; color:initial" 
                                                title="#{msgs['show']}">
-                                            <p:dataTable value="#{rule.appSugestions}"
+                                            <p:dataTable value="#{appRule.appSugestions}"
                                                          emptyMessage="#{msgs['no.sugestions']}" var="app" id="tabela">
                                                 <p:column>
                                                     <p:selectBooleanCheckbox 
@@ -85,47 +88,50 @@
 
                                         </p:tab>
                                     </p:accordionPanel>
-                                    <h:outputLabel value="#{msgs['no.sugestions']}" rendered="#{rule.appSugestions.size() == 0}"/>
+                                    <h:outputLabel value="#{msgs['no.sugestions']}" rendered="#{appRule.appSugestions.size() == 0}"/>
                                 </center>
-                            </h:form>
-                        </p:column>
-                    </p:dataTable>
-                </p:tab>  			
-                <p:tab id="tab2" title="#{msgs['inventors']}">					
-                    <p:dataTable id="ruleInventors" var="rule" style="font-size:12px"
-                                 emptyMessage="#{msgs['no.rules']}"
-                                 value="#{ruleController.lazyInventors}" paginator="true" lazy="true"
-                                 paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
-                                 rowKey="#{rule.id.toString()}" sortBy="#{rule.name}">
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>  			
+                    <p:tab id="tab2" title="#{msgs['inventors']}">	
+                        <p:dataTable id="ruleInventors" var="rule" style="font-size:12px"
+                                     emptyMessage="#{msgs['no.rules']}"
+                                     value="#{ruleController.lazyInventors}" paginator="true" lazy="true"
+                                     paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+                                     rowKey="#{rule.id.toString()}" sortBy="#{rule.name}">
 
-                        <p:columnGroup type="header">
-                            <p:row>						
-                                <p:column rowspan="2" headerText="#{msgs['name']}" sortBy="#{rule.name}"/>
-                                <p:column rowspan="2" headerText="#{msgs['acronym']}" sortBy="#{rule.acronym}"/>
-                                <p:column rowspan="2" headerText="#{msgs['substitutions']}" />
-                                <p:column rowspan="2" headerText="#{msgs['country']}" sortBy="#{rule.country.name}"/>
-                                <p:column rowspan="2" headerText="#{msgs['actions']}" />
-                                <p:column rowspan="2" headerText="#{msgs['sugestions']}"/>
-                            </p:row>
-                        </p:columnGroup>		
-                        <p:column>														
-                            #{rule.name}					
-                        </p:column>
-                        <p:column>														
-                            #{rule.acronym}					
-                        </p:column>
-                        <p:column>														
-                            #{rule.substitutions}					
-                        </p:column>
-                        <p:column>														
-                            #{rule.country == null ? '' : rule.country.name}					
-                        </p:column>
-                        <p:column>
-                            <center>
-                                <h:form style="margin-bottom:0px">
+                            <p:columnGroup type="header">
+                                <p:row>						
+                                    <p:column rowspan="2" headerText="#{msgs['name']}" sortBy="#{rule.name}"/>
+                                    <p:column rowspan="2" headerText="#{msgs['acronym']}" sortBy="#{rule.acronym}"/>
+                                    <p:column rowspan="2" headerText="#{msgs['substitutions']}" />
+                                    <p:column rowspan="2" headerText="#{msgs['country']}" sortBy="#{rule.country.name}"/>
+                                    <p:column rowspan="2" headerText="#{msgs['actions']}" />
+                                    <p:column rowspan="2" headerText="#{msgs['sugestions']}"/>
+                                </p:row>
+                            </p:columnGroup>		
+                            <p:column>														
+                                #{rule.name}					
+                            </p:column>
+                            <p:column>														
+                                #{rule.acronym}					
+                            </p:column>
+                            <p:column>														
+                                #{rule.substitutions}					
+                            </p:column>
+                            <p:column>														
+                                #{rule.country == null ? '' : rule.country.name}					
+                            </p:column>
+                            <p:column>
+                                <center>
+                                    <h:commandLink value="#{msgs['edit']}" action="inventorEditRule" 
+                                                   style="color:white;margin-right: 10px" class="btn btn-inverse">
+                                        <f:param name="ruleId" value="#{rule.id}" />
+                                    </h:commandLink>
                                     <h:commandLink value="#{msgs['apply']}"
                                                    style="color:white;margin-right: 10px" class="btn btn-inverse"
                                                    action="#{ruleController.applyInventor(rule)}">	
+                                        <f:param name="tabIndex" value="1" />
                                     </h:commandLink>
                                     <h:commandLink value="#{msgs['undo.delete']}"
                                                    style="color:white;margin-right: 10px" class="btn btn-inverse"
@@ -133,12 +139,11 @@
                                                                return false;
                                                            }"
                                                    action="#{ruleController.deleteInvRule(rule.name, rule.id.toString())}">										
+                                        <f:param name="tabIndex" value="1" />
                                     </h:commandLink>
-                                </h:form>
-                            </center>
-                        </p:column>
-                        <p:column>
-                            <h:form>
+                                </center>
+                            </p:column>
+                            <p:column>
                                 <center>
                                     <p:accordionPanel activeIndex="null" rendered="#{rule.invSugestions.size() > 0}">
                                         <p:tab titleStyle="font-size:12; color:initial" 
@@ -159,12 +164,13 @@
                                     </p:accordionPanel>
                                     <h:outputLabel value="#{msgs['no.sugestions']}" rendered="#{rule.invSugestions.size() == 0}"/>
                                 </center>
-                            </h:form>
-                        </p:column>
-                    </p:dataTable>
-                </p:tab>  
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>  
 
-            </p:tabView>
+                </p:tabView>
+            </h:form>
+
             <h:form>
                 <center>
                     <h:commandLink value="#{msgs['apply.all']}" style="color:white"
