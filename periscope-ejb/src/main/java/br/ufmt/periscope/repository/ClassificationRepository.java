@@ -67,7 +67,7 @@ public class ClassificationRepository {
 
         matchParameters.put("blacklisted", false);
 
-        if (classification == 1) {
+        if (classification == 2) {
 
             matchParameters.put("mainCPCClassification", new BasicDBObject("$exists", true));
         } else {
@@ -149,7 +149,7 @@ public class ClassificationRepository {
          * {$sort:{_id:1}} );
          */
         // repete para todos
-        if (classification == 1) {
+        if (classification == 2) {
 
             Object[] list = new Object[]{"$mainCPCClassification.value", 0, 1};
             DBObject section = new BasicDBObject("section", new BasicDBObject(
@@ -188,7 +188,7 @@ public class ClassificationRepository {
          * {$sort:{applicationPerSector:-1}} );
          */
 
-        if (classification == 1) {
+        if (classification == 2) {
 
             Object[] list = new Object[]{"$mainCPCClassification.klass", 0, 3};
             DBObject section = new BasicDBObject("section", new BasicDBObject(
@@ -225,7 +225,7 @@ public class ClassificationRepository {
          * );
          */
 
-        if (classification == 1) {
+        if (classification == 2) {
 
             DBObject fields = new BasicDBObject("_id", "$mainCPCClassification.klass");
             fields.put("applicationPerSector", new BasicDBObject("$sum", 1));
@@ -252,7 +252,7 @@ public class ClassificationRepository {
          * {$sort:{applicationPerSector:-1}} );
          */
 
-        if (classification == 1) {
+        if (classification == 2) {
 
             Object[] list = {"$mainCPCClassification.klass",
                 "$mainCPCClassification.group"};
@@ -291,7 +291,7 @@ public class ClassificationRepository {
          * {$group:{_id:"$subgroup",applicationPerSector:{$sum:1}}},
          * {$sort:{applicationPerSector:-1}} );
          */
-        if (classification == 1) {
+        if (classification == 2) {
 
             Object[] list = {"$mainCPCClassification.klass",
                 "$mainCPCClassification.group", "/",

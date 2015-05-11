@@ -97,6 +97,7 @@ public class PATENTSCOPEPatentImporter implements PatentImporter {
 
         switch (columnIndex) {
             case 0:
+                patent.setPublicationCountry(countryRepository.getCountryByAcronym(contentString.substring(0, 2)));
                 patent.setPublicationNumber(contentString);
                 break;
             case 1:
