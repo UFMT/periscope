@@ -43,10 +43,13 @@
                     <p:separator/>
                 </h:column>
                 <h:column>	
-                    <p:dataTable value="#{inventorHarmonizationController.selectedInventors}" selectionMode="single"
-                                  rowKey="#{spa.name}"
-                                 selection="#{inventorHarmonizationController.selectedRadio}" var="spa">
-                        <p:ajax event="rowSelect" listener="#{inventorHarmonizationController.onSelectInventorFill}" update=":#{p:component('panelInventorHarmonized')}" />
+                    <p:dataTable id="inventorsTable" value="#{inventorHarmonizationController.selectedInventors}" selectionMode="single"
+                                 selection="#{inventorHarmonizationController.selectedRadio}" var="spa" rowKey="#{spa.name}" 
+                                 rowStyleClass="#{inventorHarmonizationController.selectedRadio.name == spa.name ? 
+                                                  'ui-state-highlight' : spa.harmonized ? 
+                                                  'harmonized-row' : 'normal-row'}">
+                        <p:ajax event="rowSelect" listener="#{inventorHarmonizationController.onSelectInventorFill}" 
+                                update="@this,:#{p:component('panelInventorHarmonized')}" />
                         <p:column headerText="#{msgs['name']}">#{spa.name}</p:column>
                     </p:dataTable>
                 </h:column>
@@ -55,9 +58,8 @@
                 </h:column>
                 <h:column>
                     <ul>
-                        <ui:repeat var="sug"
-                                   value="#{inventorHarmonizationController.inventorSugestions}">
-                            <li>
+                        <ui:repeat var="sug" value="#{inventorHarmonizationController.inventorSugestions}">
+                            <li class="#{sug.object.harmonized ? 'harmonized-row' : 'normal-row'}">
                                 <p:selectBooleanCheckbox
                                     onchange="#{inventorHarmonizationController.onSelectInventorSugestion()}" value="#{sug.selected}">
                                     <p:ajax update="@this, :#{p:component('over')}"/>
@@ -70,6 +72,15 @@
                         </h:panelGrid>
                     </ul>
                 </h:column>
+            </h:panelGrid>
+            <p:separator/>
+
+            <h:panelGrid columns="3">
+                <p:outputLabel styleClass="harmonized-row" value="___"/>
+                <p:outputLabel id="harmonized" value=": #{msgs['harmonized']}"/>
+                <p:tooltip for="harmonized">
+                    <p:outputLabel value="#{msgs['inventor']} #{msgs['alredy.harmonized']}" escape="false"/>
+                </p:tooltip>
             </h:panelGrid>
             <p:spacer height="50"/>
             <center>

@@ -1,86 +1,88 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="/template/templateProject.xhtml">
+    <ui:composition template="/template/templateProject.xhtml">
 
-	<ui:define name="content">
-		<ui:include src="/template/flashmessages.xhtml" />
-		<center>
-			<p:dataTable id="projects" var="project"
-				emptyMessage="#{msgs['registered.project']}"
-				value="#{projectController.projects}" paginator="true"
-				paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
-				rowKey="#{project.title}"
-                                sortOrder="ASCENDING"
-                                sortBy="#{project.title}"
-                                >
+        <ui:define name="content">
+            <ui:include src="/template/flashmessages.xhtml" />
+            <center>                            
+                <h:form style="margin-bottom:0px">
+                    <p:dataTable id="projects" var="project"
+                                 emptyMessage="#{msgs['registered.project']}"
+                                 value="#{projectController.projects}" paginator="true"
+                                 paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
+                                 rowKey="#{project.title}"
+                                 sortOrder="ASCENDING"
+                                 sortBy="#{project.title}"
+                                 >
 
-				<p:columnGroup type="header">
-					<p:row>
-						<p:column rowspan="2" headerText="#{msgs['title']}" />
-						<p:column rowspan="2" headerText="#{msgs['description']}" />
-						<p:column rowspan="2" headerText="#{msgs['owner']}" />
-						<p:column rowspan="2" headerText="#{msgs['visibility']}" />
-						<p:column rowspan="2" headerText="#{msgs['actions']}" />
-					</p:row>
-				</p:columnGroup>
-                            <p:column rendered="#{project.isPublic or project.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or project.observers.contains(currentUser)}">
-					<center >#{project.title}</center>
-				</p:column>
-                            <p:column width="300" rendered="#{project.isPublic or project.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or project.observers.contains(currentUser)}">														
-						#{project.description}						
-				</p:column>
-                            <p:column rendered="#{project.isPublic or project.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or project.observers.contains(currentUser)}">														
-						#{project.owner}						
-				</p:column>
-                            <p:column rendered="#{project.isPublic or project.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or project.observers.contains(currentUser)}">
-					<center>
-						<h:panelGroup rendered="#{empty project.observers}">
-							<span class="label label-#{project.isPublic ? 'success' : 'important'}">
-								#{project.isPublic ? msgs['public'] : msgs['private']} 
-							</span>	
-						</h:panelGroup>
-						<h:panelGroup rendered="#{not empty project.observers}">
-							<span class="label label-#{project.isPublic ? 'success' : 'info'}">
-								#{project.isPublic ? msgs['public'] : msgs['shared']} 
-							</span>	
-						</h:panelGroup>
-						
-					</center>
-				</p:column>
-				<p:column>
-					<center>
-						<h:form style="margin-bottom:0px">
-							<h:commandLink value="#{msgs['open']}" style="color:white;margin-right: 10px"
-								class="btn btn-inverse" action="#{projectSession.openProject(project.id.toString())}"/>
-                                                        <h:commandLink id="editProject" value="#{msgs['edit']}" action="editProject" disabled="#{!(project.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or project.observers.contains(currentUser))}"
-								style="color:white;margin-right: 10px" class="btn btn-inverse">
-								<f:param name="projectId" value="#{project.id.toString()}"/>	
-							</h:commandLink>
-                                                        <p:tooltip for="editProject" value="#{msgs['no.permission']}" rendered="#{!(project.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or project.observers.contains(currentUser))}"
-                                                                   style="color: red"/>
-                                                        <h:commandLink id="deleteProject" value="#{msgs['delete']}" style="color:white" disabled="#{!(project.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or project.observers.contains(currentUser))}"
-								onclick="if(!confirm('#{msgs['delete.project']}')) { return false; }"
-								class="btn btn-inverse" action="#{projectController.delete(project.id.toString())}"/>
-                                                        <p:tooltip for="deleteProject" value="#{msgs['no.permission']}" rendered="#{!(project.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or project.observers.contains(currentUser))}"
-                                                                   style="color: red"/>
-						</h:form>
-					</center>
-				</p:column>
-			</p:dataTable>
-			<br />
-			<h:form>
-				<h:commandLink value="#{msgs['new.project']}" style="color:white"
-					class="btn btn-large btn-info" action="newProject"/>
-			</h:form>			
+                        <p:columnGroup type="header">
+                            <p:row>
+                                <p:column rowspan="2" headerText="#{msgs['title']}" />
+                                <p:column rowspan="2" headerText="#{msgs['description']}" />
+                                <p:column rowspan="2" headerText="#{msgs['owner']}" />
+                                <p:column rowspan="2" headerText="#{msgs['visibility']}" />
+                                <p:column rowspan="2" headerText="#{msgs['actions']}" />
+                            </p:row>
+                        </p:columnGroup>
+                        <p:column rendered="#{project.isPublic or project.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or project.observers.contains(currentUser)}">
+                            <center >#{project.title}</center>
+                        </p:column>
+                        <p:column width="300" rendered="#{project.isPublic or project.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or project.observers.contains(currentUser)}">														
+                            #{project.description}						
+                        </p:column>
+                        <p:column rendered="#{project.isPublic or project.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or project.observers.contains(currentUser)}">														
+                            #{project.owner}						
+                        </p:column>
+                        <p:column rendered="#{project.isPublic or project.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or project.observers.contains(currentUser)}">
+                            <center>
+                                <h:panelGroup rendered="#{empty project.observers}">
+                                    <span class="label label-#{project.isPublic ? 'success' : 'important'}">
+                                        #{project.isPublic ? msgs['public'] : msgs['private']} 
+                                    </span>	
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{not empty project.observers}">
+                                    <span class="label label-#{project.isPublic ? 'success' : 'info'}">
+                                        #{project.isPublic ? msgs['public'] : msgs['shared']} 
+                                    </span>	
+                                </h:panelGroup>
 
-		</center>
-	</ui:define>
+                            </center>
+                        </p:column>
+                        <p:column>
+                            <center>
+                                <h:commandLink value="#{msgs['open']}" style="color:white;margin-right: 10px"
+                                               class="btn btn-inverse" action="#{projectSession.openProject(project.id.toString())}"/>
+                                <h:commandLink id="editProject" value="#{msgs['edit']}" action="editProject" disabled="#{!(project.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or project.observers.contains(currentUser))}"
+                                               style="color:white;margin-right: 10px" class="btn btn-inverse">
+                                    <f:param name="projectId" value="#{project.id.toString()}"/>	
+                                </h:commandLink>
+                                <p:tooltip for="editProject" value="#{msgs['no.permission']}" rendered="#{!(project.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or project.observers.contains(currentUser))}"
+                                           style="color: red"/>
+                                <h:commandLink id="deleteProject" value="#{msgs['delete']}" style="color:white" disabled="#{!(project.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or project.observers.contains(currentUser))}"
+                                               onclick="if (!confirm('#{msgs['delete.project']}')) {
+                                                           return false;
+                                                       }"
+                                               class="btn btn-inverse" action="#{projectController.delete(project.id.toString())}"/>
+                                <p:tooltip for="deleteProject" value="#{msgs['no.permission']}" rendered="#{!(project.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or project.observers.contains(currentUser))}"
+                                           style="color: red"/>
+                            </center>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                <br />
+                <h:form>
+                    <h:commandLink value="#{msgs['new.project']}" style="color:white"
+                                   class="btn btn-large btn-info" action="newProject"/>
+                </h:form>			
 
-</ui:composition>
+            </center>
+        </ui:define>
+
+    </ui:composition>
 </html>

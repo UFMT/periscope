@@ -13,7 +13,8 @@
                          emptyMessage="#{msgs['no.applicant']}"
                          value="#{applicantHarmonizationController.applicants}" paginator="true"
                          paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
-                         rowKey="#{pa.name}" filterEvent="enter" lazy="true">
+                         rowKey="#{pa.name}" filterEvent="enter" lazy="true"
+                         rowStyleClass="#{pa.harmonized ? 'harmonized-row' : 'normal-row'}">
                 <f:facet name="header">
                     <h:panelGrid columns="4" style="width: 20%" cellpadding="5">  
                         <p:column>
@@ -65,11 +66,22 @@
 
             <p:separator/>
 
+            <h:panelGrid columns="3">
+                <p:outputLabel styleClass="harmonized-row" value="___"/>
+                <p:outputLabel id="appHarmonized" value=": #{msgs['harmonized']}"/>
+                <p:tooltip for="appHarmonized">
+                    <p:outputLabel value="#{msgs['applicant']} #{msgs['alredy.harmonized']}" escape="false"/>
+                </p:tooltip>
+            </h:panelGrid>
+
+            <p:separator/>
+
             <p:dataTable id="selectedApplicants" var="pa" style="font-size:12px"
                          emptyMessage="#{msgs['no.selectedapplicant']}" widgetVar="tblSelected"
                          value="#{applicantHarmonizationController.selectedApplicants}" paginator="true"
                          paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
-                         rowKey="#{pa.name}" sortBy="#{pa.name}">
+                         rowKey="#{pa.name}" sortBy="#{pa.name}"
+                         rowStyleClass="#{pa.harmonized ? 'harmonized-row' : 'normal-row'}">
 
                 <p:columnGroup type="header">
                     <p:row>					

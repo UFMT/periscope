@@ -290,7 +290,6 @@ public class InventorHarmonizationController implements Serializable {
     }
 
     public Boolean overwrite() {
-        System.out.println("oi");
         return harmonized || sugHarmonized;
     }
 
