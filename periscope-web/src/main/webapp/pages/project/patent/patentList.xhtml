@@ -22,21 +22,21 @@
                             </li>
                         </ui:repeat>				  
                     </ul>
-                    
+
 
                     <br  clear="left"/>
-                    
+
                     <p:dataTable id="patents" var="item" style="font-size:10px"
                                  emptyMessage="#{msgs['registered.patent']}"
                                  value="#{patentController.patents}" paginator="true"
-                                 
+
                                  paginatorAlwaysVisible="false" rows="10" 
                                  rowKey="#{item.id}" lazy="true" filterEvent="enter" 
                                  >
 
                         <f:facet name="header" >
                             <p:outputLabel value="#{msgs['listing']} #{patentController.partialCount} #{msgs['of']} #{patentController.totalCount} #{msgs['patents.registered']}." style="font-size:20px"/>
-                            
+
                         </f:facet>
 
                         <p:column  headerText="#{msgs['country']}" >
@@ -80,7 +80,8 @@
                             <center>
 
                                 <p:commandButton ajax="false" title="#{msgs['edit']}" action="editPatent" 
-                                                 icon="ui-icon-pencil">
+                                                 id="editPatent" icon="ui-icon-pencil"
+                                                 disabled="#{!(currentProject.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or currentProject.observers.contains(currentUser))}">
                                     <f:param name="patentId" value="#{item.id}" />
                                 </p:commandButton>
                                 <p:commandButton title="#{msgs['download.file']}" ajax="false" 
@@ -96,10 +97,11 @@
                                     <p:fileDownload  value="#{patentController.download}" />  
                                 </p:commandButton>
                                 <p:commandButton title="#{msgs['darklist']}" ajax="false" action="#{patentController.updateBlackListPatent()}" 
-                                                 icon="ui-icon-cancel" rendered="#{not item.blacklisted}"/>
+                                                 id="darklist" icon="ui-icon-cancel" rendered="#{not item.blacklisted}"
+                                                 disabled="#{!(currentProject.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or currentProject.observers.contains(currentUser))}"/>
                                 <p:commandButton title="#{msgs['undarklist']}" ajax="false" action="#{patentController.updateBlackListPatent()}" 
-                                                 icon="ui-icon-arrowreturn-1-w" rendered="#{item.blacklisted}"/>	
-
+                                                 id="undarklist" icon="ui-icon-arrowreturn-1-w" rendered="#{item.blacklisted}"
+                                                 disabled="#{!(currentProject.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or currentProject.observers.contains(currentUser))}"/>
                             </center>
                         </p:column>
                     </p:dataTable>
