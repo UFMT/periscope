@@ -190,6 +190,8 @@ public abstract class GenericController {
         int newSel=  (Integer)event.getNewValue();
         getFiltro().setInicio(getPatentRepository().getMinDate(getCurrentProject(), newSel));
         getFiltro().setFim(getPatentRepository().getMaxDate(getCurrentProject(), newSel));
+        setMinDate(getFiltro().getInicio());
+        setMaxDate(getFiltro().getFim());
 
     }
 }

@@ -18,14 +18,14 @@ import javax.faces.context.FacesContext;
 @Named
 public class ApplicantTypeRepository {
 
-    private ResourceBundle bundle;
+//    private ResourceBundle bundle;
     private @Inject
     Datastore ds;
 
     @PostConstruct
     public void init() {
-        Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
-        bundle = ResourceBundle.getBundle("messages", locale);
+//        Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+//        bundle = ResourceBundle.getBundle("messages", locale);
     }
 
     public void createIfNotExists(ApplicantType type) {
@@ -45,11 +45,11 @@ public class ApplicantTypeRepository {
         return ret;
     }
 
-    public ResourceBundle getBundle() {
-        return bundle;
-    }
-
-    public void setBundle(ResourceBundle bundle) {
-        this.bundle = bundle;
-    }
+//    public ResourceBundle getBundle() {
+//        return bundle;
+//    }
+//
+//    public void setBundle(ResourceBundle bundle) {
+//        this.bundle = bundle;
+//    }
 }

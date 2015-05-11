@@ -194,7 +194,7 @@ public class ApplicantRepository {
         if (filtro.isComplete()) {
             where.put("completed", filtro.isComplete());
         }
-        if (filtro.getSelecionaData() == 0) {
+        if (filtro.getSelecionaData() == 1) {
             where.put("publicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim()));
         } else {
             where.put("applicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim()));

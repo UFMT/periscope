@@ -13,6 +13,7 @@ import org.primefaces.model.chart.ChartSeries;
 
 import br.ufmt.periscope.report.MainIPCReport;
 import br.ufmt.periscope.report.Pair;
+import javax.faces.event.ValueChangeEvent;
 
 
 @ManagedBean
@@ -26,6 +27,7 @@ public class MainIPCController extends GenericController {
     private boolean group;
     private boolean subGroup;
     private boolean description;
+    private int classification;
 
     @PostConstruct
     @Override
@@ -34,7 +36,7 @@ public class MainIPCController extends GenericController {
         subKlass = false;
         group = false;
         subGroup = false;
-
+        this.setClassification(1);
         setLimit(8);
         super.init();
         
@@ -70,7 +72,7 @@ public class MainIPCController extends GenericController {
     public void refreshChart() {
         setModel(new CartesianChartModel());
         ChartSeries series = report.ipcCount(getCurrentProject(), klass, subKlass,
-                group, subGroup, getLimit(), getFiltro());
+                group, subGroup, getLimit(), getFiltro(), this.getClassification());
 
         getModel().addSeries(series);
 
@@ -109,6 +111,9 @@ public class MainIPCController extends GenericController {
                     case 'H':
                         description = "Eletricidade";
                         break;
+                    case 'Y':
+                        description = "";
+                        break;
                 }
             }
             getPairs().add(new Pair(key, value, description));
@@ -119,6 +124,10 @@ public class MainIPCController extends GenericController {
 
     public boolean isKlass() {
         return klass;
+    }
+    public void classificationListener(ValueChangeEvent event){
+        int newVal = (Integer) event.getNewValue();
+        this.setClassification(newVal);
     }
 
     public void setKlass(boolean klass) {
@@ -155,6 +164,14 @@ public class MainIPCController extends GenericController {
 
     public void setDescription(boolean description) {
         this.description = description;
+    }
+
+    public int getClassification() {
+        return classification;
+    }
+
+    public void setClassification(int classification) {
+        this.classification = classification;
     }
     
     

@@ -15,6 +15,8 @@
                 <c:if test='#{empty ipcBooleanCheckBox}' ><c:set var="ipcBooleanCheckBox" value="false"/> </c:if>
                 <c:if test='#{empty applicantAutoComplete}' ><c:set var="applicantAutoComplete" value="false"/> </c:if>
                 <c:if test='#{empty inventorAutoComplete}' ><c:set var="inventorAutoComplete" value="false"/> </c:if>
+                <c:if test='#{empty classificationType}' ><c:set var="classificationType" value="false"/> </c:if>
+
 
                 <h:outputScript library="js" name="locales.js"></h:outputScript>
 
@@ -22,7 +24,7 @@
                     <label>#{msgs['item.number']}:</label>
                     <p:spinner value="#{controller.limit}" maxlength="3" min="5" max="20"
                                style="padding:0 20px 0 0" rendered="#{rendSpinner}">
-                        
+
                     </p:spinner>
                     <h:outputText value="#{msgs['period.interest']}:"/> 
                     <p:selectOneMenu value="#{controller.filtro.selecionaData}" id="selDate"  valueChangeListener="#{controller.selectListener}">
@@ -56,8 +58,15 @@
                         <f:selectItem itemLabel="#{msgs['none']}" itemValue=""/>
                         <f:selectItems value="#{applicantTypeRepository.all}" var="t" itemValue="#{t.name}" itemLabel="#{msgs[t.name]}" />	
 
-                        
+
                     </p:selectOneMenu>
+
+                    <p:outputLabel value="#{msgs['classification.system']}" rendered="#{classificationType}"/>
+                    <p:selectOneMenu value="#{mainIPCController.classification}"  rendered="#{classificationType}" valueChangeListener="#{mainIPCController.classificationListener}" style="width: 300px">
+                        <f:selectItem itemLabel="CPC Cooperative Patent Classification" itemValue="1" /> 
+                        <f:selectItem itemLabel="IPC International Patent Classification" itemValue="2" />
+                    </p:selectOneMenu>
+
                 </h:panelGrid>
 
                 <h:panelGrid rendered="#{ipcBooleanCheckBox}" columns="4" style="margin: 20px" >
@@ -93,7 +102,7 @@
                 <h:panelGrid columns="2" cellpadding="5">
                     <p:selectBooleanCheckbox id="complete" itemLabel="#{msgs['completo']}"
                                              value="#{controller.filtro.complete}">
-                        
+
                     </p:selectBooleanCheckbox>
                     <br />
 

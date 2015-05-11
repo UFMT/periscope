@@ -32,7 +32,7 @@ public class UserAccessFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
-        String pageRequested = req.getRequestURI().toString();
+        String pageRequested = req.getRequestURI();
         String prefix = req.getContextPath();
 
         if (pageRequested.endsWith("login.jsf")

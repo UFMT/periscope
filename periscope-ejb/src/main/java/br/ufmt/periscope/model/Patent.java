@@ -29,7 +29,11 @@ public class Patent {
     private @Embedded
     Classification mainClassification;
     private @Embedded
+    Classification mainCPCClassification;
+    private @Embedded
     List<Classification> classifications = new ArrayList<Classification>();
+    private @Embedded
+    List<Classification> cpcClassifications = new ArrayList<Classification>();
     private @Embedded
     List<Priority> priorities = new ArrayList<Priority>();
 
@@ -113,6 +117,22 @@ public class Patent {
 
     public void setProject(Project project) {
         this.project = project;
+    }
+
+    public Classification getMainCPCClassification() {
+        return mainCPCClassification;
+    }
+
+    public void setMainCPCClassification(Classification mainCPCClassification) {
+        this.mainCPCClassification = mainCPCClassification;
+    }
+
+    public List<Classification> getCpcClassifications() {
+        return cpcClassifications;
+    }
+
+    public void setCpcClassifications(List<Classification> cpcClassifications) {
+        this.cpcClassifications = cpcClassifications;
     }
 
     public Classification getMainClassification() {

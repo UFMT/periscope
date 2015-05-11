@@ -30,8 +30,10 @@
                         <p:inputTextarea value="#{patentController.selectedPatent.titleSelect}" required="true" 
                                          style="color:  #000000"
                                          requiredMessage="#{msgs['title']} #{msgs['obligatory.field']}"/>
-                        <h:outputLabel value="#{msgs['classification']}: " style="font-weight:bold" />
+                        <h:outputLabel value="#{msgs['classification']} IPC: " style="font-weight:bold" />
                         <p:inputText value="#{patentController.selectedPatent.mainClassification.value}"/>
+                        <h:outputLabel value="#{msgs['classification']} CPC: " style="font-weight:bold" />
+                        <p:inputText value="#{patentController.selectedPatent.mainCPCClassification.value}"/>
 
                     </h:panelGrid>
                 </p:fieldset>

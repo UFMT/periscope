@@ -24,7 +24,7 @@ public class ClassificationRepository {
     Datastore ds;
 
     public List<Pair> getMainIPC(Project currentProject, boolean klass,
-            boolean subKlass, boolean group, boolean subGroup, int limit, Filters filtro) {
+            boolean subKlass, boolean group, boolean subGroup, int limit, Filters filtro, int classification) {
 
         /**
          * EXEMPLO DA CONSULTA db.Patent.aggregate({ "$match" : {
@@ -59,7 +59,7 @@ public class ClassificationRepository {
             matchParameters.put("completed", filtro.isComplete());
         }
 
-        if (filtro.getSelecionaData() == 0) {
+        if (filtro.getSelecionaData() == 1) {
             matchParameters.put("publicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim()));
         } else {
             matchParameters.put("applicationDate", new BasicDBObject("$gte", filtro.getInicio()).append("$lte", filtro.getFim()));
@@ -67,34 +67,39 @@ public class ClassificationRepository {
 
         matchParameters.put("blacklisted", false);
 
-        matchParameters.put("mainClassification", new BasicDBObject("$exists", true));
+        if (classification == 1) {
+
+            matchParameters.put("mainCPCClassification", new BasicDBObject("$exists", true));
+        } else {
+            matchParameters.put("mainClassification", new BasicDBObject("$exists", true));
+        }
 
         if (!klass) {
             // classe nao esta selecionada
             // buscar secao
-            fields = getSection(parametros);
+            fields = getSection(parametros, classification);
             subKlass = false;
             group = false;
             subGroup = false;
         } else if (!subKlass) {
             // classe selecionada e subclasse nao esta
             // buscar classe
-            fields = getKlass(parametros);
+            fields = getKlass(parametros, classification);
             group = false;
             subGroup = false;
         } else if (!group) {
             // classe e subclasse selecionadas e grupo nao selecionado
             // buscar subclasse
-            fields = getSubKlass(parametros);
+            fields = getSubKlass(parametros, classification);
             subGroup = false;
         } else if (!subGroup) {
             // classe, subclasse e grupo selecionado, subgrupo nao selecioando
             // buscar grupo
-            fields = getGroup(parametros);
+            fields = getGroup(parametros, classification);
         } else {
             // tudo selecionado
             // buscar subgrupo
-            fields = getSubGroup(parametros);
+            fields = getSubGroup(parametros, classification);
         }
 
         DBObject groupDb = new BasicDBObject("$group", fields);
@@ -112,7 +117,7 @@ public class ClassificationRepository {
         match.put("$match", matchParameters);
 
         output = ds.getCollection(Patent.class).aggregate(match, parameters);
-
+        System.out.println("Comando Principais Classificações: " + output.getCommand());
         BasicDBList outputResult = (BasicDBList) output.getCommandResult().get(
                 "result");
 //        System.out.println("Comando:" + output.getCommand().toString());
@@ -133,7 +138,7 @@ public class ClassificationRepository {
         return pairs;
     }
 
-    private DBObject getSection(ArrayList<DBObject> parametros) {
+    private DBObject getSection(ArrayList<DBObject> parametros, int classification) {
         /**
          * db.Patent.aggregate( {$match:{"project.$id":new
          * ObjectId("51db042d44ae70d2d3649c20")}},
@@ -144,20 +149,35 @@ public class ClassificationRepository {
          * {$sort:{_id:1}} );
          */
         // repete para todos
-        Object[] list = new Object[]{"$mainClassification.value", 0, 1};
-        DBObject section = new BasicDBObject("section", new BasicDBObject(
-                "$substr", list));
+        if (classification == 1) {
 
-        DBObject project = new BasicDBObject("$project", section);
-        parametros.add(project);
+            Object[] list = new Object[]{"$mainCPCClassification.value", 0, 1};
+            DBObject section = new BasicDBObject("section", new BasicDBObject(
+                    "$substr", list));
 
-        DBObject fields = new BasicDBObject("_id", "$section");
-        fields.put("applicationPerSector", new BasicDBObject("$sum", 1));
-        return fields;
+            DBObject project = new BasicDBObject("$project", section);
+            parametros.add(project);
+
+            DBObject fields = new BasicDBObject("_id", "$section");
+            fields.put("applicationPerSector", new BasicDBObject("$sum", 1));
+            return fields;
+        } else {
+            Object[] list = new Object[]{"$mainClassification.value", 0, 1};
+            DBObject section = new BasicDBObject("section", new BasicDBObject(
+                    "$substr", list));
+
+            DBObject project = new BasicDBObject("$project", section);
+            parametros.add(project);
+
+            DBObject fields = new BasicDBObject("_id", "$section");
+            fields.put("applicationPerSector", new BasicDBObject("$sum", 1));
+            return fields;
+
+        }
 
     }
 
-    private DBObject getKlass(ArrayList<DBObject> parametros) {
+    private DBObject getKlass(ArrayList<DBObject> parametros, int classification) {
         /**
          * db.Patent.aggregate( {$match:{"project.$id":new
          * ObjectId("51db042d44ae70d2d3649c20")}},
@@ -167,19 +187,34 @@ public class ClassificationRepository {
          * {$group:{_id:"$section",applicationPerSector:{$sum:1}}},
          * {$sort:{applicationPerSector:-1}} );
          */
-        Object[] list = new Object[]{"$mainClassification.klass", 0, 3};
-        DBObject section = new BasicDBObject("section", new BasicDBObject(
-                "$substr", list));
 
-        DBObject project = new BasicDBObject("$project", section);
-        parametros.add(project);
-        DBObject fields = new BasicDBObject("_id", "$section");
-        fields.put("applicationPerSector", new BasicDBObject("$sum", 1));
+        if (classification == 1) {
 
-        return fields;
+            Object[] list = new Object[]{"$mainCPCClassification.klass", 0, 3};
+            DBObject section = new BasicDBObject("section", new BasicDBObject(
+                    "$substr", list));
+
+            DBObject project = new BasicDBObject("$project", section);
+            parametros.add(project);
+            DBObject fields = new BasicDBObject("_id", "$section");
+            fields.put("applicationPerSector", new BasicDBObject("$sum", 1));
+
+            return fields;
+        } else {
+            Object[] list = new Object[]{"$mainClassification.klass", 0, 3};
+            DBObject section = new BasicDBObject("section", new BasicDBObject(
+                    "$substr", list));
+
+            DBObject project = new BasicDBObject("$project", section);
+            parametros.add(project);
+            DBObject fields = new BasicDBObject("_id", "$section");
+            fields.put("applicationPerSector", new BasicDBObject("$sum", 1));
+
+            return fields;
+        }
     }
 
-    private DBObject getSubKlass(ArrayList<DBObject> parametros) {
+    private DBObject getSubKlass(ArrayList<DBObject> parametros, int classification) {
         /**
          * db.Patent.aggregate( {$match:{"project.$id":new
          * ObjectId("51db042d44ae70d2d3649c20")}},
@@ -189,14 +224,23 @@ public class ClassificationRepository {
          * ,applicationPerSector:{$sum:1}}}, {$sort:{applicationPerSector:-1}}
          * );
          */
-        DBObject fields = new BasicDBObject("_id", "$mainClassification.klass");
-        fields.put("applicationPerSector", new BasicDBObject("$sum", 1));
 
-        return fields;
+        if (classification == 1) {
+
+            DBObject fields = new BasicDBObject("_id", "$mainCPCClassification.klass");
+            fields.put("applicationPerSector", new BasicDBObject("$sum", 1));
+
+            return fields;
+        } else {
+            DBObject fields = new BasicDBObject("_id", "$mainClassification.klass");
+            fields.put("applicationPerSector", new BasicDBObject("$sum", 1));
+
+            return fields;
+        }
 
     }
 
-    private DBObject getGroup(ArrayList<DBObject> parametros) {
+    private DBObject getGroup(ArrayList<DBObject> parametros, int classification) {
         /**
          * db.Patent.aggregate( {$match:{"project.$id":new
          * ObjectId("51db042d44ae70d2d3649c20")}},
@@ -207,20 +251,35 @@ public class ClassificationRepository {
          * {$group:{_id:"$group",applicationPerSector:{$sum:1}}},
          * {$sort:{applicationPerSector:-1}} );
          */
-        Object[] list = {"$mainClassification.klass",
-            "$mainClassification.group"};
-        DBObject section = new BasicDBObject("group", new BasicDBObject(
-                "$concat", list));
-        DBObject project = new BasicDBObject("$project", section);
-        parametros.add(project);
 
-        DBObject fields = new BasicDBObject("_id", "$group");
-        fields.put("applicationPerSector", new BasicDBObject("$sum", 1));
-        return fields;
+        if (classification == 1) {
+
+            Object[] list = {"$mainCPCClassification.klass",
+                "$mainCPCClassification.group"};
+            DBObject section = new BasicDBObject("group", new BasicDBObject(
+                    "$concat", list));
+            DBObject project = new BasicDBObject("$project", section);
+            parametros.add(project);
+
+            DBObject fields = new BasicDBObject("_id", "$group");
+            fields.put("applicationPerSector", new BasicDBObject("$sum", 1));
+            return fields;
+        } else {
+            Object[] list = {"$mainClassification.klass",
+                "$mainClassification.group"};
+            DBObject section = new BasicDBObject("group", new BasicDBObject(
+                    "$concat", list));
+            DBObject project = new BasicDBObject("$project", section);
+            parametros.add(project);
+
+            DBObject fields = new BasicDBObject("_id", "$group");
+            fields.put("applicationPerSector", new BasicDBObject("$sum", 1));
+            return fields;
+        }
 
     }
 
-    private DBObject getSubGroup(ArrayList<DBObject> parametros) {
+    private DBObject getSubGroup(ArrayList<DBObject> parametros, int classification) {
 
         /**
          * db.Patent.aggregate( {$match:{"project.$id":new
@@ -232,17 +291,32 @@ public class ClassificationRepository {
          * {$group:{_id:"$subgroup",applicationPerSector:{$sum:1}}},
          * {$sort:{applicationPerSector:-1}} );
          */
-        Object[] list = {"$mainClassification.klass",
-            "$mainClassification.group", "/",
-            "$mainClassification.subgroup"};
-        DBObject section = new BasicDBObject("group", new BasicDBObject(
-                "$concat", list));
-        DBObject project = new BasicDBObject("$project", section);
-        parametros.add(project);
+        if (classification == 1) {
 
-        DBObject fields = new BasicDBObject("_id", "$group");
-        fields.put("applicationPerSector", new BasicDBObject("$sum", 1));
-        return fields;
+            Object[] list = {"$mainCPCClassification.klass",
+                "$mainCPCClassification.group", "/",
+                "$mainCPCClassification.subgroup"};
+            DBObject section = new BasicDBObject("group", new BasicDBObject(
+                    "$concat", list));
+            DBObject project = new BasicDBObject("$project", section);
+            parametros.add(project);
+
+            DBObject fields = new BasicDBObject("_id", "$group");
+            fields.put("applicationPerSector", new BasicDBObject("$sum", 1));
+            return fields;
+        } else {
+            Object[] list = {"$mainClassification.klass",
+                "$mainClassification.group", "/",
+                "$mainClassification.subgroup"};
+            DBObject section = new BasicDBObject("group", new BasicDBObject(
+                    "$concat", list));
+            DBObject project = new BasicDBObject("$project", section);
+            parametros.add(project);
+
+            DBObject fields = new BasicDBObject("_id", "$group");
+            fields.put("applicationPerSector", new BasicDBObject("$sum", 1));
+            return fields;
+        }
 
     }
 }

@@ -19,11 +19,11 @@ public class MainIPCReport {
     ClassificationRepository repo;
 
     public ChartSeries ipcCount(Project currentProject, boolean klass,
-            boolean subKlass, boolean group, boolean subGroup, int limit, Filters filtro) {
+            boolean subKlass, boolean group, boolean subGroup, int limit, Filters filtro, int classification) {
 
         ChartSeries series = new ChartSeries("Contagem classificação");
 
-        List<Pair> i = repo.getMainIPC(currentProject, klass, subKlass, group, subGroup, limit, filtro);
+        List<Pair> i = repo.getMainIPC(currentProject, klass, subKlass, group, subGroup, limit, filtro, classification);
 
         Collections.reverse(i);
 

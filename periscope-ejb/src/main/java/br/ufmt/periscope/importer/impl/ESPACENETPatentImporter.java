@@ -294,6 +294,19 @@ public class ESPACENETPatentImporter implements PatentImporter {
                 break;
             case 6:
                 //"Cooperative Patent Classification: ";
+                List<Classification> cpcClassifications = patent.getCpcClassifications();
+                st = new StringTokenizer(contentString, "\n");
+                while (st.hasMoreTokens()) {
+                    Classification cpcClassification = new Classification();
+                    cpcClassification.setType(ClassificationType.IC);
+                    cpcClassification.setValue(st.nextToken());
+                    cpcClassifications.add(cpcClassification);
+                }
+                try {
+                    patent.setMainCPCClassification(cpcClassifications.get(0));
+                } catch (Exception ex) {
+                }
+                patent.setCpcClassifications(cpcClassifications);
                 break;
             case 7:
                 patent.setApplicationNumber(contentString);
@@ -351,6 +364,7 @@ public class ESPACENETPatentImporter implements PatentImporter {
         List<Inventor> inventors = patent.getInventors();
         List<Applicant> applicants = patent.getApplicants();
         List<Classification> classifications = patent.getClassifications();
+        List<Classification> cpcClassifications = patent.getCpcClassifications();
         List<Priority> priorities = patent.getPriorities();
         for (int i = 0; i < vet.length; i++) {
             array = vet[i].split(";");
@@ -418,6 +432,10 @@ public class ESPACENETPatentImporter implements PatentImporter {
                         break;
                     case 6:
                         //"Cooperative Patent Classification: ";
+                        Classification cpcClassification = new Classification();
+                        cpcClassification.setValue(contentString);
+                        cpcClassification.setType(ClassificationType.IC);
+                        cpcClassifications.add(cpcClassification);
                         break;
                     case 7:
                         patent.setApplicationNumber(contentString);
@@ -453,8 +471,10 @@ public class ESPACENETPatentImporter implements PatentImporter {
         }
         patent.setApplicants(applicants);
         patent.setClassifications(classifications);
+        patent.setCpcClassifications(cpcClassifications);
         try {
             patent.setMainClassification(classifications.get(0));
+            patent.setMainCPCClassification(cpcClassifications.get(0));
         } catch (Exception ex) {
         }
         patent.setPriorities(priorities);
