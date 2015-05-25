@@ -10,6 +10,11 @@ import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.qualifier.CurrentProject;
 
+/**
+ * - @ManagedBean<BR/>
+ * - @ViewScoped<BR/>
+ * Classe controller responsável por operações relacionadas às patentes brasileiras
+ */
 @ManagedBean
 @ViewScoped
 public class PatentBrazilianController {
@@ -21,9 +26,8 @@ public class PatentBrazilianController {
     LazyPatentBrazilianDataModel patents;
 
     /**
-     * Controller constructor<BR/>
-     * Loads project's brazilian patents
-     *
+     * Método pós construtor do controller<BR/>
+     * Carrega as patentes brasileiras de maneira Lazy
      */
     @PostConstruct
     public void init() {

@@ -10,9 +10,13 @@ import org.primefaces.model.chart.ChartSeries;
 
 import br.ufmt.periscope.report.ApplicationDateReport;
 import br.ufmt.periscope.report.Pair;
-import br.ufmt.periscope.util.PDFTextParser;
 import java.util.Collections;
 
+/**
+ * - @ManagedBean<BR/>
+ * - @ViewScoped<BR/>
+ * Classe controller responsável por operações de visualização relacionadas à data de deposito das patentes
+ */
 @ManagedBean(name = "applicantDateReport")
 @ViewScoped
 public class ApplicantDateController extends GenericController {
@@ -20,6 +24,10 @@ public class ApplicantDateController extends GenericController {
     private @Inject
     ApplicationDateReport report;
 
+    /**
+     * Método responsável por atualizar os gráficos relacionados à data de deposito das patentes
+     */
+    @Override
     public void refreshChart() {
         setModel(new CartesianChartModel());
         ChartSeries series = report.applicationDateSeries(getCurrentProject(), getFiltro());
@@ -41,11 +49,6 @@ public class ApplicantDateController extends GenericController {
             series.getData().remove(keyInvalid);
         }
         Collections.reverse(getPairs());
-
-    }
-
-    public void test() {
-        PDFTextParser pdftp = new PDFTextParser();
 
     }
 }

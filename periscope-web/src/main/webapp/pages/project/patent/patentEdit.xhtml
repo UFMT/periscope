@@ -9,367 +9,354 @@
     <ui:composition template="/template/template.xhtml">
 
         <ui:define name="content">
-            <center><h1>#{msgs['edit.patent']}</h1></center>
-            <h:form>
+            <center>
+                <h:panelGroup rendered="#{not patentController.editing}">
+                    <h1>#{msgs['create.patent']}</h1>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{patentController.editing}">
+                    <h1>#{msgs['edit.patent']}</h1>
+                </h:panelGroup>
+            </center>
+            <h:form style="width: 100%">
+                <p:fieldset  toggleable="true" toggleSpeed="500" legend="#{msgs['header']}" style="width: 97%">
+                    <h:panelGrid border="0" columns="2" style="width: 100%" columnClasses="panelHalf,panelHalf">
+                        <h:panelGrid border="0" columns="2" style="width: 95%">
+                            <h:outputLabel value="#{msgs['language']} : " style="font-weight: bold"/>
+                            <p:inputText value="#{patentController.selectedPatent.language}"/>
+                            <h:outputLabel value="#{msgs['application.number']}* : " style="font-weight: bold"/>
+                            <p:inputText value="#{patentController.selectedPatent.applicationNumber}" required="true"
+                                         style="color: #000000"
+                                         requiredMessage="#{msgs['application.number']} #{msgs['obligatory.field']}"/>
+                            <h:outputLabel value="#{msgs['application.date']} : " style="font-weight: bold"/>
+                            <p:calendar value="#{patentController.selectedPatent.applicationDate}" navigator="true"/>
+                            <h:outputLabel value="#{msgs['publication.number']} : " style="font-weight: bold"/>
+                            <p:inputText value="#{patentController.selectedPatent.publicationNumber}"/>
+                            <h:outputLabel value="#{msgs['publication.date']} : " style="font-weight: bold"/>
+                            <p:calendar value="#{patentController.selectedPatent.publicationDate}" navigator="true"/>
+                            <h:outputLabel value="#{msgs['title']}* : " style="font-weight:bold" />
+                            <p:inputTextarea value="#{patentController.selectedPatent.titleSelect}" required="true" 
+                                             style="color: #000000"
+                                             requiredMessage="#{msgs['title']} #{msgs['obligatory.field']}"/>
+                            <h:outputLabel value="#{msgs['classification']} IPC : " style="font-weight:bold" />
+                            <p:inputText value="#{patentController.selectedPatent.mainClassification.value}"/>
+                            <h:outputLabel value="#{msgs['classification']} CPC : " style="font-weight:bold" />
+                            <p:inputText value="#{patentController.selectedPatent.mainCPCClassification.value}"/>
 
-                <p:fieldset  toggleable="true" toggleSpeed="500" legend="#{msgs['header']}">
-                    <h:panelGrid border="0" columns="2"  >
-                        <h:outputLabel value="#{msgs['language']}: " style="font-weight: bold"/>
-                        <p:inputText value="#{patentController.selectedPatent.language}"/>
-                        <h:outputLabel value="#{msgs['application.number']}*: " style="font-weight: bold"/>
-                        <p:inputText value="#{patentController.selectedPatent.applicationNumber}" required="true"
-                                     style="color:  #000000"
-                                     requiredMessage="#{msgs['application.number']} #{msgs['obligatory.field']}"/>
-                        <h:outputLabel value="#{msgs['application.date']}: " style="font-weight: bold"/>
-                        <p:calendar value="#{patentController.selectedPatent.applicationDate}" navigator="true"/>
-                        <h:outputLabel value="#{msgs['publication.number']}: " style="font-weight: bold"/>
-                        <p:inputText value="#{patentController.selectedPatent.publicationNumber}"/>
-                        <h:outputLabel value="#{msgs['publication.date']}: " style="font-weight: bold"/>
-                        <p:calendar value="#{patentController.selectedPatent.publicationDate}" navigator="true"/>
-                        <h:outputLabel value="#{msgs['title']}*: " style="font-weight:bold" />
-                        <p:inputTextarea value="#{patentController.selectedPatent.titleSelect}" required="true" 
-                                         style="color:  #000000"
-                                         requiredMessage="#{msgs['title']} #{msgs['obligatory.field']}"/>
-                        <h:outputLabel value="#{msgs['classification']} IPC: " style="font-weight:bold" />
-                        <p:inputText value="#{patentController.selectedPatent.mainClassification.value}"/>
-                        <h:outputLabel value="#{msgs['classification']} CPC: " style="font-weight:bold" />
-                        <p:inputText value="#{patentController.selectedPatent.mainCPCClassification.value}"/>
-
+                        </h:panelGrid>
+                        <h:panelGrid border="0" style="width: 100%">
+                            <p:commandButton value="#{msgs['new.priority']}" action="#{patentController.doPriority()}" 
+                                             class="btn-info" oncomplete="priorityAddDialog.show()"/>
+                            <p:dataTable id="prioridades" var="prioridade" style="font-size:0.77em;"
+                                         emptyMessage="#{msgs['no.priorities']}" 
+                                         value="#{patentController.selectedPatent.priorities}" paginator="true"
+                                         paginatorAlwaysVisible="true" paginatorPosition="bottom" rows="6">
+                                <p:column headerText="#{msgs['value']}" style="width: 70%;">
+                                    #{prioridade.value}
+                                </p:column>
+                                <p:column headerText="#{msgs['acronym']}" style="width: 5%;">														
+                                    #{prioridade.country.acronym}
+                                </p:column>
+                                <p:column headerText="#{msgs['country']}" style="width: 15%;">														
+                                    #{prioridade.country.name}
+                                </p:column>
+                                <p:column headerText="#{msgs['action']}" style="width: 10%;">
+                                    <center>
+                                        <p:commandButton value="#{msgs['delete']}" class="btn-danger"
+                                                         update=":#{p:component('prioridades')}" partialSubmit="true" 
+                                                         process=":#{p:component('prioridades')}"
+                                                         action="#{patentController.deletePriority(prioridade)}"/>
+                                    </center>
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGrid>
                     </h:panelGrid>
-                </p:fieldset>
-                <p:fieldset  toggleable="true" toggleSpeed="500" legend="#{msgs['priorities']}">
-
-                    <h:panelGrid border="0" columns="4"  >
-                        <p:dataTable id="prioridades" var="prioridade" style="font-size:10px"
-                                     emptyMessage="#{msgs['no.priorities']}"
-                                     value="#{patentController.selectedPatent.priorities}" paginator="true"
-                                     paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
-                                     >
-                            <p:column headerText="#{msgs['value']}">
-                                #{prioridade.value}
-                            </p:column>
-                            <p:column headerText="#{msgs['country']}">														
-                                #{prioridade.country.acronym}
-                            </p:column>
-                            <p:column headerText="#{msgs['name']}">														
-                                #{prioridade.country.name}
-                            </p:column>
-                            <p:column>														
-                                <p:commandButton value="#{msgs['delete']}" 
-                                                 update=":#{p:component('prioridades')}" partialSubmit="true" 
-                                                 process=":#{p:component('prioridades')}"
-                                                 action="#{patentController.deletePriority(prioridade)}"/>
-                            </p:column>
-                        </p:dataTable>
-
-                    </h:panelGrid>
-                    <br/>
-
-                    <p:commandButton value="#{msgs['new.priority']}" action="#{patentController.doPriority()}" 
-                                     oncomplete="priorityAddDialog.show();" />
-
-                    <p:dialog id="addPriority" widgetVar="priorityAddDialog" modal="true" closable="false"
-                              header="#{msgs['add.priority']}" resizable="true">
+                    <p:dialog id="addPriority" widgetVar="priorityAddDialog" modal="true"
+                              header="#{msgs['add.priority']}" resizable="true" dynamic="true" >
                         <h:panelGrid border="0" columns="2">
-                            <h:outputLabel value="#{msgs['value']}" style="font-weight:bold" />
-                            <p:inputText value="#{patentController.newPriority.value}"/>
-                            <h:outputLabel value="#{msgs['date']}" style="font-weight:bold" />
+                            <h:outputLabel value="#{msgs['value']} :  " style="font-weight:bold" />
+                            <p:inputText value="#{patentController.newPriority.value}" />
+                            <h:outputLabel value="#{msgs['date']} :  " style="font-weight:bold" />
                             <p:calendar value="#{patentController.newPriority.date}" navigator="true"/>
-                            <h:outputLabel value="#{msgs['country']}" style="font-weight:bold"/>				
+                            <h:outputLabel value="#{msgs['country']} :  " style="font-weight:bold"/>				
                             <p:selectOneMenu value="#{patentController.newPriority.country.acronym}">
                                 <f:selectItems value="#{patentController.countries}" var="country" 
                                                itemValue="#{country.acronym}" itemLabel="#{country.name}"/>					
                             </p:selectOneMenu>
                         </h:panelGrid>
-                        <p:spacer height="50"/>
+                        <p:spacer height="25"/>
                         <center>
-                            <p:commandButton value="#{msgs['save']}"
-                                             update="prioridades"
+                            <p:commandButton value="#{msgs['add']}" update="prioridades" class="btn-info"
                                              action="#{patentController.addPriority()}" 
                                              onclick="priorityAddDialog.hide()"/>
-
-                            <p:commandButton value="#{msgs['cancel']}" immediate="true"
-                                             onclick="priorityAddDialog.hide();" />
                         </center>
-
                     </p:dialog>
                 </p:fieldset>
-                <p:fieldset  toggleable="true" toggleSpeed="500" legend="#{msgs['applicants']}">
-
-                    <h:panelGrid id="applicants" columns="3" border="0" columnClasses="alignTop,alignTop,alignTop">
-                        <h:column >
-                            <p:outputLabel value="#{msgs['patent.applicants']}"/>
-                            <p:dataTable id="currentApplicants" var="applicant" style="font-size:10px"
-                                         emptyMessage="#{msgs['no.applicant']}"
-                                         value="#{patentController.applicants.selectedApplicants}" paginator="true"
-                                         paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
-                                         >
-                                <p:column headerText="#{msgs['name']}" sortBy="#{applicant.name}">														
-                                    #{applicant.name}
-                                </p:column>
-                                <p:column headerText="#{msgs['country']}" sortBy="#{applicant.country.acronym}">														
-                                    #{applicant.country.acronym}
-                                </p:column>
-                                <p:column>														
-                                    <p:commandButton value="#{msgs['delete']}" 
+                <p:fieldset toggleable="true" toggleSpeed="500" legend="#{msgs['applicants']}" style="width: 97%">
+                    <p:commandButton value="#{msgs['new.applicant']}" action="#{patentController.doApplicant()}" 
+                                     class="btn-info" oncomplete="applicantAddDialog.show()"/>
+                    <h:panelGrid id="applicants" columns="2" border="0" style="width: 100%" 
+                                 columnClasses="panelHalf,panelHalf">
+                        <p:dataTable id="currentApplicants" var="applicant" style="font-size:0.77em; width: 95%"
+                                     emptyMessage="#{msgs['no.applicant']}" filterEvent="enter" pageLinks="5"
+                                     value="#{patentController.applicants.selectedApplicants}" paginator="true"
+                                     paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="6">
+                            <f:facet name="header">
+                                #{msgs['patent.applicants']}
+                            </f:facet>
+                            <p:column headerText="#{msgs['name']}" style="width: 85%"
+                                      sortBy="#{applicant.name}" filterBy="#{applicant.name}">														
+                                #{applicant.name}
+                            </p:column>
+                            <p:column headerText="#{msgs['country']}" sortBy="#{applicant.country.acronym}" style="width: 5%">
+                                <center>
+                                    #{applicant.country.acronym == '' ? '-' : applicant.country.acronym}
+                                </center>
+                            </p:column>
+                            <p:column headerText="#{msgs['action']}" style="width: 10%">
+                                <center>
+                                    <p:commandButton value="#{msgs['unlink']}" class="btn-warning"
                                                      update=":#{p:component('applicants')}" partialSubmit="true" 
                                                      process=":#{p:component('applicants')}"
                                                      action="#{patentController.deleteApplicant(applicant)}"/>
-                                </p:column>
-                            </p:dataTable>
-                        </h:column>
-
-                        <h:column>
-                            <p:spacer width="25"/>
-                        </h:column>
-
-                        <h:column>
-                            <p:outputLabel value="#{msgs['applicants.available']}"/>
-                            <p:dataTable id="addApplicants" var="ap" style="font-size:10px"
-                                         emptyMessage="#{msgs['no.applicant']}" lazy="true" filterEvent="enter"
-                                         value="#{patentController.applicants}" paginator="true"
-                                         paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
-                                         >
-                                <p:column headerText="#{msgs['name']}" sortBy="#{ap.name}" filterBy="#{ap.name}">														
-                                    #{ap.name}
-                                </p:column>
-                                <p:column headerText="#{msgs['country']}" sortBy="#{ap.country.acronym}" >														
-                                    #{ap.country.acronym}
-                                </p:column>
-                                <p:column>														
-                                    <p:commandButton id="linkApplicant" value="#{msgs['link']}" 
+                                </center>
+                            </p:column>
+                        </p:dataTable>
+                        <p:dataTable id="addApplicants" var="ap" style="font-size:0.77em; width: 100%"
+                                     emptyMessage="#{msgs['no.applicant']}" lazy="true" filterEvent="enter"
+                                     value="#{patentController.applicants}" paginator="true" pageLinks="5"
+                                     paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="6">
+                            <f:facet name="header">
+                                #{msgs['applicants.available']}
+                            </f:facet>
+                            <p:column headerText="#{msgs['name']}" style="width: 85%"
+                                      sortBy="#{ap.name}" filterBy="#{ap.name}">														
+                                #{ap.name}
+                            </p:column>
+                            <p:column headerText="#{msgs['country']}" sortBy="#{ap.country.acronym}" style="width: 5%">
+                                <center>
+                                    #{ap.country.acronym == '' ? '-' : ap.country.acronym}
+                                </center>
+                            </p:column>
+                            <p:column headerText="#{msgs['action']}" style="width: 10%">	
+                                <center>
+                                    <p:commandButton id="linkApplicant" value="#{msgs['link']}" class="btn-success"
                                                      update=":#{p:component('applicants')}" partialSubmit="true" 
                                                      process=":#{p:component('applicants')}"
                                                      action="#{patentController.addApplicant(ap)}"/>
                                     <p:tooltip for="linkApplicant">
                                         <p:outputLabel value="Clique para vincular esse depositante à nova patente." escape="false"/>
                                     </p:tooltip>
-                                </p:column>
-                            </p:dataTable>
-                        </h:column>
+                                </center>
+                            </p:column>
+                        </p:dataTable>
                     </h:panelGrid>
                     <br/>
-
-                    <p:commandButton value="#{msgs['new.applicant']}" action="#{patentController.doApplicant()}" 
-                                     oncomplete="applicantAddDialog.show();"/>
-
-                    <p:dialog id="addNewApplicant" widgetVar="applicantAddDialog" modal="true" closable="false"
-                              header="#{msgs['add.applicant']}" resizable="true">
-                        <h:panelGrid border="0" columns="1">
-                            <h:outputLabel value="#{msgs['name']}" style="font-weight:bold"/>
-                            <p:inputText value="#{patentController.newApplicant.name}" />
-                            <h:outputLabel value="#{msgs['country']}" style="font-weight:bold"/>				
+                    <p:dialog id="addNewApplicant" widgetVar="applicantAddDialog" modal="true"
+                              header="#{msgs['add.applicant']}" resizable="true" dynamic="true">
+                        <h:panelGrid border="0" columns="2">
+                            <h:outputLabel value="#{msgs['name']} :  " style="font-weight:bold"/>
+                            <p:inputText value="#{patentController.newApplicant.name}"/>
+                            <h:outputLabel value="#{msgs['country']} :  " style="font-weight:bold"/>				
                             <p:selectOneMenu value="#{patentController.newApplicant.country.acronym}">
                                 <f:selectItems value="#{patentController.countries}" var="country" 
                                                itemValue="#{country.acronym}" itemLabel="#{country.name}"/>					
                             </p:selectOneMenu>
                         </h:panelGrid>
-                        <p:spacer height="50"/>
+                        <p:spacer height="25"/>
                         <center>
-                            <p:commandButton value="#{msgs['save']}"
-                                             update="applicants"
-                                             action="#{patentController.newApplicant()}" 
-                                             oncomplete="applicantAddDialog.hide();"/>
-
-                            <p:commandButton value="#{msgs['cancel']}" immediate="true"
-                                             onclick="applicantAddDialog.hide();" />
+                            <p:commandButton value="#{msgs['add']}" update="applicants" class="btn-info"
+                                             action="#{patentController.createNewApplicant()}" 
+                                             oncomplete="applicantAddDialog.hide()"/>
                         </center>
 
                     </p:dialog>
                 </p:fieldset>
-                <p:fieldset  toggleable="true" toggleSpeed="500" legend="#{msgs['inventors']}">
-
-                    <h:panelGrid id="inventors" border="0" columns="3"  columnClasses="alignTop,alignTop,alignTop">
-                        <h:column>
-                            <p:outputLabel value="#{msgs['patent.inventors']}" />
-                            <p:dataTable id="currentInventors" var="inventor" style="font-size:10px"
-                                         emptyMessage="#{msgs['no.inventor']}"
-                                         value="#{patentController.selectedPatent.inventors}" 
-                                         paginator="true" paginatorAlwaysVisible="false" 
-                                         paginatorPosition="bottom" rows="10" 
-                                         >
-                                <p:column headerText="#{msgs['name']}" sortBy="#{inventor.name}">														
-                                    #{inventor.name}
-                                </p:column>
-                                <p:column headerText="#{msgs['country']}" sortBy="#{inventor.country.acronym}">														
-                                    #{inventor.country.acronym}
-                                </p:column>
-                                <p:column>														
-                                    <p:commandButton value="#{msgs['delete']}"
+                <p:fieldset  toggleable="true" toggleSpeed="500" legend="#{msgs['inventors']}" style="width: 97%">
+                    <p:commandButton value="#{msgs['new.inventor']}" action="#{patentController.doInventor()}"
+                                     class="btn-info" oncomplete="inventorAddDialog.show()"/>
+                    <h:panelGrid id="inventors" border="0" columns="2" style="width: 100%" 
+                                 columnClasses="panelHalf, panelHalf">
+                        <p:dataTable id="currentInventors" var="inventor" style="font-size:0.77em; width: 95%"
+                                     emptyMessage="#{msgs['no.inventor']}" filterEvent="enter"
+                                     value="#{patentController.selectedPatent.inventors}" 
+                                     paginator="true" paginatorAlwaysVisible="false" 
+                                     paginatorPosition="bottom" rows="6" pageLinks="5">
+                            <f:facet name="header">
+                                #{msgs['patent.inventors']}
+                            </f:facet>
+                            <p:column headerText="#{msgs['name']}" style="width: 85%"
+                                      sortBy="#{inventor.name}" filterBy="#{inventor.name}">
+                                #{inventor.name}
+                            </p:column>
+                            <p:column headerText="#{msgs['country']}" sortBy="#{inventor.country.acronym}" style="width: 5%">
+                                <center>
+                                    #{inventor.country.acronym == '' ? '-' : inventor.country.acronym}
+                                </center>
+                            </p:column>
+                            <p:column headerText="#{msgs['action']}" style="width: 10%">
+                                <center>
+                                    <p:commandButton value="#{msgs['unlink']}" class="btn-warning"
                                                      update=":#{p:component('inventors')}" partialSubmit="true" 
                                                      process=":#{p:component('inventors')}" 
                                                      action="#{patentController.deleteInventor(inventor)}"/>
-                                </p:column>
-                            </p:dataTable>
-                        </h:column>
+                                </center>
+                            </p:column>
+                        </p:dataTable>
 
-                        <h:column>
-                            <p:spacer width="25" />
-                        </h:column>
-
-                        <h:column>
-                            <p:outputLabel value="#{msgs['inventors.available']}"/>
-                            <p:dataTable id="addInventors" var="inv" style="font-size:10px"
-                                         emptyMessage="#{msgs['no.inventor']}" lazy="true" filterEvent="enter"
-                                         value="#{patentController.inventors}" paginator="true"
-                                         paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="10"
-                                         >
-                                <p:column headerText="#{msgs['name']}" sortBy="#{inv.name}" filterBy="#{inv.name}">														
-                                    #{inv.name}
-                                </p:column>
-                                <p:column headerText="#{msgs['country']}" sortBy="#{inv.country.acronym}" >
-                                    #{inv.country.acronym}
-                                </p:column>
-                                <p:column>														
-                                    <p:commandButton id="linkInventor" value="#{msgs['link']}"
+                        <p:dataTable id="addInventors" var="inv" style="font-size:0.77em; width: 100%"
+                                     emptyMessage="#{msgs['no.inventor']}" lazy="true" filterEvent="enter"
+                                     value="#{patentController.inventors}" paginator="true" pageLinks="5"
+                                     paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="6">
+                            <f:facet name="header">
+                                #{msgs['inventors.available']}
+                            </f:facet>
+                            <p:column headerText="#{msgs['name']}" style="width: 85%"
+                                      sortBy="#{inv.name}" filterBy="#{inv.name}">
+                                #{inv.name}
+                            </p:column>
+                            <p:column headerText="#{msgs['country']}" sortBy="#{inv.country.acronym}" style="width: 5%">
+                                <center>
+                                    #{inv.country.acronym == '' ? '-' : inv.country.acronym}
+                                </center>
+                            </p:column>
+                            <p:column headerText="#{msgs['action']}" style="width: 10%">
+                                <center>
+                                    <p:commandButton id="linkInventor" value="#{msgs['link']}" class="btn-success"
                                                      update=":#{p:component('inventors')},addInventors" 
                                                      partialSubmit="true" process=":#{p:component('inventors')}" 
                                                      action="#{patentController.addInventor(inv)}"/>
                                     <p:tooltip for="linkInventor">
                                         <p:outputLabel value="Clique para vincular esse inventor à nova patente." escape="false"/>
                                     </p:tooltip>
-                                </p:column>
-                            </p:dataTable>
-                        </h:column>
+                                </center>
+                            </p:column>
+                        </p:dataTable>
                     </h:panelGrid>
                     <br/>
-
-                    <p:commandButton value="#{msgs['new.inventor']}" action="#{patentController.doInventor()}"
-                                     oncomplete="inventorAddDialog.show();"/>
-
-                    <p:dialog id="addInventor" widgetVar="inventorAddDialog" modal="true" closable="false"
-                              header="#{msgs['add.inventor']}" resizable="true">
+                    <p:dialog id="addInventor" widgetVar="inventorAddDialog" modal="true"
+                              header="#{msgs['add.inventor']}" resizable="true" dynamic="true">
                         <h:panelGrid border="0" columns="2">
-
-                            <h:outputLabel value="#{msgs['name']}" style="font-weight:bold" />
-                            <p:inputText value="#{patentController.newInventor.name}" />
-                            <h:outputLabel value="#{msgs['country']}" style="font-weight:bold"/>				
+                            <h:outputLabel value="#{msgs['name']} :  " style="font-weight:bold" />
+                            <p:inputText value="#{patentController.newInventor.name}"/>
+                            <h:outputLabel value="#{msgs['country']} :  " style="font-weight:bold"/>				
                             <p:selectOneMenu value="#{patentController.newInventor.country.acronym}">
                                 <f:selectItems value="#{patentController.countries}" var="country" 
                                                itemValue="#{country.acronym}" itemLabel="#{country.name}"/>					
                             </p:selectOneMenu>
                         </h:panelGrid>
-                        <p:spacer height="50"/>
+                        <p:spacer height="25"/>
                         <center>
-                            <p:commandButton value="#{msgs['save']}"
-                                             update="inventors" 
-                                             action="#{patentController.newInventor()}" 
-                                             oncomplete="inventorAddDialog.hide();"/>
-
-                            <p:commandButton value="#{msgs['cancel']}" immediate="true"
-                                             onclick="inventorAddDialog.hide();" />
+                            <p:commandButton value="#{msgs['add']}" update="inventors" class="btn-info"
+                                             action="#{patentController.createNewInventor()}" 
+                                             oncomplete="inventorAddDialog.hide()"/>
                         </center>
-
                     </p:dialog>
                 </p:fieldset>
 
-                <h:panelGrid columns="2" cellpadding="10">
-                    <p:commandButton value="#{msgs['presentation.file']}"
-                                     onclick="fileDownloadDialog.show();"/>
-                    <p:commandButton value="#{msgs['patent.info']}"
-                                     onclick="patentDownloadDialog.show();"/>
+                <center>
+                    <h:panelGrid columns="2" cellpadding="10">
+                        <p:commandButton value="#{msgs['presentation.file']}" type="button" class="btn-inverse"
+                                         onclick="fileDownloadDialog.show()"/>
+                        <p:commandButton value="#{msgs['patent.info']}" type="button" class="btn-inverse"
+                                         onclick="patentDownloadDialog.show()"/>
+                    </h:panelGrid>
 
-                </h:panelGrid>
+                    <h:panelGrid columns="3" cellpadding="10">
+                        <h:commandLink value="#{msgs['update']}" action="#{patentController.save()}"
+                                       style="color:white"  class="btn btn-large btn-info"
+                                       rendered="#{patentController.editing}"/>
+                        <h:commandLink value="#{msgs['add']}" action="#{patentController.add()}"
+                                       style="color:white"  class="btn btn-large btn-info"
+                                       rendered="#{not patentController.editing}"/>
+                        <h:commandLink value="#{msgs['cancel']}" immediate="true" action="listPatent" 
+                                       style="color:white"  class="btn btn-large btn-info"/>
+                    </h:panelGrid>
+                </center>
 
-                <h:panelGrid columns="2" cellpadding="10">
-                    <h:commandLink value="#{msgs['update']}" action="#{patentController.save()}"
-                                   style="color:white"  class="btn btn-large btn-info"/>
-                    <h:commandLink value="#{msgs['cancel']}" immediate="true" action="#{patentController.cancelChange('edit')}" 
-                                   style="color:white"  class="btn btn-large btn-info"/>
-                </h:panelGrid>
-            </h:form>
-            <p:dialog id="fileDialog" widgetVar="fileDownloadDialog" modal="true" closable="false"
-                      header="#{msgs['options.file']}" resizable="false">
-                <h:form id="fileOptions" >
-                    <h:panelGrid columns="2">
-                        <h:column>
+                <p:dialog id="fileDialog" widgetVar="fileDownloadDialog" modal="true" dynamic="true"
+                          header="#{msgs['options.file']}" resizable="false">
+                    <h:panelGrid id="panelInfoPresentation" columns="1">
+                        <center>
+                            <h:outputLabel value="#{msgs['no.file']}" 
+                                           rendered="#{patentController.temporaryPresentationFile == null}"
+                                           style="font-size: 1.1em; font-weight: bold"/>
+                            <h:outputLabel value="#{msgs['help.delete']}" 
+                                           rendered="#{patentController.temporaryPresentationFile != null}" 
+                                           style="color: red;font-size: 1.1em;font-weight: bold"/>
+                        </center>
+                    </h:panelGrid>
+                    <center>
+                        <h:panelGrid id="panelUploadPresentation" columns="1">
                             <p:fileUpload fileUploadListener="#{patentController.uploadPresentationFile}" 
                                           mode="advanced" dragDropSupport="false" auto="true"
                                           sizeLimit="100000" multiple="false" label="#{msgs['choose.file']}"
-                                          update=":#{p:component('fileOptions')},messages"
-                                          process=":#{p:component('fileOptions')}" 
+                                          update="panelUploadPresentation,panelButtonPresentation,panelInfoPresentation,messages1"
                                           rendered="#{patentController.temporaryPresentationFile == null}"
-                                          showButtons="false" 
-                                          allowTypes="/(\.|\/)(gif|jpeg|png|pdf)$/" />  
+                                          showButtons="false" allowTypes="/(\.|\/)(gif|jpeg|png|pdf)$/" />  
+                            <p:growl id="messages1" showDetail="true"/>
+                        </h:panelGrid>
 
-                            <p:growl id="messages" showDetail="true"/>
-                        </h:column>
-                        <h:column>
-                            <h:outputLabel rendered="#{patentController.temporaryPresentationFile != null}" 
-                                           value="#{msgs['help.delete']}"/>
-                        </h:column>
-                    </h:panelGrid>
-                    <br/>
+                        <br/>
 
-                    <center>
-                        <p:commandButton value="Download" ajax="false" 
-                                         icon="ui-icon-arrowthick-1-s"
-                                         immediate="true"
-                                         rendered="#{patentController.temporaryPresentationFile != null}"
-                                         actionListener="#{patentController.downloadFile(patentController.temporaryPresentationFile)}">  
-                            <p:fileDownload  value="#{patentController.download}" />  
-                        </p:commandButton>
-                        <p:commandButton value="#{msgs['delete.file']}" 
-                                         update=":#{p:component('fileOptions')}"
-                                         process=":#{p:component('fileOptions')}" 
-                                         action="#{patentController.deletePresentationFile()}" 
-                                         disabled="#{patentController.temporaryPresentationFile == null}"
-                                         onclick="if (!confirm('#{msgs['delete.file']}')) {
-                                                     return false;
-                                                 }"/>
-                        <p:commandButton value="#{msgs['close']}" immediate="true"
-                                         update=":#{p:component('fileOptions')}"
-                                         process=":#{p:component('fileOptions')}"
-                                         onclick="fileDownloadDialog.hide();"  />
+                        <h:panelGrid id="panelButtonPresentation" border="0" columns="2">
+                            <p:commandButton title="#{msgs['download.file']}" value="#{msgs['download']}" ajax="false"
+                                             rendered="#{patentController.temporaryPresentationFile != null}" class="btn-success"
+                                             actionListener="#{patentController.downloadFile(patentController.temporaryPresentationFile)}">  
+                                <p:fileDownload  value="#{patentController.download}" />  
+                            </p:commandButton>
+                            <p:commandButton value="#{msgs['delete']}" class="btn-danger"
+                                             update="panelUploadPresentation,panelInfoPresentation,panelButtonPresentation"
+                                             action="#{patentController.deletePresentationFile()}"
+                                             rendered="#{patentController.temporaryPresentationFile != null}"
+                                             onclick="if (!confirm('#{msg['you.sure']}')) {
+                                                         return false;
+                                                     }"/>
+                        </h:panelGrid>
                     </center>
-                </h:form>
-            </p:dialog>
+                </p:dialog>
 
-            <p:dialog id="patentDialog" widgetVar="patentDownloadDialog" modal="true" closable="false"
-                      header="#{msgs['options.patent']}" resizable="false">
-                <h:form id="fileOptions2">
-                    <h:panelGrid columns="2">
-                        <h:column>
+                <p:dialog id="patentDialog" widgetVar="patentDownloadDialog" modal="true" dynamic="true"
+                          header="#{msgs['options.patent']}" resizable="false">
+                    <h:panelGrid id="panelInfoFile" columns="1">
+                        <center>
+                            <h:outputLabel value="#{msgs['no.file']}" 
+                                           rendered="#{patentController.temporaryPatentInfo == null}"
+                                           style="font-size: 1.1em; font-weight: bold"/>
+                            <h:outputLabel value="#{msgs['help.delete']}" 
+                                           rendered="#{patentController.temporaryPatentInfo != null}" 
+                                           style="color: red;font-size: 1.1em;font-weight: bold"/>
+                        </center>
+                    </h:panelGrid>
+                    <center>
+                        <h:panelGrid id="panelUploadFile">
                             <p:fileUpload fileUploadListener="#{patentController.uploadPatentInfo}" 
                                           mode="advanced" dragDropSupport="false" auto="true"
-                                          update=":#{p:component('fileOptions2')},messages"
-                                          process=":#{p:component('fileOptions2')}" 
+                                          update="panelUploadFile,panelInfoFile,panelButtonFile,messages2"
                                           rendered="#{patentController.temporaryPatentInfo == null}"
                                           sizeLimit="5000000" showButtons="false" label="#{msgs['choose.file']}"
                                           allowTypes="/(\.|\/)(doc|docx|odt|pdf|txt)$/" />  
 
-                            <p:growl id="messages" showDetail="true"/>
-                        </h:column>
-                        <h:column>
-                            <h:outputLabel rendered="#{patentController.temporaryPatentInfo != null}" 
-                                           value="#{msgs['help.delete']}"/>
-                        </h:column>
-                    </h:panelGrid>
-                    <br/>
+                            <p:growl id="messages2" showDetail="true"/>
+                        </h:panelGrid>
 
-                    <center>
-                        <p:commandButton title="#{msgs['download.patent']}" ajax="false" 
-                                         icon="ui-icon-arrowthick-1-s"
-                                         immediate="true"
-                                         rendered="#{patentController.temporaryPatentInfo != null}"
-                                         actionListener="#{patentController.downloadFile(patentController.temporaryPatentInfo)}">  
-                            <p:fileDownload  value="#{patentController.download}" />  
-                        </p:commandButton>
-                        <p:commandButton value="#{msgs['delete.file']}"
-                                         update=":#{p:component('fileOptions2')}"
-                                         process=":#{p:component('fileOptions2')}" 
-                                         action="#{patentController.deletePatentInfo()}" 
-                                         disabled="#{patentController.temporaryPatentInfo == null}"
-                                         onclick="if (!confirm('#{msgs['delete.file']}')) {
-                                                     return false;
-                                                 }"/>
-                        <p:commandButton value="#{msgs['close']}" immediate="true"
-                                         update=":#{p:component('fileOptions2')}"
-                                         process=":#{p:component('fileOptions2')}"
-                                         onclick="patentDownloadDialog.hide();" />
+                        <br/>
+
+                        <h:panelGrid id="panelButtonFile" border="0" columns="2" >
+                            <p:commandButton title="#{msgs['download.patent']}" value="#{msgs['download']}" ajax="false" 
+                                             rendered="#{patentController.temporaryPatentInfo != null}" class="btn-success"
+                                             actionListener="#{patentController.downloadFile(patentController.temporaryPatentInfo)}">  
+                                <p:fileDownload  value="#{patentController.download}" />  
+                            </p:commandButton>
+                            <p:commandButton value="#{msgs['delete']}" action="#{patentController.deletePatentInfo()}" 
+                                             update="panelButtonFile,panelInfoFile,panelUploadFile" class="btn-danger"
+                                             rendered="#{patentController.temporaryPatentInfo != null}"
+                                             onclick="if (!confirm('#{msgs['you.sure']}')) {
+                                                         return false;
+                                                     }"/>
+                        </h:panelGrid>
                     </center>
-                </h:form>
-            </p:dialog>
+                </p:dialog>
+            </h:form>
         </ui:define>
     </ui:composition>
 </html>

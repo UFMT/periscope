@@ -13,6 +13,11 @@ import br.ufmt.periscope.report.PublicationDateReport;
 import br.ufmt.periscope.util.PDFTextParser;
 import java.util.Collections;
 
+/**
+ * - @ManagedBean<BR/>
+ * - @ViewScoped<BR/>
+ * Classe controller responsável por operações de visualização relacionadas à data de publicação das patentes
+ */
 @ManagedBean(name = "publicantDateReport")
 @ViewScoped
 public class PublicationDateController extends GenericController {
@@ -20,6 +25,10 @@ public class PublicationDateController extends GenericController {
     private @Inject
     PublicationDateReport report;
 
+    /**
+     *  Método responsável pela atualização dos gráficos relacionados à data de publicação das patentes
+     */
+    @Override
     public void refreshChart() {
         setModel(new CartesianChartModel());
         ChartSeries series = report.publicationDateSeries(getCurrentProject(), getFiltro());
@@ -41,11 +50,6 @@ public class PublicationDateController extends GenericController {
             series.getData().remove(keyInvalid);
         }
         Collections.reverse(getPairs());
-
-    }
-
-    public void test() {
-        PDFTextParser pdftp = new PDFTextParser();
 
     }
 }

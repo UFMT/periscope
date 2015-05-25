@@ -9,12 +9,20 @@ import javax.inject.Inject;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 
+/**
+ * - @ManagedBean<BR/>
+ * - @ViewScoped<BR/>
+ * Classe controller responsável por operações de visualização relacionadas à data de prioridade das patentes
+ */
 @ManagedBean
 public class PriorityDateController extends GenericController {
 
     private @Inject
     PriorityDateReport report;
 
+    /**
+     * Método responsável pela atualização dos gráficos relacionados à data de prioridade
+     */
     @Override
     public void refreshChart() {
         setModel(new CartesianChartModel());

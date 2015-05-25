@@ -10,6 +10,11 @@ import javax.inject.Inject;
 import org.primefaces.model.chart.CartesianChartModel;
 import org.primefaces.model.chart.ChartSeries;
 
+/**
+ * - @ManagedBean<BR/>
+ * - @ViewScoped<BR/>
+ * Classe controller responsável por operações de visualização relacionadas ao país de prioridade das patentes
+ */
 @ManagedBean
 @ViewScoped
 public class PriorityCountryController extends GenericController {
@@ -17,6 +22,10 @@ public class PriorityCountryController extends GenericController {
     private @Inject
     PriorityCountryReport report;
 
+    /**
+     * Método responsável pela atualização dos gráficos relacionados ao país de prioridade
+     */
+    @Override
     public void refreshChart() {
         setModel(new CartesianChartModel());
         ChartSeries series = report.mainPriorityCountrySeries(getCurrentProject(), getLimit(), getFiltro());

@@ -11,7 +11,7 @@
             <ui:include src="/template/flashmessages.xhtml" />
             <center>
                 <center><h1>#{msgs['patent.list']}</h1></center>
-                <h:form id="formType">			
+                <h:form id="formType" style="width: 100%">			
                     <ul class="nav nav-pills pull-left">
                         <ui:repeat var="type" value="#{patentController.filters}">
                             <li class="#{(param['listType'] == type or patentController.type == type) ? 'active' : ''}">
@@ -26,10 +26,9 @@
 
                     <br  clear="left"/>
 
-                    <p:dataTable id="patents" var="item" style="font-size:10px"
+                    <p:dataTable id="patents" var="item" style="font-size:0.77em; width: 100%"
                                  emptyMessage="#{msgs['registered.patent']}"
                                  value="#{patentController.patents}" paginator="true"
-
                                  paginatorAlwaysVisible="false" rows="10" 
                                  rowKey="#{item.id}" lazy="true" filterEvent="enter" 
                                  >
@@ -39,29 +38,29 @@
 
                         </f:facet>
 
-                        <p:column  headerText="#{msgs['country']}" >
-                            #{item.applicationNumber.substring(0, 2)}
+                        <p:column headerText="#{msgs['country']}" style="width: 3%">
+                            <center>#{item.applicationNumber.substring(0, 2)}</center>
                         </p:column>
-                        <p:column width="150" headerText="#{msgs['title']}" filterBy="#{item.titleSelect}" >
+                        <p:column headerText="#{msgs['title']}" filterBy="#{item.titleSelect}" style="width: 24%">
                             <center>#{item.titleSelect}</center>
                         </p:column>	
-                        <p:column  headerText="#{msgs['publication.date']}" sortBy="#{item.publicationDate}">														
-                            #{item.publicationDate.toLocaleString().substring(0, 10)}					
+                        <p:column headerText="#{msgs['publication.date']}" sortBy="#{item.publicationDate}" style="width: 8%">														
+                            <center>#{item.publicationDate.toLocaleString().substring(0, 10)}</center>
                         </p:column>
-                        <p:column headerText="#{msgs['classification']}" >														
-                            #{item.mainClassification.klass} 
-                            #{item.mainClassification.group}/#{item.mainClassification.subgroup}						
+                        <p:column headerText="#{msgs['classification']}" style="width: 10%">							
+                            <center>#{item.mainClassification.klass} 
+                                #{item.mainClassification.group}/#{item.mainClassification.subgroup}</center>
                         </p:column>
-                        <p:column headerText="#{msgs['application.number']}" >														
-                            #{item.applicationNumber}					
+                        <p:column headerText="#{msgs['application.number']}" style="width: 8%">														
+                            <center>#{item.applicationNumber}</center>
                         </p:column>
-                        <p:column headerText="#{msgs['applicants']}">
-                            #{item.applicants.size()}
-                            #{item.applicantsToString}					
+                        <p:column headerText="#{msgs['applicants']}" style="width: 20%">
+                            <center>#{item.applicants.size()}
+                                #{item.applicantsToString}</center>
                         </p:column>
-                        <p:column headerText="#{msgs['inventors']}" >														
-                            #{item.inventors.size()}
-                            #{item.inventorsToString}					
+                        <p:column headerText="#{msgs['inventors']}" style="width: 20%">														
+                            <center>#{item.inventors.size()}
+                                #{item.inventorsToString}</center>
                         </p:column>
                         <!--                    <p:column>														
                         #{item.prioritiesToString}					
@@ -76,7 +75,7 @@
         </center>
     </p:column>
                         -->
-                        <p:column headerText="#{msgs['actions']}">
+                        <p:column headerText="#{msgs['actions']}" style="width: 8%">
                             <center>
 
                                 <p:commandButton ajax="false" title="#{msgs['edit']}" action="editPatent" 

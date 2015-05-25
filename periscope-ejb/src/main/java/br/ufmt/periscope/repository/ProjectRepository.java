@@ -17,6 +17,7 @@ import com.mongodb.gridfs.GridFS;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.bson.types.ObjectId;
@@ -28,6 +29,8 @@ public class ProjectRepository {
     Datastore ds;
     private @Inject
     PatentIndexer patentIndexer;
+    private @Inject
+    Instance<GridFS> fsProvider;
 
     public List<Project> getProjectList(User user) {
         Query<Project> query = ds.createQuery(Project.class);
@@ -79,7 +82,7 @@ public class ProjectRepository {
         List<String> files = getProjectFiles(p);
 
         if (files != null) {
-            GridFS fs = getFs();
+            GridFS fs = fsProvider.get();
             ObjectId _id;
             for (String file : files) {
                 _id = new ObjectId(file);
@@ -91,13 +94,12 @@ public class ProjectRepository {
         deleteProject(p);
     }
 
-    public GridFS getFs() throws UnknownHostException {
-        Mongo mongo = new Mongo("localhost", 27017);
-        DB db = mongo.getDB("Periscope");
-        GridFS fs = new GridFS(db);
-        return fs;
-    }
-
+//    public GridFS getFs() throws UnknownHostException {
+//        Mongo mongo = new Mongo("localhost", 27017);
+//        DB db = mongo.getDB("Periscope");
+//        GridFS fs = new GridFS(db);
+//        return fs;
+//    }
     public boolean isEmptyPatent(Project currentProject) {
         return ds.getCollection(Project.class).findOne(new BasicDBObject("_id", currentProject.getId()), new BasicDBObject("patents", new BasicDBObject("$slice", 1))).get("patents") == null;
     }

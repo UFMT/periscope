@@ -25,6 +25,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * - @ManagedBean<BR/>
+ * - @ViewScoped<BR/>
+ * Classe controller responsável por operações relacionadas à importação
+ */
 @ManagedBean
 @ViewScoped
 public class ImportPatentController implements Serializable {
@@ -43,11 +48,17 @@ public class ImportPatentController implements Serializable {
     private String[] origins = null;
     private List<UploadedFile> uploadAttachment = new ArrayList<UploadedFile>();
 
+    /**
+     * Método pós construtor que atualiza os importadores existentes
+     */
     @PostConstruct
     public void init() {
         origins = importerFactory.getORIGINS();
     }
 
+    /**
+     * Método chamado para efetivamente fazer a importação das patente a partir dos arquivos selecionados
+     */
     public void importPatents() {
         if (uploadAttachment == null || uploadAttachment.isEmpty()) {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Nenhum arquivo foi enviado.");
@@ -85,28 +96,52 @@ public class ImportPatentController implements Serializable {
         }
     }
 
+    /**
+     * Método responsável por lidar com o upload dos arquivos
+     * @param event
+     */
     public void handleFileUpload(FileUploadEvent event) {
         uploadAttachment.add(event.getFile());
         FacesMessage msg = new FacesMessage("Sucesso", event.getFile().getFileName() + " foi enviado.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFileOrigin() {
         return fileOrigin;
     }
 
+    /**
+     *
+     * @param fileOrigin
+     */
     public void setFileOrigin(String fileOrigin) {
         this.fileOrigin = fileOrigin;
     }
 
+    /**
+     *
+     * @return
+     */
     public String[] getOrigins() {
         return origins;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<UploadedFile> getUploadAttachment() {
         return uploadAttachment;
     }
 
+    /**
+     *
+     * @param uploadAttachment
+     */
     public void setUploadAttachment(List<UploadedFile> uploadAttachment) {
         this.uploadAttachment = uploadAttachment;
     }

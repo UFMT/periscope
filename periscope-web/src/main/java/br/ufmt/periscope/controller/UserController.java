@@ -22,6 +22,11 @@ import br.ufmt.periscope.qualifier.LoggedUser;
 
 import com.github.jmkgreen.morphia.Datastore;
 
+/**
+ * - @ManagedBean<BR/>
+ * - @ViewScoped<BR/>
+ * Classe controller responsável por operações elacionadas aos usuários do projeto
+ */
 @ManagedBean
 @ViewScoped
 public class UserController {
@@ -36,6 +41,9 @@ public class UserController {
     private boolean editing = false;
     private List<UserLevel> levels = new ArrayList<UserLevel>();
 
+    /**
+     * Método de pós construção da classe que verifica se está editando o usuário e colocando seu nível de accesso
+     */
     @PostConstruct
     public void init() {
 
@@ -53,6 +61,10 @@ public class UserController {
         }
     }
 
+    /**
+     * Salva um usuário
+     * @return Página de Lista de Usuários
+     */
     public String save() {
         User existingUser = ds.find(User.class).field("username").equal(user.getUsername()).get();
         boolean hasUniqueUsername = false;
@@ -82,6 +94,11 @@ public class UserController {
 
     }
 
+    /**
+     * Deleta um usuário
+     * @param id Identificador do usuário
+     * @return Página de Lista de Usuários
+     */
     public String delete(String id) {
         ds.delete(User.class, new ObjectId(id));
         Flash flash = FacesContext.getCurrentInstance().
@@ -90,6 +107,10 @@ public class UserController {
         return "userList";
     }
 
+    /**
+     * Lista de usuários
+     * @return Lista de usuários
+     */
     public DataModel<User> getUsers() {
         if (users == null) {
             users = new ListDataModel<User>(ds.find(User.class).asList());
@@ -97,30 +118,58 @@ public class UserController {
         return users;
     }
 
+    /**
+     *
+     * @param users
+     */
     public void setUsers(DataModel<User> users) {
         this.users = users;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isEditing() {
         return editing;
     }
 
+    /**
+     *
+     * @param editing
+     */
     public void setEditing(boolean editing) {
         this.editing = editing;
     }
 
+    /**
+     *
+     * @return
+     */
     public User getUser() {
         return user;
     }
 
+    /**
+     *
+     * @param user
+     */
     public void setUser(User user) {
         this.user = user;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<UserLevel> getLevels() {
         return levels;
     }
 
+    /**
+     *
+     * @param levels
+     */
     public void setLevels(List<UserLevel> levels) {
         this.levels = levels;
     }

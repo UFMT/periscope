@@ -275,6 +275,7 @@ public class ApplicantHarmonizationController implements Serializable {
             }
             aplicants.add(app);
         }
+        System.out.println("Sugestoes carregadas");
         setApplicantSugestions(new ArrayList<SelectObject<Applicant>>(SelectObject.convertToSelectObjects(aplicants)));
 
     }

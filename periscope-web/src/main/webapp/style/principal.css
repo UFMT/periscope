@@ -54,6 +54,11 @@ body {
     
 }
 
+.panelHalf{
+    vertical-align: top;
+    width: 50%
+}
+
 .ui-autocomplete-input{
     width: 500px;
 }

@@ -15,7 +15,11 @@ import br.ufmt.periscope.report.MainIPCReport;
 import br.ufmt.periscope.report.Pair;
 import javax.faces.event.ValueChangeEvent;
 
-
+/**
+ * - @ManagedBean<BR/>
+ * - @ViewScoped<BR/>
+ * Classe controller responsável por operações de visualização relacionadas à classificação IPC
+ */
 @ManagedBean
 @ViewScoped
 public class MainIPCController extends GenericController {
@@ -29,6 +33,9 @@ public class MainIPCController extends GenericController {
     private boolean description;
     private int classification;
 
+    /**
+     * Método pós construção que foi sobrescrito para iniciar parametros do controller
+     */
     @PostConstruct
     @Override
     public void init() {
@@ -42,6 +49,9 @@ public class MainIPCController extends GenericController {
         
     }
 
+    /**
+     * Método que atualiza os valores dos filtros existentes para os gráficos da classificação IPC
+     */
     public void update() {
         if (!klass) {
             // classe nao esta selecionada
@@ -69,6 +79,10 @@ public class MainIPCController extends GenericController {
         refreshChart();
     }
 
+    /**
+     * Método responsável pela atualização dos gráficos relacionados à classificação IPC
+     */
+    @Override
     public void refreshChart() {
         setModel(new CartesianChartModel());
         ChartSeries series = report.ipcCount(getCurrentProject(), klass, subKlass,
@@ -122,54 +136,107 @@ public class MainIPCController extends GenericController {
         Collections.reverse(getPairs());
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isKlass() {
         return klass;
     }
+
+    /**
+     *
+     * @param event
+     */
     public void classificationListener(ValueChangeEvent event){
         int newVal = (Integer) event.getNewValue();
         this.setClassification(newVal);
     }
 
+    /**
+     *
+     * @param klass
+     */
     public void setKlass(boolean klass) {
         this.klass = klass;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isSubKlass() {
         return subKlass;
     }
 
+    /**
+     *
+     * @param subKlass
+     */
     public void setSubKlass(boolean subKlass) {
         this.subKlass = subKlass;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isGroup() {
         return group;
     }
 
+    /**
+     *
+     * @param group
+     */
     public void setGroup(boolean group) {
         this.group = group;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isSubGroup() {
         return subGroup;
     }
 
+    /**
+     *
+     * @param subGroup
+     */
     public void setSubGroup(boolean subGroup) {
         this.subGroup = subGroup;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isDescription() {
         return description;
     }
 
+    /**
+     *
+     * @param description
+     */
     public void setDescription(boolean description) {
         this.description = description;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getClassification() {
         return classification;
     }
 
+    /**
+     *
+     * @param classification
+     */
     public void setClassification(int classification) {
         this.classification = classification;
     }

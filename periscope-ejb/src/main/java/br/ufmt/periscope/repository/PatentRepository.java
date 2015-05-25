@@ -163,12 +163,12 @@ public class PatentRepository {
         return data;
     }
 
-    public GridFS getFs() throws UnknownHostException {
-        Mongo mongo = new Mongo("localhost", 27017);
-        DB db = mongo.getDB("Periscope");
-        GridFS fs = new GridFS(db);
-        return fs;
-    }
+//    public GridFS getFs() throws UnknownHostException {
+//        Mongo mongo = new Mongo("localhost", 27017);
+//        DB db = mongo.getDB("Periscope");
+//        GridFS fs = new GridFS(db);
+//        return fs;
+//    }
     
     public List<Patent> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters) {
         Query query = ds.find(Patent.class)

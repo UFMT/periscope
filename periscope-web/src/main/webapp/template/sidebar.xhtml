@@ -15,45 +15,45 @@
                         <p:submenu label="#{msgs['overview']}" icon="ui-icon-clipboard" > 					
 
                             <p:menuitem value="#{msgs['main.applicant']}" action="mainApplicantReport"  
-                                         ajax="false" />
+                                        ajax="false" />
 
                             <p:menuitem value="#{msgs['main.inventor']}" action="mainInventorReport"
-                                         ajax="false" />
+                                        ajax="false" />
 
                             <p:menuitem value="#{msgs['main.classification']}" action="mainIPCReport"
-                                         ajax="false" />
+                                        ajax="false" />
 
                             <p:menuitem value="#{msgs['application.date']}" action="applicationDateReport"
-                                         ajax="false" />
+                                        ajax="false" />
 
                             <p:menuitem value="#{msgs['priority.country']}" action="priorityCountry"
-                                         ajax="false" />
+                                        ajax="false" />
 
                             <p:menuitem value="#{msgs['priority.date']}" action="priorityDate"
-                                         ajax="false" />
+                                        ajax="false" />
 
                             <p:menuitem value="#{msgs['publication.date']}" action="publicationDate"
-                                         ajax="false" />
+                                        ajax="false" />
 
 
                             <p:menuitem value="#{msgs['docsOfNationalPriority']}" action="docsOfNationalPriority"
-                                         ajax="false" />
+                                        ajax="false" />
 
 
                             <p:menuitem value="#{msgs['technological.profile.applicant']}" action="mainTechnologicalProfile"
-                                         ajax="false" />
-                            
+                                        ajax="false" />
+
                             <p:menuitem value="#{msgs['technological.profile.inventor']}" action="technologicalProfileByInventor"
-                                         ajax="false" />
+                                        ajax="false" />
 
                             <p:menuitem value="#{msgs['natureDepositor']}" action="natureApplicant" 
-                                         ajax="false" />
+                                        ajax="false" />
 
                             <p:menuitem value="#{msgs['stateDistribuition']}" action="stateDistribuition"
-                                         ajax="false" />
+                                        ajax="false" />
 
                             <p:menuitem value="#{msgs['regionDistribuition']}" action="regionDistribuition"
-                                         ajax="false" />
+                                        ajax="false" />
 
 
                         </p:submenu>
@@ -66,13 +66,13 @@
                                     ajax="false" rendered="#{not sidebarController.emptyPatent}"/>
 
                         <p:menuitem value="#{msgs['import.data']}" action="importPatent"
-                                     ajax="false" rendered="#{currentProject.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or currentProject.observers.contains(currentUser)}" />
+                                    ajax="false" rendered="#{currentProject.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or currentProject.observers.contains(currentUser)}" />
 
                         <p:menuitem value="#{msgs['harmonize.data']}" action="harmonizationHome"
-                                     ajax="false" rendered="#{(currentProject.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or currentProject.observers.contains(currentUser)) and (not sidebarController.emptyPatent)}"/>
-                        <p:menuitem value="#{msgs['add.patent']}" action="addPatent"
+                                    ajax="false" rendered="#{(currentProject.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or currentProject.observers.contains(currentUser)) and (not sidebarController.emptyPatent)}"/>
+                        <p:menuitem value="#{msgs['add.patent']}" action="editPatent"
                                     ajax="false" rendered="#{(currentProject.owner.id eq currentUser.id or currentUser.userLevel.accessLevel == 10 or currentProject.observers.contains(currentUser))}">
-                            <f:param name="patentAdd" value="add" />
+                            <f:param name="patentAdd" value="add"/>
                         </p:menuitem>
                     </p:submenu>				
                 </p:panelMenu>		

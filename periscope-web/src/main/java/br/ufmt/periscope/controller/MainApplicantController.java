@@ -15,15 +15,21 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- *
+ * - @ManagedBean<BR/>
+ * - @ViewScoped<BR/>
+ * Classe controller responsável por operações de visualização relacionadas aos depositantes
  */
-@ManagedBean(name = "report")
+@ManagedBean
 @ViewScoped
-public class ReportController extends GenericController {
+public class MainApplicantController extends GenericController {
 
     private @Inject
     MainApplicantReport report;
 
+    /**
+     * Método responsável por atualizar os gráficos relacionados aos principais depositantes
+     */
+    @Override
     public void refreshChart() {
 
         setModel(new CartesianChartModel());
@@ -40,9 +46,9 @@ public class ReportController extends GenericController {
     }
 
     /**
-     *
-     * @param query
-     * @return
+     * Lista de depositantes dado um filtro
+     * @param query String que deverá começar o nome dos depositantes
+     * @return lista de depositantes do projeto nas quais os nomes começam com o parametro passado
      */
     public List<String> getApplicants(String query) {
         List<String> teste = report.getRepo().getApplicants(getCurrentProject(), query);

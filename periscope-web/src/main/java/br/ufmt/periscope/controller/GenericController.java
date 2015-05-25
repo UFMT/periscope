@@ -13,8 +13,8 @@ import javax.inject.Inject;
 import org.primefaces.model.chart.CartesianChartModel;
 
 /**
- * Abstract generic controller model<BR/>
- * All system's graph controllers extend this class
+ * Modelo abstrato generico dos controllers<BR/>
+ * Quase todos os controllers de gráficos do sistema extendem essa classe
  */
 public abstract class GenericController {
 
@@ -31,9 +31,8 @@ public abstract class GenericController {
     private int limit = 5;
 
     /**
-     * Controller constructor<BR/>
-     * Gets the date range according to the current open project's patents<BR/>
-     * Also sets the filter's parameters and refreshes the chart shown
+     * Método pós construtor da classe abstrata generica dos controllers<BR/>
+     * Atualiza os parametros do filtro, o intervalo de datas existentes no projeto e o gráfico sendo mostrado atualmente
      */
     @PostConstruct
     public void init() {
@@ -48,13 +47,13 @@ public abstract class GenericController {
     }
 
     /**
-     * Absctract method to refresh system's charts<BR/>
-     * Only the header here
+     * Método abstrato que atualiza os gráficos do sistema<BR/>
+     * Apenas o cabeçalho definido nesta classe
      */
     public abstract void refreshChart();
 
     /**
-     * Patent Repository's getter
+     * 
      * @return
      */
     public PatentRepository getPatentRepository() {
@@ -62,7 +61,7 @@ public abstract class GenericController {
     }
 
     /**
-     * Patent Repository's setter
+     * 
      * @param patentRepository
      */
     public void setPatentRepository(PatentRepository patentRepository) {
@@ -70,7 +69,7 @@ public abstract class GenericController {
     }
 
     /**
-     * Minimum date range's getter
+     * 
      * @return
      */
     public Date getMinDate() {
@@ -78,7 +77,7 @@ public abstract class GenericController {
     }
 
     /**
-     * Minimum date range's setter
+     * 
      * @param minDate
      */
     public void setMinDate(Date minDate) {
@@ -86,7 +85,7 @@ public abstract class GenericController {
     }
 
     /**
-     * Maximum date range's getter
+     * 
      * @return
      */
     public Date getMaxDate() {
@@ -94,7 +93,7 @@ public abstract class GenericController {
     }
 
     /**
-     * Maximum date range's setter
+     * 
      * @param maxDate
      */
     public void setMaxDate(Date maxDate) {
@@ -102,7 +101,7 @@ public abstract class GenericController {
     }
 
     /**
-     * Open current project's getter
+     * 
      * @return
      */
     public Project getCurrentProject() {
@@ -110,7 +109,7 @@ public abstract class GenericController {
     }
 
     /**
-     * Open current project's setter
+     * 
      * @param currentProject
      */
     public void setCurrentProject(Project currentProject) {
@@ -118,7 +117,7 @@ public abstract class GenericController {
     }
 
     /**
-     * Chart model's getter
+     * 
      * @return
      */
     public CartesianChartModel getModel() {
@@ -126,7 +125,7 @@ public abstract class GenericController {
     }
 
     /**
-     * Chart model's setter
+     * 
      * @param model
      */
     public void setModel(CartesianChartModel model) {
@@ -134,7 +133,7 @@ public abstract class GenericController {
     }
 
     /**
-     * Pair list's getter
+     * 
      * @return
      */
     public List<Pair> getPairs() {
@@ -142,7 +141,7 @@ public abstract class GenericController {
     }
 
     /**
-     * Pair list's setter
+     * 
      * @param pairs
      */
     public void setPairs(List<Pair> pairs) {
@@ -150,7 +149,7 @@ public abstract class GenericController {
     }
 
     /**
-     * Filter's getter
+     * 
      * @return
      */
     public Filters getFiltro() {
@@ -158,7 +157,7 @@ public abstract class GenericController {
     }
 
     /**
-     * Filter's setter
+     * 
      * @param filtro
      */
     public void setFiltro(Filters filtro) {
@@ -166,7 +165,7 @@ public abstract class GenericController {
     }
 
     /**
-     * Chart limit's getter
+     * 
      * @return
      */
     public int getLimit() {
@@ -174,7 +173,7 @@ public abstract class GenericController {
     }
 
     /**
-     * Chart limit's setter
+     * 
      * @param limit
      */
     public void setLimit(int limit) {
@@ -182,6 +181,7 @@ public abstract class GenericController {
     }
 
     /**
+     * 
      * Filter's change listener
      * @param event
      */
