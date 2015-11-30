@@ -467,6 +467,7 @@ public class PatentController {
      */
     private Files savePresentationFile() {
         openFs();
+        Files f = null;
         if (temporaryPresentationFile == null && selectedPatent.getPresentationFile() != null) {
             fs.remove(selectedPatent.getPresentationFile().getId());
             closeFs();
@@ -474,13 +475,15 @@ public class PatentController {
         } else if (selectedPatent.getPresentationFile() != null) {
             fs.remove(selectedPatent.getPresentationFile().getId());
         }
-        GridFSInputFile gfsFiles = fs.createFile(temporaryPresentationFile.getStream());
-        gfsFiles.setFilename(temporaryPresentationFile.getName());
-        gfsFiles.setContentType(temporaryPresentationFile.getContentType());
-        gfsFiles.save();
+        if (temporaryPresentationFile != null) {
+            GridFSInputFile gfsFiles = fs.createFile(temporaryPresentationFile.getStream());
+            gfsFiles.setFilename(temporaryPresentationFile.getName());
+            gfsFiles.setContentType(temporaryPresentationFile.getContentType());
+            gfsFiles.save();
 
-        Files f = lazyResources.getFiles();
-        f.setId((ObjectId) gfsFiles.getId());
+            f = lazyResources.getFiles();
+            f.setId((ObjectId) gfsFiles.getId());
+        }
         closeFs();
         return f;
     }
@@ -529,6 +532,7 @@ public class PatentController {
      */
     private Files savePatentInfo() {
         openFs();
+        Files f = null;
         if (temporaryPatentInfo == null && selectedPatent.getPatentInfo() != null) {
             fs.remove(selectedPatent.getPatentInfo().getId());
             closeFs();
@@ -536,13 +540,15 @@ public class PatentController {
         } else if (selectedPatent.getPatentInfo() != null) {
             fs.remove(selectedPatent.getPatentInfo().getId());
         }
-        GridFSInputFile gfsFiles = fs.createFile(temporaryPatentInfo.getStream());
-        gfsFiles.setFilename(temporaryPatentInfo.getName());
-        gfsFiles.setContentType(temporaryPatentInfo.getContentType());
-        gfsFiles.save();
+        if (temporaryPatentInfo != null) {
+            GridFSInputFile gfsFiles = fs.createFile(temporaryPatentInfo.getStream());
+            gfsFiles.setFilename(temporaryPatentInfo.getName());
+            gfsFiles.setContentType(temporaryPatentInfo.getContentType());
+            gfsFiles.save();
 
-        Files f = lazyResources.getFiles();
-        f.setId((ObjectId) gfsFiles.getId());
+            f = lazyResources.getFiles();
+            f.setId((ObjectId) gfsFiles.getId());
+        }
         closeFs();
         return f;
     }

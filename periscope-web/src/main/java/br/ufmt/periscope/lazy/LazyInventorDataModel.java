@@ -2,6 +2,7 @@ package br.ufmt.periscope.lazy;
 
 import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.repository.InventorRepository;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
@@ -18,6 +19,12 @@ public class LazyInventorDataModel extends LazyDataModel<Inventor> {
     private List<Inventor> selectedInventors;
     private Integer searchType;
     private Boolean harmonization = false;
+
+    public LazyInventorDataModel() {
+        System.out.println("Construtor");
+    }
+    
+    
 
     @Override
     public int getRowCount() {
@@ -43,17 +50,20 @@ public class LazyInventorDataModel extends LazyDataModel<Inventor> {
     public List<Inventor> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, String> filters) {
         long inicio = System.currentTimeMillis();
         inventorRepository.setSearchType(searchType);
+        
+
         if (harmonization) {
-
             datasource = inventorRepository.load(first, pageSize, sortField, sortOrder.ordinal(), filters);
-
         } else {
             datasource = inventorRepository.load(first, pageSize, sortField, sortOrder.ordinal(), filters, this.selectedInventors);
-
+        }
+        if (this.selectedInventors == null) {
+            System.out.println("null");
+            this.selectedInventors = new ArrayList<Inventor>();
         }
         setRowCount(inventorRepository.getCount());
         for (Inventor inventor : datasource) {
-            if (this.selectedInventors.contains(inventor)) {
+            if (this.selectedInventors != null && this.selectedInventors.contains(inventor)) {
                 inventor.setSelected(true);
             }
         }

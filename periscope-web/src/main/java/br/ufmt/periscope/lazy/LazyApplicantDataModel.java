@@ -2,6 +2,7 @@ package br.ufmt.periscope.lazy;
 
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.repository.ApplicantRepository;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
@@ -56,7 +57,7 @@ public class LazyApplicantDataModel extends LazyDataModel<Applicant> {
         }
         setRowCount(applicantRepository.getCount());
         for (Applicant applicant : datasource) {
-            if (this.selectedApplicants.contains(applicant)) {
+            if (this.selectedApplicants != null && this.selectedApplicants.contains(applicant)) {
 
                 applicant.setSelected(true);
             }

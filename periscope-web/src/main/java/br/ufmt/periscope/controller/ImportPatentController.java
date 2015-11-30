@@ -68,15 +68,16 @@ public class ImportPatentController implements Serializable {
                 boolean imported = true;
                 List<String> errors = new ArrayList<String>();
                 for (UploadedFile file : uploadAttachment) {
-
+                    System.out.println("For");
                     InputStream is = file.getInputstream();
                     PatentImporter importer = importerFactory.getImporter(fileOrigin);
                     if (importer.initWithStream(is)) {
                         patentRepository.savePatentToDatabase(importer, currentProject);
-
+                        System.out.println("IF");
                     } else {
                         imported = false;
                         errors.add(file.getFileName());
+                        System.out.println("ELSE");
                     }
                 }
                 if (imported) {
@@ -90,7 +91,7 @@ public class ImportPatentController implements Serializable {
             } catch (IOException e) {
                 FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Ocorreu um erro com o arquivo que foi enviado.");
                 FacesContext.getCurrentInstance().addMessage(null, msg);
-                e.printStackTrace();
+                System.out.println("Catch");
             }
 
         }

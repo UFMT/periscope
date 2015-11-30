@@ -80,24 +80,26 @@ public class DPMAPatentImporter implements PatentImporter {
         vet = line.split("; ", -2);
 
         patent.setLanguage(lang);
-        if (vet[6].length() > 5) {
-            patent.setTitleSelect(vet[6].substring(5));
-        } else {
-            patent = null;
-            return;
+        if (vet.length >= 7) {
+            if (vet[6].length() > 5) {
+                patent.setTitleSelect(vet[6].substring(5));
+            } else {
+                patent = null;
+                return;
+            }
+            patent.setPublicationNumber(vet[0] + " " + sdf2.format(sdf.parse(vet[2])));
+            patent.setPublicationCountry(countryRepository.getCountryByAcronym(patent.getPublicationNumber().substring(0, 2).toUpperCase()));
+            patent.setPublicationDate(sdf.parse(vet[2]));
+
+            //patent.setApplicationNumber(vet[0] + " " + 	sdf2.format(sdf.parse(vet[2])));
+            patent.setApplicationDate(sdf.parse(vet[1]));
+            patent.setApplicationCountry(countryRepository.getCountryByAcronym(patent.getPublicationNumber().substring(0, 2).toUpperCase()));
+
+            //Carrega as classificações
+            readClassifications();
+            readApplicants();
+            readInventors();
         }
-        patent.setPublicationNumber(vet[0] + " " + sdf2.format(sdf.parse(vet[2])));
-        patent.setPublicationCountry(countryRepository.getCountryByAcronym(patent.getPublicationNumber().substring(0, 2).toUpperCase()));
-        patent.setPublicationDate(sdf.parse(vet[2]));
-
-        //patent.setApplicationNumber(vet[0] + " " + 	sdf2.format(sdf.parse(vet[2])));
-        patent.setApplicationDate(sdf.parse(vet[1]));
-        patent.setApplicationCountry(countryRepository.getCountryByAcronym(patent.getPublicationNumber().substring(0, 2).toUpperCase()));
-
-        //Carrega as classificações
-        readClassifications();
-        readApplicants();
-        readInventors();
     }
 
     private Boolean testLine(String test) {
@@ -134,7 +136,7 @@ public class DPMAPatentImporter implements PatentImporter {
                     if (i + 1 < array.length) {
                         inventor.setCountry(countryRepository.getCountryByAcronym(array[i + 1].substring(0, 2)));
                     }
-                    if(inventor.getCountry() == null){
+                    if (inventor.getCountry() == null) {
                         inventor.setCountry(nulCountry);
                     }
                     history.setName(inventor.getName());

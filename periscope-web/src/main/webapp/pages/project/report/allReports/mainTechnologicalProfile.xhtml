@@ -19,13 +19,7 @@
             <h:form id="chart" styleClass="container">
                 <i:filtro controller="#{mainIPCController}" applicantAutoComplete="true" ipcBooleanCheckBox="true" filter="8"/>
 
-
-
-                   
-
                 <h:panelGrid id="tudo" columns="2" styleClass="container">
-
-
 
                     <p:barChart id="horizontal" value="#{mainIPCController.model}" rendered="#{mainIPCController.model.series.get(0).getData().size()!=0}"
                                 orientation="horizontal" legendPosition="e" datatipFormat="%s"

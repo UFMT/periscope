@@ -17,6 +17,71 @@
                     <h1>#{msgs['edit.patent']}</h1>
                 </h:panelGroup>
             </center>
+            <h:form style="width: 100%"  id="insertInventor">
+                <p:dialog id="addInventor" widgetVar="inventorAddDialog" modal="true"
+                          appendToBody="false" header="#{msgs['add.inventor']}" resizable="true" dynamic="true">
+
+                    <h:panelGrid id="panel" border="0" columns="2">
+                        <h:outputLabel value="#{msgs['name']} :  " style="font-weight:bold" />
+                        <p:inputText value="#{patentController.newInventor.name}"/>
+                        <h:outputLabel value="#{msgs['country']} :  " style="font-weight:bold"/>				
+                        <p:selectOneMenu value="#{patentController.newInventor.country.acronym}">
+                            <f:selectItems value="#{patentController.countries}" var="country" 
+                                           itemValue="#{country.acronym}" itemLabel="#{country.name}"/>					
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                    <p:spacer height="25"/>
+                    <center>
+                        <p:commandButton  value="#{msgs['add']}" update=":#{p:component('inventors')},panel" class="btn-info"
+                                          partialSubmit="true" process=":#{p:component('insertInventor')}" action="#{patentController.createNewInventor()}" 
+                                          oncomplete="inventorAddDialog.hide()" />
+                    </center>
+
+                </p:dialog>
+            </h:form>
+            <h:form id="insertApplicant">
+                <p:dialog id="addNewApplicant" widgetVar="applicantAddDialog" modal="true"
+                          header="#{msgs['add.applicant']}" resizable="true" dynamic="true">
+                    <h:panelGrid id="panelApplicant" border="0" columns="2">
+                        <h:outputLabel value="#{msgs['name']} :  " style="font-weight:bold"/>
+                        <p:inputText value="#{patentController.newApplicant.name}"/>
+                        <h:outputLabel value="#{msgs['country']} :  " style="font-weight:bold"/>				
+                        <p:selectOneMenu value="#{patentController.newApplicant.country.acronym}">
+                            <f:selectItems value="#{patentController.countries}" var="country" 
+                                           itemValue="#{country.acronym}" itemLabel="#{country.name}"/>					
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                    <p:spacer height="25"/>
+                    <center>
+                        <p:commandButton value="#{msgs['add']}" update=":#{p:component('applicants')},panelApplicant" class="btn-info"
+                                         partialSubmit="true" process=":#{p:component('insertApplicant')}" 
+                                         action="#{patentController.createNewApplicant()}" oncomplete="applicantAddDialog.hide()"/>
+                    </center>
+
+                </p:dialog>
+            </h:form>
+            <h:form id="insertPriority">
+                <p:dialog id="addPriority" widgetVar="priorityAddDialog" modal="true"
+                          header="#{msgs['add.priority']}" resizable="true" dynamic="true" >
+                    <h:panelGrid id="panelPriority" border="0" columns="2">
+                        <h:outputLabel value="#{msgs['value']} :  " style="font-weight:bold" />
+                        <p:inputText value="#{patentController.newPriority.value}" />
+                        <h:outputLabel value="#{msgs['date']} :  " style="font-weight:bold" />
+                        <p:calendar value="#{patentController.newPriority.date}" navigator="true"/>
+                        <h:outputLabel value="#{msgs['country']} :  " style="font-weight:bold"/>				
+                        <p:selectOneMenu value="#{patentController.newPriority.country.acronym}">
+                            <f:selectItems value="#{patentController.countries}" var="country" 
+                                           itemValue="#{country.acronym}" itemLabel="#{country.name}"/>					
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                    <p:spacer height="25"/>
+                    <center>
+                        <p:commandButton value="#{msgs['add']}" update=":#{p:component('prioridades')},panelPriority" class="btn-info"
+                                         partialSubmit="true" process=":#{p:component('insertPriority')}" action="#{patentController.addPriority()}" 
+                                         onclick="priorityAddDialog.hide()"/>
+                    </center>
+                </p:dialog>
+            </h:form>
             <h:form style="width: 100%">
                 <p:fieldset  toggleable="true" toggleSpeed="500" legend="#{msgs['header']}" style="width: 97%">
                     <h:panelGrid border="0" columns="2" style="width: 100%" columnClasses="panelHalf,panelHalf">
@@ -28,11 +93,11 @@
                                          style="color: #000000"
                                          requiredMessage="#{msgs['application.number']} #{msgs['obligatory.field']}"/>
                             <h:outputLabel value="#{msgs['application.date']} : " style="font-weight: bold"/>
-                            <p:calendar value="#{patentController.selectedPatent.applicationDate}" navigator="true"/>
+                            <p:calendar value="#{patentController.selectedPatent.applicationDate}" navigator="true" yearRange="1900:2050"/>
                             <h:outputLabel value="#{msgs['publication.number']} : " style="font-weight: bold"/>
                             <p:inputText value="#{patentController.selectedPatent.publicationNumber}"/>
                             <h:outputLabel value="#{msgs['publication.date']} : " style="font-weight: bold"/>
-                            <p:calendar value="#{patentController.selectedPatent.publicationDate}" navigator="true"/>
+                            <p:calendar value="#{patentController.selectedPatent.publicationDate}" navigator="true" yearRange="1900:2050"/>
                             <h:outputLabel value="#{msgs['title']}* : " style="font-weight:bold" />
                             <p:inputTextarea value="#{patentController.selectedPatent.titleSelect}" required="true" 
                                              style="color: #000000"
@@ -70,26 +135,7 @@
                             </p:dataTable>
                         </h:panelGrid>
                     </h:panelGrid>
-                    <p:dialog id="addPriority" widgetVar="priorityAddDialog" modal="true"
-                              header="#{msgs['add.priority']}" resizable="true" dynamic="true" >
-                        <h:panelGrid border="0" columns="2">
-                            <h:outputLabel value="#{msgs['value']} :  " style="font-weight:bold" />
-                            <p:inputText value="#{patentController.newPriority.value}" />
-                            <h:outputLabel value="#{msgs['date']} :  " style="font-weight:bold" />
-                            <p:calendar value="#{patentController.newPriority.date}" navigator="true"/>
-                            <h:outputLabel value="#{msgs['country']} :  " style="font-weight:bold"/>				
-                            <p:selectOneMenu value="#{patentController.newPriority.country.acronym}">
-                                <f:selectItems value="#{patentController.countries}" var="country" 
-                                               itemValue="#{country.acronym}" itemLabel="#{country.name}"/>					
-                            </p:selectOneMenu>
-                        </h:panelGrid>
-                        <p:spacer height="25"/>
-                        <center>
-                            <p:commandButton value="#{msgs['add']}" update="prioridades" class="btn-info"
-                                             action="#{patentController.addPriority()}" 
-                                             onclick="priorityAddDialog.hide()"/>
-                        </center>
-                    </p:dialog>
+
                 </p:fieldset>
                 <p:fieldset toggleable="true" toggleSpeed="500" legend="#{msgs['applicants']}" style="width: 97%">
                     <p:commandButton value="#{msgs['new.applicant']}" action="#{patentController.doApplicant()}" 
@@ -151,29 +197,11 @@
                         </p:dataTable>
                     </h:panelGrid>
                     <br/>
-                    <p:dialog id="addNewApplicant" widgetVar="applicantAddDialog" modal="true"
-                              header="#{msgs['add.applicant']}" resizable="true" dynamic="true">
-                        <h:panelGrid border="0" columns="2">
-                            <h:outputLabel value="#{msgs['name']} :  " style="font-weight:bold"/>
-                            <p:inputText value="#{patentController.newApplicant.name}"/>
-                            <h:outputLabel value="#{msgs['country']} :  " style="font-weight:bold"/>				
-                            <p:selectOneMenu value="#{patentController.newApplicant.country.acronym}">
-                                <f:selectItems value="#{patentController.countries}" var="country" 
-                                               itemValue="#{country.acronym}" itemLabel="#{country.name}"/>					
-                            </p:selectOneMenu>
-                        </h:panelGrid>
-                        <p:spacer height="25"/>
-                        <center>
-                            <p:commandButton value="#{msgs['add']}" update="applicants" class="btn-info"
-                                             action="#{patentController.createNewApplicant()}" 
-                                             oncomplete="applicantAddDialog.hide()"/>
-                        </center>
 
-                    </p:dialog>
                 </p:fieldset>
                 <p:fieldset  toggleable="true" toggleSpeed="500" legend="#{msgs['inventors']}" style="width: 97%">
                     <p:commandButton value="#{msgs['new.inventor']}" action="#{patentController.doInventor()}"
-                                     class="btn-info" oncomplete="inventorAddDialog.show()"/>
+                                     class="btn-info" oncomplete="inventorAddDialog.show()" />
                     <h:panelGrid id="inventors" border="0" columns="2" style="width: 100%" 
                                  columnClasses="panelHalf, panelHalf">
                         <p:dataTable id="currentInventors" var="inventor" style="font-size:0.77em; width: 95%"
@@ -233,24 +261,7 @@
                         </p:dataTable>
                     </h:panelGrid>
                     <br/>
-                    <p:dialog id="addInventor" widgetVar="inventorAddDialog" modal="true"
-                              header="#{msgs['add.inventor']}" resizable="true" dynamic="true">
-                        <h:panelGrid border="0" columns="2">
-                            <h:outputLabel value="#{msgs['name']} :  " style="font-weight:bold" />
-                            <p:inputText value="#{patentController.newInventor.name}"/>
-                            <h:outputLabel value="#{msgs['country']} :  " style="font-weight:bold"/>				
-                            <p:selectOneMenu value="#{patentController.newInventor.country.acronym}">
-                                <f:selectItems value="#{patentController.countries}" var="country" 
-                                               itemValue="#{country.acronym}" itemLabel="#{country.name}"/>					
-                            </p:selectOneMenu>
-                        </h:panelGrid>
-                        <p:spacer height="25"/>
-                        <center>
-                            <p:commandButton value="#{msgs['add']}" update="inventors" class="btn-info"
-                                             action="#{patentController.createNewInventor()}" 
-                                             oncomplete="inventorAddDialog.hide()"/>
-                        </center>
-                    </p:dialog>
+
                 </p:fieldset>
 
                 <center>
@@ -357,6 +368,7 @@
                     </center>
                 </p:dialog>
             </h:form>
+
         </ui:define>
     </ui:composition>
 </html>
