@@ -150,7 +150,11 @@ public class ApplicantHarmonizationController implements Serializable {
     }
 
     private void searchState(String acronym) {
-        Country country = countryRepository.getCountryByAcronym(acronym);
+        Country country;
+        if (!acronym.contentEquals(""))
+            country = countryRepository.getCountryByAcronym(acronym);
+        else
+            country = countryRepository.getCountryByAcronym("BR");
         states = country.getStates();
         Collections.sort(states);
     }
