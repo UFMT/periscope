@@ -167,6 +167,20 @@
         <converter-id>applicantsConverter</converter-id>
         <converter-class>br.ufmt.periscope.converter.ApplicantsConverter</converter-class>
     </converter>
-
-    
+    <navigation-rule>
+        <from-view-id>/pages/project/editProject.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>projectList</from-outcome>
+            <to-view-id>/pages/project/projectList.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/pages/project/harmonization/applicantRuleEdit.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>ruleList</from-outcome>
+            <to-view-id>/pages/project/harmonization/ruleList.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>
