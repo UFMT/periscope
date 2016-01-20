@@ -4,6 +4,8 @@ import br.ufmt.periscope.enumerated.ClassificationType;
 import br.ufmt.periscope.importer.PatentImporter;
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Classification;
+import br.ufmt.periscope.model.Country;
+import br.ufmt.periscope.model.History;
 import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.repository.CountryRepository;
@@ -94,7 +96,10 @@ public class PATENTSCOPEPatentImporter implements PatentImporter {
     }
 
     private void fillPatent(int columnIndex, String contentString) {
-
+        Country nullCountry = new Country();
+        nullCountry.setAcronym("");
+        nullCountry.setName("");
+        nullCountry.setStates(null);
         switch (columnIndex) {
             case 0:
                 patent.setPublicationCountry(countryRepository.getCountryByAcronym(contentString.substring(0, 2)));
@@ -124,16 +129,31 @@ public class PATENTSCOPEPatentImporter implements PatentImporter {
             case 5:
                 st = new StringTokenizer(contentString, ";");
                 List<Applicant> applicants = patent.getApplicants();
+                Applicant app;
+                History hist;
                 while (st.hasMoreTokens()) {
-                    applicants.add(new Applicant(st.nextToken().trim()));
+                    app = new Applicant(st.nextToken().trim());
+                    app.setCountry(nullCountry);
+                    hist = new History();
+                    hist.setName(app.getName());
+                    hist.setCountry(app.getCountry());
+                    app.setHistory(hist);
+                    applicants.add(app);
                 }
                 patent.setApplicants(applicants);
                 break;
             case 6:
                 st = new StringTokenizer(contentString, ";");
                 List<Inventor> inventors = patent.getInventors();
+                Inventor inv;
                 while (st.hasMoreTokens()) {
-                    inventors.add(new Inventor(st.nextToken().trim()));
+                    inv = new Inventor(st.nextToken().trim());
+                    inv.setCountry(nullCountry);
+                    hist = new History();
+                    hist.setName(inv.getName());
+                    hist.setCountry(inv.getCountry());
+                    inv.setHistory(hist);
+                    inventors.add(inv);
                 }
                 patent.setInventors(inventors);
                 break;
