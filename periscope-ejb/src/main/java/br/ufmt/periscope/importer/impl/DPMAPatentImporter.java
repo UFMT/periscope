@@ -39,17 +39,23 @@ public class DPMAPatentImporter implements PatentImporter {
     public boolean initWithStream(InputStream is) {
         InputStreamReader isr = new InputStreamReader(is);
         bur = new BufferedReader(isr);
-        //Passa o cabeçalho
-        nextLine();
-        //Inicia na primeira linha dos dados
-        nextLine();
-        if (testLine(line)) {
-            patent = new Patent();
-            return true;
-        } else {
-            return false;
-        }
+        try {
+            if (!bur.readLine().matches("\"Title.*")) {
+                //Passa o cabeçalho
+                nextLine();
+                //Inicia na primeira linha dos dados
+                nextLine();
+                if (testLine(line)) {
+                    patent = new Patent();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        } catch (IOException ex) {
 
+        }
+        return false;
     }
 
     @Override

@@ -222,8 +222,8 @@ public class ApplicantHarmonizationController implements Serializable {
                 }
             }
         }
-
-        if (rule.getNature().getName().contentEquals("")) {
+        
+        if (rule.getNature() == null|| rule.getNature().getName() == null || rule.getNature().getName().contentEquals("")) {
             rule.setNature(null);
         }
         rule.setCountry(countryRepository.getCountryByAcronym(rule.getCountry().getAcronym()));

@@ -10,17 +10,20 @@
 
         <ui:define name="content">
             <center>
-                <h:form enctype="multipart/form-data">
+                <h:form id="form" enctype="multipart/form-data" >
                     <center><h1>#{msgs['import.data']}</h1></center>
                     <p:panel id="pnlImport" style="font">
 
-                        
-                        <h:panelGrid columns="3">
-                            <p:outputLabel>#{msgs['file.origin']} :</p:outputLabel>
+                        <h:panelGrid columns="4" id="origins" style="width: 100%;text-align: center">
+                            <h:panelGrid style="width: 120px" rendered="#{not importPatentController.stepOne}"/>
+                            <p:outputLabel style="float: left;font-size: 14px;background-color: #0092dc;display: 
+                                           block;border-radius: 5px;padding: 5px;width: 120px;color: #fff" 
+                                           rendered="#{importPatentController.stepOne}" >#{msgs['step.one']}</p:outputLabel>
+                            <p:outputLabel >#{msgs['file.origin']} :</p:outputLabel>
                             <p:selectOneMenu value="#{importPatentController.fileOrigin}">
                                 <f:selectItems value="#{importPatentController.origins}" />
                             </p:selectOneMenu>
-                            <p:panel toggleOrientation="vertical">
+                            <p:panel id="pnl" toggleOrientation="vertical">
                                 <p:outputLabel style="font-weight: bold">#{msgs['supported.files']}</p:outputLabel>
                                 <p:outputLabel id="espacenetHelp"><h4><a href="http://worldwide.espacenet.com/" target="_blank "> ESPACENET</a></h4> .csv e .xls</p:outputLabel>
                                 <p:tooltip for="espacenetHelp">
@@ -33,35 +36,52 @@
                                     <p:outputLabel value="#{msgs['dpma.help']}" escape="false"/>
                                     <p:graphicImage value="/imgs/dpmaHelp.png"/>
                                 </p:tooltip>
-                                    <p:outputLabel id="patentscopeHelp"><h4><a  target="_blank "> PATENTSCOPE</a></h4> .xls</p:outputLabel>
-<!--                                    <p:tooltip for="dpmaHelp">
-                                    <p:outputLabel value="#{msgs['dpma.help']}" escape="false"/>
-                                    <p:graphicImage value="/imgs/dpmaHelp.png"/>
-                                </p:tooltip>-->
+                                <p:outputLabel id="patentscopeHelp"><h4><a  target="_blank "> PATENTSCOPE</a></h4> .xls</p:outputLabel>
+                                <!--                                    <p:tooltip for="dpmaHelp">
+                                                                    <p:outputLabel value="#{msgs['dpma.help']}" escape="false"/>
+                                                                    <p:graphicImage value="/imgs/dpmaHelp.png"/>
+                                                                </p:tooltip>-->
+
                             </p:panel>
                         </h:panelGrid>
-
+                        <p:commandButton value="#{msgs['next']}" id="steptwo"
+                                         action="#{importPatentController.nextStep()}"
+                                         update="pnlImport" disabled="#{not importPatentController.stepOne}"/> 
                         <br/>
-                        
-                        <p:fileUpload id="fileUpload" label="#{msgs['choose.files']}"
-                                      uploadLabel="#{msgs['upload.files']}" cancelLabel="#{msgs['cancel']}"
-                                      fileUploadListener="#{importPatentController.handleFileUpload}"
-                                      mode="advanced"
-                                      allowTypes="/(.csv|.xls)$/"
-                                      multiple="true"
-                                      update="messages">
+                        <h:panelGrid columns="3" id="files" style="width: 100%" columnClasses="colstyle3,colstyle2,colstyle3">
+                            <h:panelGrid style="width: 130px" rendered="#{not importPatentController.stepTwo}"/>
+                            <p:outputLabel style="width: 130px;float: left;display: block;background-color: #0092dc;
+                                           border-radius: 5px;padding: 5px;font-size: 14px;color: #fff" rendered="#{importPatentController.stepTwo}">#{msgs['step.two']}</p:outputLabel>
+                            <p:fileUpload id="fileUpload" label="#{msgs['choose.files']}"
+                                          uploadLabel="#{msgs['upload.files']}" cancelLabel="#{msgs['cancel']}"
+                                          fileUploadListener="#{importPatentController.handleFileUpload}"
+                                          mode="advanced" disabled="#{not importPatentController.stepTwo}" allowTypes="/(.csv|.xls)$/"
+                                          multiple="true" update="messages pnlImport">
+                            </p:fileUpload>
+                            <p:outputLabel />
+                        </h:panelGrid>
 
-                        </p:fileUpload>
-                        
                         <br/>					
-		
-                        <p:commandButton id="btnImport"  ajax="#{not empty currentProject.patents}" value="#{msgs['import']}" update="messages :superbody" action="#{importPatentController.importPatents()}"/>
+                        <h:panelGrid columns="3" id="importPanel" style="width: 100%" columnClasses="colstyle,colstyle,colstyle">
+                            <h:panelGrid style="width: 100px" rendered="#{not importPatentController.stepThree}"/>
+                            <p:outputLabel style="width: 100px;float: left;display: block;color: #fff;
+                                           background-color: #0092dc;border-radius: 5px;padding: 5px;font-size: 14px" 
+                                           rendered="#{importPatentController.stepThree}">#{msgs['step.three']}</p:outputLabel>
+                            <p:commandButton id="btnImport" disabled="#{not importPatentController.stepThree}" 
+                                             ajax="#{not empty currentProject.patents}" value="#{msgs['import']}" 
+                                             update="messages pnlImport"
+                                             action="#{importPatentController.importPatents()}"/>
+                            <p:outputLabel />
+                        </h:panelGrid>
                         <p:growl id="messages" showDetail="true" />
                     </p:panel>
-
+                    
                 </h:form>
+
             </center>
+            
         </ui:define>
 
     </ui:composition>
+
 </html>

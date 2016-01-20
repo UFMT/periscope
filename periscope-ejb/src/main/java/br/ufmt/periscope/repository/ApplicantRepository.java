@@ -49,14 +49,13 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.util.Version;
 
-
 @ViewScoped
 /**
  * This class have the methods with the queries for Applicant
  */
 @Named
 public class ApplicantRepository {
-    
+
     private @Inject
     Datastore ds;
     private @Inject
@@ -72,8 +71,9 @@ public class ApplicantRepository {
 
     /**
      * Method that query an applicant by its name.
+     *
      * @param name String - Name of the applicant to be got.
-     * @return Applicant 
+     * @return Applicant
      */
     public Applicant getApplicantByName(String name) {
 
@@ -99,9 +99,10 @@ public class ApplicantRepository {
         return null;
 
     }
-    
+
     /**
      * Method responsible to get the applicants from database.
+     *
      * @param project Project - Project in which the applicant most be searched.
      * @return List&lt;String&gt; - List with the applicants queried.
      */
@@ -137,14 +138,14 @@ public class ApplicantRepository {
         return ret;
     }
 
-
     /**
      * Method responsible to get the applicants from database.
+     *
      * @param project Project - Project in which the applicant most be searched.
      * @param begins String - The applicant name must begins with this string
      * @return List&lt;String&gt; - List with the applicants queried.
      */
-    public List<String> getApplicants(Project project,String begins) {
+    public List<String> getApplicants(Project project, String begins) {
         ArrayList<DBObject> parametros = new ArrayList<DBObject>();
         DBObject matchProject = new BasicDBObject("$match", new BasicDBObject("project.$id", project.getId()).append("blacklisted", false));
         DBObject unwind = new BasicDBObject("$unwind", "$applicants");
@@ -171,6 +172,7 @@ public class ApplicantRepository {
 
     /**
      * Method responsible to update the mainApplicant collection with MapReduce.
+     *
      * @param currentProject Project - Current Project.
      * @param filtro Filters - filters to be applied in the query.
      */
@@ -216,11 +218,15 @@ public class ApplicantRepository {
     }
 
     /**
-     * Method responsible for searching with <i>LUCENE</i> the suggestions of Applicants for the harmonization.
-     * @param project Project - Project where the suggestions should be searched.
+     * Method responsible for searching with <i>LUCENE</i> the suggestions of
+     * Applicants for the harmonization.
+     *
+     * @param project Project - Project where the suggestions should be
+     * searched.
      * @param top int - Maximum amount of names to be returned.
      * @param names String - Names of applicants to be queried.
-     * @return Set&lt;String&gt; - Set of applicants names suggested by the query
+     * @return Set&lt;String&gt; - Set of applicants names suggested by the
+     * query
      */
     public Set<String> getApplicantSugestions(Project project, int top, String... names) {
         Set<String> results = new HashSet<String>();
@@ -243,7 +249,7 @@ public class ApplicantRepository {
                 valor = valor.trim();
                 stream.end();
                 stream.close();
-                BooleanQuery query = new BooleanQuery();                
+                BooleanQuery query = new BooleanQuery();
                 Query fastQuery = new FastJoinQuery("applicant", valor, 0.6f, 0.6f);
                 query.add(queryProject, BooleanClause.Occur.MUST);
                 query.add(fastQuery, BooleanClause.Occur.MUST);
@@ -272,14 +278,19 @@ public class ApplicantRepository {
     }
 
     /**
-     * Method responsible to search the data to fill the LazyTable of <b>Applicants</b>
+     * Method responsible to search the data to fill the LazyTable of
+     * <b>Applicants</b>
+     *
      * @param first int - The offset of the query.
      * @param pageSize int - The limit of applicant in each page.
      * @param sortField String - Name of the column to be sorted.
      * @param sortOrder int - The Sort order of the column.
-     * @param filters Map&lt;String, String&gt; - Map with the column and values of the filters in the table.
-     * @param list List&lt;Applicant&gt; - List with the applicants that should not be queried.
-     * @return List&lt;Applicant&gt; - List of the applicants to be put in the table.
+     * @param filters Map&lt;String, String&gt; - Map with the column and values
+     * of the filters in the table.
+     * @param list List&lt;Applicant&gt; - List with the applicants that should
+     * not be queried.
+     * @return List&lt;Applicant&gt; - List of the applicants to be put in the
+     * table.
      */
     public List<Applicant> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters, List<Applicant> list) {
 
@@ -395,7 +406,9 @@ public class ApplicantRepository {
             DBObject aux = (DBObject) patent;
             DBObject result = (DBObject) aux.get("_id");
             Applicant applicant = new Applicant();
-            applicant.setName(result.get("name").toString());
+            if (result.get("name") != null) {
+                applicant.setName(result.get("name").toString());
+            }
             if (result.get("acronym") != null) {
                 applicant.setAcronym(result.get("acronym").toString());
             }
@@ -437,14 +450,18 @@ public class ApplicantRepository {
         return datasource;
     }
 
-     /**
-     * Method responsible to search the data to fill the LazyTable of <b>Applicants</b>
+    /**
+     * Method responsible to search the data to fill the LazyTable of
+     * <b>Applicants</b>
+     *
      * @param first int - The offset of the query.
      * @param pageSize int - The limit of applicant in each page.
      * @param sortField String - Name of the column to be sorted.
      * @param sortOrder int - The Sort order of the column.
-     * @param filters Map&lt;String, String&gt; - Map with the column and values of the filters in the table.
-     * @return List&lt;Applicant&gt; - List of the applicants to be put in the table.
+     * @param filters Map&lt;String, String&gt; - Map with the column and values
+     * of the filters in the table.
+     * @return List&lt;Applicant&gt; - List of the applicants to be put in the
+     * table.
      */
     public List<Applicant> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters) {
         return load(first, pageSize, sortField, sortOrder, filters, null);
@@ -452,6 +469,7 @@ public class ApplicantRepository {
 
     /**
      * Method responsible to verify the existence of an applicant in a project.
+     *
      * @param applicant - Applicant to be verified.
      * @return boolean - The existence or not of an applicant in a project.
      */

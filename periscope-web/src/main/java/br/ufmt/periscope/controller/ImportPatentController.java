@@ -24,6 +24,8 @@ import com.github.jmkgreen.morphia.Datastore;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import javax.faces.event.ValueChangeEvent;
 
 /**
  * - @ManagedBean<BR/>
@@ -47,7 +49,11 @@ public class ImportPatentController implements Serializable {
     private String fileOrigin;
     private String[] origins = null;
     private List<UploadedFile> uploadAttachment = new ArrayList<UploadedFile>();
-
+    private boolean stepOne = true;
+    private boolean stepTwo = false;
+    private boolean stepThree = false;
+    
+    
     /**
      * Método pós construtor que atualiza os importadores existentes
      */
@@ -57,9 +63,12 @@ public class ImportPatentController implements Serializable {
     }
 
     /**
-     * Método chamado para efetivamente fazer a importação das patente a partir dos arquivos selecionados
+     * Método chamado para efetivamente fazer a importação das patente a partir
+     * dos arquivos selecionados
      */
     public void importPatents() {
+        nextStep();
+        
         if (uploadAttachment == null || uploadAttachment.isEmpty()) {
             FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Nenhum arquivo foi enviado.");
             FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -68,16 +77,19 @@ public class ImportPatentController implements Serializable {
                 boolean imported = true;
                 List<String> errors = new ArrayList<String>();
                 for (UploadedFile file : uploadAttachment) {
-                    System.out.println("For");
                     InputStream is = file.getInputstream();
                     PatentImporter importer = importerFactory.getImporter(fileOrigin);
-                    if (importer.initWithStream(is)) {
-                        patentRepository.savePatentToDatabase(importer, currentProject);
-                        System.out.println("IF");
+                    if (!file.getFileName().contains("csv") || !importer.provider().equals("PATENSCOPE")
+                            && (!file.getFileName().contains("xls") || !importer.provider().equals("DPMA"))) {
+                        if (importer.initWithStream(is)) {
+                            patentRepository.savePatentToDatabase(importer, currentProject);
+                        } else {
+                            imported = false;
+                            errors.add(file.getFileName());
+                        }
                     } else {
                         imported = false;
                         errors.add(file.getFileName());
-                        System.out.println("ELSE");
                     }
                 }
                 if (imported) {
@@ -99,13 +111,17 @@ public class ImportPatentController implements Serializable {
 
     /**
      * Método responsável por lidar com o upload dos arquivos
+     *
      * @param event
      */
     public void handleFileUpload(FileUploadEvent event) {
         uploadAttachment.add(event.getFile());
         FacesMessage msg = new FacesMessage("Sucesso", event.getFile().getFileName() + " foi enviado.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
+        stepTwo = false;
+        stepThree = true;
     }
+       
 
     /**
      *
@@ -147,4 +163,36 @@ public class ImportPatentController implements Serializable {
         this.uploadAttachment = uploadAttachment;
     }
 
+    public boolean isStepOne() {
+        return stepOne;
+    }
+
+    public void setStepOne(boolean stepOne) {
+        this.stepOne = stepOne;
+    }
+    
+    public void nextStep(){
+        this.stepThree = !stepOne && stepTwo;
+        this.stepTwo = !stepThree && stepOne; 
+        this.stepOne = !stepThree && !stepOne;
+        
+    }
+
+    public boolean isStepTwo() {
+        return stepTwo;
+    }
+
+    public void setStepTwo(boolean stepTwo) {
+        this.stepTwo = stepTwo;
+    }
+
+    public boolean isStepThree() {
+        return stepThree;
+    }
+
+    public void setStepThree(boolean stepThree) {
+        this.stepThree = stepThree;
+    }
+
+    
 }

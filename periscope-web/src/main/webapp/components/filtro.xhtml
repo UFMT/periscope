@@ -42,13 +42,13 @@
                     </p:calendar>
 
                     <p:outputLabel value="#{msgs['inventors']}:" rendered="#{inventorAutoComplete}"/> 
-                    <p:autoComplete rendered="#{inventorAutoComplete}" minQueryLength="1" value="#{mainIPCController.filtro.inventorName}" completeMethod="#{mainInventorController.getInventors}" effect="fade">
+                    <p:autoComplete rendered="#{inventorAutoComplete}" minQueryLength="1" global="false" value="#{mainIPCController.filtro.inventorName}" completeMethod="#{mainInventorController.getInventors}" effect="fade">
                         <p:ajax update=":#{p:component('tudo')},@this" event="itemSelect"
                                 listener="#{mainIPCController.update()}" />
                     </p:autoComplete>
 
                     <p:outputLabel value="#{msgs['applicants']}:" rendered="#{applicantAutoComplete}"/> 
-                    <p:autoComplete rendered="#{applicantAutoComplete}" minQueryLength="1" value="#{mainIPCController.filtro.applicantName}" completeMethod="#{report.getApplicants}" effect="fade">
+                    <p:autoComplete rendered="#{applicantAutoComplete}" minQueryLength="1" global="false" value="#{mainIPCController.filtro.applicantName}" completeMethod="#{report.getApplicants}" effect="fade">
                         <p:ajax update=":#{p:component('tudo')},@this" event="itemSelect"
                                 listener="#{mainIPCController.update()}"/>
                     </p:autoComplete>

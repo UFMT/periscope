@@ -61,7 +61,7 @@ public class ESPACENETPatentImporter implements PatentImporter {
             cloneInputStream(is);
             isr = new InputStreamReader(fileDetect);
             br = new BufferedReader(isr);
-
+            
             //Detectando o tipo de arquivo, a primeira linha do CSV sempre começa com "Title" ...
             if (!br.readLine().matches("\"Title.*")) {
                 fileType = "xls";
@@ -70,7 +70,7 @@ public class ESPACENETPatentImporter implements PatentImporter {
                 fileType = "csv";
                 next();
             }
-
+            
         } catch (IOException ex) {
             //Se entrar aqui é porque o arquivo não está no padrão
             Logger.getLogger(ESPACENETPatentImporter.class.getName()).log(Level.SEVERE, null, ex);

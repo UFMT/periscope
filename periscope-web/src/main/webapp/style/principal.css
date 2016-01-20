@@ -62,3 +62,22 @@ body {
 .ui-autocomplete-input{
     width: 500px;
 }
+
+.colstyle{
+    width: 33%;
+    text-align: center
+}
+
+.colstyle2{
+    width: 60%;
+    text-align: center
+}
+
+.colstyle3{
+    width: 20%;
+    text-align: center
+}
+
+.fileupload-content .start{
+    display: none !important;
+}

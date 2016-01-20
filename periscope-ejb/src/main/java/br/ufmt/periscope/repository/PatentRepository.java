@@ -84,10 +84,19 @@ public class PatentRepository {
     }
 
     public boolean patentExistsForProject(Patent patent, Project project) {
-        return ds.find(Patent.class)
+        boolean exists;
+        if(patent.getPublicationNumber() != null && !patent.getPublicationNumber().equals("")){
+            exists = ds.find(Patent.class)
                 .field("publicationNumber").equal(patent.getPublicationNumber())
                 .field("project").equal(project)
                 .countAll() > 0;
+        }else{
+            exists = ds.find(Patent.class)
+                .field("applicationNumber").equal(patent.getApplicationNumber())
+                .field("project").equal(project)
+                .countAll() > 0;
+        }
+        return exists;
     }
 
     public void sendPatentToBlacklist(Patent patent) {
@@ -99,6 +108,7 @@ public class PatentRepository {
     public void savePatent(Patent patent) {
         validator.validate(patent);
         patentIndexer.indexPatent(patent);
+        System.out.println("1");
         ds.save(patent);
     }
 
