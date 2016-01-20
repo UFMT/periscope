@@ -55,7 +55,7 @@ public class LuceneIndexerResources {
             iw = new IndexWriter(dir, config);
         } catch (LockObtainFailedException ex) {
             Logger.getLogger(LuceneIndexerResources.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+            } catch (IOException ex) {
             Logger.getLogger(LuceneIndexerResources.class.getName()).log(Level.SEVERE, null, ex);
         }
         return iw;
