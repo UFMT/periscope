@@ -133,16 +133,23 @@ public class DPMAPatentImporter implements PatentImporter {
             if (1 < array.length) {
                 inventor.setCountry(countryRepository.getCountryByAcronym(array[1].substring(0, 2)));
             }
+            if (inventor.getCountry() == null || inventor.getCountry().getName() == null) {
+                inventor.setCountry(nulCountry);
+            }
+            history.setName(inventor.getName());
+            history.setCountry(inventor.getCountry());
+            inventor.setHistory(history);
             listInventors.add(inventor);
             for (int i = 1; i < array.length; i++) {
                 if (array[i].trim().length() > 3) {
 
                     inventor = new Inventor();
+                    history = new History();
                     inventor.setName(array[i].substring(2).trim());
                     if (i + 1 < array.length) {
                         inventor.setCountry(countryRepository.getCountryByAcronym(array[i + 1].substring(0, 2)));
                     }
-                    if (inventor.getCountry() == null) {
+                    if (inventor.getCountry() == null || inventor.getCountry().getName() == null) {
                         inventor.setCountry(nulCountry);
                     }
                     history.setName(inventor.getName());
@@ -170,15 +177,22 @@ public class DPMAPatentImporter implements PatentImporter {
             if (1 < array.length) {
                 applicant.setCountry(countryRepository.getCountryByAcronym(array[1].substring(0, 2)));
             }
+            if (applicant.getCountry() == null || applicant.getCountry().getName() == null) {
+                applicant.setCountry(nulCountry);
+            }
+            history.setName(applicant.getName());
+            history.setCountry(applicant.getCountry());
+            applicant.setHistory(history);
             listPa.add(applicant);
             for (int i = 1; i < array.length; i++) {
                 if (array[i].trim().length() > 3) {
                     applicant = new Applicant();
+                    history = new History();
                     applicant.setName(array[i].substring(2).trim());
                     if (i + 1 < array.length) {
                         applicant.setCountry(countryRepository.getCountryByAcronym(array[i + 1].substring(0, 2)));
                     }
-                    if (applicant.getCountry() == null) {
+                    if ((applicant.getCountry() == null || applicant.getCountry().getName() == null)) {
                         applicant.setCountry(nulCountry);
                     }
                     history.setName(applicant.getName());
