@@ -59,7 +59,8 @@ public class Patent {
     private Boolean shared = false;
     @Reference
     private Project project;
-
+    private String classification;
+        
     public ObjectId getId() {
         return id;
     }
@@ -271,4 +272,11 @@ public class Patent {
         }
     }
 
+    public String getClassification() {
+        return classification;
+    }
+
+    public void setClassification(String classification) {
+        this.classification = classification;
+    }
 }

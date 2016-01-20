@@ -38,20 +38,20 @@
 
                         </f:facet>
 
-                        <p:column headerText="#{msgs['country']}" style="width: 3%">
+                        <p:column headerText="#{msgs['country']}" sortBy="#{item.publicationCountry}" style="width: 3%">
                             <center>#{item.applicationNumber.substring(0, 2)}</center>
                         </p:column>
-                        <p:column headerText="#{msgs['title']}" filterBy="#{item.titleSelect}" style="width: 24%">
+                        <p:column headerText="#{msgs['title']}" sortBy="#{item.titleSelect}" filterBy="#{item.titleSelect}" style="width: 24%">
                             <center>#{item.titleSelect}</center>
                         </p:column>	
                         <p:column headerText="#{msgs['publication.date']}" sortBy="#{item.publicationDate}" style="width: 8%">														
                             <center>#{item.publicationDate.toLocaleString().substring(0, 10)}</center>
                         </p:column>
-                        <p:column headerText="#{msgs['classification']}" style="width: 10%">							
+                        <p:column headerText="#{msgs['classification']}" sortBy="#{item.classification}" style="width: 10%">							
                             <center>#{item.mainClassification.klass} 
                                 #{item.mainClassification.group}/#{item.mainClassification.subgroup}</center>
                         </p:column>
-                        <p:column headerText="#{msgs['application.number']}" style="width: 8%">														
+                        <p:column headerText="#{msgs['application.number']}" sortBy="#{item.applicationNumber}" style="width: 8%">														
                             <center>#{item.applicationNumber}</center>
                         </p:column>
                         <p:column headerText="#{msgs['applicants']}" style="width: 20%">

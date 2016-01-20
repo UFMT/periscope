@@ -83,7 +83,7 @@ public class PatentController {
     Inventor newInventor;
     private Boolean editing = false;
     private StreamedContent download;
-
+    
     /**
      * Metodo de pós contrução do Controller<BR/>
      * Carrega as patentes, países, depositantes e inventores do projeto
