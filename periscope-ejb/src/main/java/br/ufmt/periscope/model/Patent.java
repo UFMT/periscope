@@ -93,6 +93,8 @@ public class Patent {
     }
 
     public void setTitleSelect(String titleSelect) {
+        if(titleSelect != null)
+            titleSelect = titleSelect.toUpperCase();
         this.titleSelect = titleSelect;
     }
 
@@ -193,6 +195,7 @@ public class Patent {
     }
 
     public Country getApplicationCountry() {
+        //verifica a existencia do pais se tiver vazio, pegar do numero de aplicacao
         return applicationCountry;
     }
 

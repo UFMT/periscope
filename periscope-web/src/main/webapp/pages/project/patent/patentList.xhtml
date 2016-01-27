@@ -38,8 +38,8 @@
 
                         </f:facet>
 
-                        <p:column headerText="#{msgs['country']}" sortBy="#{item.publicationCountry}" style="width: 3%">
-                            <center>#{item.applicationNumber.substring(0, 2)}</center>
+                        <p:column headerText="#{msgs['country']}" sortBy="#{item.applicationCountry.acronym}" style="width: 3%">
+                            <center>#{item.applicationCountry.acronym}</center>
                         </p:column>
                         <p:column headerText="#{msgs['title']}" sortBy="#{item.titleSelect}" filterBy="#{item.titleSelect}" style="width: 24%">
                             <center>#{item.titleSelect}</center>
@@ -47,7 +47,7 @@
                         <p:column headerText="#{msgs['publication.date']}" sortBy="#{item.publicationDate}" style="width: 8%">														
                             <center>#{item.publicationDate.toLocaleString().substring(0, 10)}</center>
                         </p:column>
-                        <p:column headerText="#{msgs['classification']}" sortBy="#{item.classification}" style="width: 10%">							
+                        <p:column headerText="#{msgs['classification']}" sortBy="#{item.mainClassification}" style="width: 10%">							
                             <center>#{item.mainClassification.klass} 
                                 #{item.mainClassification.group}/#{item.mainClassification.subgroup}</center>
                         </p:column>
@@ -62,19 +62,7 @@
                             <center>#{item.inventors.size()}
                                 #{item.inventorsToString}</center>
                         </p:column>
-                        <!--                    <p:column>														
-                        #{item.prioritiesToString}					
-                    </p:column>-->
-
-                        <!-- 
-                        <p:column>
-                                <center>
-                                        <span class="label label-#{item.blacklisted ? 'inverse' : 'success'}">
-                        #{item.blacklisted ? 'Sim' : 'Não'}
-                </span>
-        </center>
-    </p:column>
-                        -->
+                        
                         <p:column headerText="#{msgs['actions']}" style="width: 8%">
                             <center>
 

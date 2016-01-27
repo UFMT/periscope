@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.model.SortOrder;
 import org.bson.types.ObjectId;
 
 @Named
@@ -189,7 +190,8 @@ public class PatentRepository {
         }
 
         if (sortField != null) {
-            query = query.order((sortOrder == 1 ? "-" : "") + sortField);
+            sortField = (sortOrder == 1 ? "-" : "") + sortField;
+            query = query.order(sortField);
         }
         for (Map.Entry<String, String> entry : filters.entrySet()) {
             String column = entry.getKey();
@@ -198,7 +200,7 @@ public class PatentRepository {
         }
         setRowCount((int) query.countAll());
         query.offset(first).limit(pageSize);
-        query.retrievedFields(true, "_id", "titleSelect", "mainClassification", "publicationDate", "applicationNumber", "applicants", "inventors", "blacklisted", "presentationFile", "patentInfo");
+        query.retrievedFields(true, "_id","applicationCountry", "titleSelect", "mainClassification", "publicationDate", "applicationNumber", "applicants", "inventors", "blacklisted", "presentationFile", "patentInfo");
         return query.asList();
     }
     public List<Patent> loadApplicantDocs(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters, String name) {

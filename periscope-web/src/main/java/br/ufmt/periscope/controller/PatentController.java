@@ -92,7 +92,7 @@ public class PatentController {
     @PostConstruct
     public void init() {
         patents.getRepo().setBlacklisted(false);
-        patents.getRepo().setCompleted(false);
+        patents.getRepo().setCompleted(true);
         patents.getRepo().setCurrentProject(currentProject);
         totalCount = patents.getRowCount();
         countries = countryRepository.getAll();
