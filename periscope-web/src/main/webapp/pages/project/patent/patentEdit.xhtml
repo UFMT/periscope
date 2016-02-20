@@ -84,12 +84,13 @@
             </h:form>
             <h:form style="width: 100%">
                 <p:fieldset  toggleable="true" toggleSpeed="500" legend="#{msgs['header']}" style="width: 97%">
+                    <p:messages autoUpdate="true"/>
                     <h:panelGrid border="0" columns="2" style="width: 100%" columnClasses="panelHalf,panelHalf">
                         <h:panelGrid border="0" columns="2" style="width: 95%">
                             <h:outputLabel value="#{msgs['language']} : " style="font-weight: bold"/>
                             <p:inputText value="#{patentController.selectedPatent.language}"/>
-                            <h:outputLabel value="#{msgs['application.number']}* : " style="font-weight: bold"/>
-                            <p:inputText value="#{patentController.selectedPatent.applicationNumber}" required="true"
+                            <h:outputLabel for="applicationNumber" value="#{msgs['application.number']}* : " style="font-weight: bold"/>
+                            <p:inputText id="applicationNumber" value="#{patentController.selectedPatent.applicationNumber}" required="true"
                                          style="color: #000000"
                                          requiredMessage="#{msgs['application.number']} #{msgs['obligatory.field']}"/>
                             <h:outputLabel value="#{msgs['application.date']} : " style="font-weight: bold"/>
