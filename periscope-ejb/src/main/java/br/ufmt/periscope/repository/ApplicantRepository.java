@@ -261,9 +261,9 @@ public class ApplicantRepository {
                     }
                 }
             }
-            for (String name : names) {
-                results.remove(name);
-            }
+//            for (String name : names) {
+//                results.remove(name);
+//            }
 
         } catch (CorruptIndexException e) {
             e.printStackTrace();
