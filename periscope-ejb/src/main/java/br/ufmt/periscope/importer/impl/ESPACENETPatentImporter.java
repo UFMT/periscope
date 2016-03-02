@@ -310,6 +310,7 @@ public class ESPACENETPatentImporter implements PatentImporter {
                 break;
             case 7:
                 patent.setApplicationNumber(contentString);
+                patent.setApplicationCountry(countryRepository.getCountryByAcronym(contentString.substring(0, 2).toUpperCase()));
                 break;
             case 8:
                 try {
@@ -439,6 +440,7 @@ public class ESPACENETPatentImporter implements PatentImporter {
                         break;
                     case 7:
                         patent.setApplicationNumber(contentString);
+                        patent.setApplicationCountry(countryRepository.getCountryByAcronym(contentString.substring(0, 2).toUpperCase()));
                         break;
                     case 8:
                         try {
@@ -479,7 +481,7 @@ public class ESPACENETPatentImporter implements PatentImporter {
         }
         patent.setPriorities(priorities);
         patent.setInventors(inventors);
-
+        
     }
 
     private void parseLineCSV() {
