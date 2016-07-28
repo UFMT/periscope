@@ -43,7 +43,7 @@
                     <p:separator/>
                 </h:column>
                 <h:column>	
-                    <p:dataTable id="inventorsTable" value="#{inventorHarmonizationController.selectedInventors}" selectionMode="single"
+                    <p:dataTable style="overflow: scroll; height: 100px" id="inventorsTable" value="#{inventorHarmonizationController.selectedInventors}" selectionMode="single"
                                  selection="#{inventorHarmonizationController.selectedRadio}" var="spa" rowKey="#{spa.name}" 
                                  rowStyleClass="#{inventorHarmonizationController.selectedRadio.name == spa.name ? 
                                                   'ui-state-highlight' : spa.harmonized ? 
@@ -57,7 +57,7 @@
                     <p:spacer width="50"/>
                 </h:column>
                 <h:column>
-                    <ul>
+                    <ul style="overflow: scroll; height: 100px">
                         <ui:repeat var="sug" value="#{inventorHarmonizationController.inventorSugestions}">
                             <li class="#{sug.object.harmonized ? 'harmonized-row' : 'normal-row'}">
                                 <p:selectBooleanCheckbox

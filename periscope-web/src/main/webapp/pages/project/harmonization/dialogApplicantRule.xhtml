@@ -53,7 +53,7 @@
                     <p:separator/>
                 </h:column>
                 <h:column>				
-                    <p:dataTable id="applicantsTable" value="#{applicantHarmonizationController.selectedApplicants}" selectionMode="single"
+                    <p:dataTable style="overflow: scroll; height: 100px" id="applicantsTable" value="#{applicantHarmonizationController.selectedApplicants}" selectionMode="single"
                                  rowKey="#{spa.name}" selection="#{applicantHarmonizationController.selectedRadio}" var="spa"
                                  rowStyleClass="#{applicantHarmonizationController.selectedRadio.name == spa.name ? 
                                                   'ui-state-highlight' : spa.harmonized ? 
@@ -67,7 +67,7 @@
                     <p:spacer width="50"/>
                 </h:column>
                 <h:column>
-                    <ul>
+                    <ul style="overflow: scroll; height: 100px">
                         <ui:repeat var="sug" value="#{applicantHarmonizationController.applicantSugestions}">
                             <li class="#{sug.object.harmonized ? 'harmonized-row' : 'normal-row'}">
                                 <p:selectBooleanCheckbox
@@ -76,7 +76,7 @@
                                 </p:selectBooleanCheckbox>
                                 #{sug.object.name}
                             </li>
-                        </ui:repeat>				
+                        </ui:repeat>
                         <h:panelGrid rendered="#{applicantHarmonizationController.applicantSugestions.size() == 0}">
                             <li>#{msgs['no.sugestions']}</li>
                         </h:panelGrid>
