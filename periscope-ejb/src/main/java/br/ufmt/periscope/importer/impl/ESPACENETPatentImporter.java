@@ -384,7 +384,10 @@ public class ESPACENETPatentImporter implements PatentImporter {
                         break;
                     case 2:
                         try {
-                            patent.setPublicationDate(sdf.parse(contentString));
+                            if (contentString.length() > 0)
+                                patent.setPublicationDate(sdf.parse(contentString));
+                            else
+                                patent.setPublicationDate(null);
                         } catch (ParseException ex) {
                             Logger.getLogger(ESPACENETPatentImporter.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -444,7 +447,10 @@ public class ESPACENETPatentImporter implements PatentImporter {
                         break;
                     case 8:
                         try {
-                            patent.setApplicationDate(sdf2.parse(contentString));
+                            if (contentString.length() > 0)
+                                patent.setApplicationDate(sdf2.parse(contentString));
+                            else
+                                patent.setApplicationDate(null);
                         } catch (ParseException ex) {
                             Logger.getLogger(ESPACENETPatentImporter.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -460,8 +466,10 @@ public class ESPACENETPatentImporter implements PatentImporter {
                         } catch (IndexOutOfBoundsException ex) {
                         }
                         try {
-
-                            priority.setDate(sdf2.parse(contentString.substring(contentString.indexOf(" ")).trim()));
+                            if ((contentString.substring(contentString.indexOf(" ")).trim()).length() > 0)
+                                priority.setDate(sdf2.parse(contentString.substring(contentString.indexOf(" ")).trim()));
+                            else
+                                priority.setDate(null);
                         } catch (ParseException ex) {
                             Logger.getLogger(ESPACENETPatentImporter.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (IndexOutOfBoundsException ex) {

@@ -107,7 +107,10 @@ public class PATENTSCOPEPatentImporter implements PatentImporter {
                 break;
             case 1:
                 try {
-                    patent.setPublicationDate(sdf.parse(contentString.trim()));
+                    if ((contentString.trim()).length() > 0)
+                        patent.setPublicationDate(sdf.parse(contentString.trim()));
+                    else
+                        patent.setPublicationDate(null);
                 } catch (ParseException ex) {
                     Logger.getLogger(PATENTSCOPEPatentImporter.class.getName()).log(Level.SEVERE, null, ex);
                 }
