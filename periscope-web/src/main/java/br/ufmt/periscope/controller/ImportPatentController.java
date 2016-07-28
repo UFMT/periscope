@@ -79,7 +79,7 @@ public class ImportPatentController implements Serializable {
                 for (UploadedFile file : uploadAttachment) {
                     InputStream is = file.getInputstream();
                     PatentImporter importer = importerFactory.getImporter(fileOrigin);
-                    if (!file.getFileName().contains("csv") || !importer.provider().equals("PATENSCOPE")
+                    if (!file.getFileName().contains("csv") || !importer.provider().equals("PATENTSCOPE")
                             && (!file.getFileName().contains("xls") || !importer.provider().equals("DPMA"))) {
                         if (importer.initWithStream(is)) {
                             patentRepository.savePatentToDatabase(importer, currentProject);
