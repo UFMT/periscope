@@ -74,12 +74,5 @@ public class LazyPatentDataModel extends LazyDataModel<Patent>{
         this.name = name;
     }
 
-    @Override
-    public void setRowIndex(int rowIndex) {
-        if (getPageSize() == 0)
-            rowIndex = -1;
-        super.setRowIndex(rowIndex); //To change body of generated methods, choose Tools | Templates.
-    }
-
     
 }
