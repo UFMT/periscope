@@ -18,9 +18,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.CorruptIndexException;
-import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
 
@@ -75,9 +75,9 @@ public class PatentIndexer {
                 if (pas != null) {
                     for (String a : pas) {
                         Document doc = new Document();
-                        doc.add(new TextField("id", project.getId().toString() + String.valueOf(a.hashCode()), Field.Store.YES));
+                        doc.add(new StringField("id", project.getId().toString() + "app" + String.valueOf(a.hashCode()), Field.Store.YES));
                         doc.add(new TextField("applicant", a, Field.Store.YES));
-                        doc.add(new TextField("project", project.getId().toString(), Field.Store.YES));
+                        doc.add(new StringField("project", project.getId().toString(), Field.Store.YES));
                         writer.deleteDocuments(new Term("id", doc.get("id")));
                         writer.addDocument(doc);
                     }
@@ -85,9 +85,9 @@ public class PatentIndexer {
                 if (invs != null) {
                     for (String a : invs) {
                         Document doc = new Document();
-                        doc.add(new TextField("id", project.getId().toString() + String.valueOf(a.hashCode()), Field.Store.YES));
+                        doc.add(new StringField("id", project.getId().toString() + "inv" + String.valueOf(a.hashCode()), Field.Store.YES));
                         doc.add(new TextField("inventor", a, Field.Store.YES));
-                        doc.add(new TextField("project", project.getId().toString(), Field.Store.YES));
+                        doc.add(new StringField("project", project.getId().toString(), Field.Store.YES));
                         writer.deleteDocuments(new Term("id", doc.get("id")));
                         writer.addDocument(doc);
                     }
@@ -114,26 +114,26 @@ public class PatentIndexer {
                 if (pas != null) {
                     for (String a : pas) {
                         Document doc = new Document();
-                        doc.add(new TextField("id", project.getId().toString() + String.valueOf(a.hashCode()), Field.Store.YES));
+                        doc.add(new TextField("id", project.getId().toString() + "app" + String.valueOf(a.hashCode()), Field.Store.YES));
                         writer.deleteDocuments(new Term("id", doc.get("id")));
                     }
                     Document doc = new Document();
-                    doc.add(new TextField("id", project.getId().toString() + String.valueOf(pa.hashCode()), Field.Store.YES));
+                    doc.add(new TextField("id", project.getId().toString() + "app" + String.valueOf(pa.hashCode()), Field.Store.YES));
                     doc.add(new TextField("applicant", pa, Field.Store.YES));
-                    doc.add(new TextField("project", project.getId().toString(), Field.Store.YES));
+                    doc.add(new StringField("project", project.getId().toString(), Field.Store.YES));
                     writer.deleteDocuments(new Term("id", doc.get("id")));
                     writer.addDocument(doc);
                 }
                 if (invs != null) {
                     for (String a : invs) {
                         Document doc = new Document();
-                        doc.add(new TextField("id", project.getId().toString() + String.valueOf(a.hashCode()), Field.Store.YES));
+                        doc.add(new TextField("id", project.getId().toString() + "inv" + String.valueOf(a.hashCode()), Field.Store.YES));
                         writer.deleteDocuments(new Term("id", doc.get("id")));
                     }
                     Document doc = new Document();
-                    doc.add(new TextField("id", project.getId().toString() + String.valueOf(inv.hashCode()), Field.Store.YES));
+                    doc.add(new TextField("id", project.getId().toString() + "inv" + String.valueOf(inv.hashCode()), Field.Store.YES));
                     doc.add(new TextField("inventor", inv, Field.Store.YES));
-                    doc.add(new TextField("project", project.getId().toString(), Field.Store.YES));
+                    doc.add(new StringField("project", project.getId().toString(), Field.Store.YES));
                     writer.deleteDocuments(new Term("id", doc.get("id")));
                     writer.addDocument(doc);
                 }
