@@ -24,6 +24,7 @@ public class CommonDescriptorsTokenFilter extends TokenFilter {
     private CommonDescriptorsSet descriptorsSet;
     // This will contain the tokens, because is more easy to control in a list
     public List<String> tokens = new ArrayList<String>();
+    public List<String> tokensCopy = new ArrayList<String>();
     // Bolleans to help the operations
     public boolean consumed = false, removed = false, constructed = false,
             removeIt;
@@ -35,6 +36,7 @@ public class CommonDescriptorsTokenFilter extends TokenFilter {
      * The default constructor for TokenFilter
      *
      * @param input the input TokenStream
+     * @param descriptorsSet the common descriptorsSet
      */
     public CommonDescriptorsTokenFilter(TokenStream input, CommonDescriptorsSet descriptorsSet) {
         super(input);
@@ -50,6 +52,9 @@ public class CommonDescriptorsTokenFilter extends TokenFilter {
                 if (!termAtt.toString().replaceAll("[^A-Za-z0-9_]", "").isEmpty()) {
                     tokens.add(termAtt.toString().replaceAll("[^A-Za-z0-9_]", ""));
                 }
+            }
+            for (int i = 0; i < tokens.size(); i++){
+                tokensCopy.add(i, tokens.get(i));
             }
             // The start position
             pos = 0;
@@ -82,6 +87,8 @@ public class CommonDescriptorsTokenFilter extends TokenFilter {
                         pos += 1;
                     }
                 }
+                if (tokens.isEmpty())
+                    tokens = tokensCopy;
                 removed = true;
                 return true;
             }
@@ -133,6 +140,7 @@ public class CommonDescriptorsTokenFilter extends TokenFilter {
     private void flush() {
         pos = 0;
         tokens = new ArrayList<String>();
+        tokensCopy = new ArrayList<String>();
         consumed = false;
         removed = false;
         constructed = false;
