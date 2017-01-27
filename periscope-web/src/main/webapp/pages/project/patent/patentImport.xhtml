@@ -48,6 +48,7 @@
                                          action="#{importPatentController.nextStep()}"
                                          update="pnlImport" disabled="#{not importPatentController.stepOne}"/> 
                         <br/>
+                        
                         <h:panelGrid columns="3" id="files" style="width: 100%" columnClasses="colstyle3,colstyle2,colstyle3">
                             <h:panelGrid style="width: 130px" rendered="#{not importPatentController.stepTwo}"/>
                             <p:outputLabel style="width: 130px;float: left;display: block;background-color: #0092dc;
@@ -56,23 +57,26 @@
                                           uploadLabel="#{msgs['upload.files']}" cancelLabel="#{msgs['cancel']}"
                                           fileUploadListener="#{importPatentController.handleFileUpload}"
                                           mode="advanced" disabled="#{not importPatentController.stepTwo}" allowTypes="/(.csv|.xls)$/"
-                                          multiple="true" update="messages pnlImport">
+                                          multiple="true" update="messages btnImport">
                             </p:fileUpload>
                             <p:outputLabel />
                         </h:panelGrid>
 
-                        <br/>					
+                        <br/>		
+                        
                         <h:panelGrid columns="3" id="importPanel" style="width: 100%" columnClasses="colstyle,colstyle,colstyle">
                             <h:panelGrid style="width: 100px" rendered="#{not importPatentController.stepThree}"/>
                             <p:outputLabel style="width: 100px;float: left;display: block;color: #fff;
                                            background-color: #0092dc;border-radius: 5px;padding: 5px;font-size: 14px" 
                                            rendered="#{importPatentController.stepThree}">#{msgs['step.three']}</p:outputLabel>
-                            <p:commandButton id="btnImport" disabled="#{not importPatentController.stepThree}" 
+                            <p:commandButton id="btnImport" widgetVar="btnImport" disabled="#{not importPatentController.stepThree}" 
                                              ajax="#{not empty currentProject.patents}" value="#{msgs['import']}" 
                                              update="messages pnlImport"
-                                             action="#{importPatentController.importPatents()}"/>
+                                             action="#{importPatentController.importPatents()}" onclick="progBar.start(); setTimeout(function(){btnImport.disable()}, 1000);" >
+                            </p:commandButton>
                             <p:outputLabel />
                         </h:panelGrid>
+                        <p:progressBar id="progBar" widgetVar="progBar" ajax="true" labelTemplate="{value}%" value="#{importPatentController.importProgress}" style="width: 50%;"/>
                         <p:growl id="messages" showDetail="true" />
                     </p:panel>
                     

@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import javax.faces.event.ValueChangeEvent;
+import org.primefaces.context.RequestContext;
 
 /**
  * - @ManagedBean<BR/>
@@ -52,6 +53,7 @@ public class ImportPatentController implements Serializable {
     private boolean stepOne = true;
     private boolean stepTwo = false;
     private boolean stepThree = false;
+    private int importProgress = 0;
     
     
     /**
@@ -76,7 +78,9 @@ public class ImportPatentController implements Serializable {
             try {
                 boolean imported = true;
                 List<String> errors = new ArrayList<String>();
+                int count = 0;
                 for (UploadedFile file : uploadAttachment) {
+                    count++;
                     InputStream is = file.getInputstream();
                     PatentImporter importer = importerFactory.getImporter(fileOrigin);
                     if (!file.getFileName().contains("csv") || !importer.provider().equals("PATENTSCOPE")
@@ -91,6 +95,7 @@ public class ImportPatentController implements Serializable {
                         imported = false;
                         errors.add(file.getFileName());
                     }
+                    importProgress = (int) (100.0f * count / uploadAttachment.size());
                 }
                 if (imported) {
                     FacesMessage msg = new FacesMessage("Sucesso", "Arquivo importado com sucesso.");
@@ -105,8 +110,10 @@ public class ImportPatentController implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, msg);
                 System.out.println("Catch");
             }
-
+            
         }
+        importProgress = 0;
+        uploadAttachment.clear();
     }
 
     /**
@@ -118,8 +125,10 @@ public class ImportPatentController implements Serializable {
         uploadAttachment.add(event.getFile());
         FacesMessage msg = new FacesMessage("Sucesso", event.getFile().getFileName() + " foi enviado.");
         FacesContext.getCurrentInstance().addMessage(null, msg);
+        
         stepTwo = false;
         stepThree = true;
+        
     }
        
 
@@ -194,5 +203,12 @@ public class ImportPatentController implements Serializable {
         this.stepThree = stepThree;
     }
 
-    
+    public int getImportProgress() {
+        return importProgress;
+    }
+
+    public void setImportProgress(int importProgress) {
+        this.importProgress = importProgress;
+    }
+
 }
