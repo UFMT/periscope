@@ -46,7 +46,7 @@ public class CommonDescriptorsTokenFilter extends TokenFilter {
     @Override
     public boolean incrementToken() throws IOException {
         // If we not consumed all tokens, then cosume it!
-        if (!consumed) {
+        while (!consumed) {
             consumed = true;
             while (input.incrementToken()) {
                 if (!termAtt.toString().replaceAll("[^A-Za-z0-9_]", "").isEmpty()) {
@@ -58,40 +58,37 @@ public class CommonDescriptorsTokenFilter extends TokenFilter {
             }
             // The start position
             pos = 0;
-            return true;
-        } else {
-            // If we not remove the common descriptors, and the size of the
-            // name it's greater than 2
-            if (!removed && tokens.size() > 2) {
-                // Remove the common descriptors
-                while (pos < tokens.size()) {
-                    if (!tokens.get(pos).trim().isEmpty()) {
-                        if (descriptorsSet.contains(tokens.get(pos).trim())) {
-                            // In there we may remove it
-                            removeIt = true;
-                            int j = pos + 1;
-                            while (j < tokens.size() && removeIt && pos != 0) {
-                            // But if have some word after this that is not an
-                                // common descriptor, we will not remove it
-                                if (tokens.get(j).length() > 1 && !descriptorsSet.contains(tokens.get(j).trim())) {
-                                    removeIt = false;
-                                }
-                                j += 1;
+        }
+        // If we not remove the common descriptors, and the size of the
+        // name it's greater than 2
+        while (!removed && tokens.size() > 2) {
+            // Remove the common descriptors
+            while (pos < tokens.size()) {
+                if (!tokens.get(pos).trim().isEmpty()) {
+                    if (descriptorsSet.contains(tokens.get(pos).trim())) {
+                        // In there we may remove it
+                        removeIt = true;
+                        int j = pos + 1;
+                        while (j < tokens.size() && removeIt && pos != 0) {
+                        // But if have some word after this that is not an
+                            // common descriptor, we will not remove it
+                            if (tokens.get(j).length() > 1 && !descriptorsSet.contains(tokens.get(j).trim())) {
+                                removeIt = false;
                             }
-                            // If we need to remove, so, remove
-                            if (removeIt) {
-                                tokens.remove(pos);
-                                pos -= 1;
-                            }
+                            j += 1;
                         }
-                        pos += 1;
+                        // If we need to remove, so, remove
+                        if (removeIt) {
+                            tokens.remove(pos);
+                            pos -= 1;
+                        }
                     }
+                    pos += 1;
                 }
-                if (tokens.isEmpty())
-                    tokens = tokensCopy;
-                removed = true;
-                return true;
             }
+            if (tokens.isEmpty())
+                tokens = tokensCopy;
+            removed = true;
         }
         // If we already pass through the remove operation, so let's construct
         // the TokenStream
@@ -147,3 +144,4 @@ public class CommonDescriptorsTokenFilter extends TokenFilter {
     }
 
 }
+

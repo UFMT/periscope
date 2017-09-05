@@ -1,6 +1,7 @@
 package br.ufmt.periscope.indexer;
 
 import br.ufmt.periscope.bean.SeedBean;
+import br.ufmt.periscope.indexer.resources.analysis.DataSignaturesAnalyzer;
 import br.ufmt.periscope.indexer.resources.analysis.FastJoinAnalyzer;
 import br.ufmt.periscope.model.Project;
 import java.io.IOException;
@@ -29,7 +30,8 @@ import org.apache.lucene.store.FSDirectory;
 public class LuceneIndexerResources {
 
     
-    private @Inject FastJoinAnalyzer analyzer;    
+    private @Inject FastJoinAnalyzer fastJoinAnalyzer;    
+    private @Inject DataSignaturesAnalyzer dataSignaturesAnalyzer;    
 
     public IndexReader getReader() {
         IndexReader reader=null;
@@ -63,7 +65,7 @@ public class LuceneIndexerResources {
     }
 
     private IndexWriterConfig getIndexConfig() {
-        IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_47, analyzer);
+        IndexWriterConfig config = new IndexWriterConfig(dataSignaturesAnalyzer).setOpenMode(IndexWriterConfig.OpenMode.CREATE_OR_APPEND);
         return config;
     }
 
@@ -71,7 +73,7 @@ public class LuceneIndexerResources {
     public Directory getLocalLuceneDirectory() {
         Directory dir = null;
         try {
-            dir = FSDirectory.open(new File(SeedBean.PERISCOPE_DIR), new SimpleFSLockFactory());
+            dir = FSDirectory.open(new File(SeedBean.PERISCOPE_DIR).toPath());
         } catch (IOException ex) {
             Logger.getLogger(LuceneIndexerResources.class.getName()).log(Level.SEVERE, null, ex);
         }

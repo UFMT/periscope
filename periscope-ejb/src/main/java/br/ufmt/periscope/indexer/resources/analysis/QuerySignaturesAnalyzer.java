@@ -14,25 +14,20 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.util.Version;
 
 /**
- * The PatenteeAnalyzer class will make the patentee names pre-processing, the
- * operations is : Normalize (pass the characters to lowercase); Pass the chars
- * to your ASCII equivalents; Removes the English Stopwords; Removes the Common
- * Descriptors of the names; Condense the name, removing all the withespaces;
- * Create the Acronym for the name
+ *
  *
  * @author mattyws
  */
 @Named
-public class FastJoinAnalyzer extends Analyzer {
-    
+public class QuerySignaturesAnalyzer extends Analyzer {
+
     @Inject
     private CommonDescriptorsSet descriptorSet;
     public Version matchVersion = Version.LATEST;
 
-//    public FastJoinAnalyzer(Version version) {
-//        this.matchVersion = version;
-//        System.out.println("Chupa essa manga : " + descriptorSet);
-//    }
+    public QuerySignaturesAnalyzer() {
+    }
+
     
     @Override
     protected TokenStreamComponents createComponents(String field) {
@@ -62,10 +57,10 @@ public class FastJoinAnalyzer extends Analyzer {
         CommonDescriptorsTokenFilter commonDescriptorsTokenFilter = new CommonDescriptorsTokenFilter(stopFilter, descriptorSet);
         
 //        
-//        sink = new CondenseTokenFilter(commonDescriptorsTokenFilter);
+        sink = new QuerySignaturesTokenFilter(commonDescriptorsTokenFilter);
 
-        return new TokenStreamComponents(source, commonDescriptorsTokenFilter);
-//        return new TokenStreamComponents(source, sink);
+//        return new TokenStreamComponents(source, commonDescriptorsTokenFilter);
+        return new TokenStreamComponents(source, sink);
         
     }
 

@@ -1,14 +1,9 @@
 package br.ufmt.periscope.indexer.resources.analysis;
 
-import br.ufmt.periscope.indexer.LuceneIndexerResources;
 import com.github.jmkgreen.morphia.Datastore;
-import java.io.BufferedReader;
-import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.search.IndexSearcher;
 
 /**
  * O conjunto de descritores comuns. Gerencia as buscas a base de dados de

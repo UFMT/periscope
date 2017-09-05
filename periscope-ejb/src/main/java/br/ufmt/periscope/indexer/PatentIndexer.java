@@ -1,5 +1,6 @@
 package br.ufmt.periscope.indexer;
 
+import br.ufmt.periscope.indexer.resources.search.FuzzyTokenSimilaritySearch;
 import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.model.Patent;
@@ -37,6 +38,8 @@ public class PatentIndexer {
     InventorRepository inRepo;
     private @Inject
     Logger log;
+    private @Inject
+    FuzzyTokenSimilaritySearch fs;
 
     public void indexPatents(List<Patent> patents, Project project) {
         Set<String> applicants = new HashSet<String>();
@@ -75,8 +78,9 @@ public class PatentIndexer {
                 if (pas != null) {
                     for (String a : pas) {
                         Document doc = new Document();
-                        doc.add(new StringField("id", project.getId().toString() + "app" + String.valueOf(a.hashCode()), Field.Store.YES));
                         doc.add(new TextField("applicant", a, Field.Store.YES));
+                        doc.add(new StringField("tokens", fs.getAnalyzed("applicant", a), Field.Store.YES));
+                        doc.add(new StringField("id", project.getId().toString() + "app" + String.valueOf(a.hashCode()), Field.Store.YES));
                         doc.add(new StringField("project", project.getId().toString(), Field.Store.YES));
                         writer.deleteDocuments(new Term("id", doc.get("id")));
                         writer.addDocument(doc);
@@ -85,8 +89,9 @@ public class PatentIndexer {
                 if (invs != null) {
                     for (String a : invs) {
                         Document doc = new Document();
-                        doc.add(new StringField("id", project.getId().toString() + "inv" + String.valueOf(a.hashCode()), Field.Store.YES));
                         doc.add(new TextField("inventor", a, Field.Store.YES));
+                        doc.add(new StringField("tokens", fs.getAnalyzed("inventor", a), Field.Store.YES));
+                        doc.add(new StringField("id", project.getId().toString() + "inv" + String.valueOf(a.hashCode()), Field.Store.YES));
                         doc.add(new StringField("project", project.getId().toString(), Field.Store.YES));
                         writer.deleteDocuments(new Term("id", doc.get("id")));
                         writer.addDocument(doc);

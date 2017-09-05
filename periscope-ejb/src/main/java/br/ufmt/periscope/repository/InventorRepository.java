@@ -1,8 +1,6 @@
 package br.ufmt.periscope.repository;
 
-import br.ufmt.periscope.indexer.LuceneIndexerResources;
-import br.ufmt.periscope.indexer.resources.analysis.FastJoinAnalyzer;
-import br.ufmt.periscope.indexer.resources.search.FastJoinQuery;
+import br.ufmt.periscope.indexer.resources.search.FuzzyTokenSimilaritySearch;
 import br.ufmt.periscope.model.Country;
 import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.model.Patent;
@@ -19,8 +17,6 @@ import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-import java.io.IOException;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -32,19 +28,7 @@ import java.util.Set;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.index.CorruptIndexException;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.queryparser.classic.ParseException;
-import org.apache.lucene.queryparser.classic.QueryParser;
-import org.apache.lucene.search.BooleanClause;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.util.Version;
 
 /**
  * 
@@ -56,14 +40,12 @@ public class InventorRepository {
 
     private @Inject
     Datastore ds;
-    private @Inject LuceneIndexerResources resources;
-    private IndexReader reader;
-    private @Inject
-    FastJoinAnalyzer analyzer;
     private @Inject
     Project currentProject;
     private int count;
     private Integer searchType;
+    private @Inject
+    FuzzyTokenSimilaritySearch fs;
 
     public Inventor getInventorByName(String name) {
 
@@ -243,57 +225,15 @@ public class InventorRepository {
      * @return 
      */
     public Set<String> getInventorSugestions(Project project, int top, String... names) {
-
         Set<String> results = new HashSet<String>();
-        reader = resources.getReader();
-        try {
-            Query queryProject = new QueryParser(Version.LUCENE_47, "project", analyzer)
-                    .parse(project.getId().toString());
-            queryProject.setBoost(0.1f);
-
-            IndexSearcher searcher = new IndexSearcher(reader);
-
-            for (String name : names) {
-                TokenStream stream = analyzer.tokenStream("inventor", new StringReader(
-                        name));
-                CharTermAttribute attr = stream
-                        .getAttribute(CharTermAttribute.class);
-                stream.reset();                
-                String valor = "";
-                while (stream.incrementToken()) {
-                    valor = valor + attr.toString() + ' ';
-                }
-                valor = valor.trim();
-                stream.end();
-                stream.close();
-                BooleanQuery query = new BooleanQuery();
-                Query fastQuery = new FastJoinQuery("inventor", valor, 0.8f, 0.9f);
-                query.add(fastQuery, BooleanClause.Occur.MUST);
-                query.add(queryProject, BooleanClause.Occur.MUST);
-                ScoreDoc[] hits = searcher.search(query, 10).scoreDocs;
-                if (hits.length > 0) {
-                    for (int i = 0; i < hits.length; i++) {
-                        Document hitDoc = searcher.doc(hits[i].doc);
-                        results.add(hitDoc.get("inventor"));
-                    }
-
-                }
-            }
-
-            //searcher.close();
-            resources.closeReader(reader);
-            return results;
-
-        } catch (CorruptIndexException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
+        
+        for (String name : names) {
+            List<Document> docs = fs.search("inventor", project.getId().toString(), name, top);
+            for (Document doc : docs)
+                results.add(doc.get("inventor"));
         }
-        resources.closeReader(reader);
+        
         return results;
-
     }
 
     public List<Inventor> load(int first, int pageSize, String sortField, int sortOrder, Map<String, String> filters, List<Inventor> list) {
