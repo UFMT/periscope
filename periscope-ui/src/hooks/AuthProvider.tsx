@@ -4,31 +4,20 @@ import * as authApi from '../api/auth';
 import {
   clearSession,
   getStoredToken,
-  getStoredUserJson,
   setStoredToken,
-  setStoredUserJson,
   setUnauthorizedHandler,
 } from '../api/client';
 import type { User } from '../types';
 import { AuthContext, type AuthContextValue } from './authContext';
 
-function parseUser(json: string | null): User | null {
-  if (!json) return null;
-  try {
-    return JSON.parse(json) as User;
-  } catch {
-    return null;
-  }
-}
-
 export function AuthProvider({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
-  const initialToken = getStoredToken();
-  const [token, setToken] = useState<string | null>(initialToken);
-  const [user, setUser] = useState<User | null>(() => parseUser(getStoredUserJson()));
-  const [loading, setLoading] = useState(!!initialToken);
+  const [token, setToken] = useState<string | null>(() => getStoredToken());
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const handleUnauthorized = useCallback(() => {
+    clearSession();
     setToken(null);
     setUser(null);
     setLoading(false);
@@ -41,16 +30,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [handleUnauthorized]);
 
   useEffect(() => {
-    if (!token) {
-      return;
-    }
     let cancelled = false;
     void (async () => {
       try {
-        const me = await authApi.me();
+        const me = await authApi.me(true);
         if (!cancelled) {
           setUser(me);
-          setStoredUserJson(JSON.stringify(me));
         }
       } catch {
         if (!cancelled) {
@@ -67,12 +52,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => {
       cancelled = true;
     };
-  }, [token]);
+  }, []);
 
   const login = useCallback(async (username: string, password: string) => {
     const result = await authApi.login({ username, password });
     setStoredToken(result.token);
-    setStoredUserJson(JSON.stringify(result.user));
     setLoading(false);
     setToken(result.token);
     setUser(result.user);
@@ -80,11 +64,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = useCallback(async () => {
     try {
-      if (getStoredToken()) {
-        await authApi.logout();
-      }
+      await authApi.logout();
     } catch {
-      // discard token locally regardless of server response
+      // discard session locally regardless of server response
     } finally {
       clearSession();
       setToken(null);
@@ -97,21 +79,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const refreshUser = useCallback(async () => {
     const me = await authApi.me();
     setUser(me);
-    setStoredUserJson(JSON.stringify(me));
+  }, []);
+
+  const updateCurrentUser = useCallback((nextUser: User) => {
+    setUser(nextUser);
   }, []);
 
   const value = useMemo<AuthContextValue>(
     () => ({
       user,
       token,
-      isAuthenticated: !!token && !!user,
+      isAuthenticated: !!user,
       isAdmin: user?.userLevel === 'ADMIN',
-      loading: !!token && loading,
+      loading,
       login,
       logout,
       refreshUser,
+      updateCurrentUser,
     }),
-    [user, token, loading, login, logout, refreshUser],
+    [user, token, loading, login, logout, refreshUser, updateCurrentUser],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

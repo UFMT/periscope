@@ -5,13 +5,9 @@ import br.ufmt.periscope.repository.NatureApplicantRepository;
 import br.ufmt.periscope.util.Filters;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
-import br.ufmt.periscope.report.ChartSeries;
 
 @ApplicationScoped
 @Named
@@ -26,13 +22,13 @@ public class MainNatureApplicantReport {
         List<Pair> i = repo.getNatureApplicantRepository(currentProject, filtro);
 
         Collections.reverse(i);
-        Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
-        ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
 
         for (Pair pair : i) {
-
-            String nature = bundle.getString((String) pair.getKey());
-            Integer count = (Integer) pair.getValue();
+            if (pair.getKey() == null) {
+                continue;
+            }
+            String nature = String.valueOf(pair.getKey());
+            Integer count = pair.getValue() instanceof Number n ? n.intValue() : 0;
             series.set(nature, count);
         }
 

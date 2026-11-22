@@ -37,8 +37,7 @@ public class InventorRepository {
 
     private @Inject
     Datastore ds;
-    private @Inject
-    Project currentProject;
+    private Project currentProject;
     private int count;
     private Integer searchType;
     private @Inject
@@ -86,12 +85,14 @@ public class InventorRepository {
                     com.mongodb.client.model.Filters.eq("completed", filtro.isComplete())));
         }
 
-        if (filtro.getSelecionaData() == 1) {
-            pipeline.add(Aggregates.match(new Document("publicationDate",
-                    new Document("$gte", filtro.getInicio()).append("$lte", filtro.getFim()))));
-        } else {
-            pipeline.add(Aggregates.match(new Document("applicationDate",
-                    new Document("$gte", filtro.getInicio()).append("$lte", filtro.getFim()))));
+        if (filtro.getInicio() != null && filtro.getFim() != null) {
+            if (filtro.getSelecionaData() == 1) {
+                pipeline.add(Aggregates.match(new Document("publicationDate",
+                        new Document("$gte", filtro.getInicio()).append("$lte", filtro.getFim()))));
+            } else {
+                pipeline.add(Aggregates.match(new Document("applicationDate",
+                        new Document("$gte", filtro.getInicio()).append("$lte", filtro.getFim()))));
+            }
         }
 
         pipeline.add(Aggregates.match(
@@ -164,7 +165,7 @@ public class InventorRepository {
                 com.mongodb.client.model.Filters.eq("blacklisted", false))));
         pipeline.add(Aggregates.unwind("$inventors"));
         pipeline.add(Aggregates.match(com.mongodb.client.model.Filters.regex(
-                "inventors.name", "^" + begins, "i")));
+                "inventors.name", "^" + java.util.regex.Pattern.quote(begins != null ? begins : ""), "i")));
         pipeline.add(Aggregates.project(Projections.include("inventors")));
         pipeline.add(Aggregates.group("$inventors.name"));
 
@@ -217,7 +218,7 @@ public class InventorRepository {
         if (filters != null) {
             for (Map.Entry<String, String> entry : filters.entrySet()) {
                 String column = entry.getKey();
-                String value = entry.getValue();
+                String value = java.util.regex.Pattern.quote(entry.getValue());
                 Document regexDoc;
                 if (searchType != null && searchType.equals(1)) {
                     regexDoc = new Document("$regex", "^" + value).append("$options", "i");
@@ -275,6 +276,7 @@ public class InventorRepository {
         totalPipeline.add(Aggregates.match(matchProj));
         totalPipeline.addAll(parametrosGroup);
 
+        this.setCount(0);
         List<Document> outputListTotal = patentDocs().aggregate(totalPipeline)
                 .into(new ArrayList<Document>());
         for (Document result : outputListTotal) {

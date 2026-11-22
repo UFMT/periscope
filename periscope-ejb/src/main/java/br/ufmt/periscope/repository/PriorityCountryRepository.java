@@ -35,16 +35,19 @@ public class PriorityCountryRepository {
 
         pipeline.add(new Document("$match", new Document("project.$id", currentProject.getId())));
 
-        if (filtro.isComplete()) {
-            pipeline.add(new Document("$match", new Document("completed", filtro.isComplete())));
-        }
-
-        if (filtro.getSelecionaData() == 1) {
-            pipeline.add(new Document("$match", new Document("publicationDate",
-                    new Document("$gte", filtro.getInicio()).append("$lte", filtro.getFim()))));
-        } else {
-            pipeline.add(new Document("$match", new Document("applicationDate",
-                    new Document("$gte", filtro.getInicio()).append("$lte", filtro.getFim()))));
+        if (filtro != null) {
+            if (filtro.isComplete()) {
+                pipeline.add(new Document("$match", new Document("completed", true)));
+            }
+            if (filtro.getInicio() != null && filtro.getFim() != null) {
+                if (filtro.getSelecionaData() == 1) {
+                    pipeline.add(new Document("$match", new Document("publicationDate",
+                            new Document("$gte", filtro.getInicio()).append("$lte", filtro.getFim()))));
+                } else {
+                    pipeline.add(new Document("$match", new Document("applicationDate",
+                            new Document("$gte", filtro.getInicio()).append("$lte", filtro.getFim()))));
+                }
+            }
         }
 
         pipeline.add(new Document("$match", new Document("blacklisted", false)));

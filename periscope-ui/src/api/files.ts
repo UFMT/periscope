@@ -8,6 +8,7 @@ export function downloadFileUrl(fileId: string): string {
 export async function downloadFile(fileId: string, filename?: string): Promise<void> {
   const token = getStoredToken();
   const response = await fetch(downloadFileUrl(fileId), {
+    credentials: 'include',
     headers: token ? { Authorization: `Bearer ${token}` } : {},
   });
   if (!response.ok) {

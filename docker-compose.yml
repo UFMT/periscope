@@ -19,9 +19,17 @@ services:
       MONGODB_URI: mongodb://mongodb:27017
       MONGODB_DATABASE: Periscope
       PERISCOPE_DIR: /opt/periscope
+      PERISCOPE_JWT_SECRET: ${PERISCOPE_JWT_SECRET:-dev-only-change-me-32-chars-minimum!}
+      PERISCOPE_CORS_ORIGINS: ${PERISCOPE_CORS_ORIGINS:-http://localhost:5173,http://localhost:8080}
     depends_on:
       mongodb:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8080/periscope/rest/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 45s
     volumes:
       - periscope_data:/opt/periscope
 

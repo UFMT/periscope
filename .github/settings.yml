@@ -6,7 +6,7 @@ repository:
   description: >-
     Patent analysis and name-harmonization web app (UFMT). Assists the Brazilian
     community in using Industrial Property System data — Jakarta EE 10 / WildFly,
-    MongoDB (Morphia), Lucene Fast-Join, REST API + React SPA (JSF fallback).
+    MongoDB (Morphia), Lucene Fast-Join, REST API + React SPA.
 
   # Homepage (docs / app); leave blank if none
   # homepage: https://github.com/brunomartinsmv/periscope
@@ -24,8 +24,6 @@ repository:
     - lucene
     - react
     - typescript
-    - jsf
-    - primefaces
     - rest-api
     - ufmt
 

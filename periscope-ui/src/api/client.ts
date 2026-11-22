@@ -1,7 +1,9 @@
 import { ApiError, type ApiErrorBody } from '../types';
 
-const TOKEN_KEY = 'periscope.token';
-const USER_KEY = 'periscope.user';
+const LEGACY_TOKEN_KEY = 'periscope.token';
+const LEGACY_USER_KEY = 'periscope.user';
+
+let memoryToken: string | null = null;
 
 export function getApiBase(): string {
   const base = import.meta.env.VITE_API_BASE || '/periscope/rest';
@@ -9,32 +11,21 @@ export function getApiBase(): string {
 }
 
 export function getStoredToken(): string | null {
-  return localStorage.getItem(TOKEN_KEY);
+  return memoryToken;
 }
 
 export function setStoredToken(token: string | null): void {
-  if (token) {
-    localStorage.setItem(TOKEN_KEY, token);
-  } else {
-    localStorage.removeItem(TOKEN_KEY);
-  }
-}
-
-export function getStoredUserJson(): string | null {
-  return localStorage.getItem(USER_KEY);
-}
-
-export function setStoredUserJson(json: string | null): void {
-  if (json) {
-    localStorage.setItem(USER_KEY, json);
-  } else {
-    localStorage.removeItem(USER_KEY);
-  }
+  memoryToken = token;
 }
 
 export function clearSession(): void {
-  setStoredToken(null);
-  setStoredUserJson(null);
+  memoryToken = null;
+  try {
+    localStorage.removeItem(LEGACY_TOKEN_KEY);
+    localStorage.removeItem(LEGACY_USER_KEY);
+  } catch {
+    // ignore storage failures in restricted contexts
+  }
 }
 
 type UnauthorizedHandler = () => void;
@@ -48,6 +39,7 @@ export interface RequestOptions extends Omit<RequestInit, 'body'> {
   body?: unknown;
   auth?: boolean;
   formData?: FormData;
+  skipUnauthorizedHandler?: boolean;
 }
 
 async function parseError(response: Response): Promise<ApiError> {
@@ -70,7 +62,14 @@ async function parseError(response: Response): Promise<ApiError> {
 }
 
 export async function apiRequest<T>(path: string, options: RequestOptions = {}): Promise<T> {
-  const { body, auth = true, formData, headers: customHeaders, ...rest } = options;
+  const {
+    body,
+    auth = true,
+    formData,
+    skipUnauthorizedHandler = false,
+    headers: customHeaders,
+    ...rest
+  } = options;
   const headers = new Headers(customHeaders);
 
   if (auth) {
@@ -88,16 +87,21 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
     payload = JSON.stringify(body);
   }
 
-  const url = path.startsWith('http') ? path : `${getApiBase()}${path.startsWith('/') ? path : `/${path}`}`;
+  const url = path.startsWith('http')
+    ? path
+    : `${getApiBase()}${path.startsWith('/') ? path : `/${path}`}`;
   const response = await fetch(url, {
     ...rest,
+    credentials: 'include',
     headers,
     body: payload,
   });
 
   if (response.status === 401) {
     clearSession();
-    onUnauthorized?.();
+    if (!skipUnauthorizedHandler) {
+      onUnauthorized?.();
+    }
     throw await parseError(response);
   }
 

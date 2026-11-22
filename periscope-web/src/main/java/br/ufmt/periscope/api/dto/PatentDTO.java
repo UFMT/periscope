@@ -1,9 +1,11 @@
 package br.ufmt.periscope.api.dto;
 
 import br.ufmt.periscope.model.Applicant;
+import br.ufmt.periscope.model.Classification;
 import br.ufmt.periscope.model.Country;
 import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.model.Patent;
+import br.ufmt.periscope.model.Priority;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +26,10 @@ public record PatentDTO(
         List<String> applicants,
         List<String> inventors,
         String presentationFileId,
-        String patentInfoFileId
+        String patentInfoFileId,
+        String language,
+        List<String> classifications,
+        List<PriorityDTO> priorities
 ) {
     /**
      * Maps a patent using an explicit project id — preferred for list endpoints
@@ -53,7 +58,10 @@ public record PatentDTO(
                 patent.getPresentationFile() != null && patent.getPresentationFile().getId() != null
                         ? patent.getPresentationFile().getId().toString() : null,
                 patent.getPatentInfo() != null && patent.getPatentInfo().getId() != null
-                        ? patent.getPatentInfo().getId().toString() : null
+                        ? patent.getPatentInfo().getId().toString() : null,
+                patent.getLanguage(),
+                mapClassifications(patent.getClassifications()),
+                mapPriorities(patent.getPriorities())
         );
     }
 
@@ -91,6 +99,29 @@ public record PatentDTO(
         return inventors.stream()
                 .filter(i -> i != null && i.getName() != null)
                 .map(Inventor::getName)
+                .toList();
+    }
+
+    private static List<String> mapClassifications(List<Classification> classifications) {
+        if (classifications == null) {
+            return List.of();
+        }
+        return classifications.stream()
+                .filter(c -> c != null && c.getValue() != null)
+                .map(Classification::getValue)
+                .toList();
+    }
+
+    private static List<PriorityDTO> mapPriorities(List<Priority> priorities) {
+        if (priorities == null) {
+            return List.of();
+        }
+        return priorities.stream()
+                .filter(p -> p != null)
+                .map(p -> new PriorityDTO(
+                        p.getValue(),
+                        p.getCountry() != null ? p.getCountry().getAcronym() : null,
+                        toInstant(p.getDate())))
                 .toList();
     }
 

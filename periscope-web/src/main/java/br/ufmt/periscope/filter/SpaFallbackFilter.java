@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * Serves {@code /app/index.html} for client-side routes of the React SPA
  * when the requested path under {@code /app/} is not an existing static asset.
- * Does not interfere with {@code /rest/*}, {@code *.jsf} or {@code /pages/*}.
+ * Does not interfere with {@code /rest/*}.
  */
 @WebFilter(urlPatterns = {"/app/*"})
 public class SpaFallbackFilter implements Filter {

@@ -7,6 +7,7 @@ import br.ufmt.periscope.util.Filters;
 import com.mongodb.client.MongoCollection;
 import dev.morphia.Datastore;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import jakarta.inject.Inject;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -21,27 +22,34 @@ public class NatureApplicantRepository {
     Datastore ds;
 
     public List<Pair> getNatureApplicantRepository(Project currentProject, Filters filtro) {
-
-        //db.Patent.aggregate({$match:{blacklisted:false}},
-        //{$unwind:"$applicants"},{$group:{_id:"$applicants.nature.name", count:{$sum:1}}})
         MongoCollection<Document> coll = ds.getDatabase()
                 .getCollection(ds.getMapper().getEntityModel(Patent.class).getCollectionName());
 
         List<Document> pipeline = new ArrayList<Document>();
-        pipeline.add(new Document("$match", new Document("project.$id", currentProject.getId())));
+        Document match = new Document("project.$id", currentProject.getId())
+                .append("blacklisted", false);
 
-        if (filtro.isComplete()) {
-            pipeline.add(new Document("$match", new Document("completed", filtro.isComplete())));
+        if (filtro != null) {
+            if (filtro.isComplete()) {
+                match.append("completed", true);
+            }
+            if (filtro.getInicio() != null && filtro.getFim() != null) {
+                String dateField = filtro.getSelecionaData() == 1 ? "publicationDate" : "applicationDate";
+                match.append(dateField,
+                        new Document("$gte", filtro.getInicio()).append("$lte", filtro.getFim()));
+            }
         }
 
-        pipeline.add(new Document("$match", new Document("blacklisted", false)));
+        pipeline.add(new Document("$match", match));
         pipeline.add(new Document("$unwind", "$applicants"));
 
-        //db.Patent.aggregate({$match:{blacklisted:false}},
-        //{$unwind:"$applicants"},{$group:{_id:{name:"$applicants.name",nature:"$applicants.nature.name"}}},
-        //{$group:{_id:"$_id.nature",count:{$sum:1}}},{$sort:{count:-1}})
-        Document nature = new Document("nature", "$applicants.nature.name")
-                .append("name", "$applicants.name");
+        // Applicant persists field as "type"; keep fallback to legacy "nature"
+        pipeline.add(new Document("$project", new Document("applicantName", "$applicants.name")
+                .append("natureName", new Document("$ifNull",
+                        Arrays.asList("$applicants.type.name", "$applicants.nature.name")))));
+
+        Document nature = new Document("nature", "$natureName")
+                .append("name", "$applicantName");
         pipeline.add(new Document("$group", new Document("_id", nature)));
 
         pipeline.add(new Document("$group", new Document("_id", "$_id.nature")

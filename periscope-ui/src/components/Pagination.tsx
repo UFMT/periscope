@@ -1,3 +1,5 @@
+import { useI18n } from '../i18n/useI18n';
+
 interface PaginationProps {
   page: number;
   totalPages: number;
@@ -6,10 +8,15 @@ interface PaginationProps {
 }
 
 export function Pagination({ page, totalPages, totalElements, onChange }: PaginationProps) {
+  const { t } = useI18n();
   return (
     <div className="pagination">
       <span className="muted">
-        Página {totalPages === 0 ? 0 : page + 1} de {totalPages} · {totalElements} registro(s)
+        {t('common.pageInfo', {
+          page: totalPages === 0 ? 0 : page + 1,
+          totalPages,
+          total: totalElements,
+        })}
       </span>
       <div className="stack-actions">
         <button
@@ -18,7 +25,7 @@ export function Pagination({ page, totalPages, totalElements, onChange }: Pagina
           disabled={page <= 0}
           onClick={() => onChange(page - 1)}
         >
-          Anterior
+          {t('common.previous')}
         </button>
         <button
           type="button"
@@ -26,7 +33,7 @@ export function Pagination({ page, totalPages, totalElements, onChange }: Pagina
           disabled={page + 1 >= totalPages}
           onClick={() => onChange(page + 1)}
         >
-          Próxima
+          {t('common.next')}
         </button>
       </div>
     </div>

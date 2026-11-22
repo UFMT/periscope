@@ -58,16 +58,16 @@ public class SeedBean {
         // existing Lucene files under PERISCOPE_DIR before the first deploy so a
         // fresh index can be created (see LuceneIndexerResources).
         PERISCOPE_DIR = System.getenv("PERISCOPE_DIR");
-        if (PERISCOPE_DIR == null) {
+        if (PERISCOPE_DIR == null || PERISCOPE_DIR.isBlank()) {
             if (System.getProperty("os.name").toLowerCase().contains("windows")) {
                 PERISCOPE_DIR = "C:\\ProgramData\\Periscope";
             } else {
                 PERISCOPE_DIR = "/opt/periscope";
             }
-            File dir = new File(PERISCOPE_DIR);
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
+        }
+        File dir = new File(PERISCOPE_DIR);
+        if (!dir.exists()) {
+            dir.mkdirs();
         }
 
     }
@@ -163,6 +163,7 @@ public class SeedBean {
         if (ds.find(User.class).count() == 0L) {
             log.info("Nenhum usuário encontrado.");
             List<User> users = YamlLoader.loadList("user-inicial.yaml", User.class);
+            applyAdminEnvOverrides(users, System::getenv);
             Iterator<User> it = users.iterator();
             while (it.hasNext()) {
                 User user = it.next();
@@ -172,6 +173,29 @@ public class SeedBean {
                 ds.save(user);
             }
             log.info("Cadastrado " + users.size() + " usuários.");
+        }
+    }
+
+    public static void applyAdminEnvOverrides(List<User> users, java.util.function.Function<String, String> env) {
+        if (users == null || users.isEmpty() || env == null) {
+            return;
+        }
+        User admin = users.get(0);
+        String username = env.apply("PERISCOPE_ADMIN_USERNAME");
+        if (username != null && !username.isBlank()) {
+            admin.setUsername(username.trim());
+        }
+        String password = env.apply("PERISCOPE_ADMIN_PASSWORD");
+        if (password != null && !password.isBlank()) {
+            admin.setPassword(password);
+        }
+        String email = env.apply("PERISCOPE_ADMIN_EMAIL");
+        if (email != null && !email.isBlank()) {
+            admin.setEmail(email.trim());
+        }
+        String forceChange = env.apply("PERISCOPE_FORCE_ADMIN_PASSWORD_CHANGE");
+        if ("true".equalsIgnoreCase(forceChange)) {
+            admin.setMustChangePassword(true);
         }
     }
 

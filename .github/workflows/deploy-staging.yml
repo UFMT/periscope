@@ -1,73 +1,67 @@
-# Template INERTE de deploy para homologação futura.
-# NÃO roda automaticamente: apenas workflow_dispatch, e o job principal tem `if: false`.
-# A infra de staging ainda não existe — ver docs/modernization/ambiente-homologacao-futuro.md.
-#
-# Quando a infra existir, remova o `if: false`, preencha secrets/vars e descomente os passos.
-
-name: Deploy staging (template)
+name: Deploy staging
 
 on:
   workflow_dispatch:
     inputs:
       confirm:
-        description: 'Digite DEPLOY para confirmar (quando o template estiver ativo)'
-        required: false
+        description: 'Digite DEPLOY para confirmar o envio para staging'
+        required: true
         default: ''
 
 jobs:
   staging:
-    name: Deploy to staging (disabled)
-    if: false
+    name: Build, push, smoke & E2E against staging
+    if: github.event.inputs.confirm == 'DEPLOY'
     runs-on: ubuntu-latest
     environment: staging
     steps:
-      - name: Explain why this is inactive
+      - uses: actions/checkout@v4
+
+      - name: Validate staging configuration
         run: |
-          echo "Template de homologação — infra inexistente."
-          echo "Ative removendo 'if: false' e preenchendo secrets."
+          if [ -z "${{ vars.REGISTRY }}" ] || [ -z "${{ vars.STAGING_BASE_URL }}" ]; then
+            echo "Configure vars.REGISTRY and vars.STAGING_BASE_URL in the staging environment."
+            exit 1
+          fi
+
+      - name: Build and push container image
+        run: |
+          echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login "${{ vars.REGISTRY }}" -u "${{ secrets.REGISTRY_USERNAME }}" --password-stdin
+          docker build -t "${{ vars.REGISTRY }}/periscope:${{ github.sha }}" -t "${{ vars.REGISTRY }}/periscope:staging" .
+          docker push "${{ vars.REGISTRY }}/periscope:${{ github.sha }}"
+          docker push "${{ vars.REGISTRY }}/periscope:staging"
+
+      - name: Deploy webhook / hook
+        if: ${{ secrets.STAGING_DEPLOY_WEBHOOK != '' }}
+        run: |
+          curl -fsSL -X POST "${{ secrets.STAGING_DEPLOY_WEBHOOK }}" \
+            -H "Content-Type: application/json" \
+            -d "{\"image\":\"${{ vars.REGISTRY }}/periscope:${{ github.sha }}\"}"
+
+      - name: Smoke check health endpoint
+        run: |
+          for i in $(seq 1 30); do
+            code=$(curl -sf -o /tmp/health.json -w "%{http_code}" "${{ vars.STAGING_BASE_URL }}/rest/health" || true)
+            if [ "$code" = "200" ] && grep -q '"status":"UP"' /tmp/health.json; then
+              cat /tmp/health.json
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "Staging health check failed"
           exit 1
 
-      # --- passos estruturados (descomentar / adaptar quando houver registry + cluster) ---
-      #
-      # - uses: actions/checkout@v4
-      #
-      # - name: Build container image
-      #   run: |
-      #     docker build -t ${{ vars.REGISTRY }}/periscope:${{ github.sha }} .
-      #
-      # - name: Push to registry
-      #   run: |
-      #     echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ vars.REGISTRY }} -u ${{ secrets.REGISTRY_USERNAME }} --password-stdin
-      #     docker push ${{ vars.REGISTRY }}/periscope:${{ github.sha }}
-      #
-      # - name: Deploy (kubectl / helm / ssh)
-      #   run: |
-      #     # kubectl set image deploy/periscope periscope=${{ vars.REGISTRY }}/periscope:${{ github.sha }}
-      #     echo "deploy placeholder"
-      #
-      # - name: Smoke — health
-      #   run: |
-      #     for i in $(seq 1 30); do
-      #       code=$(curl -sf -o /tmp/health.json -w "%{http_code}" "${{ vars.STAGING_BASE_URL }}/rest/health" || true)
-      #       if [ "$code" = "200" ] && grep -q '"status":"UP"' /tmp/health.json; then
-      #         cat /tmp/health.json
-      #         exit 0
-      #       fi
-      #       sleep 5
-      #     done
-      #     echo "Health check failed"; exit 1
-      #
-      # - uses: actions/setup-node@v4
-      #   with:
-      #     node-version: '22'
-      #     cache: npm
-      #     cache-dependency-path: periscope-ui/package-lock.json
-      #
-      # - name: E2E against staging
-      #   working-directory: periscope-ui
-      #   env:
-      #     E2E_BASE_URL: ${{ vars.STAGING_BASE_URL }}/app/
-      #   run: |
-      #     npm ci
-      #     npx playwright install --with-deps chromium
-      #     npm run test:e2e
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: periscope-ui/package-lock.json
+
+      - name: Run Playwright E2E against staging
+        working-directory: periscope-ui
+        env:
+          E2E_BASE_URL: ${{ vars.STAGING_BASE_URL }}/app/
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+          npm run test:e2e

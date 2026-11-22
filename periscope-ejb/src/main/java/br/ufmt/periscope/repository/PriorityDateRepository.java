@@ -38,8 +38,10 @@ public class PriorityDateRepository {
             pipeline.add(new Document("$match", new Document("completed", filtro.isComplete())));
         }
 
-        pipeline.add(new Document("$match", new Document("priorities.date",
-                new Document("$gte", filtro.getInicio()).append("$lte", filtro.getFim()))));
+        if (filtro.getInicio() != null && filtro.getFim() != null) {
+            pipeline.add(new Document("$match", new Document("priorities.date",
+                    new Document("$gte", filtro.getInicio()).append("$lte", filtro.getFim()))));
+        }
 
         pipeline.add(new Document("$match", new Document("blacklisted", false)));
         pipeline.add(new Document("$unwind", "$priorities"));
@@ -59,7 +61,11 @@ public class PriorityDateRepository {
 
         List<Pair> pairs = new ArrayList<Pair>();
         for (Document aux : outputResult) {
-            String year = aux.get("_id").toString();
+            Object id = aux.get("_id");
+            if (id == null) {
+                continue;
+            }
+            String year = id.toString();
             Number count = (Number) aux.get("prioritiesPerYear");
             pairs.add(new Pair(year, count));
         }

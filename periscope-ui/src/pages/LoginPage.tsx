@@ -1,12 +1,14 @@
 import type { FormEvent } from 'react';
 import { useState } from 'react';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { ApiError } from '../types';
-import { useAuth } from '../hooks/useAuth';
 import { ErrorAlert, Loading } from '../components/Feedback';
+import { useAuth } from '../hooks/useAuth';
+import { useI18n } from '../i18n/useI18n';
+import { ApiError } from '../types';
 
 export function LoginPage() {
   const { login, isAuthenticated, loading } = useAuth();
+  const { locale, setLocale, t } = useI18n();
   const navigate = useNavigate();
   const location = useLocation();
   const [username, setUsername] = useState('admin');
@@ -30,11 +32,11 @@ export function LoginPage() {
       navigate(from, { replace: true });
     } catch (err) {
       if (err instanceof ApiError && (err.status === 401 || err.status === 403)) {
-        setError('Usuário ou senha inválidos.');
+        setError(t('login.invalid'));
       } else if (err instanceof Error) {
         setError(err.message);
       } else {
-        setError('Falha ao autenticar.');
+        setError(t('login.error'));
       }
     } finally {
       setSubmitting(false);
@@ -44,13 +46,33 @@ export function LoginPage() {
   return (
     <div className="login-page">
       <form className="login-card" onSubmit={(e) => void onSubmit(e)}>
-        <div className="brand">PERISCOPE</div>
-        <h1>Entrar</h1>
-        <p className="muted">Acesse a análise e harmonização de patentes.</p>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div className="brand">PERISCOPE</div>
+          <div className="lang-switch">
+            <button
+              type="button"
+              data-testid="login-lang-pt"
+              className={`btn btn-sm ${locale === 'pt-BR' ? '' : 'btn-secondary'}`}
+              onClick={() => setLocale('pt-BR')}
+            >
+              PT
+            </button>
+            <button
+              type="button"
+              data-testid="login-lang-en"
+              className={`btn btn-sm ${locale === 'en-US' ? '' : 'btn-secondary'}`}
+              onClick={() => setLocale('en-US')}
+            >
+              EN
+            </button>
+          </div>
+        </div>
+        <h1>{t('login.title')}</h1>
+        <p className="muted">{t('login.subtitle')}</p>
         {error && <ErrorAlert message={error} />}
         <div className="form-grid">
           <div className="field">
-            <label htmlFor="username">Usuário</label>
+            <label htmlFor="username">{t('login.username')}</label>
             <input
               id="username"
               name="username"
@@ -62,7 +84,7 @@ export function LoginPage() {
             />
           </div>
           <div className="field">
-            <label htmlFor="password">Senha</label>
+            <label htmlFor="password">{t('login.password')}</label>
             <input
               id="password"
               name="password"
@@ -75,7 +97,7 @@ export function LoginPage() {
             />
           </div>
           <button type="submit" className="btn" data-testid="login-submit" disabled={submitting}>
-            {submitting ? 'Entrando…' : 'Entrar'}
+            {submitting ? t('login.submitting') : t('login.submit')}
           </button>
         </div>
       </form>

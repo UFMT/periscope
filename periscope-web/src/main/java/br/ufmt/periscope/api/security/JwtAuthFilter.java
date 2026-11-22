@@ -5,16 +5,21 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.Priorities;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
+import jakarta.ws.rs.core.Cookie;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.SecurityContext;
 import jakarta.ws.rs.ext.Provider;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Map;
 
 @Provider
 @Priority(Priorities.AUTHENTICATION)
 public class JwtAuthFilter implements ContainerRequestFilter {
+
+    public static final String TOKEN_COOKIE = "periscope_token";
+    public static final String CLAIMS_PROPERTY = "jwt.claims";
 
     @Inject
     private AuthService authService;
@@ -33,18 +38,18 @@ public class JwtAuthFilter implements ContainerRequestFilter {
             }
         }
 
-        String header = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
-        if (header == null || !header.regionMatches(true, 0, "Bearer ", 0, 7)) {
+        String token = resolveToken(requestContext);
+        if (token == null || token.isBlank()) {
             abortUnauthorized(requestContext, "Missing or invalid Authorization header");
             return;
         }
-        String token = header.substring(7).trim();
         try {
             JwtService.JwtClaims claims = authService.validate(token);
             final String username = claims.subject();
             final String role = normalizeRole(claims.userLevel());
             requestContext.setProperty("jwt.username", username);
             requestContext.setProperty("jwt.userLevel", role);
+            requestContext.setProperty(CLAIMS_PROPERTY, claims);
             requestContext.setSecurityContext(new SecurityContext() {
                 @Override
                 public Principal getUserPrincipal() {
@@ -79,6 +84,21 @@ public class JwtAuthFilter implements ContainerRequestFilter {
         }
     }
 
+    private static String resolveToken(ContainerRequestContext requestContext) {
+        String header = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
+        if (header != null && header.regionMatches(true, 0, "Bearer ", 0, 7)) {
+            return header.substring(7).trim();
+        }
+        Map<String, Cookie> cookies = requestContext.getCookies();
+        if (cookies != null) {
+            Cookie tokenCookie = cookies.get(TOKEN_COOKIE);
+            if (tokenCookie != null && tokenCookie.getValue() != null && !tokenCookie.getValue().isBlank()) {
+                return tokenCookie.getValue().trim();
+            }
+        }
+        return null;
+    }
+
     private static String normalizeRole(String userLevel) {
         if (userLevel == null) {
             return "USER";
@@ -88,7 +108,7 @@ public class JwtAuthFilter implements ContainerRequestFilter {
 
     private static void abortUnauthorized(ContainerRequestContext ctx, String message) {
         ctx.abortWith(Response.status(Response.Status.UNAUTHORIZED)
-                .entity(java.util.Map.of("error", message, "status", 401))
+                .entity(Map.of("error", message, "status", 401))
                 .type("application/json")
                 .build());
     }

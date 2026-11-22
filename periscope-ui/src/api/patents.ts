@@ -1,5 +1,12 @@
 import { apiRequest } from './client';
-import type { ImportResult, ImporterType, Page, Patent, PatentUpdateRequest } from '../types';
+import type {
+  ImportResult,
+  ImporterType,
+  Page,
+  Patent,
+  PatentCreateRequest,
+  PatentUpdateRequest,
+} from '../types';
 
 export interface PatentListParams {
   page?: number;
@@ -23,6 +30,13 @@ export function listPatents(
   return apiRequest<Page<Patent>>(
     `/projects/${projectId}/patents${qs ? `?${qs}` : ''}`,
   );
+}
+
+export function createPatent(projectId: string, data: PatentCreateRequest): Promise<Patent> {
+  return apiRequest<Patent>(`/projects/${projectId}/patents`, {
+    method: 'POST',
+    body: data,
+  });
 }
 
 export function getPatent(id: string): Promise<Patent> {

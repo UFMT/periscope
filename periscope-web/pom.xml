@@ -21,19 +21,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>primefaces</artifactId>
-            <classifier>jakarta</classifier>
-        </dependency>
-        <dependency>
-            <groupId>org.primefaces.themes</groupId>
-            <artifactId>bootstrap</artifactId>
-        </dependency>
-        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>periscope-ejb</artifactId>
             <version>${project.version}</version>

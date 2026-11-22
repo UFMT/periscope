@@ -39,8 +39,7 @@ public class ApplicantRepository {
 
     private @Inject
     Datastore ds;
-    private @Inject
-    Project currentProject;
+    private Project currentProject;
     private int count;
     private List<Applicant> list;
     private Integer searchType;
@@ -126,7 +125,7 @@ public class ApplicantRepository {
                 com.mongodb.client.model.Filters.eq("blacklisted", false))));
         pipeline.add(Aggregates.unwind("$applicants"));
         pipeline.add(Aggregates.match(com.mongodb.client.model.Filters.regex(
-                "applicants.name", "^" + begins, "i")));
+                "applicants.name", "^" + java.util.regex.Pattern.quote(begins != null ? begins : ""), "i")));
         pipeline.add(Aggregates.project(Projections.include("applicants")));
         pipeline.add(Aggregates.group("$applicants.name"));
 
@@ -153,19 +152,22 @@ public class ApplicantRepository {
      */
     public void updateMainApplicants(Project currentProject, Filters filtro) {
         Document match = new Document("project.$id", currentProject.getId())
+                .append("blacklisted", false)
                 .append("applicants", new Document("$exists", true));
-        if (filtro.isComplete()) {
-            match.append("completed", filtro.isComplete());
-        }
-        if (filtro.getSelecionaData() == 1) {
-            match.append("publicationDate",
-                    new Document("$gte", filtro.getInicio()).append("$lte", filtro.getFim()));
-        } else {
-            match.append("applicationDate",
-                    new Document("$gte", filtro.getInicio()).append("$lte", filtro.getFim()));
-        }
-        if (filtro.getApplicantType() != null && !filtro.getApplicantType().isEmpty()) {
-            match.append("applicants.nature.name", filtro.getApplicantType());
+        if (filtro != null) {
+            if (filtro.isComplete()) {
+                match.append("completed", true);
+            }
+            if (filtro.getInicio() != null && filtro.getFim() != null) {
+                String dateField = filtro.getSelecionaData() == 1 ? "publicationDate" : "applicationDate";
+                match.append(dateField,
+                        new Document("$gte", filtro.getInicio()).append("$lte", filtro.getFim()));
+            }
+            if (filtro.getApplicantType() != null && !filtro.getApplicantType().isEmpty()) {
+                match.append("$or", Arrays.asList(
+                        new Document("applicants.type.name", filtro.getApplicantType()),
+                        new Document("applicants.nature.name", filtro.getApplicantType())));
+            }
         }
 
         List<Bson> pipeline = Arrays.<Bson>asList(
@@ -233,7 +235,7 @@ public class ApplicantRepository {
             Document matchFilterItem = new Document();
             for (Map.Entry<String, String> entry : filters.entrySet()) {
                 String column = entry.getKey();
-                String value = entry.getValue();
+                String value = java.util.regex.Pattern.quote(entry.getValue());
                 Document regexDoc;
                 if (searchType != null && searchType.equals(1)) {
                     regexDoc = new Document("$regex", "^" + value).append("$options", "i");
@@ -263,6 +265,7 @@ public class ApplicantRepository {
                 .append("country", "$applicants.country")
                 .append("state", "$applicants.state")
                 .append("acronym", "$applicants.acronym")
+                .append("type", "$applicants.type")
                 .append("nature", "$applicants.nature")
                 .append("harmonized", "$applicants.harmonized");
         Document groupFields = new Document("_id", idData)
@@ -293,6 +296,7 @@ public class ApplicantRepository {
         totalPipeline.add(Aggregates.match(matchProj));
         totalPipeline.addAll(parametrosGroup);
 
+        this.setCount(0);
         List<Document> outputListTotal = patentDocs().aggregate(totalPipeline)
                 .into(new ArrayList<Document>());
         for (Document result : outputListTotal) {
@@ -320,7 +324,10 @@ public class ApplicantRepository {
             if (result.get("acronym") != null) {
                 applicant.setAcronym(result.get("acronym").toString());
             }
-            Document nature = result.get("nature", Document.class);
+            Document nature = result.get("type", Document.class);
+            if (nature == null) {
+                nature = result.get("nature", Document.class);
+            }
             if (nature != null) {
                 ApplicantType realApplicantType = new ApplicantType();
                 realApplicantType.setName((String) nature.get("name"));

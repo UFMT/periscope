@@ -7,6 +7,7 @@ import br.ufmt.periscope.model.Files;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.model.User;
+import br.ufmt.periscope.model.UserLevel;
 import br.ufmt.periscope.repository.PatentRepository;
 import com.mongodb.client.gridfs.GridFSBucket;
 import com.mongodb.client.gridfs.model.GridFSFile;
@@ -65,18 +66,26 @@ public class FileResource {
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     @Operation(summary = "Download de arquivo GridFS")
     public Response download(@PathParam("id") String id, @Context SecurityContext securityContext) {
-        securitySupport.requireUser(securityContext);
+        User user = securitySupport.requireUser(securityContext);
         if (id == null || !ObjectId.isValid(id)) {
             throw ApiException.badRequest("Invalid file id");
         }
         ObjectId oid = new ObjectId(id);
+        String projectId = patentRepository.findProjectIdByFileId(oid);
+        if (projectId != null) {
+            securitySupport.requireProject(projectId, user);
+        } else if (user.getUserLevel() != UserLevel.ADMIN) {
+            throw ApiException.notFound("File not found");
+        }
+
         GridFSFile gfile = gridFSBucket.find(Filters.eq("_id", oid)).first();
         if (gfile == null) {
             throw ApiException.notFound("File not found");
         }
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         gridFSBucket.downloadToStream(oid, out);
-        String filename = gfile.getFilename() != null ? gfile.getFilename() : id;
+        String rawFilename = gfile.getFilename() != null ? gfile.getFilename() : id;
+        String filename = rawFilename.replaceAll("[\\r\\n\"\\\\]", "_");
         String contentType = MediaType.APPLICATION_OCTET_STREAM;
         if (gfile.getMetadata() != null && gfile.getMetadata().getString("contentType") != null) {
             contentType = gfile.getMetadata().getString("contentType");

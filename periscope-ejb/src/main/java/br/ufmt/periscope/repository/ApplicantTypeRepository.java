@@ -35,7 +35,7 @@ public class ApplicantTypeRepository {
                 .filter(eq("name", type.getName()))
                 .count();
 
-        if (count >= 0) {
+        if (count > 0) {
             return;
         }
 

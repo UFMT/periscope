@@ -1,0 +1,14 @@
+{$PERISCOPE_DOMAIN:localhost} {
+	encode gzip zstd
+
+	header {
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "SAMEORIGIN"
+		Referrer-Policy "strict-origin-when-cross-origin"
+	}
+
+	@root path /
+	redir @root /periscope/app/ 302
+
+	reverse_proxy periscope:8080
+}

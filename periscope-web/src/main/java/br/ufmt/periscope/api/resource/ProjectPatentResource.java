@@ -3,6 +3,7 @@ package br.ufmt.periscope.api.resource;
 import br.ufmt.periscope.api.ApiException;
 import br.ufmt.periscope.api.dto.ImportResultDTO;
 import br.ufmt.periscope.api.dto.PageDTO;
+import br.ufmt.periscope.api.dto.PatentCreateRequest;
 import br.ufmt.periscope.api.dto.PatentDTO;
 import br.ufmt.periscope.api.security.ApiSecuritySupport;
 import br.ufmt.periscope.importer.PatentImporter;
@@ -11,6 +12,7 @@ import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.model.User;
 import br.ufmt.periscope.repository.PatentRepository;
+import dev.morphia.Datastore;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -24,18 +26,19 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.SecurityContext;
 import java.io.InputStream;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.jboss.resteasy.plugins.providers.multipart.InputPart;
-import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
-
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.security.SecurityRequirement;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import org.jboss.resteasy.plugins.providers.multipart.InputPart;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
 @Path("/projects/{projectId}/patents")
 @Produces(MediaType.APPLICATION_JSON)
@@ -46,6 +49,9 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 public class ProjectPatentResource {
 
     @Inject
+    private Datastore ds;
+
+    @Inject
     private PatentRepository patentRepository;
 
     @Inject
@@ -53,6 +59,9 @@ public class ProjectPatentResource {
 
     @Inject
     private ApiSecuritySupport securitySupport;
+
+    @Inject
+    private PatentMapperSupport patentMapper;
 
     @GET
     @Operation(summary = "Listar patentes do projeto (paginado)")
@@ -90,6 +99,59 @@ public class ProjectPatentResource {
     }
 
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Cadastrar patente manualmente")
+    public Response create(
+            @PathParam("projectId") String projectId,
+            PatentCreateRequest request,
+            @Context SecurityContext securityContext) {
+        User user = securitySupport.requireUser(securityContext);
+        Project project = securitySupport.requireProject(projectId, user);
+        if (request == null || request.title() == null || request.title().isBlank()) {
+            throw ApiException.badRequest("title is required");
+        }
+        boolean hasPub = request.publicationNumber() != null && !request.publicationNumber().isBlank();
+        boolean hasApp = request.applicationNumber() != null && !request.applicationNumber().isBlank();
+        if (!hasPub && !hasApp) {
+            throw ApiException.badRequest("publicationNumber or applicationNumber is required");
+        }
+
+        Patent patent = new Patent();
+        patentMapper.applyFields(
+                patent,
+                request.title(),
+                request.abstractText(),
+                request.publicationNumber(),
+                request.publicationDate(),
+                request.applicationNumber(),
+                request.applicationDate(),
+                request.applicationCountry(),
+                request.language(),
+                request.mainClassification(),
+                request.classifications(),
+                request.applicants(),
+                request.inventors(),
+                request.priorities(),
+                request.blacklisted() != null ? request.blacklisted() : Boolean.FALSE,
+                request.completed());
+        patent.setProject(project);
+
+        if (patentRepository.patentExistsForProject(patent, project)) {
+            throw ApiException.conflict("Patent already exists in this project");
+        }
+        patentRepository.savePatentToDatabase(patent, project);
+        if (request.completed() != null && !request.completed().equals(patent.getCompleted())) {
+            patent.setCompleted(request.completed());
+            ds.save(patent);
+        }
+
+        PatentDTO dto = PatentDTO.from(patent, projectId);
+        return Response.created(URI.create("/periscope/rest/patents/" + dto.id()))
+                .entity(dto)
+                .build();
+    }
+
+    @POST
     @Path("/import")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Operation(summary = "Importar patentes", description = "multipart: file + importer (ESPACENET|PATENTSCOPE|DPMA)")
@@ -100,7 +162,7 @@ public class ProjectPatentResource {
         User user = securitySupport.requireUser(securityContext);
         Project project = securitySupport.requireProject(projectId, user);
         if (project.getPatents() == null) {
-            project.setPatents(new java.util.ArrayList<>());
+            project.setPatents(new ArrayList<>());
         }
 
         Map<String, List<InputPart>> form = input.getFormDataMap();
@@ -129,7 +191,6 @@ public class ProjectPatentResource {
         } catch (RuntimeException ex) {
             long afterError = securitySupport.countPatents(project);
             if (afterError > before) {
-                // DB save may have succeeded before Lucene index failure
                 List<String> messages = new ArrayList<>();
                 messages.add("Imported with indexing warning: " + ex.getMessage());
                 return new ImportResultDTO((int) (afterError - before), importerType.trim(), fileName, messages);

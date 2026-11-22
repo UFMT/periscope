@@ -1,0 +1,87 @@
+services:
+  mongodb:
+    image: mongo:7
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME:?Set MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD:?Set MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - mongodb_prod_data:/data/db
+    networks:
+      - internal
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mongosh",
+          "--quiet",
+          "-u",
+          "${MONGO_INITDB_ROOT_USERNAME}",
+          "-p",
+          "${MONGO_INITDB_ROOT_PASSWORD}",
+          "--authenticationDatabase",
+          "admin",
+          "--eval",
+          "db.adminCommand('ping').ok",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  periscope:
+    build: .
+    restart: unless-stopped
+    environment:
+      MONGODB_URI: mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongodb:27017/${MONGODB_DATABASE:-Periscope}?authSource=admin
+      MONGODB_DATABASE: ${MONGODB_DATABASE:-Periscope}
+      PERISCOPE_DIR: /opt/periscope
+      PERISCOPE_PRODUCTION: "true"
+      PERISCOPE_COOKIE_SECURE: ${PERISCOPE_COOKIE_SECURE:-true}
+      PERISCOPE_JWT_SECRET: ${PERISCOPE_JWT_SECRET:?Set PERISCOPE_JWT_SECRET (at least 32 bytes)}
+      PERISCOPE_JWT_EXPIRATION_HOURS: ${PERISCOPE_JWT_EXPIRATION_HOURS:-8}
+      PERISCOPE_CORS_ORIGINS: ${PERISCOPE_CORS_ORIGINS:-https://localhost}
+      PERISCOPE_ADMIN_USERNAME: ${PERISCOPE_ADMIN_USERNAME:-admin}
+      PERISCOPE_ADMIN_PASSWORD: ${PERISCOPE_ADMIN_PASSWORD:-}
+      PERISCOPE_ADMIN_EMAIL: ${PERISCOPE_ADMIN_EMAIL:-admin@ufmt.br}
+      PERISCOPE_FORCE_ADMIN_PASSWORD_CHANGE: ${PERISCOPE_FORCE_ADMIN_PASSWORD_CHANGE:-true}
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - internal
+    volumes:
+      - periscope_prod_data:/opt/periscope
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:8080/periscope/rest/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 45s
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      PERISCOPE_DOMAIN: ${PERISCOPE_DOMAIN:-localhost}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      periscope:
+        condition: service_healthy
+    networks:
+      - internal
+
+networks:
+  internal:
+    driver: bridge
+
+volumes:
+  mongodb_prod_data:
+  periscope_prod_data:
+  caddy_data:
+  caddy_config:

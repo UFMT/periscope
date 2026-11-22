@@ -22,21 +22,22 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 @OpenAPIDefinition(
         info = @Info(
                 title = "Periscope API",
-                version = "2.0",
+                version = "2.1",
                 description = "API REST JSON do Periscope (UFMT) para autenticação JWT, "
                         + "projetos, patentes, importação, harmonização, relatórios, "
-                        + "usuários e arquivos GridFS. Health em /rest/health.",
+                        + "usuários, dados de referência e arquivos GridFS. Health em /rest/health.",
                 contact = @Contact(name = "UFMT / Periscope")
         ),
         servers = {
                 @Server(url = "/periscope", description = "Context root local / Docker")
         },
         tags = {
-                @Tag(name = "Auth", description = "Login JWT e sessão"),
-                @Tag(name = "Projects", description = "CRUD de projetos"),
-                @Tag(name = "Patents", description = "Patentes e importação"),
-                @Tag(name = "Harmonization", description = "Sugestões Lucene e regras"),
-                @Tag(name = "Reports", description = "Relatórios agregados"),
+                @Tag(name = "Auth", description = "Login JWT, refresh, troca de senha e logout"),
+                @Tag(name = "Projects", description = "CRUD de projetos e observadores"),
+                @Tag(name = "Patents", description = "Patentes, cadastro manual e importação"),
+                @Tag(name = "Harmonization", description = "Sugestões Lucene, entidades e regras"),
+                @Tag(name = "Reports", description = "13 relatórios agregados com filtros"),
+                @Tag(name = "Reference", description = "Dados de referência (países, naturezas, usuários)"),
                 @Tag(name = "Users", description = "Administração de usuários"),
                 @Tag(name = "Files", description = "Anexos GridFS"),
                 @Tag(name = "Health", description = "Liveness / readiness")

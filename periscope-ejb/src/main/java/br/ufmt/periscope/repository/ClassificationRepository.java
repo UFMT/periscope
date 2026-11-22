@@ -59,12 +59,14 @@ public class ClassificationRepository {
             matchParameters.put("completed", filtro.isComplete());
         }
 
-        if (filtro.getSelecionaData() == 1) {
-            matchParameters.put("publicationDate",
-                    new Document("$gte", filtro.getInicio()).append("$lte", filtro.getFim()));
-        } else {
-            matchParameters.put("applicationDate",
-                    new Document("$gte", filtro.getInicio()).append("$lte", filtro.getFim()));
+        if (filtro.getInicio() != null && filtro.getFim() != null) {
+            if (filtro.getSelecionaData() == 1) {
+                matchParameters.put("publicationDate",
+                        new Document("$gte", filtro.getInicio()).append("$lte", filtro.getFim()));
+            } else {
+                matchParameters.put("applicationDate",
+                        new Document("$gte", filtro.getInicio()).append("$lte", filtro.getFim()));
+            }
         }
 
         matchParameters.put("blacklisted", false);
@@ -122,7 +124,11 @@ public class ClassificationRepository {
 //        { "$limit" : 8})
         List<Pair> pairs = new ArrayList<Pair>();
         for (Document aux : outputResult) {
-            String ipc = aux.get("_id").toString();
+            Object id = aux.get("_id");
+            if (id == null) {
+                continue;
+            }
+            String ipc = id.toString();
             Number count = (Number) aux.get("applicationPerSector");
             pairs.add(new Pair(ipc, count));
         }

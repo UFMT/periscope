@@ -33,7 +33,6 @@ public class PatentRepository {
     private Datastore ds;
     @Inject
     private PatentIndexer patentIndexer;
-    @Inject
     private Project currentProject;
     @Inject
     private PatentValidator validator;
@@ -78,6 +77,9 @@ public class PatentRepository {
 
     public void savePatentToDatabase(Patent p, Project project) {
         p.setProject(project);
+        if (project.getPatents() == null) {
+            project.setPatents(new ArrayList<Patent>());
+        }
         if (!patentExistsForProject(p, project)) {
             validator.validate(p);
             project.getPatents().add(p);
@@ -185,7 +187,7 @@ public class PatentRepository {
         Query<Patent> query = ds.find(Patent.class)
                 .filter(
                         eq("project", this.currentProject),
-                        eq("blacklisted", this.blacklisted));
+                        eq("blacklisted", Boolean.TRUE.equals(this.blacklisted)));
         if (this.completed != null) {
             query.filter(eq("completed", this.completed));
         }
@@ -236,20 +238,76 @@ public class PatentRepository {
 
     public List<Patent> loadBrazilian(int first, int pageSize, String sortField, int sortOrder,
             Map<String, String> filters) {
+        PatentPage page = loadBrazilianPage(
+                this.currentProject,
+                Boolean.TRUE.equals(this.blacklisted),
+                first, pageSize, sortField, sortOrder, filters);
+        setRowCount((int) page.total());
+        return page.content();
+    }
+
+    public PatentPage loadBrazilianPage(Project project, boolean blacklistedFlag,
+            int first, int pageSize, String sortField, int sortOrder,
+            Map<String, String> filters) {
         Query<Patent> query = ds.find(Patent.class)
                 .filter(
-                        eq("project", this.currentProject),
-                        eq("blacklisted", this.blacklisted),
+                        eq("project", project),
+                        eq("blacklisted", blacklistedFlag),
                         eq("priorities.country.acronym", "BR"));
         applyContainsFilters(query, filters);
-        setRowCount((int) query.count());
+        long total = query.count();
 
         FindOptions options = new FindOptions().skip(first).limit(pageSize);
         applySort(options, sortField, sortOrder);
         options.projection().include(
-                "_id", "titleSelect", "mainClassification", "publicationDate",
-                "applicationNumber", "applicants", "inventors", "blacklisted");
-        return query.iterator(options).toList();
+                "_id", "titleSelect", "mainClassification", "publicationDate", "publicationNumber",
+                "applicationDate", "applicationNumber", "applicationCountry",
+                "applicants", "inventors", "blacklisted", "completed",
+                "presentationFile", "patentInfo");
+        return new PatentPage(query.iterator(options).toList(), total);
+    }
+
+    public record PatentPage(List<Patent> content, long total) {
+    }
+
+    public String findProjectIdByFileId(ObjectId fileId) {
+        if (fileId == null) {
+            return null;
+        }
+        MongoCollection<Document> coll = ds.getDatabase()
+                .getCollection(ds.getMapper().getEntityModel(Patent.class).getCollectionName());
+        Document raw = coll.find(Filters.or(
+                        Filters.eq("presentationFile.$id", fileId),
+                        Filters.eq("patentInfo.$id", fileId),
+                        Filters.eq("presentationFile", fileId),
+                        Filters.eq("patentInfo", fileId)))
+                .projection(com.mongodb.client.model.Projections.include("project"))
+                .first();
+        if (raw == null) {
+            return null;
+        }
+        return extractRefId(raw.get("project"));
+    }
+
+    private static String extractRefId(Object ref) {
+        if (ref == null) {
+            return null;
+        }
+        if (ref instanceof com.mongodb.DBRef dbRef) {
+            Object id = dbRef.getId();
+            return id != null ? id.toString() : null;
+        }
+        if (ref instanceof Document doc) {
+            Object id = doc.get("$id");
+            if (id == null) {
+                id = doc.get("_id");
+            }
+            return id != null ? id.toString() : null;
+        }
+        if (ref instanceof ObjectId oid) {
+            return oid.toString();
+        }
+        return null;
     }
 
     private void applyContainsFilters(Query<Patent> query, Map<String, String> filters) {

@@ -1,15 +1,20 @@
 package br.ufmt.periscope.api.resource;
 
 import br.ufmt.periscope.api.ApiException;
+import br.ufmt.periscope.api.dto.HarmonizationEntityDTO;
+import br.ufmt.periscope.api.dto.PageDTO;
 import br.ufmt.periscope.api.dto.RuleDTO;
 import br.ufmt.periscope.api.dto.RuleRequest;
 import br.ufmt.periscope.api.security.ApiSecuritySupport;
 import br.ufmt.periscope.harmonization.Harmonization;
+import br.ufmt.periscope.model.Applicant;
 import br.ufmt.periscope.model.ApplicantType;
 import br.ufmt.periscope.model.Country;
+import br.ufmt.periscope.model.Inventor;
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.model.Rule;
 import br.ufmt.periscope.model.RuleType;
+import br.ufmt.periscope.model.State;
 import br.ufmt.periscope.model.User;
 import br.ufmt.periscope.repository.ApplicantRepository;
 import br.ufmt.periscope.repository.ApplicantTypeRepository;
@@ -24,6 +29,7 @@ import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
@@ -106,6 +112,61 @@ public class HarmonizationResource {
     }
 
     @GET
+    @Path("/entities")
+    @Operation(summary = "Listar depositantes ou inventores do projeto")
+    public PageDTO<HarmonizationEntityDTO> listEntities(
+            @PathParam("projectId") String projectId,
+            @QueryParam("type") @DefaultValue("applicant") String type,
+            @QueryParam("page") @DefaultValue("0") int page,
+            @QueryParam("size") @DefaultValue("20") int size,
+            @QueryParam("q") String q,
+            @Context SecurityContext securityContext) {
+        User user = securitySupport.requireUser(securityContext);
+        Project project = securitySupport.requireProject(projectId, user);
+        if (page < 0) {
+            page = 0;
+        }
+        if (size <= 0 || size > 200) {
+            size = 20;
+        }
+        String kind = type.trim().toLowerCase();
+        Map<String, String> filters = (q != null && !q.isBlank()) ? Map.of("name", q.trim()) : Map.of();
+        if ("applicant".equals(kind)) {
+            applicantRepository.setCurrentProject(project);
+            List<Applicant> items = applicantRepository.load(page * size, size, "documentCount", 1, filters);
+            long total = applicantRepository.getCount();
+            List<HarmonizationEntityDTO> dtos = items.stream()
+                    .map(a -> new HarmonizationEntityDTO(
+                            a.getName(),
+                            a.getAcronym(),
+                            a.getCountry() != null ? a.getCountry().getAcronym() : null,
+                            a.getState() != null ? a.getState().getAcronym() : null,
+                            a.getType() != null ? a.getType().getName() : null,
+                            a.getHarmonized(),
+                            a.getDocumentCount() != null ? a.getDocumentCount() : 0))
+                    .toList();
+            return PageDTO.of(dtos, page, size, total);
+        }
+        if ("inventor".equals(kind)) {
+            inventorRepository.setCurrentProject(project);
+            List<Inventor> items = inventorRepository.load(page * size, size, "documentCount", 1, filters);
+            long total = inventorRepository.getCount();
+            List<HarmonizationEntityDTO> dtos = items.stream()
+                    .map(i -> new HarmonizationEntityDTO(
+                            i.getName(),
+                            i.getAcronym(),
+                            i.getCountry() != null ? i.getCountry().getAcronym() : null,
+                            i.getState() != null ? i.getState().getAcronym() : null,
+                            null,
+                            i.getHarmonized(),
+                            i.getDocumentCount() != null ? i.getDocumentCount() : 0))
+                    .toList();
+            return PageDTO.of(dtos, page, size, total);
+        }
+        throw ApiException.badRequest("type must be applicant or inventor");
+    }
+
+    @GET
     @Path("/rules")
     @Operation(summary = "Listar regras de harmonização")
     public List<RuleDTO> listRules(
@@ -136,43 +197,54 @@ public class HarmonizationResource {
             @Context SecurityContext securityContext) {
         User user = securitySupport.requireUser(securityContext);
         Project project = securitySupport.requireProject(projectId, user);
-        if (request == null || request.name() == null || request.name().isBlank()) {
-            throw ApiException.badRequest("name is required");
-        }
-        if (request.type() == null) {
-            throw ApiException.badRequest("type is required (APPLICANT or INVENTOR)");
-        }
-        RuleType ruleType;
-        try {
-            ruleType = RuleType.valueOf(request.type().trim().toUpperCase());
-        } catch (IllegalArgumentException ex) {
-            throw ApiException.badRequest("type must be APPLICANT or INVENTOR");
-        }
         Rule rule = new Rule();
-        rule.setName(request.name());
-        rule.setAcronym(request.acronym());
-        rule.setType(ruleType);
         rule.setProject(project);
-        if (request.substitutions() != null) {
-            rule.setSubstitutions(new HashSet<>(request.substitutions()));
-        }
-        if (request.countryAcronym() != null && !request.countryAcronym().isBlank()) {
-            Country country = countryRepository.getCountryByAcronym(request.countryAcronym());
-            if (country != null) {
-                rule.setCountry(country);
-            }
-        }
-        if (request.nature() != null && !request.nature().isBlank()) {
-            for (ApplicantType at : applicantTypeRepository.getAll()) {
-                if (request.nature().equalsIgnoreCase(at.getName())) {
-                    rule.setNature(at);
-                    break;
-                }
-            }
-        }
+        applyRuleFields(rule, request, true);
         ruleRepository.setCurrentProject(project);
         ruleRepository.save(rule);
         return Response.status(Response.Status.CREATED).entity(RuleDTO.from(rule, projectId)).build();
+    }
+
+    @PUT
+    @Path("/rules/{ruleId}")
+    @Operation(summary = "Atualizar regra")
+    public RuleDTO updateRule(
+            @PathParam("projectId") String projectId,
+            @PathParam("ruleId") String ruleId,
+            RuleRequest request,
+            @Context SecurityContext securityContext) {
+        User user = securitySupport.requireUser(securityContext);
+        Project project = securitySupport.requireProject(projectId, user);
+        Rule rule = loadProjectRule(ruleId, project);
+        if (request == null) {
+            throw ApiException.badRequest("Body is required");
+        }
+        rule.setProject(project);
+        applyRuleFields(rule, request, false);
+        ruleRepository.update(rule);
+        return RuleDTO.from(rule, projectId);
+    }
+
+    @POST
+    @Path("/rules/{ruleId}/undo")
+    @Operation(summary = "Desfazer aplicação de uma regra")
+    public Map<String, Object> undoRule(
+            @PathParam("projectId") String projectId,
+            @PathParam("ruleId") String ruleId,
+            @Context SecurityContext securityContext) {
+        User user = securitySupport.requireUser(securityContext);
+        Project project = securitySupport.requireProject(projectId, user);
+        Rule rule = loadProjectRule(ruleId, project);
+        if (rule.getType() == RuleType.INVENTOR) {
+            ruleRepository.undoInventorRule(project, rule.getName());
+        } else {
+            ruleRepository.undoApplicantRule(project, rule.getName());
+        }
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("undone", 1);
+        body.put("ruleId", ruleId);
+        body.put("message", "Rule undone successfully");
+        return body;
     }
 
     @DELETE
@@ -184,11 +256,7 @@ public class HarmonizationResource {
             @Context SecurityContext securityContext) {
         User user = securitySupport.requireUser(securityContext);
         Project project = securitySupport.requireProject(projectId, user);
-        Rule rule = ruleRepository.findById(ruleId);
-        if (rule == null || rule.getProject() == null
-                || !rule.getProject().getId().equals(project.getId())) {
-            throw ApiException.notFound("Rule not found");
-        }
+        loadProjectRule(ruleId, project);
         ruleRepository.delete(ruleId);
         return Response.noContent().build();
     }
@@ -223,11 +291,7 @@ public class HarmonizationResource {
             @Context SecurityContext securityContext) {
         User user = securitySupport.requireUser(securityContext);
         Project project = securitySupport.requireProject(projectId, user);
-        Rule rule = ruleRepository.findById(ruleId);
-        if (rule == null || rule.getProject() == null
-                || !rule.getProject().getId().equals(project.getId())) {
-            throw ApiException.notFound("Rule not found");
-        }
+        Rule rule = loadProjectRule(ruleId, project);
         rule.setProject(project);
         harmonization.applyRule(rule);
         Map<String, Object> body = new LinkedHashMap<>();
@@ -235,5 +299,100 @@ public class HarmonizationResource {
         body.put("ruleId", ruleId);
         body.put("message", "Rule applied successfully");
         return body;
+    }
+
+    private Rule loadProjectRule(String ruleId, Project project) {
+        Rule rule = ruleRepository.findById(ruleId);
+        if (rule == null || rule.getProject() == null
+                || !rule.getProject().getId().equals(project.getId())) {
+            throw ApiException.notFound("Rule not found");
+        }
+        return rule;
+    }
+
+    private void applyRuleFields(Rule rule, RuleRequest request, boolean requireNameAndType) {
+        if (requireNameAndType) {
+            if (request == null || request.name() == null || request.name().isBlank()) {
+                throw ApiException.badRequest("name is required");
+            }
+            if (request.type() == null) {
+                throw ApiException.badRequest("type is required (APPLICANT or INVENTOR)");
+            }
+        }
+        if (request.name() != null && !request.name().isBlank()) {
+            rule.setName(request.name().trim().toUpperCase());
+        }
+        if (request.acronym() != null) {
+            rule.setAcronym(request.acronym().isBlank() ? null : request.acronym().trim().toUpperCase());
+        }
+        if (request.type() != null && !request.type().isBlank()) {
+            try {
+                rule.setType(RuleType.valueOf(request.type().trim().toUpperCase()));
+            } catch (IllegalArgumentException ex) {
+                throw ApiException.badRequest("type must be APPLICANT or INVENTOR");
+            }
+        }
+        if (request.substitutions() != null) {
+            rule.setSubstitutions(new HashSet<>(request.substitutions()));
+        }
+        if (request.countryAcronym() != null) {
+            if (request.countryAcronym().isBlank()) {
+                rule.setCountry(new Country());
+                rule.setState(new State());
+            } else {
+                Country found = countryRepository.getCountryByAcronym(request.countryAcronym().trim().toUpperCase());
+                if (found != null) {
+                    Country copy = new Country();
+                    copy.setId(found.getId());
+                    copy.setAcronym(found.getAcronym());
+                    copy.setName(found.getName());
+                    copy.setStates(null);
+                    rule.setCountry(copy);
+                    rule.setState(resolveState(found, request.stateAcronym()));
+                }
+            }
+        } else if (request.stateAcronym() != null) {
+            if (request.stateAcronym().isBlank()) {
+                rule.setState(new State());
+            } else {
+                Country existingCountry = rule.getCountry() != null && rule.getCountry().getAcronym() != null
+                        ? countryRepository.getCountryByAcronym(rule.getCountry().getAcronym())
+                        : null;
+                rule.setState(resolveState(existingCountry, request.stateAcronym()));
+            }
+        }
+        if (request.nature() != null) {
+            if (request.nature().isBlank()) {
+                rule.setNature(new ApplicantType());
+            } else {
+                for (ApplicantType at : applicantTypeRepository.getAll()) {
+                    if (request.nature().trim().equalsIgnoreCase(at.getName())) {
+                        rule.setNature(at);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    private static State resolveState(Country country, String stateAcronym) {
+        if (stateAcronym == null || stateAcronym.isBlank()) {
+            return new State();
+        }
+        String code = stateAcronym.trim().toUpperCase();
+        if (country != null && country.getStates() != null) {
+            for (State s : country.getStates()) {
+                if (s != null && code.equalsIgnoreCase(s.getAcronym())) {
+                    State copy = new State();
+                    copy.setAcronym(s.getAcronym());
+                    copy.setName(s.getName());
+                    copy.setRegion(s.getRegion());
+                    return copy;
+                }
+            }
+        }
+        State fallback = new State();
+        fallback.setAcronym(code);
+        return fallback;
     }
 }

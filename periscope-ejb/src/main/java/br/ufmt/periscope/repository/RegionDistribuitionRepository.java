@@ -3,6 +3,7 @@ package br.ufmt.periscope.repository;
 import br.ufmt.periscope.model.Patent;
 import br.ufmt.periscope.model.Project;
 import br.ufmt.periscope.report.Pair;
+import br.ufmt.periscope.util.Filters;
 import com.mongodb.client.MongoCollection;
 import dev.morphia.Datastore;
 import java.util.ArrayList;
@@ -20,16 +21,27 @@ public class RegionDistribuitionRepository {
     Datastore ds;
 
     public List<Pair> getRegionDistribuitions(Project currentProject) {
+        return getRegionDistribuitions(currentProject, null);
+    }
 
-//        db.Patent.aggregate({$unwind:"$applicants"},
-//        {$project:{applicants:1}},
-//        {$match:{"applicants.country.acronym":"BR"}}, {$project:{"applicants.state":1}}
-//        ,{$group:{_id:{_id:"$_id",state:"$applicants.state"}}},{$group:{_id:"$_id.state.region",count:{$sum:1}}},{$sort : {count: -1}})
+    public List<Pair> getRegionDistribuitions(Project currentProject, Filters filtro) {
         MongoCollection<Document> coll = ds.getDatabase()
                 .getCollection(ds.getMapper().getEntityModel(Patent.class).getCollectionName());
 
         List<Document> pipeline = new ArrayList<Document>();
-        pipeline.add(new Document("$match", new Document("project.$id", currentProject.getId())));
+        Document match = new Document("project.$id", currentProject.getId())
+                .append("blacklisted", false);
+        if (filtro != null) {
+            if (filtro.isComplete()) {
+                match.append("completed", true);
+            }
+            if (filtro.getInicio() != null && filtro.getFim() != null) {
+                String dateField = filtro.getSelecionaData() == 1 ? "publicationDate" : "applicationDate";
+                match.append(dateField,
+                        new Document("$gte", filtro.getInicio()).append("$lte", filtro.getFim()));
+            }
+        }
+        pipeline.add(new Document("$match", match));
         pipeline.add(new Document("$unwind", "$applicants"));
         pipeline.add(new Document("$project", new Document("applicants", 1)));
         pipeline.add(new Document("$match", new Document("applicants.country.acronym", "BR")));
@@ -47,7 +59,7 @@ public class RegionDistribuitionRepository {
 
         List<Pair> pairs = new ArrayList<Pair>();
         for (Document aux : outputResult) {
-            if (aux.get("_id") != null) {
+            if (aux.get("_id") != null && !"".equals(aux.get("_id"))) {
                 String state = aux.get("_id").toString();
                 Number count = (Number) aux.get("count");
                 pairs.add(new Pair(state, count));

@@ -9,7 +9,8 @@ public record UserDTO(
         String firstname,
         String lastname,
         String email,
-        String userLevel
+        String userLevel,
+        boolean mustChangePassword
 ) {
     public static UserDTO from(User user) {
         if (user == null) {
@@ -22,7 +23,8 @@ public record UserDTO(
                 user.getFirstname(),
                 user.getLastname(),
                 user.getEmail(),
-                level != null ? level.name() : null
+                level != null ? level.name() : null,
+                Boolean.TRUE.equals(user.getMustChangePassword())
         );
     }
 }

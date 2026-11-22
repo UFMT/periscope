@@ -367,6 +367,28 @@ table.data tr:hover td {
   color: var(--accent-hover);
 }
 
+.badge-success {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.badge-muted {
+  background: #e9eef4;
+  color: var(--text-muted);
+}
+
+.lang-switch {
+  display: inline-flex;
+  gap: 0.3rem;
+}
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0.75rem;
+  align-items: end;
+}
+
 .stack-actions {
   display: flex;
   flex-wrap: wrap;
@@ -432,10 +454,16 @@ table.data tr:hover td {
 
 .modal {
   width: min(560px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
   background: #fff;
   border-radius: 12px;
   padding: 1.25rem;
   box-shadow: var(--shadow);
+}
+
+.modal-wide {
+  width: min(760px, 100%);
 }
 
 .modal-header {

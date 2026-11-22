@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { openProjectWithPatents } from './helpers';
 
 test.describe('patents', () => {
-  test('abre projeto com patentes, verifica tabela e detalhe', async ({ page }) => {
+  test('abre projeto com patentes, verifica tabela, detalhe e cadastro manual', async ({ page }) => {
     await openProjectWithPatents(page);
 
     const table = page.getByTestId('patents-table');
@@ -17,5 +17,18 @@ test.describe('patents', () => {
     if (title && title !== '(sem título)') {
       await expect(page.locator('#title')).toHaveValue(title);
     }
+
+    await page.getByRole('link', { name: 'Voltar à lista' }).click();
+    await expect(page).toHaveURL(/\/patents\/?$/);
+
+    const manualTitle = `PATENTE MANUAL E2E ${Date.now()}`;
+    const manualPub = `BR${Date.now()}`;
+    await page.getByTestId('patent-create').click();
+    await expect(page.getByTestId('patent-create-form')).toBeVisible();
+    await page.getByTestId('new-patent-title').fill(manualTitle);
+    await page.getByTestId('new-patent-pubnum').fill(manualPub);
+    await page.getByTestId('patent-create-save').click();
+
+    await expect(page.getByTestId('patents-table')).toContainText(manualTitle);
   });
 });

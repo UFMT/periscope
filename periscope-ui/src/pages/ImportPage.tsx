@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import * as patentsApi from '../api/patents';
 import { ErrorAlert, SuccessAlert } from '../components/Feedback';
+import { useI18n } from '../i18n/useI18n';
 import type { ImporterType, ImportResult } from '../types';
 import { ApiError } from '../types';
 
@@ -15,6 +16,7 @@ const IMPORTERS: { value: ImporterType; label: string }[] = [
 
 export function ImportPage() {
   const { id: projectId = '' } = useParams();
+  const { t } = useI18n();
   const [type, setType] = useState<ImporterType>('DPMA');
   const [file, setFile] = useState<File | null>(null);
   const [result, setResult] = useState<ImportResult | null>(null);
@@ -22,7 +24,7 @@ export function ImportPage() {
 
   const importMutation = useMutation({
     mutationFn: () => {
-      if (!file) throw new Error('Selecione um arquivo.');
+      if (!file) throw new Error(t('import.selectFile'));
       return patentsApi.importPatents(projectId, file, type);
     },
     onSuccess: (data) => {
@@ -31,14 +33,14 @@ export function ImportPage() {
     },
     onError: (err: unknown) => {
       setResult(null);
-      setError(err instanceof ApiError || err instanceof Error ? err.message : 'Falha na importação.');
+      setError(err instanceof ApiError || err instanceof Error ? err.message : t('import.error'));
     },
   });
 
   function onSubmit(e: FormEvent) {
     e.preventDefault();
     if (!file) {
-      setError('Selecione um arquivo para importar.');
+      setError(t('import.selectFile'));
       return;
     }
     importMutation.mutate();
@@ -48,27 +50,32 @@ export function ImportPage() {
     <div>
       <div className="page-header">
         <div>
-          <h1>Importação de patentes</h1>
-          <p>Envie um arquivo e escolha o importador correspondente.</p>
+          <h1>{t('import.title')}</h1>
+          <p>{t('import.subtitle')}</p>
         </div>
         <Link className="btn btn-secondary" to={`/projects/${projectId}/patents`}>
-          Ver patentes
+          {t('import.viewPatents')}
         </Link>
       </div>
 
       {error && <ErrorAlert message={error} />}
       {result && (
         <SuccessAlert
-          message={`Importadas ${result.imported} patente(s) via ${result.importer} (${result.fileName}).`}
+          message={t('import.successAlert', {
+            count: result.imported,
+            importer: result.importer,
+            fileName: result.fileName,
+          })}
         />
       )}
 
       <div className="card">
-        <form className="form-grid" onSubmit={onSubmit}>
+        <form className="form-grid" onSubmit={onSubmit} data-testid="import-form">
           <div className="field">
-            <label htmlFor="type">Tipo de importador</label>
+            <label htmlFor="type">{t('import.importerType')}</label>
             <select
               id="type"
+              data-testid="import-type"
               value={type}
               onChange={(e) => setType(e.target.value as ImporterType)}
             >
@@ -80,26 +87,34 @@ export function ImportPage() {
             </select>
           </div>
           <div className="field">
-            <label htmlFor="file">Arquivo</label>
+            <label htmlFor="file">{t('import.file')}</label>
             <input
               id="file"
+              data-testid="import-file"
               type="file"
               onChange={(e) => setFile(e.target.files?.[0] || null)}
               required
             />
           </div>
-          <button type="submit" className="btn" disabled={importMutation.isPending}>
-            {importMutation.isPending ? 'Importando…' : 'Importar'}
+          <button
+            type="submit"
+            className="btn"
+            data-testid="import-submit"
+            disabled={importMutation.isPending}
+          >
+            {importMutation.isPending ? t('import.submitting') : t('import.submit')}
           </button>
         </form>
       </div>
 
       {result && (
         <div className="card">
-          <h2>Resultado</h2>
+          <h2>{t('import.resultTitle')}</h2>
           <p>
-            <strong>{result.imported}</strong> patente(s) importada(s) com o importador{' '}
-            <strong>{result.importer}</strong>.
+            {t('import.resultSummary', {
+              count: result.imported,
+              importer: result.importer,
+            })}
           </p>
           {result.messages?.length > 0 && (
             <ul>

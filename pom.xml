@@ -17,8 +17,6 @@
       <maven.compiler.release>21</maven.compiler.release>
 
       <jakartaee.version>10.0.0</jakartaee.version>
-      <primefaces.version>14.0.0</primefaces.version>
-      <primefaces.theme.version>1.0.8</primefaces.theme.version>
       <!-- 2.5.x required for mongodb-driver 5.x (MapCodec became final in bson 5) -->
       <morphia.version>2.5.3</morphia.version>
       <mongodb.version>5.2.1</mongodb.version>
@@ -42,15 +40,6 @@
       <maven.failsafe.plugin.version>3.5.0</maven.failsafe.plugin.version>
    </properties>
 
-   <repositories>
-      <!-- Theme bootstrap 1.0.8 still vendored; PrimeFaces 14 vem do Central -->
-      <repository>
-         <id>legacy-m2</id>
-         <name>Vendored legacy artifacts</name>
-         <url>file://${maven.multiModuleProjectDirectory}/tools/legacy-m2</url>
-      </repository>
-   </repositories>
-
    <dependencyManagement>
       <dependencies>
          <dependency>
@@ -66,18 +55,6 @@
             <version>${jakartaee.version}</version>
             <type>pom</type>
             <scope>import</scope>
-         </dependency>
-
-         <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>primefaces</artifactId>
-            <version>${primefaces.version}</version>
-            <classifier>jakarta</classifier>
-         </dependency>
-         <dependency>
-            <groupId>org.primefaces.themes</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>${primefaces.theme.version}</version>
          </dependency>
 
          <dependency>
@@ -269,7 +246,7 @@
                <artifactId>dependency-check-maven</artifactId>
                <version>${dependency-check.version}</version>
                <configuration>
-                  <failBuildOnCVSS>11</failBuildOnCVSS>
+                  <failBuildOnCVSS>7</failBuildOnCVSS>
                   <!-- OSS Index requires a Sonatype token since 2025; CI has none. NVD remains the source. -->
                   <ossindexAnalyzerEnabled>false</ossindexAnalyzerEnabled>
                   <ossIndexWarnOnlyOnRemoteErrors>true</ossIndexWarnOnlyOnRemoteErrors>

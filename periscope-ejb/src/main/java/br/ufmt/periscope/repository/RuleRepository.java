@@ -27,8 +27,7 @@ public class RuleRepository {
     private @Inject
     Datastore ds;
     private Integer rowCount = null;
-    private @Inject
-    Project currentProject;
+    private Project currentProject;
     private Integer searchType = null;
 
     public List<Rule> load(int first, int pageSize, String sortField, int sortOrder,
@@ -226,11 +225,22 @@ public class RuleRepository {
     }
 
     public void save(Rule rule) {
-        Rule r = findByName(rule.getName());
-        if (r != null) {
-            delete(r.getId().toString());
-            rule.getSubstitutions().addAll(r.getSubstitutions());
+        Rule existing = rule.getProject() != null
+                ? findByNameAndProject(rule.getName(), rule.getProject())
+                : findByName(rule.getName());
+        if (existing != null && (rule.getId() == null || !existing.getId().equals(rule.getId()))) {
+            delete(existing.getId().toString());
+            if (existing.getSubstitutions() != null) {
+                if (rule.getSubstitutions() == null) {
+                    rule.setSubstitutions(new java.util.HashSet<>());
+                }
+                rule.getSubstitutions().addAll(existing.getSubstitutions());
+            }
         }
+        ds.save(rule);
+    }
+
+    public void update(Rule rule) {
         ds.save(rule);
     }
 
@@ -242,7 +252,22 @@ public class RuleRepository {
         return ds.find(Rule.class).filter(eq("name", name)).first();
     }
 
+    public Rule findByNameAndProject(String name, Project project) {
+        if (name == null || name.isBlank() || project == null) {
+            return null;
+        }
+        return ds.find(Rule.class)
+                .filter(eq("project", project),
+                        dev.morphia.query.filters.Filters.regex("name",
+                                "^" + java.util.regex.Pattern.quote(name.trim()) + "$")
+                                .caseInsensitive())
+                .first();
+    }
+
     public Rule findById(String id) {
+        if (id == null || !ObjectId.isValid(id)) {
+            return null;
+        }
         return ds.find(Rule.class).filter(eq("_id", new ObjectId(id))).first();
     }
 

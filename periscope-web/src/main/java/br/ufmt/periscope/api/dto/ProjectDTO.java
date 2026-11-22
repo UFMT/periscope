@@ -16,18 +16,22 @@ public record ProjectDTO(
         String ownerId,
         String ownerName,
         long patentCount,
-        List<String> observerIds
+        List<String> observerIds,
+        List<UserSummaryDTO> observers
 ) {
     public static ProjectDTO from(Project project, long patentCount) {
         if (project == null) {
             return null;
         }
         User owner = project.getOwner();
-        List<String> observers = project.getObservers() == null
+        List<UserSummaryDTO> observerSummaries = project.getObservers() == null
                 ? List.of()
                 : project.getObservers().stream()
                 .filter(u -> u != null && u.getId() != null)
-                .map(u -> u.getId().toString())
+                .map(UserSummaryDTO::from)
+                .toList();
+        List<String> observerIds = observerSummaries.stream()
+                .map(UserSummaryDTO::id)
                 .toList();
         return new ProjectDTO(
                 project.getId() != null ? project.getId().toString() : null,
@@ -39,7 +43,8 @@ public record ProjectDTO(
                 owner != null && owner.getId() != null ? owner.getId().toString() : null,
                 owner != null ? owner.toString() : null,
                 patentCount,
-                observers
+                observerIds,
+                observerSummaries
         );
     }
 
